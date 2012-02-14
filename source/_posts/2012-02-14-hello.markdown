@@ -1,0 +1,22 @@
+---
+layout: post
+title: "Hello, World"
+date: 2012-02-14 11:08
+comments: true
+categories: 
+---
+## A first post always says 
+
+``` ruby Hello, World
+class Hello
+  def self.world
+    "Hello, World!"
+  end
+end
+
+puts Hello.world
+```
+
+``` ruby return
+=> "Hello, World!"
+```
