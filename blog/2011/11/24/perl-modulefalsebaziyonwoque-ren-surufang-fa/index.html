@@ -92,18 +92,16 @@ Makefile.PLを作るとき依存するモジュールを記述するが、今使
   </header>
 
 
-<div class="entry-content"><p>たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。</p>
+<div class="entry-content">たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
 
-<p>例</p>
-
+例
 <pre code="shell">
 $ perl -MTemplate -e '$Template::VERSION'
 2.14
 </pre>
 
-
-<p>モジュール内で定義された our $VERSION = 2.14; を出力すればよい。</p>
+モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
 </div>
 
 

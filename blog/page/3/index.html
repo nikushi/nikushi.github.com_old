@@ -93,13 +93,13 @@
   </header>
 
 
-  <div class="entry-content"><p>Catalystは癖がありそう。学習コストが高めだけど、なれると楽しくなりそう。個人でアプリケーション作るときに使ってみよう。</p>
+  <div class="entry-content">Catalystは癖がありそう。学習コストが高めだけど、なれると楽しくなりそう。個人でアプリケーション作るときに使ってみよう。
 
-<p>CGI::Applicationは初めてでも学習コスト少なく使えそう。運用ツールとか内製ツールなど気づいたメンバでメンテしやすさを考えると、こちらを使ってみるかな。</p>
+CGI::Applicationは初めてでも学習コスト少なく使えそう。運用ツールとか内製ツールなど気づいたメンバでメンテしやすさを考えると、こちらを使ってみるかな。
 
-<p>参考:<a href="http://naoya.dyndns.org/~naoya/mt/archives/001682.html">Perl の MVC フレームワーク Catalyst に入門してみた</a></p>
+参考:<a href="http://naoya.dyndns.org/~naoya/mt/archives/001682.html">Perl の MVC フレームワーク Catalyst に入門してみた</a>
 
-<p><strong>2012/01/05 追記:</strong> 後になって読み返すとPerlでやるならRubyとかPythonでやったほうが断然楽だな、ともおもう。</p>
+<strong>2012/01/05 追記:</strong> 後になって読み返すとPerlでやるならRubyとかPythonでやったほうが断然楽だな、ともおもう。
 </div>
   
   
@@ -135,21 +135,17 @@
   </header>
 
 
-  <div class="entry-content"><p>perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。</p>
+  <div class="entry-content">perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。
 
-<p><strong>system()</strong></p>
-
+<strong>system()</strong>
 <pre lang="perl">if ( system( $command ) ) {
     warn "fail";
 } else {
     print "success";
 }</pre>
-
-
-<p>if ! system() ではないことに注意。
+if ! system() ではないことに注意。
 &nbsp;
-<strong><code>xxx</code> back quote</strong></p>
-
+<strong>`xxx` back quote</strong>
 <pre lang="perl">$buffer = `$command`;
 if ( $? != 0 ) { # if false
     warn "fail";
@@ -158,42 +154,31 @@ if ( $? != 0 ) { # if false
     print "buffer=$buffer";
 }
 $?に戻り値が入る。0以外はfalse。</pre>
+&nbsp;
 
-
-<p>&nbsp;</p>
-
-<p><strong>open()</strong></p>
-
+<strong>open()</strong>
 <pre lang="perl">open(OUTPUT, ’sort >foo’)  # pipe to sort
     or die "Can’t start sort: $!";
 #...                        # print stuff to output
 close OUTPUT                # wait for sort to finish
     or warn $! ? "Error closing sort pipe: $!" # 純粋にcloseが失敗した場合(外部コマンドのfailではなく)
                : "Exit status $? from sort";   # 外部コマンドがnon-zeroでexitしｓた場合</pre>
+外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
+$ perldoc perlfunc に詳しく説明されています。
 
+&nbsp;
 
-<p>外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
-$ perldoc perlfunc に詳しく説明されています。</p>
-
-<p>&nbsp;</p>
-
-<p>system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。</p>
-
+system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。
 <pre lang="perl">open ( IN , "ping 202.232.0.1 -c 3 |" ) or die $!;
 while(){
     chomp;
     print $_ . "\n";
 }
 close IN;</pre>
-
-
-<p>こちらは都度出力してくれる。</p>
-
+こちらは都度出力してくれる。
 <pre lang="perl">my $buffer = `ping 202.232.0.1 -c 3`;
 print $buffer;</pre>
-
-
-<p>こちらは、pingが終了するまで出力を得られない。</p>
+こちらは、pingが終了するまで出力を得られない。
 </div>
   
   
@@ -229,11 +214,11 @@ print $buffer;</pre>
   </header>
 
 
-  <div class="entry-content"><p>を始めた。以前はジョギングをたまにしてたんだけど、ジョギング=有酸素運動より無酸素運動が良いらしい。</p>
+  <div class="entry-content">を始めた。以前はジョギングをたまにしてたんだけど、ジョギング=有酸素運動より無酸素運動が良いらしい。
 
-<p>腹筋、腕立て、スクワットをそれぞれ3セット。間に1分間の休憩を入れるのがいいらしい。反動は使わずゆっくりとが基本ということでした。かなりキツく、翌日筋肉痛。</p>
+腹筋、腕立て、スクワットをそれぞれ3セット。間に1分間の休憩を入れるのがいいらしい。反動は使わずゆっくりとが基本ということでした。かなりキツく、翌日筋肉痛。
 
-<p>amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽちってしまった。たっぷり2kgも来たw これは太れということだな。</p>
+amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽちってしまった。たっぷり2kgも来たw これは太れということだな。
 </div>
   
   
@@ -269,9 +254,9 @@ print $buffer;</pre>
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/aziat/6213602359/" title="Waikiki Beach by Nixie+, on Flickr"><img src="http://farm7.static.flickr.com/6161/6213602359_6d255cb8f3.jpg" width="500" height="333" alt="Waikiki Beach"></a></p>
+  <div class="entry-content"><a href="http://www.flickr.com/photos/aziat/6213602359/" title="Waikiki Beach by Nixie+, on Flickr"><img src="http://farm7.static.flickr.com/6161/6213602359_6d255cb8f3.jpg" width="500" height="333" alt="Waikiki Beach"></a>
 
-<p>行って来ましたー。6泊8日。帰国してはや2週間。すっかり日本は秋ですね。</p>
+行って来ましたー。6泊8日。帰国してはや2週間。すっかり日本は秋ですね。
 </div>
   
   
@@ -307,11 +292,11 @@ print $buffer;</pre>
   </header>
 
 
-  <div class="entry-content"><p>I&#8217;m going to take all week off in Hawaii.</p>
+  <div class="entry-content">I&#8217;m going to take all week off in Hawaii. 
 
-<p>というわけで、来週のシルバーウィークは遅めの夏休みでハワイです。浮き足立ってるかと言われると、実は全然そんなことなくて、目の前の仕事をいかに終えるかで今月はたいへん。</p>
+というわけで、来週のシルバーウィークは遅めの夏休みでハワイです。浮き足立ってるかと言われると、実は全然そんなことなくて、目の前の仕事をいかに終えるかで今月はたいへん。
 
-<p>来週は一眼レフで気ままに写真とったり、ダイヤモンドヘッドをトレッキングして、ワイキキビーチで日光浴するぜ。浮き足立ってきた。</p>
+来週は一眼レフで気ままに写真とったり、ダイヤモンドヘッドをトレッキングして、ワイキキビーチで日光浴するぜ。浮き足立ってきた。
 </div>
   
   
@@ -347,15 +332,15 @@ print $buffer;</pre>
   </header>
 
 
-  <div class="entry-content"><p>&nbsp;</p>
+  <div class="entry-content">&nbsp;
 
-<p><a href="http://www.jins-jp.com/functional/pc.html"><img src='http://orihubon.com/wp-content/uploads/img_pc_main.jpg' alt='' /></a></p>
+<a href="http://www.jins-jp.com/functional/pc.html"><img src='http://orihubon.com/wp-content/uploads/img_pc_main.jpg' alt='' /></a>
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p><a href="http://www.jins-jp.com/functional/pc.html">PC - 機能性アイウエア | JINS - 眼鏡（メガネ・めがね）</a></p>
+<a href="http://www.jins-jp.com/functional/pc.html">PC - 機能性アイウエア | JINS - 眼鏡（メガネ・めがね）</a>
 
-<p>これは買って試す価値ありだな。最近、コードを書く時間が増えて余計に目がチラつくし欲しいところ。むしろこれまでこのジャンルが少なかったのが不思議なくらい。</p>
+これは買って試す価値ありだな。最近、コードを書く時間が増えて余計に目がチラつくし欲しいところ。むしろこれまでこのジャンルが少なかったのが不思議なくらい。
 </div>
   
   
@@ -391,8 +376,7 @@ print $buffer;</pre>
   </header>
 
 
-  <div class="entry-content"><p>インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。</p>
-
+  <div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
 <pre lang="php">
 // For delivered tarballs, if option enabled...
 $config->setTarPath('/bin/');
@@ -415,15 +399,13 @@ $config->setMinDownloadLevel(1);
 </pre>
 
 
-<p>$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。</p>
-
+$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
 <pre>
  /               0
    project1/     1
      - sub/      2
    project2/     1
 </pre>
-
 </div>
   
   
@@ -459,7 +441,7 @@ $config->setMinDownloadLevel(1);
   </header>
 
 
-  <div class="entry-content"><p>小さめなwebアプリだとmojoとかdancerを使うのが良いのかね。apache+CGIとかmod_perlにするだけが方法じゃないんですね。</p>
+  <div class="entry-content">小さめなwebアプリだとmojoとかdancerを使うのが良いのかね。apache+CGIとかmod_perlにするだけが方法じゃないんですね。
 </div>
   
   
@@ -498,11 +480,9 @@ $config->setMinDownloadLevel(1);
   <div class="entry-content"><blockquote>使ってみようTokyo Cabinet
 
 本稿では、巷で話題の軽量データベースライブラリTokyo Cabinetの概要と使い方について説明します。</blockquote>
+引用元: <a href="http://fallabs.com/blog-ja/promenade.cgi?id=72">開発メモ: 使ってみようTokyo Cabinet</a>.
 
-
-<p>引用元: <a href="http://fallabs.com/blog-ja/promenade.cgi?id=72">開発メモ: 使ってみようTokyo Cabinet</a>.</p>
-
-<p>メモ。しかしネーミングの由来はなんだろう。東京で開発したからとかなのか?はたして。</p>
+メモ。しかしネーミングの由来はなんだろう。東京で開発したからとかなのか?はたして。
 </div>
   
   
@@ -541,13 +521,11 @@ $config->setMinDownloadLevel(1);
   <div class="entry-content"><blockquote>あなたの渡航認証は許可され、ビザ免除プログラムに基づき米国に渡航することができます。この回答は、米国への入国を保証するものではありません。最終決定は入国地で
 
 米国税関国境警備局審査官が行ないます。</blockquote>
+passしました。これ面倒くさいね。ESTA申請時の質問にYESって答えるメリットかるんかね。YESって答えたらアウトでしょ。オバマ大統領どうしてこの制度決めたんだろ。
 
+&nbsp;
 
-<p>passしました。これ面倒くさいね。ESTA申請時の質問にYESって答えるメリットかるんかね。YESって答えたらアウトでしょ。オバマ大統領どうしてこの制度決めたんだろ。</p>
-
-<p>&nbsp;</p>
-
-<p>数年前にミャンマーに行ったことがあるので、入国に止められないかと少々不安。</p>
+数年前にミャンマーに行ったことがあるので、入国に止められないかと少々不安。
 </div>
   
   

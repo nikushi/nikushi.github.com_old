@@ -91,8 +91,7 @@ $config->setTarPath('/bin/'); // For delivered &hellip;">
   </header>
 
 
-<div class="entry-content"><p>インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。</p>
-
+<div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
 <pre lang="php">
 // For delivered tarballs, if option enabled...
 $config->setTarPath('/bin/');
@@ -115,15 +114,13 @@ $config->setMinDownloadLevel(1);
 </pre>
 
 
-<p>$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。</p>
-
+$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
 <pre>
  /               0
    project1/     1
      - sub/      2
    project2/     1
 </pre>
-
 </div>
 
 

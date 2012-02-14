@@ -95,18 +95,16 @@ Makefile.PLを作るとき依存するモジュールを記述するが、今使
   </header>
 
 
-  <div class="entry-content"><p>たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。</p>
+  <div class="entry-content">たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
 
-<p>例</p>
-
+例
 <pre code="shell">
 $ perl -MTemplate -e '$Template::VERSION'
 2.14
 </pre>
 
-
-<p>モジュール内で定義された our $VERSION = 2.14; を出力すればよい。</p>
+モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
 </div>
   
   
@@ -142,39 +140,32 @@ $ perl -MTemplate -e '$Template::VERSION'
   </header>
 
 
-  <div class="entry-content"><p>ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。</p>
+  <div class="entry-content">ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p>最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
-結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。</p>
+最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
+結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p>書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。</p>
+書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。
 
-<p><strong>追記</strong></p>
+<strong>追記</strong>
 
-<p>選べる。</p>
-
+選べる。
 <ul>
-    <li>App::Cmd</li>
-    <li>App::CLI</li>
-    <li>CLI::Dispatch</li>
+	<li>App::Cmd</li>
+	<li>App::CLI</li>
+	<li>CLI::Dispatch</li>
 </ul>
+App::Cmdが有名どころのようだ。
 
-
-<p>App::Cmdが有名どころのようだ。</p>
-
-<p>&nbsp;</p>
-
+&nbsp;
 <div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
-
-
 <div id="__ss_134444" style="width: 425px;">
 <div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
 </div>
-
 </div>
   
   
@@ -210,7 +201,7 @@ $ perl -MTemplate -e '$Template::VERSION'
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.</p>
+  <div class="entry-content"><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.
 </div>
   
   
@@ -246,7 +237,7 @@ $ perl -MTemplate -e '$Template::VERSION'
   </header>
 
 
-  <div class="entry-content"><p>行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。</p>
+  <div class="entry-content">行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。
 </div>
   
   
@@ -287,22 +278,21 @@ $ perl -MTemplate -e '$Template::VERSION'
 <div style="padding: 5px 0 12px;">Environment</div>
 <div style="padding: 5px 0 12px;">
 <ul>
-    <li>Perlbrew</li>
+	<li>Perlbrew</li>
 </ul>
 &nbsp;
 
 Framewark
 <ul>
-    <li>Catalystは超重量級</li>
-    <li>Mojo::Lite, Dancer,etc</li>
+	<li>Catalystは超重量級</li>
+	<li>Mojo::Lite, Dancer,etc</li>
 </ul>
 Framewark
 <ul>
-    <li>DotCloud (?) 使ってみないとよく分からない。</li>
+	<li>DotCloud (?) 使ってみないとよく分からない。</li>
 </ul>
 </div>
 </div>
-
 </div>
   
   
@@ -338,67 +328,47 @@ Framewark
   </header>
 
 
-  <div class="entry-content"><p>RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！</p>
+  <div class="entry-content">RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p>物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。</p>
+物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。
 
-<p>インストール。rootにならず一般ユーザで。</p>
-
+インストール。rootにならず一般ユーザで。
 <pre lang="shell">curl -kL http://xrl.us/perlbrewinstall | bash</pre>
+curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。
 
-
-<p>curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。</p>
-
-<p>実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。</p>
-
+実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。
 <pre lang="shell">source ~/perl5/perlbrew/etc/bashrc</pre>
+インストール完了。
 
+&nbsp;
 
-<p>インストール完了。</p>
-
-<p>&nbsp;</p>
-
-<p>さっそくperl 5.14.1に切り替えてみる。</p>
-
+さっそくperl 5.14.1に切り替えてみる。
 <pre lang="shell">perlbrew install perl-5.14.1
 perlbrew switch perl-5.14.1</pre>
+perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。
 
-
-<p>perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。</p>
-
-<p>テスト</p>
-
+テスト
 <pre lang="shell">$ perl -v 
 
 This is perl 5, version 14, subversion 1 (v5.14.1) built for darwin-2level 
 
 Copyright 1987-2011, Larry Wall</pre>
+成功！！
 
+もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。
 
-<p>成功！！</p>
-
-<p>もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。</p>
-
-<p>インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！</p>
-
+インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！
 <pre lang="shell">perlbrew exec myprogram.pl</pre>
-
-
-<p>more help</p>
-
+more help
 <pre lang="shell">perlbrew help</pre>
+&nbsp;
 
-
-<p>&nbsp;</p>
-
-<p>参考にさせていただいたページ</p>
-
+参考にさせていただいたページ
 <ul>
-    <li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
+	<li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
 </ul>
-
 </div>
   
   
@@ -434,11 +404,11 @@ Copyright 1987-2011, Larry Wall</pre>
   </header>
 
 
-  <div class="entry-content"><p>perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。</p>
+  <div class="entry-content">perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p><a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。</p>
+<a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
 </div>
   
   
@@ -475,9 +445,7 @@ Copyright 1987-2011, Larry Wall</pre>
 
 
   <div class="entry-content"><p style="text-align: right;">ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。</p>
-
-
-<p>引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.</p>
+引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.
 </div>
   
   
@@ -513,13 +481,13 @@ Copyright 1987-2011, Larry Wall</pre>
   </header>
 
 
-  <div class="entry-content"><p>Catlyst is very heavy weight one .</p>
+  <div class="entry-content">Catlyst is very heavy weight one .
 
-<p>mojolicious is light weight one .</p>
+mojolicious is light weight one .
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p>重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。</p>
+重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。
 </div>
   
   
@@ -555,9 +523,9 @@ Copyright 1987-2011, Larry Wall</pre>
   </header>
 
 
-  <div class="entry-content"><p>amazonで注文したダンベルが届いた。20kg x 2。 重さを調節できるのでいろいろな筋肉で使える。まっするまっする。</p>
+  <div class="entry-content">amazonで注文したダンベルが届いた。20kg x 2。 重さを調節できるのでいろいろな筋肉で使える。まっするまっする。
 
-<p>配達のお兄さん大変そうだった。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20111015-214413.jpg"><img src="http://orihubon.com/wp-content/uploads/20111015-214413.jpg" alt="20111015-214413.jpg" class="alignnone size-full" /></a></p>
+配達のお兄さん大変そうだった。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20111015-214413.jpg"><img src="http://orihubon.com/wp-content/uploads/20111015-214413.jpg" alt="20111015-214413.jpg" class="alignnone size-full" /></a>
 </div>
   
   

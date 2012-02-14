@@ -90,17 +90,15 @@
   </header>
 
 
-<div class="entry-content"><p>Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。</p>
+<div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
 
-<p>&nbsp;</p>
+&nbsp;
 
-<p>warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。</p>
-
+warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
 <pre>log4perl.category = DEBUG, Screen
 log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
-
-<p>たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。</p>
+たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
 </div>
 
 

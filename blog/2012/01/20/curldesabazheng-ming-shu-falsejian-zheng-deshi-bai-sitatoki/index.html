@@ -90,19 +90,15 @@
   </header>
 
 
-<div class="entry-content"><p>rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。</p>
+<div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
 
 <pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
+rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
 
+じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
 
-<p>rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。</p>
-
-<p>じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。</p>
-
-<p>根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。</p>
-
+根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
 <pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
-
 </div>
 
 

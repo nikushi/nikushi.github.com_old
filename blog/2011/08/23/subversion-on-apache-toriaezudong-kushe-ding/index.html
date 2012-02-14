@@ -90,17 +90,14 @@
   </header>
 
 
-<div class="entry-content"><p>仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。</p>
+<div class="entry-content">仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。
 
-<p>mod_dav_svnが必要なのでyum installする。</p>
-
+mod_dav_svnが必要なのでyum installする。
 <pre lang="shell">
  $ sudo yum install mod_dav_svn.x86_64
 </pre>
 
-
-<p>svn関連のapache設定。CentOSの流儀に従って /etc/conf.d/svn.conf とした。</p>
-
+svn関連のapache設定。CentOSの流儀に従って /etc/conf.d/svn.conf とした。
 <pre lang="apache">
 <IfModule !mod_dav_svn.c>
     LoadModule dav_svn_module modules/mod_dav_svn.so
@@ -112,12 +109,10 @@
 </Location>
 </pre>
 
+リポジトリが1個だけならくSVNPathを使えばよい。
+SVNParentPathを使うと、配下のディレクトリにある複数のリポジトリを対象としてくれるので設定ファイルを毎度書き換えなくて良い利点がある。
 
-<p>リポジトリが1個だけならくSVNPathを使えばよい。
-SVNParentPathを使うと、配下のディレクトリにある複数のリポジトリを対象としてくれるので設定ファイルを毎度書き換えなくて良い利点がある。</p>
-
-<p>複数のリポジトリで構成すると/var/svn以下は以下のようになる。</p>
-
+複数のリポジトリで構成すると/var/svn以下は以下のようになる。
 <pre>
   /var/svn/
     + repos1/
@@ -128,9 +123,8 @@ SVNParentPathを使うと、配下のディレクトリにある複数のリポ�
        + (略)
 </pre>
 
-
-<p>ここで一つ不便を感じる点として、ブラウザでhttp://xxx/svn/にアクセスするとSVNモジュールがエラーページを吐く。GETリクエストを解釈できないためであるが、URI的にはリポジトリのlistを出力してほしいところだ。
-そこで、SVNListParentPath on だ。これだけ。</p>
+ここで一つ不便を感じる点として、ブラウザでhttp://xxx/svn/にアクセスするとSVNモジュールがエラーページを吐く。GETリクエストを解釈できないためであるが、URI的にはリポジトリのlistを出力してほしいところだ。
+そこで、SVNListParentPath on だ。これだけ。
 </div>
 
 
