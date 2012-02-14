@@ -1,0 +1,40 @@
+---
+layout: post
+title: CPANモジュールを手動インストールする方法
+tags:
+- cpan
+- linux
+- perl
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+---
+時には、perlが標準で読むモジュールディレクトリにインストールしたくないときもある。
+
+例えば、テストで使ってみるときや、システム全体に適用しなくとも一部のコマンドだけで使いたいモジュールを適用する場合などだ。システム全体に影響しないパスにインストールすれば、影響範囲を気にせずモジュールを使える。
+
+
+まずは、普通にインストールする場合。以下では/usr/lib以下あたりにインストールされる。
+<pre lang="shell">
+# perl -MCPAN -e shell
+cpan> insall HOGE
+</pre>
+
+次に、PREFIXを使って指定したディレクトリにインストールする場合。YAML.pmをインストールする例。
+<pre lang="shell">
+# wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/YAML-0.73.tar.gz
+# tar zxvf YAML-0.73.tar.gz 
+# cd YAML-0.73
+# perl Makefile.PL PREFIX=/var/tmp/test
+# make
+# make install
+</pre>
+この例では、/var/tmp/test/lib 以下にインストールされる。読み込むperlスクリプトでuse libを使って明示すればよい。
+<pre lang="perl">
+#!/usr/bin/perl
+
+use FindBin qw($Bin);
+use lib '/var/tmp/test/lib/perl5/site_perl';
+</pre>

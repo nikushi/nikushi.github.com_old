@@ -1,0 +1,16 @@
+---
+layout: post
+title: 世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community
+tags:
+- money
+- スパム
+- セキュリティ
+- 株
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+---
+<blockquote>この操作に成功すると、大量のスパムによって株価の人為的な高騰が促され、最終的には詐欺師が持ち株の売却を狙っている値に達します。その時点でスパム攻撃も終息するのが普通で、そうなると今度は株に対する関心が薄れ、評価額は元の安値まで下落します（これも市場で悪用されることがあります）。ポンプアンドダンプのスパム攻撃が成功すると、詐欺師はたった数日間でかなりの利益をあげることができます。</blockquote>
+引用元: <a href="http://www.symantec.com/connect/ja/blogs-217">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a>.

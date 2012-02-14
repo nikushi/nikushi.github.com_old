@@ -1,0 +1,14 @@
+---
+layout: post
+title: 40kg 送料無料で。
+tags:
+- life
+- weight up
+status: publish
+type: post
+published: true
+meta: {}
+---
+amazonで注文したダンベルが届いた。20kg x 2。 重さを調節できるのでいろいろな筋肉で使える。まっするまっする。
+
+配達のお兄さん大変そうだった。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20111015-214413.jpg"><img src="http://orihubon.com/wp-content/uploads/20111015-214413.jpg" alt="20111015-214413.jpg" class="alignnone size-full" /></a>

@@ -1,0 +1,21 @@
+---
+layout: post
+title: ディスプレイを見るときの負荷を軽減する眼鏡 by JINS
+tags:
+- jins
+- life
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+---
+&nbsp;
+
+<a href="http://www.jins-jp.com/functional/pc.html"><img src='http://orihubon.com/wp-content/uploads/img_pc_main.jpg' alt='' /></a>
+
+&nbsp;
+
+<a href="http://www.jins-jp.com/functional/pc.html">PC - 機能性アイウエア | JINS - 眼鏡（メガネ・めがね）</a>
+
+これは買って試す価値ありだな。最近、コードを書く時間が増えて余計に目がチラつくし欲しいところ。むしろこれまでこのジャンルが少なかったのが不思議なくらい。

@@ -1,0 +1,14 @@
+---
+layout: post
+title: 8/8 breakfast
+tags:
+- breakfast
+- life
+- 画像
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+---
+<a href="http://orihubon.com/wp-content/uploads/20110808-221018.jpg"><img class="alignnone size-full" src="http://orihubon.com/wp-content/uploads/20110808-221018.jpg" alt="20110808-221018.jpg" /></a>

@@ -1,0 +1,16 @@
+---
+layout: post
+title: getting works done
+tags:
+- life
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+---
+I'm going to take all week off in Hawaii. 
+
+というわけで、来週のシルバーウィークは遅めの夏休みでハワイです。浮き足立ってるかと言われると、実は全然そんなことなくて、目の前の仕事をいかに終えるかで今月はたいへん。
+
+来週は一眼レフで気ままに写真とったり、ダイヤモンドヘッドをトレッキングして、ワイキキビーチで日光浴するぜ。浮き足立ってきた。

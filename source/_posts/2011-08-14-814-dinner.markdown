@@ -1,0 +1,11 @@
+---
+layout: post
+title: 8/14 dinner
+tags:
+- life
+status: publish
+type: post
+published: true
+meta: {}
+---
+盛岡冷麺をお土産にもらったので作ってみた。うまうま。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20110814-185711.jpg"><img src="http://orihubon.com/wp-content/uploads/20110814-185711.jpg" alt="20110814-185711.jpg" class="alignnone size-full" /></a>
