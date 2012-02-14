@@ -4,7 +4,7 @@
   <title><![CDATA[niku4i blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-02-14T11:41:14+09:00</updated>
+  <updated>2012-02-14T15:17:04+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -43,6 +43,566 @@
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PerlでHashの初期値をセットする]]></title>
+    <link href="http://niku4i.github.com/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/"/>
+    <updated>2012-02-13T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru</id>
+    <content type="html"><![CDATA[<pre lang="perl">sub conf{
+    my %arg = (
+        lang =>; 'perl',
+        rank =>; 1,
+        @_ # ここが決め手!           
+    );
+    # ...
+}</pre>
+
+
+<p>参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a></p>
+
+<p>&nbsp;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Streaming Log with Capistrano]]></title>
+    <link href="http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano/"/>
+    <updated>2012-02-09T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano</id>
+    <content type="html"><![CDATA[<p><a href="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a></p>
+
+<p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
+
+<p>Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。</p>
+
+<p>まずは、Capistranoのstreamメソッドを使って試します。</p>
+
+<h1><strong>streamメソッドを使った例</strong></h1>
+
+
+<p>カレントディレクトリにCapfileというファイル名で以下を保存してください。</p>
+
+<pre lang="ruby">server server1, :web
+server server2, :web
+
+desc "tail -f accees_log"
+task :tail, :roles =&gt; :web do
+  stream "tail -f /var/log/apache/access_log ; true"
+end</pre>
+
+
+<h4>実行</h4>
+
+
+<pre lang="shell">$ cap tail</pre>
+
+
+<p>capコマンドはCapistranoがインストールされていればあるとおもいます。capコマンドはカレントディレクトリのCapfileという名前を探して読み込みます。引数に指定したtailタスクを実行します。</p>
+
+<p>出力をみると分かりますが、単純にログがストリームされるだけなので、１つのログがどのサーバのログか分かりません。微妙です。</p>
+
+<p>次に別のアプローチとしてrunメソッドを使った方法を試してみました。</p>
+
+<h1><strong>runメソッドにブロックを渡す方法</strong></h1>
+
+
+<p>runは通常</p>
+
+<pre lang="ruby">desc "hoge"
+task :uptime do
+  run "uptime"
+end</pre>
+
+
+<p>みたいにリモートでコマンドを実行する際に使いますが、ブロックを渡して出力を編集したりできます。Capfileを以下のように修正します。参考 : <a href=" http://errtheblog.com/posts/19-streaming-capistrano">Err the Blog</a></p>
+
+<pre lang="ruby">desc "tail -f accees_log"
+task :tail, :roles =&gt; :web do
+  run "tail -f /var/log/apache/access_log ; true" do |ch, stream, out|
+    puts "#{ch[:host]}: #{out}"
+    break if stream == :err
+  end
+end</pre>
+
+
+<p>ブロック変数に指定したoutにリモートで実行したコマンドの標準出力がストアされます。chはセッションの情報とかが保存されるようです。</p>
+
+<p>こによりログの左側にサーバ名が付加されます。</p>
+
+<p>しかしすぐに問題が見つかりました。tail -fの標準出力は複数行をまとめたバルクデータとしてoutにストアされるらしく、上のコードだと1行ごとには処理できません。ですので1行ごとにホスト名を先頭に付加できませんでした。</p>
+
+<h1><strong>streamメソッドを拡張</strong></h1>
+
+
+<p>そこで、ここからはいっきに進みますが、以下のとおり標準のstreamメソッドを拡張しました。さらにcolorizeモジュールを使ってホスト名毎に色づけをして、どのサーバのログかを見やすくしてみました。</p>
+
+<p>inspect-stream.rbという名前で以下の内容でファイルを作成します。</p>
+
+<pre lang="ruby">require 'colorize'
+
+unless Capistrano::Configuration.respond_to?(:instance)
+      abort "requires Capistrano 2"
+end
+
+module Capistrano
+  class Configuration
+    module Actions
+      module Inspect
+        # 標準のstreamメソッドを拡張する
+        # 各行の先頭にホスト名を出力しつつ、ホスト名毎に色づけする
+        def stream(command, options={})
+
+          trap("INT") { puts 'Interupted'; exit 0; }
+
+          # out の 最終行のchunk dataを一時保存するHash
+          # keyはホスト名
+          last = Hash.new("")
+          invoke_command(command, options) do |ch, stream, out|
+            a = out.split(/\n/m)
+
+            if out[0].chr  == "\n"
+              a.unshift(last[ch[:host]])
+              last[ch[:host]] = ""
+            else
+              tmp = a.shift
+              a.unshift(last[ch[:host]] + tmp)
+              last[ch[:host]] = ""
+            end
+
+            if out[-1].chr == "\n"
+              last[ch[:host]] = ""
+            else
+              last[ch[:host]] = a.pop
+            end
+
+            a.each do |line|
+              puts colorize_by_host(ch[:host]) + ": " + line if stream == :out
+            end
+            warn "[err :: #{ch[:server]}] #{out}" if stream == :err
+          end
+        end
+
+        private
+
+        def colorize_by_host(host)
+          color = [ :light_blue, :yellow, :magenta, :cyan, :light_red, :light_green, :light_yellow, :light_blue, :light_magenta, :light_cyan, :light_white ]
+          host.colorize( color[str2acsii(host) % color.size] )
+        end
+
+        def str2acsii(str="")
+          acsii = ""
+          str.each_byte do |c|
+            acsii += c.to_s
+          end
+          acsii.to_i
+        end
+      end
+    end
+  end
+end</pre>
+
+
+<p>さらにCapfileを以下の内容に書き換えます。</p>
+
+<pre lang="ruby">require './inspect-stream'
+
+server server1, :web
+server server2, :web
+
+desc "tail -f accees_log"
+task :tail, :roles =&gt; :web do
+  stream "tail -f /var/log/apache/access_log ; true"
+end</pre>
+
+
+<h4>colorizeモジュールはあらかじめインストールしてください</h4>
+
+
+<pre lang="shell">$ gem install colorize --remote</pre>
+
+
+<h4>実行</h4>
+
+
+<pre lang="shell">$ cap tail</pre>
+
+
+<h4>結果</h4>
+
+
+<p><span style="color: #ff0000;">server1</span>: 192.168.1.1 - - [05/Feb/2012:01:46:04 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
+<span style="color: #339966;">server2</span>: 192.168.1.1 - - [05/Feb/2012:01:46:05 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
+<span style="color: #ff0000;">server1</span>: 192.168.1.6 - - [05/Feb/2012:01:46:07 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
+<span style="color: #ff0000;">server1</span>: 192.168.2.1 - - [05/Feb/2012:01:46:04 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
+<span style="color: #ff0000;">server1</span>: 192.168.2.1 - - [05/Feb/2012:01:47:05 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
+<span style="color: #339966;">server2</span>: 192.168.2.5 - - [05/Feb/2012:01:48:07 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -</p>
+
+<p>ログの最初が色づけされてだけですが結構眺めてると楽しめます。</p>
+
+<p>streamメソッド自体を拡張したのでCapfile自体は元々最初にやろうとしてた内容とほぼ同じになりすっきりしました。ホストごとに色が異なるので、どのホストがログが多めかが何となく視覚的に分かるようになりました。ログが多すぎると目がちかちかしてあまり効果は無いかもしれません(爆)</p>
+
+<p>Capistranoモジュールのソースにinspect.rbというのが含まれておりstreamメソッドを定義しなおして上書きしてます。Capistrano 2系で動作確認しました。</p>
+
+<p>Rubyはまだ勉強中のためやり方が間違ってるとか別のやり方があるとかあればぜひ教えてください。</p>
+
+<p>&nbsp;</p>
+
+<p>ここまで書いてなんですが、実際の現場ではsyslogやfluentdなどでログをログサーバに転送してログサーバで見るのが普通でしょう。この使い方は、ちょっとしたログを確認したいとき用途とか、syslogでとばせない環境だったりとか向きかもしれません。</p>
+
+<p>&nbsp;</p>
+
+<p>今回おまけでログに色をつけましたが、色がつくだけでログ調査が数倍楽しくなりました。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sinatraで作ったWebアプリをHerokuにデプロイする]]></title>
+    <link href="http://niku4i.github.com/blog/2012/01/29/sinatratoherokufalseomian-qiang/"/>
+    <updated>2012-01-29T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/01/29/sinatratoherokufalseomian-qiang</id>
+    <content type="html"><![CDATA[<p>現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。</p>
+
+<p>というわけでさっそくマイクロWebアプリを作ってみた。</p>
+
+<ul>
+    <li><a title="Random Password Generator" href="http://makepasswdx.herokuapp.com/">Random Password Generator</a></li>
+    <li><a title="ソース" href="https://github.com/niku4i/makepasswdx">ソース</a></li>
+</ul>
+
+
+<p>シンプルにランダム文字列返すだけ。</p>
+
+<p>実はこれ昔作ったPerl CGIの焼き直し。昔、ランダム文字列pass付きzipで添付ファイルをメールするけど、文字列を都度考えるのは面倒ですとオペさん(事務のおねえさん)が言うのでその時はPerl CGI版を社内向に作った。Sinatraで焼き直してみた。</p>
+
+<div>Sinatraは<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にコードを書く。</div>
+
+
+<p>herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考に。</p>
+
+<p>最初はSinatraを勉強するつもりだったけど後半はherokuとgitの勉強もできた。herokuへのdeploy方法とか細かいところはリ<a href="https://github.com/niku4i/makepasswdx/blob/master/README">ポジトリのREADME</a>に書いた。</p>
+
+<p>herokuはとっても便利だ。数回コマンドだけでwebサイト作れる。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[改名]]></title>
+    <link href="http://niku4i.github.com/blog/2012/01/29/gai-ming/"/>
+    <updated>2012-01-29T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/01/29/gai-ming</id>
+    <content type="html"><![CDATA[<p>twitterの名前を@niku4iに変えた。以前のは<em>が含まれれて何かと不便で、githubだと</em>が使えないので-にしないといけなかったりだったので。</p>
+
+<p>idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[curlでサーバ証明書の検証で失敗したとき]]></title>
+    <link href="http://niku4i.github.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/"/>
+    <updated>2012-01-20T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki</id>
+    <content type="html"><![CDATA[<p>rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。</p>
+
+<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
+
+
+<p>rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。</p>
+
+<p>じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。</p>
+
+<p>根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。</p>
+
+<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[vim]ビジュアルモード選択範囲だけ置換]]></title>
+    <link href="http://niku4i.github.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/"/>
+    <updated>2012-01-10T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan</id>
+    <content type="html"><![CDATA[<ol>
+    <li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
+    <li>:にてコマンド指定するモードに入る</li>
+    <li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
+</ol>
+
+
+<p>vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/<sup>/#</sup> /g こんな感じで。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[logrotateの動作をテストする]]></title>
+    <link href="http://niku4i.github.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/"/>
+    <updated>2012-01-06T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru</id>
+    <content type="html"><![CDATA[<pre lang="shell">
+$ logrotate -dv file.conf
+</pre>
+
+
+<p>でdry-run。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Perl] colored logging by log4perl]]></title>
+    <link href="http://niku4i.github.com/blog/2011/12/03/perl-colored-logging-by-log4perl/"/>
+    <updated>2011-12-03T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/12/03/perl-colored-logging-by-log4perl</id>
+    <content type="html"><![CDATA[<p>Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。</p>
+
+<p>&nbsp;</p>
+
+<p>warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。</p>
+
+<pre>log4perl.category = DEBUG, Screen
+log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
+
+
+<p>たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Perl] perlstyle - perldoc.perl.org]]></title>
+    <link href="http://niku4i.github.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/"/>
+    <updated>2011-12-01T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org</id>
+    <content type="html"><![CDATA[<p>Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Perl Moduleのバージョンを確認する方法]]></title>
+    <link href="http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/"/>
+    <updated>2011-11-24T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa</id>
+    <content type="html"><![CDATA[<p>たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。</p>
+
+<p>例</p>
+
+<pre code="shell">
+$ perl -MTemplate -e '$Template::VERSION'
+2.14
+</pre>
+
+
+<p>モジュール内で定義された our $VERSION = 2.14; を出力すればよい。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CLIツールのためのフレームワーク]]></title>
+    <link href="http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/"/>
+    <updated>2011-11-03T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku</id>
+    <content type="html"><![CDATA[<p>ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。</p>
+
+<p>&nbsp;</p>
+
+<p>最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
+結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。</p>
+
+<p>&nbsp;</p>
+
+<p>書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。</p>
+
+<p><strong>追記</strong></p>
+
+<p>選べる。</p>
+
+<ul>
+    <li>App::Cmd</li>
+    <li>App::CLI</li>
+    <li>CLI::Dispatch</li>
+</ul>
+
+
+<p>App::Cmdが有名どころのようだ。</p>
+
+<p>&nbsp;</p>
+
+<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
+
+
+<div id="__ss_134444" style="width: 425px;">
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rubyを始めたい方向けまとめ2011年秋版 - 223 Software]]></title>
+    <link href="http://niku4i.github.com/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/"/>
+    <updated>2011-11-02T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software</id>
+    <content type="html"><![CDATA[<p><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[YAPC::Asia Tokyo]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/18/yapcasia-tokyo/"/>
+    <updated>2011-10-18T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/18/yapcasia-tokyo</id>
+    <content type="html"><![CDATA[<p>行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RubystのためのPerl (YAPC::Asia)]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/18/rubystfalsetamefalseperl-yapcasia/"/>
+    <updated>2011-10-18T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/18/rubystfalsetamefalseperl-yapcasia</id>
+    <content type="html"><![CDATA[<div id="__ss_9687791" style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Ruby プログラマのための Perl ウェブアプリケーション開発入門 (Perl web development guide for Rubyist )" href="http://www.slideshare.net/kyanny/rubyist-perl-perl-web-development-guide-for-rubyist" target="_blank">Ruby プログラマのための Perl ウェブアプリケーション開発入門 (Perl web development guide for Rubyist ) </a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/9687791" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe>
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/kyanny" target="_blank">Kensuke Kaneko</a></div>
+<div style="padding: 5px 0 12px;">Environment</div>
+<div style="padding: 5px 0 12px;">
+<ul>
+    <li>Perlbrew</li>
+</ul>
+&nbsp;
+
+Framewark
+<ul>
+    <li>Catalystは超重量級</li>
+    <li>Mojo::Lite, Dancer,etc</li>
+</ul>
+Framewark
+<ul>
+    <li>DotCloud (?) 使ってみないとよく分からない。</li>
+</ul>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[perlbrew]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/18/perlbrew/"/>
+    <updated>2011-10-18T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/18/perlbrew</id>
+    <content type="html"><![CDATA[<p>RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！</p>
+
+<p>&nbsp;</p>
+
+<p>物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。</p>
+
+<p>インストール。rootにならず一般ユーザで。</p>
+
+<pre lang="shell">curl -kL http://xrl.us/perlbrewinstall | bash</pre>
+
+
+<p>curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。</p>
+
+<p>実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。</p>
+
+<pre lang="shell">source ~/perl5/perlbrew/etc/bashrc</pre>
+
+
+<p>インストール完了。</p>
+
+<p>&nbsp;</p>
+
+<p>さっそくperl 5.14.1に切り替えてみる。</p>
+
+<pre lang="shell">perlbrew install perl-5.14.1
+perlbrew switch perl-5.14.1</pre>
+
+
+<p>perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。</p>
+
+<p>テスト</p>
+
+<pre lang="shell">$ perl -v 
+
+This is perl 5, version 14, subversion 1 (v5.14.1) built for darwin-2level 
+
+Copyright 1987-2011, Larry Wall</pre>
+
+
+<p>成功！！</p>
+
+<p>もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。</p>
+
+<p>インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！</p>
+
+<pre lang="shell">perlbrew exec myprogram.pl</pre>
+
+
+<p>more help</p>
+
+<pre lang="shell">perlbrew help</pre>
+
+
+<p>&nbsp;</p>
+
+<p>参考にさせていただいたページ</p>
+
+<ul>
+    <li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[App::FatPacker]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/18/appfatpacker/"/>
+    <updated>2011-10-18T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/18/appfatpacker</id>
+    <content type="html"><![CDATA[<p>perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。</p>
+
+<p>&nbsp;</p>
+
+<p><a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/17/rozikuru%2C-erugofalsemikusudezaindeuebuyong/"/>
+    <updated>2011-10-17T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/17/rozikuru,-erugofalsemikusudezaindeuebuyong</id>
+    <content type="html"><![CDATA[<p style="text-align: right;">ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。</p>
+
+
+<p>引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[memo for Perl Framewarks]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/15/memo-for-perl-framewarks/"/>
+    <updated>2011-10-15T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/15/memo-for-perl-framewarks</id>
+    <content type="html"><![CDATA[<p>Catlyst is very heavy weight one .</p>
+
+<p>mojolicious is light weight one .</p>
+
+<p>&nbsp;</p>
+
+<p>重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[40kg 送料無料で。]]></title>
+    <link href="http://niku4i.github.com/blog/2011/10/15/40kg-song-liao-wu-liao-de./"/>
+    <updated>2011-10-15T00:00:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2011/10/15/40kg-song-liao-wu-liao-de.</id>
+    <content type="html"><![CDATA[<p>amazonで注文したダンベルが届いた。20kg x 2。 重さを調節できるのでいろいろな筋肉で使える。まっするまっする。</p>
+
+<p>配達のお兄さん大変そうだった。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20111015-214413.jpg"><img src="http://orihubon.com/wp-content/uploads/20111015-214413.jpg" alt="20111015-214413.jpg" class="alignnone size-full" /></a></p>
 ]]></content>
   </entry>
   

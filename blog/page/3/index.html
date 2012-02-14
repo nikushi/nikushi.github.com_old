@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>niku4i blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="Catalystは癖がありそう。学習コストが高めだけど、なれると楽しくなりそう。個人でアプリケーション作るときに使ってみよう。 CGI::Applicationは初めてでも学習コスト少なく使えそう。運用ツールとか内製ツールなど気づいたメンバでメンテしやすさを考えると、こちらを使ってみるかな。 参考 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://niku4i.github.com/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="niku4i blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">niku4i blog</a></h1>
+  
+    <h2>keep memo memo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:niku4i.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/14/webapurifalsehuremuwakufalsememoperl/">Webアプリのフレームワークのメモ(Perl)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-14T00:00:00+09:00" pubdate data-updated="true">Oct 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Catalystは癖がありそう。学習コストが高めだけど、なれると楽しくなりそう。個人でアプリケーション作るときに使ってみよう。</p>
+
+<p>CGI::Applicationは初めてでも学習コスト少なく使えそう。運用ツールとか内製ツールなど気づいたメンバでメンテしやすさを考えると、こちらを使ってみるかな。</p>
+
+<p>参考:<a href="http://naoya.dyndns.org/~naoya/mt/archives/001682.html">Perl の MVC フレームワーク Catalyst に入門してみた</a></p>
+
+<p><strong>2012/01/05 追記:</strong> 後になって読み返すとPerlでやるならRubyとかPythonでやったほうが断然楽だな、ともおもう。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl/">外部コマンドを実行した時の戻り値判定(Perl)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。</p>
+
+<p><strong>system()</strong></p>
+
+<pre lang="perl">if ( system( $command ) ) {
+    warn "fail";
+} else {
+    print "success";
+}</pre>
+
+
+<p>if ! system() ではないことに注意。
+&nbsp;
+<strong><code>xxx</code> back quote</strong></p>
+
+<pre lang="perl">$buffer = `$command`;
+if ( $? != 0 ) { # if false
+    warn "fail";
+} else {
+    print "success\n";
+    print "buffer=$buffer";
+}
+$?に戻り値が入る。0以外はfalse。</pre>
+
+
+<p>&nbsp;</p>
+
+<p><strong>open()</strong></p>
+
+<pre lang="perl">open(OUTPUT, ’sort >foo’)  # pipe to sort
+    or die "Can’t start sort: $!";
+#...                        # print stuff to output
+close OUTPUT                # wait for sort to finish
+    or warn $! ? "Error closing sort pipe: $!" # 純粋にcloseが失敗した場合(外部コマンドのfailではなく)
+               : "Exit status $? from sort";   # 外部コマンドがnon-zeroでexitしｓた場合</pre>
+
+
+<p>外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
+$ perldoc perlfunc に詳しく説明されています。</p>
+
+<p>&nbsp;</p>
+
+<p>system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。</p>
+
+<pre lang="perl">open ( IN , "ping 202.232.0.1 -c 3 |" ) or die $!;
+while(){
+    chomp;
+    print $_ . "\n";
+}
+close IN;</pre>
+
+
+<p>こちらは都度出力してくれる。</p>
+
+<pre lang="perl">my $buffer = `ping 202.232.0.1 -c 3`;
+print $buffer;</pre>
+
+
+<p>こちらは、pingが終了するまで出力を得られない。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/10/jin-tore/">筋トレ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>を始めた。以前はジョギングをたまにしてたんだけど、ジョギング=有酸素運動より無酸素運動が良いらしい。</p>
+
+<p>腹筋、腕立て、スクワットをそれぞれ3セット。間に1分間の休憩を入れるのがいいらしい。反動は使わずゆっくりとが基本ということでした。かなりキツく、翌日筋肉痛。</p>
+
+<p>amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽちってしまった。たっぷり2kgも来たw これは太れということだな。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/10/hawai/">ハワイ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/aziat/6213602359/" title="Waikiki Beach by Nixie+, on Flickr"><img src="http://farm7.static.flickr.com/6161/6213602359_6d255cb8f3.jpg" width="500" height="333" alt="Waikiki Beach"></a></p>
+
+<p>行って来ましたー。6泊8日。帰国してはや2週間。すっかり日本は秋ですね。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/16/getting-works-done/">Getting Works Done</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-16T00:00:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m going to take all week off in Hawaii.</p>
+
+<p>というわけで、来週のシルバーウィークは遅めの夏休みでハワイです。浮き足立ってるかと言われると、実は全然そんなことなくて、目の前の仕事をいかに終えるかで今月はたいへん。</p>
+
+<p>来週は一眼レフで気ままに写真とったり、ダイヤモンドヘッドをトレッキングして、ワイキキビーチで日光浴するぜ。浮き足立ってきた。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/15/pc-ji-neng-xing-aiuea-jins-yan-jing-%28meganemegane%29/">ディスプレイを見るときの負荷を軽減する眼鏡 by JINS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-15T00:00:00+09:00" pubdate data-updated="true">Sep 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>&nbsp;</p>
+
+<p><a href="http://www.jins-jp.com/functional/pc.html"><img src='http://orihubon.com/wp-content/uploads/img_pc_main.jpg' alt='' /></a></p>
+
+<p>&nbsp;</p>
+
+<p><a href="http://www.jins-jp.com/functional/pc.html">PC - 機能性アイウエア | JINS - 眼鏡（メガネ・めがね）</a></p>
+
+<p>これは買って試す価値ありだな。最近、コードを書く時間が増えて余計に目がチラつくし欲しいところ。むしろこれまでこのジャンルが少なかったのが不思議なくらい。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/">WebSvnでリポジトリをtar.gzやzip化してダウンロードする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。</p>
+
+<pre lang="php">
+// For delivered tarballs, if option enabled...
+$config->setTarPath('/bin/');
+
+// For delivered GZIP'd files and tarballs, if option enabled...
+$config->setGZipPath('/usr/bin/');
+
+// download folder/file zipped ...
+$config->setZipPath('/usr/bin/');
+
+// You need tar and gzip installed on your system. Set the paths above if necessary
+//
+// Uncomment the line below to offer a tarball download option across all your
+// reposi
+$config->allowDownload();
+
+// Change the line below to set the download level across all your repositories.
+// 環境に合わせて調整
+$config->setMinDownloadLevel(1);
+</pre>
+
+
+<p>$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。</p>
+
+<pre>
+ /               0
+   project1/     1
+     - sub/      2
+   project2/     1
+</pre>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/11/web-app-with-perl-without-using-apache/">Web App With Perl Without Using Apache</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-11T00:00:00+09:00" pubdate data-updated="true">Sep 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>小さめなwebアプリだとmojoとかdancerを使うのが良いのかね。apache+CGIとかmod_perlにするだけが方法じゃないんですね。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/07/tokyo-cabinet/">Tokyo Cabinet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00+09:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>使ってみようTokyo Cabinet
+
+本稿では、巷で話題の軽量データベースライブラリTokyo Cabinetの概要と使い方について説明します。</blockquote>
+
+
+<p>引用元: <a href="http://fallabs.com/blog-ja/promenade.cgi?id=72">開発メモ: 使ってみようTokyo Cabinet</a>.</p>
+
+<p>メモ。しかしネーミングの由来はなんだろう。東京で開発したからとかなのか?はたして。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/03/du-hang-xu-ke-shu-esta/">渡航許可書 ESTA</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>あなたの渡航認証は許可され、ビザ免除プログラムに基づき米国に渡航することができます。この回答は、米国への入国を保証するものではありません。最終決定は入国地で
+
+米国税関国境警備局審査官が行ないます。</blockquote>
+
+
+<p>passしました。これ面倒くさいね。ESTA申請時の質問にYESって答えるメリットかるんかね。YESって答えたらアウトでしょ。オバマ大統領どうしてこの制度決めたんだろ。</p>
+
+<p>&nbsp;</p>
+
+<p>数年前にミャンマーに行ったことがあるので、入国に止められないかと少々不安。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/14/hello/">Hello, World</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log with Capistrano</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/gai-ming/">改名</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

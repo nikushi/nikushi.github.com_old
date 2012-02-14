@@ -5,20 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hello, World - niku4i blog</title>
+  <title>perlbrew - niku4i blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="A first post always says Hello, World1
-2
-3
-4
-5
-6
-7
-class Hello def self.world &quot;Hello, World!&quot; end
-end puts Hello.world return1
-=&gt; &quot; &hellip;">
+  <meta name="description" content="RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！ &nbsp; 物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +18,7 @@ end puts Hello.world return1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2012/02/14/hello">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2011/10/18/perlbrew">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +67,7 @@ end puts Hello.world return1
   
   <header>
     
-      <h1 class="entry-title">Hello, World</h1>
+      <h1 class="entry-title">Perlbrew</h1>
     
     
       <p class="meta">
@@ -92,37 +83,73 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>A first post always says</h2>
+<div class="entry-content"><p>RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！</p>
 
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>&nbsp;</p>
+
+<p>物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。</p>
+
+<p>インストール。rootにならず一般ユーザで。</p>
+
+<pre lang="shell">curl -kL http://xrl.us/perlbrewinstall | bash</pre>
 
 
+<p>curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。</p>
+
+<p>実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。</p>
+
+<pre lang="shell">source ~/perl5/perlbrew/etc/bashrc</pre>
 
 
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>インストール完了。</p>
+
+<p>&nbsp;</p>
+
+<p>さっそくperl 5.14.1に切り替えてみる。</p>
+
+<pre lang="shell">perlbrew install perl-5.14.1
+perlbrew switch perl-5.14.1</pre>
+
+
+<p>perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。</p>
+
+<p>テスト</p>
+
+<pre lang="shell">$ perl -v 
+
+This is perl 5, version 14, subversion 1 (v5.14.1) built for darwin-2level 
+
+Copyright 1987-2011, Larry Wall</pre>
+
+
+<p>成功！！</p>
+
+<p>もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。</p>
+
+<p>インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！</p>
+
+<pre lang="shell">perlbrew exec myprogram.pl</pre>
+
+
+<p>more help</p>
+
+<pre lang="shell">perlbrew help</pre>
+
+
+<p>&nbsp;</p>
+
+<p>参考にさせていただいたページ</p>
+
+<ul>
+    <li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
+</ul>
 
 </div>
 
@@ -146,7 +173,7 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
       
 
 
@@ -154,7 +181,7 @@ end puts Hello.world return1
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/02/14/hello/" data-via="" data-counturl="http://niku4i.github.com/blog/2012/02/14/hello/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2011/10/18/perlbrew/" data-via="" data-counturl="http://niku4i.github.com/blog/2011/10/18/perlbrew/" >Tweet</a>
   
   
   
@@ -163,8 +190,10 @@ end puts Hello.world return1
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/" title="Previous Post: PerlでHashの初期値をセットする">&laquo; PerlでHashの初期値をセットする</a>
+        <a class="basic-alignment left" href="/blog/2011/10/18/appfatpacker/" title="Previous Post: App::FatPacker">&laquo; App::FatPacker</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2011/10/18/rubystfalsetamefalseperl-yapcasia/" title="next Post: RubystのためのPerl (YAPC::Asia)">RubystのためのPerl (YAPC::Asia) &raquo;</a>
       
     </p>
   </footer>

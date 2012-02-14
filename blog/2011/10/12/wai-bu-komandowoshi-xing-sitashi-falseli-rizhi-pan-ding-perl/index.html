@@ -5,20 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hello, World - niku4i blog</title>
+  <title>外部コマンドを実行した時の戻り値判定(Perl) - niku4i blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="A first post always says Hello, World1
-2
-3
-4
-5
-6
-7
-class Hello def self.world &quot;Hello, World!&quot; end
-end puts Hello.world return1
-=&gt; &quot; &hellip;">
+  <meta name="description" content="perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。 system() if ( system( $command ) ) { warn "fail";
+} else { print "success";
+} if ! system() ではないことに注意 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +20,7 @@ end puts Hello.world return1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2012/02/14/hello">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +69,7 @@ end puts Hello.world return1
   
   <header>
     
-      <h1 class="entry-title">Hello, World</h1>
+      <h1 class="entry-title">外部コマンドを実行した時の戻り値判定(Perl)</h1>
     
     
       <p class="meta">
@@ -92,38 +85,72 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>A first post always says</h2>
+<div class="entry-content"><p>perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。</p>
 
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><strong>system()</strong></p>
+
+<pre lang="perl">if ( system( $command ) ) {
+    warn "fail";
+} else {
+    print "success";
+}</pre>
 
 
+<p>if ! system() ではないことに注意。
+&nbsp;
+<strong><code>xxx</code> back quote</strong></p>
+
+<pre lang="perl">$buffer = `$command`;
+if ( $? != 0 ) { # if false
+    warn "fail";
+} else {
+    print "success\n";
+    print "buffer=$buffer";
+}
+$?に戻り値が入る。0以外はfalse。</pre>
 
 
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>&nbsp;</p>
 
+<p><strong>open()</strong></p>
+
+<pre lang="perl">open(OUTPUT, ’sort >foo’)  # pipe to sort
+    or die "Can’t start sort: $!";
+#...                        # print stuff to output
+close OUTPUT                # wait for sort to finish
+    or warn $! ? "Error closing sort pipe: $!" # 純粋にcloseが失敗した場合(外部コマンドのfailではなく)
+               : "Exit status $? from sort";   # 外部コマンドがnon-zeroでexitしｓた場合</pre>
+
+
+<p>外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
+$ perldoc perlfunc に詳しく説明されています。</p>
+
+<p>&nbsp;</p>
+
+<p>system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。</p>
+
+<pre lang="perl">open ( IN , "ping 202.232.0.1 -c 3 |" ) or die $!;
+while(){
+    chomp;
+    print $_ . "\n";
+}
+close IN;</pre>
+
+
+<p>こちらは都度出力してくれる。</p>
+
+<pre lang="perl">my $buffer = `ping 202.232.0.1 -c 3`;
+print $buffer;</pre>
+
+
+<p>こちらは、pingが終了するまで出力を得られない。</p>
 </div>
 
 
@@ -146,7 +173,7 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
       
 
 
@@ -154,7 +181,7 @@ end puts Hello.world return1
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/02/14/hello/" data-via="" data-counturl="http://niku4i.github.com/blog/2012/02/14/hello/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl/" data-via="" data-counturl="http://niku4i.github.com/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl/" >Tweet</a>
   
   
   
@@ -163,8 +190,10 @@ end puts Hello.world return1
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/" title="Previous Post: PerlでHashの初期値をセットする">&laquo; PerlでHashの初期値をセットする</a>
+        <a class="basic-alignment left" href="/blog/2011/10/10/jin-tore/" title="Previous Post: 筋トレ">&laquo; 筋トレ</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2011/10/14/webapurifalsehuremuwakufalsememoperl/" title="next Post: Webアプリのフレームワークのメモ(Perl)">Webアプリのフレームワークのメモ(Perl) &raquo;</a>
       
     </p>
   </footer>

@@ -5,20 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>niku4i blog</title>
+  <title>Streaming Log with Capistrano - niku4i blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="A first post always says Hello, World1
-2
-3
-4
-5
-6
-7
-class Hello def self.world &quot;Hello, World!&quot; end
-end puts Hello.world return1
-=&gt; &quot; &hellip;">
+  <meta name="description" content="複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。 Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +18,7 @@ end puts Hello.world return1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -71,123 +62,12 @@ end puts Hello.world return1
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/02/14/hello/">Hello, World</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>A first post always says</h2>
-
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-13T00:00:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="perl">sub conf{
-    my %arg = (
-        lang =>; 'perl',
-        rank =>; 1,
-        @_ # ここが決め手!           
-    );
-    # ...
-}</pre>
-
-
-<p>参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a></p>
-
-<p>&nbsp;</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a></h1>
+      <h1 class="entry-title">Streaming Log With Capistrano</h1>
     
     
       <p class="meta">
@@ -210,7 +90,7 @@ end puts Hello.world return1
   </header>
 
 
-  <div class="entry-content"><p><a href="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a></p>
+<div class="entry-content"><p><a href="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a></p>
 
 <p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
 
@@ -394,79 +274,16 @@ end</pre>
 
 <p>今回おまけでログに色をつけましたが、色がつくだけでログ調査が数倍楽しくなりました。</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
 
-<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。</p>
-
-<p>というわけでさっそくマイクロWebアプリを作ってみた。</p>
-
-<ul>
-    <li><a title="Random Password Generator" href="http://makepasswdx.herokuapp.com/">Random Password Generator</a></li>
-    <li><a title="ソース" href="https://github.com/niku4i/makepasswdx">ソース</a></li>
-</ul>
-
-
-<p>シンプルにランダム文字列返すだけ。</p>
-
-<p>実はこれ昔作ったPerl CGIの焼き直し。昔、ランダム文字列pass付きzipで添付ファイルをメールするけど、文字列を都度考えるのは面倒ですとオペさん(事務のおねえさん)が言うのでその時はPerl CGI版を社内向に作った。Sinatraで焼き直してみた。</p>
-
-<div>Sinatraは<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にコードを書く。</div>
-
-
-<p>herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考に。</p>
-
-<p>最初はSinatraを勉強するつもりだったけど後半はherokuとgitの勉強もできた。herokuへのdeploy方法とか細かいところはリ<a href="https://github.com/niku4i/makepasswdx/blob/master/README">ポジトリのREADME</a>に書いた。</p>
-
-<p>herokuはとっても便利だ。数回コマンドだけでwebサイト作れる。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/29/gai-ming/">改名</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -478,245 +295,34 @@ end</pre>
   
 
 
-<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>twitterの名前を@niku4iに変えた。以前のは<em>が含まれれて何かと不便で、githubだと</em>が使えないので-にしないといけなかったりだったので。</p>
-
-<p>idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2012-02-09T00:00:00+09:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
       
-  <header>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">Curlでサーバ証明書の検証で失敗したとき</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
+      <div class="sharing">
   
-
-
-<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。</p>
-
-<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
-
-
-<p>rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。</p>
-
-<p>じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。</p>
-
-<p>根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。</p>
-
-<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
-
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano/" data-via="" data-counturl="http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[Vim]ビジュアルモード選択範囲だけ置換</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-    <li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
-    <li>:にてコマンド指定するモードに入る</li>
-    <li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
-</ol>
-
-
-<p>vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/<sup>/#</sup> /g こんな感じで。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment left" href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/" title="Previous Post: Sinatraで作ったWebアプリをHerokuにデプロイする">&laquo; Sinatraで作ったWebアプリをHerokuにデプロイする</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/">Logrotateの動作をテストする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="shell">
-$ logrotate -dv file.conf
-</pre>
-
-
-<p>でdry-run。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/">[Perl] Colored Logging by Log4perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。</p>
-
-<p>&nbsp;</p>
-
-<p>warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。</p>
-
-<pre>log4perl.category = DEBUG, Screen
-log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
-
-
-<p>たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment right" href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/" title="next Post: PerlでHashの初期値をセットする">PerlでHashの初期値をセットする &raquo;</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/">[Perl] Perlstyle - perldoc.perl.org</a></h1>
-    
-    
-      <p class="meta">
-        
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-01T00:00:00+09:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.</p>
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -753,6 +359,7 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
   
 </aside>
+
 
     </div>
   </div>

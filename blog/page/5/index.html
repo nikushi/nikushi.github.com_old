@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>niku4i blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="条件演算子を覚えた。 #my $a = "abc\n";
+my $a = "";
+print test( $a ); sub test { my $t = shift; return $t ? $t : "no data\n";
+} 条件式 ? 条件式が真の時 : 偽の時 上の例だと、$ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://niku4i.github.com/blog/page/5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="niku4i blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">niku4i blog</a></h1>
+  
+    <h2>keep memo memo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:niku4i.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/19/perltiao-jian-yan-suan-zi/">Perl::条件演算子</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-19T00:00:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>条件演算子を覚えた。</p>
+
+<pre lang="perl">#my $a = "abc\n";
+my $a = "";
+print test( $a );
+
+sub test {
+    my $t = shift;
+    return $t ? $t : "no data\n";
+}</pre>
+
+
+<p>条件式 ? 条件式が真の時 : 偽の時</p>
+
+<p>上の例だと、$aに値があれば$aを、undefなら&#8221;no data¥n&#8221;を返す。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/18/videtabuwosupesuni%5B%3F%5D-gua-bian-huan-suruniha/">Viでタブをスペースに一括変換するには</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T00:00:00+09:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>vi(vim)で編集中に、
+
+&nbsp;
+
+:1,$!expand -4
+
+&nbsp;
+
+とやればよい。</blockquote>
+
+
+<p>引用元: <a href="http://d.hatena.ne.jp/nyanplus/20110610/1307677456">viでタブをスペースに一括変換するには - 俺用メモ</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/18/coding-week/">Coding Week</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T00:00:00+09:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>&#12381;&#12429;&#12381;&#12429;&#32224;&#20999;&#12364;&#36843;&#12387;&#12390;&#12365;&#12383;&#12479;&#12473;&#12463;&#35299;&#28040;&#12395;&#12416;&#12369;&#12390;&#12289;Perl&#12398;&#12467;&#12540;&#12489;&#12434;&#12379;&#12387;&#12379;&#26360;&#12356;&#12390;&#12427;&#20170;&#36913;&#12290;SE&#12391;&#12399;&#12354;&#12427;&#12418;&#12398;&#12398;&#26222;&#27573;&#12399;&#12452;&#12531;&#12501;&#12521;&#30340;&#12394;&#12371;&#12392;&#12420;&#23566;&#20837;&#25903;&#25588;&#12420;&#12387;&#12390;&#12427;&#12398;&#12391;&#12289;&#26172;&#38291;&#12399;&#12467;&#12540;&#12489;&#26360;&#12367;&#26178;&#38291;&#12364;&#28961;&#12356;&#12398;&#12391;&#12371;&#12435;&#12394;&#26178;&#38291;&#12394;&#12431;&#12369;&#12391;&#12377;&#12290;</p>
+
+
+<p>&#12391;&#12418;&#12354;&#12428;&#12384;&#12394;&#12290;&#12467;&#12540;&#12487;&#12451;&#12531;&#12464;&#12387;&#12390;&#27005;&#12375;&#12356;&#12397;&#12290;&#25972;&#29702;&#25972;&#38931;&#12375;&#12390;&#12427;&#24863;&#12376;&#12290;</p>
+
+
+<p>&#12354;&#12428;&#12371;&#12428;&#12503;&#12525;&#12464;&#12521;&#12512;&#12398;&#20316;&#12426;&#32244;&#12387;&#12390;&#12415;&#12427;&#12392;&#26085;&#26332;&#12503;&#12525;&#12464;&#12521;&#12512;&#12391;&#12399;&#21454;&#12414;&#12425;&#12356;&#22823;&#12365;&#12373;&#12394;&#12398;&#12391;&#12289;&#12385;&#12423;&#12356;&#12392;&#30495;&#38754;&#30446;&#12395;&#21462;&#12426;&#32068;&#12415;&#12414;&#12377;&#12424;&#12290;&#20170;&#26356;&#12394;&#12364;&#12425;&#12522;&#12515;&#12510;&#26412;&#12413;&#12385;&#12426;&#12414;&#12375;&#12383;&#12290;Web&#12398;&#24773;&#22577;&#12384;&#12369;&#12384;&#12392;&#24515;&#12418;&#12392;&#12394;&#12356;&#12398;&#12391;&#12290;&#36913;&#26411;&#23626;&#12367;&#12398;&#12391;&#26412;&#29255;&#25163;&#12395;&#12473;&#12497;&#12540;&#12488;&#12363;&#12369;&#12427;&#12380;&#12290;</p>
+
+
+<p style="text-align: left;"><a href="http://www.amazon.co.jp/%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AEPerl-%E7%AC%AC5%E7%89%88-Randal-L-Schwartz/dp/4873114276%3FSubscriptionId%3D0PZ7TM66EXQCXFVTMTR2%26tag%3Danimlife-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4873114276"><img src="http://ecx.images-amazon.com/images/I/51Hgdb6WcQL._SL160_.jpg" /></a></p>
+
+
+<p style="text-align: left;"><a href="http://www.amazon.co.jp/%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AEPerl-%E7%AC%AC5%E7%89%88-Randal-L-Schwartz/dp/4873114276%3FSubscriptionId%3D0PZ7TM66EXQCXFVTMTR2%26tag%3Danimlife-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4873114276">&#8220;&#21021;&#12417;&#12390;&#12398;Perl &#31532;5&#29256;&#8221; (Randal L. Schwartz, Tom Phoenix, brian d foy)</a></p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/18/818-lunch/">8/18 Lunch</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T00:00:00+09:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>アジアンランチ ¥600</p>
+
+<br /><br /><a href="http://orihubon.com/wp-content/uploads/20110818-123856.jpg"><img src="http://orihubon.com/wp-content/uploads/20110818-123856.jpg" alt="20110818-123856.jpg" class="alignnone size-full" /></a>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/16/xing-seratusiyu/">幸せラッシュ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-16T00:00:00+09:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>残業終わり会社を出たら鳴り出す電話。大学時代の親友P氏から。普段電話なぞ掛けぬP氏からのコールにこれは来たなとピンとくる。</p>
+
+<p>案の定、一間をおいての結婚式に招待したい報告。なんとなくだが、そろそろ報告来そうな予感してたしな。お幸せに。</p>
+
+<p>最近、妊娠とか結婚したとか周りに多くなって来たな。つまり、そういう時期に来ちまったな。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/16/what-is-cissp/">What Is CISSP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-16T00:00:00+09:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>CISSP認定資格とは、(ISC)2SM（International Information Systems Security Certification Consortium）が
+
+認定を行っている国際的に認められた情報セキュリティ・プロフェッショナル認証資格です。
+
+Novell、Deloitte Touche Tohmatsu、大手ヘルスケアサービス企業その他主要企業において、
+
+CISSP認定資格の取得が情報セキュリティ関連業務従事者の必須事項とされており、
+
+世界各国で76,000名以上（2011年8月現在）がCISSP認定資格を保持しています。</blockquote>
+
+
+<p>引用元: <a href="https://www.isc2.org/japan/what_index.html">(ISC)2 Japan</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T00:00:00+09:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>この操作に成功すると、大量のスパムによって株価の人為的な高騰が促され、最終的には詐欺師が持ち株の売却を狙っている値に達します。その時点でスパム攻撃も終息するのが普通で、そうなると今度は株に対する関心が薄れ、評価額は元の安値まで下落します（これも市場で悪用されることがあります）。ポンプアンドダンプのスパム攻撃が成功すると、詐欺師はたった数日間でかなりの利益をあげることができます。</blockquote>
+
+
+<p>引用元: <a href="http://www.symantec.com/connect/ja/blogs-217">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/14/shang-ye/">上野</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>お盆の日曜日、上野にて人と会う。暑さを避けて喫茶店へ。</p>
+
+<p>昭和の雰囲気あるいい喫茶店だった。コーヒーフロート¥750。高いな、東京価格。でもコーヒーがしっかりしてて美味しかったから良し。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20110814-162612.jpg"><img src="http://orihubon.com/wp-content/uploads/20110814-162612.jpg" alt="20110814-162612.jpg" class="alignnone size-full" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/14/bekontonian-shou/">ベーコンと年収</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>稼ぎいうんは、どれだけ他人の欲を満たせとるか、それが数字にそのまま現れとるんやで。</p>
+
+<p>「夢をかなえるゾウ」より</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/14/814-dinner/">8/14 Dinner</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>盛岡冷麺をお土産にもらったので作ってみた。うまうま。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20110814-185711.jpg"><img src="http://orihubon.com/wp-content/uploads/20110814-185711.jpg" alt="20110814-185711.jpg" class="alignnone size-full" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/6/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/4/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/14/hello/">Hello, World</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log with Capistrano</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/gai-ming/">改名</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

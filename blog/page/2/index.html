@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>niku4i blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。 例 $ perl -MTemplate -e '$Template::VERSION'
+2.14 モジュール内で定義された our $ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://niku4i.github.com/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="niku4i blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">niku4i blog</a></h1>
+  
+    <h2>keep memo memo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:niku4i.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/">Perl Moduleのバージョンを確認する方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。</p>
+
+<p>例</p>
+
+<pre code="shell">
+$ perl -MTemplate -e '$Template::VERSION'
+2.14
+</pre>
+
+
+<p>モジュール内で定義された our $VERSION = 2.14; を出力すればよい。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/">CLIツールのためのフレームワーク</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。</p>
+
+<p>&nbsp;</p>
+
+<p>最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
+結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。</p>
+
+<p>&nbsp;</p>
+
+<p>書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。</p>
+
+<p><strong>追記</strong></p>
+
+<p>選べる。</p>
+
+<ul>
+    <li>App::Cmd</li>
+    <li>App::CLI</li>
+    <li>CLI::Dispatch</li>
+</ul>
+
+
+<p>App::Cmdが有名どころのようだ。</p>
+
+<p>&nbsp;</p>
+
+<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
+
+
+<div id="__ss_134444" style="width: 425px;">
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-02T00:00:00+09:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/yapcasia-tokyo/">YAPC::Asia Tokyo</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/rubystfalsetamefalseperl-yapcasia/">RubystのためのPerl (YAPC::Asia)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div id="__ss_9687791" style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Ruby プログラマのための Perl ウェブアプリケーション開発入門 (Perl web development guide for Rubyist )" href="http://www.slideshare.net/kyanny/rubyist-perl-perl-web-development-guide-for-rubyist" target="_blank">Ruby プログラマのための Perl ウェブアプリケーション開発入門 (Perl web development guide for Rubyist ) </a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/9687791" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe>
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/kyanny" target="_blank">Kensuke Kaneko</a></div>
+<div style="padding: 5px 0 12px;">Environment</div>
+<div style="padding: 5px 0 12px;">
+<ul>
+    <li>Perlbrew</li>
+</ul>
+&nbsp;
+
+Framewark
+<ul>
+    <li>Catalystは超重量級</li>
+    <li>Mojo::Lite, Dancer,etc</li>
+</ul>
+Framewark
+<ul>
+    <li>DotCloud (?) 使ってみないとよく分からない。</li>
+</ul>
+</div>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/perlbrew/">Perlbrew</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！</p>
+
+<p>&nbsp;</p>
+
+<p>物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。</p>
+
+<p>インストール。rootにならず一般ユーザで。</p>
+
+<pre lang="shell">curl -kL http://xrl.us/perlbrewinstall | bash</pre>
+
+
+<p>curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。</p>
+
+<p>実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。</p>
+
+<pre lang="shell">source ~/perl5/perlbrew/etc/bashrc</pre>
+
+
+<p>インストール完了。</p>
+
+<p>&nbsp;</p>
+
+<p>さっそくperl 5.14.1に切り替えてみる。</p>
+
+<pre lang="shell">perlbrew install perl-5.14.1
+perlbrew switch perl-5.14.1</pre>
+
+
+<p>perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。</p>
+
+<p>テスト</p>
+
+<pre lang="shell">$ perl -v 
+
+This is perl 5, version 14, subversion 1 (v5.14.1) built for darwin-2level 
+
+Copyright 1987-2011, Larry Wall</pre>
+
+
+<p>成功！！</p>
+
+<p>もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。</p>
+
+<p>インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！</p>
+
+<pre lang="shell">perlbrew exec myprogram.pl</pre>
+
+
+<p>more help</p>
+
+<pre lang="shell">perlbrew help</pre>
+
+
+<p>&nbsp;</p>
+
+<p>参考にさせていただいたページ</p>
+
+<ul>
+    <li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/appfatpacker/">App::FatPacker</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。</p>
+
+<p>&nbsp;</p>
+
+<p><a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/17/rozikuru%2C-erugofalsemikusudezaindeuebuyong/">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-17T00:00:00+09:00" pubdate data-updated="true">Oct 17<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p style="text-align: right;">ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。</p>
+
+
+<p>引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/15/memo-for-perl-framewarks/">Memo for Perl Framewarks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-15T00:00:00+09:00" pubdate data-updated="true">Oct 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Catlyst is very heavy weight one .</p>
+
+<p>mojolicious is light weight one .</p>
+
+<p>&nbsp;</p>
+
+<p>重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/15/40kg-song-liao-wu-liao-de./">40kg 送料無料で。</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-15T00:00:00+09:00" pubdate data-updated="true">Oct 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>amazonで注文したダンベルが届いた。20kg x 2。 重さを調節できるのでいろいろな筋肉で使える。まっするまっする。</p>
+
+<p>配達のお兄さん大変そうだった。<br /><br /><a href="http://orihubon.com/wp-content/uploads/20111015-214413.jpg"><img src="http://orihubon.com/wp-content/uploads/20111015-214413.jpg" alt="20111015-214413.jpg" class="alignnone size-full" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/14/hello/">Hello, World</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log with Capistrano</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/gai-ming/">改名</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

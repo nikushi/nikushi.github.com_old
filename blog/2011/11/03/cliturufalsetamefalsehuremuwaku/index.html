@@ -5,20 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hello, World - niku4i blog</title>
+  <title>CLIツールのためのフレームワーク - niku4i blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="A first post always says Hello, World1
-2
-3
-4
-5
-6
-7
-class Hello def self.world &quot;Hello, World!&quot; end
-end puts Hello.world return1
-=&gt; &quot; &hellip;">
+  <meta name="description" content="ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。 &nbsp; 最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +18,7 @@ end puts Hello.world return1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2012/02/14/hello">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,7 +67,7 @@ end puts Hello.world return1
   
   <header>
     
-      <h1 class="entry-title">Hello, World</h1>
+      <h1 class="entry-title">CLIツールのためのフレームワーク</h1>
     
     
       <p class="meta">
@@ -92,37 +83,45 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>A first post always says</h2>
+<div class="entry-content"><p>ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。</p>
 
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>&nbsp;</p>
+
+<p>最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
+結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。</p>
+
+<p>&nbsp;</p>
+
+<p>書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。</p>
+
+<p><strong>追記</strong></p>
+
+<p>選べる。</p>
+
+<ul>
+    <li>App::Cmd</li>
+    <li>App::CLI</li>
+    <li>CLI::Dispatch</li>
+</ul>
 
 
+<p>App::Cmdが有名どころのようだ。</p>
+
+<p>&nbsp;</p>
+
+<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
 
 
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div id="__ss_134444" style="width: 425px;">
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
+</div>
 
 </div>
 
@@ -146,7 +145,7 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
       
 
 
@@ -154,7 +153,7 @@ end puts Hello.world return1
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/02/14/hello/" data-via="" data-counturl="http://niku4i.github.com/blog/2012/02/14/hello/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/" data-via="" data-counturl="http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/" >Tweet</a>
   
   
   
@@ -163,8 +162,10 @@ end puts Hello.world return1
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/" title="Previous Post: PerlでHashの初期値をセットする">&laquo; PerlでHashの初期値をセットする</a>
+        <a class="basic-alignment left" href="/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/" title="Previous Post: Rubyを始めたい方向けまとめ2011年秋版 - 223 Software">&laquo; Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/" title="next Post: Perl Moduleのバージョンを確認する方法">Perl Moduleのバージョンを確認する方法 &raquo;</a>
       
     </p>
   </footer>
