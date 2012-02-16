@@ -271,11 +271,15 @@
         <lastmod>2012-02-14T11:30:09+09:00</lastmod>
     </url>
     <url>
+        <loc>http://niku4i.github.com/blog/2012/02/14/migration-from-wordpress-to-octopress/</loc>
+        <lastmod>2012-02-17T01:15:05+09:00</lastmod>
+    </url>
+    <url>
         <loc>http://niku4i.github.com/blog/archives/</loc>
-        <lastmod>2012-02-14T15:14:38+09:00</lastmod>
+        <lastmod>2012-02-17T01:15:05+09:00</lastmod>
     </url>
     <url>
         <loc>http://niku4i.github.com/</loc>
-        <lastmod>2012-02-14T15:14:38+09:00</lastmod>
+        <lastmod>2012-02-17T01:15:05+09:00</lastmod>
     </url>
 </urlset>

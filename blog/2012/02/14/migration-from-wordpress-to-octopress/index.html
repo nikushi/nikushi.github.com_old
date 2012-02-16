@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>niku4i blog</title>
+  <title>Wordpressからoctopressに移行した - niku4i blog</title>
   <meta name="author" content="niku4i">
 
   
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/02/14/migration-from-wordpress-to-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -63,15 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a></h1>
+      <h1 class="entry-title">Wordpressからoctopressに移行した</h1>
     
     
       <p class="meta">
@@ -94,7 +91,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Wordpressからoctopressに移行した。</p>
+<div class="entry-content"><p>Wordpressからoctopressに移行した。</p>
 
 <p>移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。</p>
 
@@ -323,82 +320,16 @@ end</code></pre></noscript></div>
 
 <p>本番のブログにアップされたか確認して問題なければ完了。</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/14/hello/">Hello, World</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>A first post always says</h2>
-
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -410,476 +341,38 @@ end</code></pre></noscript></div>
   
 
 
-<time datetime="2012-02-13T00:00:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="perl">sub conf{
-    my %arg = (
-        lang =>; 'perl',
-        rank =>; 1,
-        @_ # ここが決め手!           
-    );
-    # ...
-}</pre>
-参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a>
-
-&nbsp;
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2012-02-14T15:53:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
 
 
-<time datetime="2012-02-09T00:00:00+09:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><a href="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a>
-
-複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。
-
-Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。
-
-まずは、Capistranoのstreamメソッドを使って試します。
-<h1><strong>streamメソッドを使った例</strong></h1>
-カレントディレクトリにCapfileというファイル名で以下を保存してください。
-<pre lang="ruby">server server1, :web
-server server2, :web
-
-desc "tail -f accees_log"
-task :tail, :roles =&gt; :web do
-  stream "tail -f /var/log/apache/access_log ; true"
-end</pre>
-<h4>実行</h4>
-<pre lang="shell">$ cap tail</pre>
-capコマンドはCapistranoがインストールされていればあるとおもいます。capコマンドはカレントディレクトリのCapfileという名前を探して読み込みます。引数に指定したtailタスクを実行します。
-
-出力をみると分かりますが、単純にログがストリームされるだけなので、１つのログがどのサーバのログか分かりません。微妙です。
-
-次に別のアプローチとしてrunメソッドを使った方法を試してみました。
-<h1><strong>runメソッドにブロックを渡す方法</strong></h1>
-runは通常
-<pre lang="ruby">desc "hoge"
-task :uptime do
-  run "uptime"
-end</pre>
-みたいにリモートでコマンドを実行する際に使いますが、ブロックを渡して出力を編集したりできます。Capfileを以下のように修正します。参考 : <a href=" http://errtheblog.com/posts/19-streaming-capistrano">Err the Blog</a>
-<pre lang="ruby">desc "tail -f accees_log"
-task :tail, :roles =&gt; :web do
-  run "tail -f /var/log/apache/access_log ; true" do |ch, stream, out|
-    puts "#{ch[:host]}: #{out}"
-    break if stream == :err
-  end
-end</pre>
-ブロック変数に指定したoutにリモートで実行したコマンドの標準出力がストアされます。chはセッションの情報とかが保存されるようです。
-
-こによりログの左側にサーバ名が付加されます。
-
-しかしすぐに問題が見つかりました。tail -fの標準出力は複数行をまとめたバルクデータとしてoutにストアされるらしく、上のコードだと1行ごとには処理できません。ですので1行ごとにホスト名を先頭に付加できませんでした。
-<h1><strong>streamメソッドを拡張</strong></h1>
-そこで、ここからはいっきに進みますが、以下のとおり標準のstreamメソッドを拡張しました。さらにcolorizeモジュールを使ってホスト名毎に色づけをして、どのサーバのログかを見やすくしてみました。
-
-inspect-stream.rbという名前で以下の内容でファイルを作成します。
-<pre lang="ruby">require 'colorize'
-
-unless Capistrano::Configuration.respond_to?(:instance)
-      abort "requires Capistrano 2"
-end
-
-module Capistrano
-  class Configuration
-    module Actions
-      module Inspect
-        # 標準のstreamメソッドを拡張する
-        # 各行の先頭にホスト名を出力しつつ、ホスト名毎に色づけする
-        def stream(command, options={})
-
-          trap("INT") { puts 'Interupted'; exit 0; }
-
-          # out の 最終行のchunk dataを一時保存するHash
-          # keyはホスト名
-          last = Hash.new("")
-          invoke_command(command, options) do |ch, stream, out|
-            a = out.split(/\n/m)
-
-            if out[0].chr  == "\n"
-              a.unshift(last[ch[:host]])
-              last[ch[:host]] = ""
-            else
-              tmp = a.shift
-              a.unshift(last[ch[:host]] + tmp)
-              last[ch[:host]] = ""
-            end
-
-            if out[-1].chr == "\n"
-              last[ch[:host]] = ""
-            else
-              last[ch[:host]] = a.pop
-            end
-
-            a.each do |line|
-              puts colorize_by_host(ch[:host]) + ": " + line if stream == :out
-            end
-            warn "[err :: #{ch[:server]}] #{out}" if stream == :err
-          end
-        end
-
-        private
-
-        def colorize_by_host(host)
-          color = [ :light_blue, :yellow, :magenta, :cyan, :light_red, :light_green, :light_yellow, :light_blue, :light_magenta, :light_cyan, :light_white ]
-          host.colorize( color[str2acsii(host) % color.size] )
-        end
-
-        def str2acsii(str="")
-          acsii = ""
-          str.each_byte do |c|
-            acsii += c.to_s
-          end
-          acsii.to_i
-        end
-      end
-    end
-  end
-end</pre>
-さらにCapfileを以下の内容に書き換えます。
-<pre lang="ruby">require './inspect-stream'
-
-server server1, :web
-server server2, :web
-
-desc "tail -f accees_log"
-task :tail, :roles =&gt; :web do
-  stream "tail -f /var/log/apache/access_log ; true"
-end</pre>
-<h4>colorizeモジュールはあらかじめインストールしてください</h4>
-<pre lang="shell">$ gem install colorize --remote</pre>
-<h4>実行</h4>
-<pre lang="shell">$ cap tail</pre>
-<h4>結果</h4>
-<span style="color: #ff0000;">server1</span>: 192.168.1.1 - - [05/Feb/2012:01:46:04 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
-<span style="color: #339966;">server2</span>: 192.168.1.1 - - [05/Feb/2012:01:46:05 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
-<span style="color: #ff0000;">server1</span>: 192.168.1.6 - - [05/Feb/2012:01:46:07 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
-<span style="color: #ff0000;">server1</span>: 192.168.2.1 - - [05/Feb/2012:01:46:04 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
-<span style="color: #ff0000;">server1</span>: 192.168.2.1 - - [05/Feb/2012:01:47:05 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
-<span style="color: #339966;">server2</span>: 192.168.2.5 - - [05/Feb/2012:01:48:07 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
-
-ログの最初が色づけされてだけですが結構眺めてると楽しめます。
-
-streamメソッド自体を拡張したのでCapfile自体は元々最初にやろうとしてた内容とほぼ同じになりすっきりしました。ホストごとに色が異なるので、どのホストがログが多めかが何となく視覚的に分かるようになりました。ログが多すぎると目がちかちかしてあまり効果は無いかもしれません(爆)
-
-Capistranoモジュールのソースにinspect.rbというのが含まれておりstreamメソッドを定義しなおして上書きしてます。Capistrano 2系で動作確認しました。
-
-Rubyはまだ勉強中のためやり方が間違ってるとか別のやり方があるとかあればぜひ教えてください。
-
-&nbsp;
-
-ここまで書いてなんですが、実際の現場ではsyslogやfluentdなどでログをログサーバに転送してログサーバで見るのが普通でしょう。この使い方は、ちょっとしたログを確認したいとき用途とか、syslogでとばせない環境だったりとか向きかもしれません。
-
-&nbsp;
-
-今回おまけでログに色をつけましたが、色がつくだけでログ調査が数倍楽しくなりました。
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/02/14/migration-from-wordpress-to-octopress/" data-via="" data-counturl="http://niku4i.github.com/blog/2012/02/14/migration-from-wordpress-to-octopress/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。
-
-というわけでさっそくマイクロWebアプリを作ってみた。
-<ul>
-	<li><a title="Random Password Generator" href="http://makepasswdx.herokuapp.com/">Random Password Generator</a></li>
-	<li><a title="ソース" href="https://github.com/niku4i/makepasswdx">ソース</a></li>
-</ul>
-シンプルにランダム文字列返すだけ。
-
-実はこれ昔作ったPerl CGIの焼き直し。昔、ランダム文字列pass付きzipで添付ファイルをメールするけど、文字列を都度考えるのは面倒ですとオペさん(事務のおねえさん)が言うのでその時はPerl CGI版を社内向に作った。Sinatraで焼き直してみた。
-<div>Sinatraは<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にコードを書く。</div>
-herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考に。
-
-最初はSinatraを勉強するつもりだったけど後半はherokuとgitの勉強もできた。herokuへのdeploy方法とか細かいところはリ<a href="https://github.com/niku4i/makepasswdx/blob/master/README">ポジトリのREADME</a>に書いた。
-
-herokuはとっても便利だ。数回コマンドだけでwebサイト作れる。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment left" href="/blog/2012/02/14/hello/" title="Previous Post: Hello, World">&laquo; Hello, World</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/29/gai-ming/">改名</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">twitterの名前を@niku4iに変えた。以前のは_が含まれれて何かと不便で、githubだと_が使えないので-にしないといけなかったりだったので。
-
-idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">Curlでサーバ証明書の検証で失敗したとき</a></h1>
-    
-    
-      <p class="meta">
-        
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
-
-<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
-rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
-
-じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
-
-根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
-<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[Vim]ビジュアルモード選択範囲だけ置換</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
-	<li>:にてコマンド指定するモードに入る</li>
-	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
-</ol>
-vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/">Logrotateの動作をテストする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="shell">
-$ logrotate -dv file.conf
-</pre>
-でdry-run。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/">[Perl] Colored Logging by Log4perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
-
-&nbsp;
-
-warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
-<pre>log4perl.category = DEBUG, Screen
-log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
-
-たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
-</div>
-  
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -916,6 +409,7 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
   
 </aside>
+
 
     </div>
   </div>
