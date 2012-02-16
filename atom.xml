@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[niku4i blog]]></title>
+  <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-02-17T01:15:35+09:00</updated>
+  <updated>2012-02-17T01:29:48+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
