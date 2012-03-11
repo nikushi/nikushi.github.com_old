@@ -475,151 +475,312 @@ end</code></pre></noscript></div>
   </header>
 
 
-  <div class="entry-content"><a href="/images/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="/images/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a>
+  <div class="entry-content"><p><img src="/images/tail-log-with-capistrano-image.jpg" alt="tail-log-with-capistrano-image" /></p>
 
-複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。
+<p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
 
-Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。
+<p>Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。</p>
 
-まずは、Capistranoのstreamメソッドを使って試します。
-<h1><strong>streamメソッドを使った例</strong></h1>
-カレントディレクトリにCapfileというファイル名で以下を保存してください。
-<pre lang="ruby">server server1, :web
-server server2, :web
+<h2>streamメソッドを使った例</h2>
 
-desc "tail -f accees_log"
-task :tail, :roles =&gt; :web do
-  stream "tail -f /var/log/apache/access_log ; true"
-end</pre>
-<h4>実行</h4>
-<pre lang="shell">$ cap tail</pre>
-capコマンドはCapistranoがインストールされていればあるとおもいます。capコマンドはカレントディレクトリのCapfileという名前を探して読み込みます。引数に指定したtailタスクを実行します。
+<p>まずは、Capistranoのstreamメソッドを使って試します。
+カレントディレクトリにCapfileというファイル名で以下を保存してください。</p>
 
-出力をみると分かりますが、単純にログがストリームされるだけなので、１つのログがどのサーバのログか分かりません。微妙です。
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">server</span> <span class="n">server1</span><span class="p">,</span> <span class="ss">:web</span>
+</span><span class='line'><span class="n">server</span> <span class="n">server2</span><span class="p">,</span> <span class="ss">:web</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;tail -f accees_log&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="ss">:web</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">stream</span> <span class="s2">&quot;tail -f /var/log/apache/access_log ; true&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-次に別のアプローチとしてrunメソッドを使った方法を試してみました。
-<h1><strong>runメソッドにブロックを渡す方法</strong></h1>
-runは通常
-<pre lang="ruby">desc "hoge"
-task :uptime do
-  run "uptime"
-end</pre>
-みたいにリモートでコマンドを実行する際に使いますが、ブロックを渡して出力を編集したりできます。Capfileを以下のように修正します。参考 : <a href=" http://errtheblog.com/posts/19-streaming-capistrano">Err the Blog</a>
-<pre lang="ruby">desc "tail -f accees_log"
-task :tail, :roles =&gt; :web do
-  run "tail -f /var/log/apache/access_log ; true" do |ch, stream, out|
-    puts "#{ch[:host]}: #{out}"
-    break if stream == :err
-  end
-end</pre>
-ブロック変数に指定したoutにリモートで実行したコマンドの標準出力がストアされます。chはセッションの情報とかが保存されるようです。
 
-こによりログの左側にサーバ名が付加されます。
+<p>実行</p>
 
-しかしすぐに問題が見つかりました。tail -fの標準出力は複数行をまとめたバルクデータとしてoutにストアされるらしく、上のコードだと1行ごとには処理できません。ですので1行ごとにホスト名を先頭に付加できませんでした。
-<h1><strong>streamメソッドを拡張</strong></h1>
-そこで、ここからはいっきに進みますが、以下のとおり標準のstreamメソッドを拡張しました。さらにcolorizeモジュールを使ってホスト名毎に色づけをして、どのサーバのログかを見やすくしてみました。
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cap</span> <span class="n">tail</span>
+</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span></code></pre></td></tr></table></div></figure>
 
-inspect-stream.rbという名前で以下の内容でファイルを作成します。
-<pre lang="ruby">require 'colorize'
 
-unless Capistrano::Configuration.respond_to?(:instance)
-      abort "requires Capistrano 2"
-end
+<p>capコマンドが見つからない場合はCapistranoがインストールされていないかもしれません。capコマンドはカレントディレクトリのCapfileという名前を探して読み込みます。引数に指定したtailタスクを実行します。
+上の例では一見うまくいっていますが、複数ホストのログが単純にログがストリームされるだけなので１つのログがどのサーバのログか分かりません。微妙です。</p>
 
-module Capistrano
-  class Configuration
-    module Actions
-      module Inspect
-        # 標準のstreamメソッドを拡張する
-        # 各行の先頭にホスト名を出力しつつ、ホスト名毎に色づけする
-        def stream(command, options={})
+<h2>runメソッドにブロックを渡す方法</h2>
 
-          trap("INT") { puts 'Interupted'; exit 0; }
+<p>次に別のアプローチとしてrunメソッドを使った方法を試してみました。
+runは通常以下のようにリモートホスト上で実行するコマンドを引数に書きます。</p>
 
-          # out の 最終行のchunk dataを一時保存するHash
-          # keyはホスト名
-          last = Hash.new("")
-          invoke_command(command, options) do |ch, stream, out|
-            a = out.split(/\n/m)
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;hoge&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:uptime</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;uptime&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-            if out[0].chr  == "\n"
-              a.unshift(last[ch[:host]])
-              last[ch[:host]] = ""
-            else
-              tmp = a.shift
-              a.unshift(last[ch[:host]] + tmp)
-              last[ch[:host]] = ""
-            end
 
-            if out[-1].chr == "\n"
-              last[ch[:host]] = ""
-            else
-              last[ch[:host]] = a.pop
-            end
+<p>runにはコマンドを引数に渡すだけなく、ブロックを渡して出力を加工したりできます。Capfileを以下のように修正します。<a href="http://errtheblog.com/posts/19-streaming-capistrano">http://errtheblog.com/posts/19-streaming-capistrano</a></p>
 
-            a.each do |line|
-              puts colorize_by_host(ch[:host]) + ": " + line if stream == :out
-            end
-            warn "[err :: #{ch[:server]}] #{out}" if stream == :err
-          end
-        end
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;tail -f accees_log&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="ss">:web</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;tail -f /var/log/apache/access_log ; true&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ch</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">out</span><span class="o">|</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">break</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="ss">:err</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-        private
 
-        def colorize_by_host(host)
-          color = [ :light_blue, :yellow, :magenta, :cyan, :light_red, :light_green, :light_yellow, :light_blue, :light_magenta, :light_cyan, :light_white ]
-          host.colorize( color[str2acsii(host) % color.size] )
-        end
+<p>ブロック変数に指定したoutにリモートで実行したコマンドの標準出力がストアされます。chはセッションの情報とかが保存されるようです。
+こによりログの左側にサーバ名が付加されます。</p>
 
-        def str2acsii(str="")
-          acsii = ""
-          str.each_byte do |c|
-            acsii += c.to_s
-          end
-          acsii.to_i
-        end
-      end
-    end
-  end
-end</pre>
-さらにCapfileを以下の内容に書き換えます。
-<pre lang="ruby">require './inspect-stream'
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cap</span> <span class="n">tail</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span></code></pre></td></tr></table></div></figure>
 
-server server1, :web
-server server2, :web
 
-desc "tail -f accees_log"
-task :tail, :roles =&gt; :web do
-  stream "tail -f /var/log/apache/access_log ; true"
-end</pre>
-<h4>colorizeモジュールはあらかじめインストールしてください</h4>
-<pre lang="shell">$ gem install colorize --remote</pre>
-<h4>実行</h4>
-<pre lang="shell">$ cap tail</pre>
-<h4>結果</h4>
-<span style="color: #ff0000;">server1</span>: 192.168.1.1 - - [05/Feb/2012:01:46:04 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
-<span style="color: #339966;">server2</span>: 192.168.1.1 - - [05/Feb/2012:01:46:05 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
-<span style="color: #ff0000;">server1</span>: 192.168.1.6 - - [05/Feb/2012:01:46:07 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
-<span style="color: #ff0000;">server1</span>: 192.168.2.1 - - [05/Feb/2012:01:46:04 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
-<span style="color: #ff0000;">server1</span>: 192.168.2.1 - - [05/Feb/2012:01:47:05 +0900] &#8220;HEAD /index.html HTTP/1.1&#8221; 200 -
-<span style="color: #339966;">server2</span>: 192.168.2.5 - - [05/Feb/2012:01:48:07 +0900] &#8220;HEAD /style.css HTTP/1.1&#8221; 200 -
+<p>しかしすぐに問題が見つかりました。tail -fの標準出力は複数行をまとめたバルクデータとしてoutにストアされるらしく、上のコードだと1行ごとには処理できません。ですので1行ごとにホスト名を先頭に付加できませんでした。</p>
 
-ログの最初が色づけされてだけですが結構眺めてると楽しめます。
+<h2>streamメソッドを拡張</h2>
 
-streamメソッド自体を拡張したのでCapfile自体は元々最初にやろうとしてた内容とほぼ同じになりすっきりしました。ホストごとに色が異なるので、どのホストがログが多めかが何となく視覚的に分かるようになりました。ログが多すぎると目がちかちかしてあまり効果は無いかもしれません(爆)
+<p>そこで、ここからはいっきに進みますが、以下のとおり標準のstreamメソッドを拡張しました。さらにcolorizeモジュールを使ってホスト名毎に色づけをして、どのサーバのログかを見やすくしてみました。</p>
 
-Capistranoモジュールのソースにinspect.rbというのが含まれておりstreamメソッドを定義しなおして上書きしてます。Capistrano 2系で動作確認しました。
+<p>まず色をつけるためcolorizeモジュールを利用します。</p>
 
-Rubyはまだ勉強中のためやり方が間違ってるとか別のやり方があるとかあればぜひ教えてください。
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">colorize</span> <span class="o">--</span><span class="n">remote</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&nbsp;
 
-ここまで書いてなんですが、実際の現場ではsyslogやfluentdなどでログをログサーバに転送してログサーバで見るのが普通でしょう。この使い方は、ちょっとしたログを確認したいとき用途とか、syslogでとばせない環境だったりとか向きかもしれません。
+<p>inspect-stream.rbという名前で以下の内容でファイルを作成します。</p>
 
-&nbsp;
+<figure class='code'><figcaption><span>inspect-stream.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;colorize&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">unless</span> <span class="no">Capistrano</span><span class="o">::</span><span class="no">Configuration</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:instance</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">abort</span> <span class="s2">&quot;requires Capistrano 2&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">Capistrano</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Configuration</span>
+</span><span class='line'>    <span class="k">module</span> <span class="nn">Actions</span>
+</span><span class='line'>      <span class="k">module</span> <span class="nn">Inspect</span>
+</span><span class='line'>        <span class="c1"># 標準のstreamメソッドを拡張する</span>
+</span><span class='line'>        <span class="c1"># 各行の先頭にホスト名を出力しつつ、ホスト名毎に色づけする</span>
+</span><span class='line'>        <span class="k">def</span> <span class="nf">stream</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="nb">trap</span><span class="p">(</span><span class="s2">&quot;INT&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s1">&#39;Interupted&#39;</span><span class="p">;</span> <span class="nb">exit</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="c1"># out の 最終行のchunk dataを一時保存するHash</span>
+</span><span class='line'>          <span class="c1"># keyはホスト名</span>
+</span><span class='line'>          <span class="n">last</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">invoke_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">ch</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">out</span><span class="o">|</span>
+</span><span class='line'>            <span class="n">a</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\n/m</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="n">out</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">chr</span>  <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'>              <span class="n">a</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span><span class="p">)</span>
+</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>              <span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shift</span>
+</span><span class='line'>              <span class="n">a</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">+</span> <span class="n">tmp</span><span class="p">)</span>
+</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>            <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="n">out</span><span class="o">[-</span><span class="mi">1</span><span class="o">].</span><span class="n">chr</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">pop</span>
+</span><span class='line'>            <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">a</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+</span><span class='line'>              <span class="nb">puts</span> <span class="n">colorize_by_host</span><span class="p">(</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">line</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="ss">:out</span>
+</span><span class='line'>            <span class="k">end</span>
+</span><span class='line'>            <span class="nb">warn</span> <span class="s2">&quot;[err :: </span><span class="si">#{</span><span class="n">ch</span><span class="o">[</span><span class="ss">:server</span><span class="o">]</span><span class="si">}</span><span class="s2">] </span><span class="si">#{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="ss">:err</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">def</span> <span class="nf">colorize_by_host</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">color</span> <span class="o">=</span> <span class="o">[</span> <span class="ss">:light_blue</span><span class="p">,</span> <span class="ss">:yellow</span><span class="p">,</span> <span class="ss">:magenta</span><span class="p">,</span> <span class="ss">:cyan</span><span class="p">,</span> <span class="ss">:light_red</span><span class="p">,</span> <span class="ss">:light_green</span><span class="p">,</span> <span class="ss">:light_yellow</span><span class="p">,</span> <span class="ss">:light_blue</span><span class="p">,</span> <span class="ss">:light_magenta</span><span class="p">,</span> <span class="ss">:light_cyan</span><span class="p">,</span> <span class="ss">:light_white</span> <span class="o">]</span>
+</span><span class='line'>          <span class="n">host</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span> <span class="n">color</span><span class="o">[</span><span class="n">str2acsii</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="o">%</span> <span class="n">color</span><span class="o">.</span><span class="n">size</span><span class="o">]</span> <span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">def</span> <span class="nf">str2acsii</span><span class="p">(</span><span class="n">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">acsii</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>          <span class="n">str</span><span class="o">.</span><span class="n">each_byte</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+</span><span class='line'>            <span class="n">acsii</span> <span class="o">+=</span> <span class="n">c</span><span class="o">.</span><span class="n">to_s</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>          <span class="n">acsii</span><span class="o">.</span><span class="n">to_i</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-今回おまけでログに色をつけましたが、色がつくだけでログ調査が数倍楽しくなりました。
+
+<p>Capfileではrequireでinspect-stream.rbを読み込みます。</p>
+
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;./inspect-stream&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">server</span> <span class="n">server1</span><span class="p">,</span> <span class="ss">:web</span>
+</span><span class='line'><span class="n">server</span> <span class="n">server2</span><span class="p">,</span> <span class="ss">:web</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;tail -f accees_log&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="ss">:web</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">stream</span> <span class="s2">&quot;tail -f /var/log/apache/access_log ; true&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>task側ではstreamを実行しているだけなのですっきりしました。</p>
+
+<p>実行します。</p>
+
+<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cap</span> <span class="n">tail</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>preタグの都合で色をつけれませんでしたが、実際にはserver1は黄色、server2は青など色付けされます</p>
+
+<h2>まとめ</h2>
+
+<ul>
+<li>Capistranoを使ってtail -f /var/log/some.log を複数ホスト上で同時実行して管理ホスト側でまとめてみることができました。</li>
+<li>最終的にはstreamメソッドを定義しなおし、colorizeモジュールを使ってサーバ毎に色を変えました。</li>
+</ul>
+
+
+<p>今このサーバが使われてるんだなというのが可視化できておもしろいです。色がつくだけでログ調査が数倍楽しくなりました。</p>
+
+<p>ログが多すぎる場合は高速でログが流れますのであまり使えないとはおもいますが、用途によっては使いやすいかとおもいます。実際の現場ではsyslogやfluentdなどでログをログサーバに転送してログサーバで見るのが普通でしょう。この使い方は、ちょっとしたログを確認したいとき用途とか、syslogでとばせない環境だったりとかニッチなシーンでは役に立つ場合があるとおもいます。</p>
+
+<p>Rubyは初心者レベルで勉強中のためやり方が間違ってるとか別のやり方があるとかあればぜひ教えてください。</p>
 </div>
   
   
