@@ -5,20 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hello, World - ni-blog</title>
+  <title>Wordpressからoctopressに移行した(画像移行編) - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="A first post always says Hello, World1
-2
-3
-4
-5
-6
-7
-class Hello def self.world &quot;Hello, World!&quot; end
-end puts Hello.world return1
-=&gt; &quot; &hellip;">
+  <meta name="description" content="このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。 移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/
+移行後(octopress)の画像ファイル置き場は/images/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +19,7 @@ end puts Hello.world return1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2012/02/14/hello">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -88,7 +80,7 @@ end puts Hello.world return1
   
   <header>
     
-      <h1 class="entry-title">Hello, World</h1>
+      <h1 class="entry-title">Wordpressからoctopressに移行した(画像移行編)</h1>
     
     
       <p class="meta">
@@ -104,36 +96,70 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2012-03-11T22:36:00+09:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>A first post always says</h2>
+<div class="entry-content"><p>このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。</p>
 
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<ul>
+<li>移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/</li>
+<li>移行後(octopress)の画像ファイル置き場は/images/</li>
+</ul>
+
+
+<p>Wordpressはxreaのサーバで運用していたので、sshでログインしてローカルのMacまでscpしてきた。 ~/tmp/uploads/ あたりに保存しとく。</p>
+
+<p>つづいてローカルのoctopressディレクトリにコピーする。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/Documents/Blog/octopress
+</span><span class='line'>cp ~/tmp/uploads/* source/images/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
+
+<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいにhttp://で始まっていたので、方針としてはhttp://orihubon.com/uploads/をざっくり消して/imagesに置き換えることにする。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd source</span>/_posts
+</span><span class='line'><span class="k">for </span>f in <span class="k">$(</span> ls <span class="k">)</span>; <span class="k">do  </span>ruby -ne <span class="s1">&#39;$_.gsub!(%r!http://orihubon.com/wp-content/uploads/!, &quot;/images/&quot;); puts $_;&#39;</span> &lt; <span class="nv">$f</span> &gt; tmp; mv tmp <span class="nv">$f</span>; <span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>上のコードは単純に置換してるだけ。過去記事のaタグやimgタグ意外のテキストも置き換えるのですが、私の記事をgrepして確認したらなかったので、parseしなくていいやということでシンプルに置き換えた。</p>
+
+<p>生成して確認する。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake generate
+</span><span class='line'>rake preview
+</span></code></pre></td></tr></table></div></figure>
 
 
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
+<p>http://localhost:4000/にアクセスして確認する。</p>
+
+<p>deployし公開。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commitもしとく。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git add -A
+</span><span class='line'>git commit -m <span class="s2">&quot;Imported image files from old wordpress blog&quot;</span>
+</span><span class='line'>git push
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
@@ -158,15 +184,21 @@ end puts Hello.world return1
   
 
 
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2012-03-11T22:36:00+09:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/02/14/hello/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/02/14/hello/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian/" >Tweet</a>
   
   
   
@@ -177,10 +209,8 @@ end puts Hello.world return1
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/" title="Previous Post: PerlでHashの初期値をセットする">&laquo; PerlでHashの初期値をセットする</a>
+        <a class="basic-alignment left" href="/blog/2012/02/14/migration-from-wordpress-to-octopress/" title="Previous Post: Wordpressからoctopressに移行した">&laquo; Wordpressからoctopressに移行した</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/14/migration-from-wordpress-to-octopress/" title="next Post: Wordpressからoctopressに移行した">Wordpressからoctopressに移行した &raquo;</a>
       
     </p>
   </footer>

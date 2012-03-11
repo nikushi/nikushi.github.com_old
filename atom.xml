@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-11T22:33:30+09:00</updated>
+  <updated>2012-03-11T23:03:14+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Wordpressからoctopressに移行した(画像移行編)]]></title>
+    <link href="http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian/"/>
+    <updated>2012-03-11T22:36:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian</id>
+    <content type="html"><![CDATA[<p>このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。</p>
+
+<ul>
+<li>移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/</li>
+<li>移行後(octopress)の画像ファイル置き場は/images/</li>
+</ul>
+
+
+<p>Wordpressはxreaのサーバで運用していたので、sshでログインしてローカルのMacまでscpしてきた。 ~/tmp/uploads/ あたりに保存しとく。</p>
+
+<p>つづいてローカルのoctopressディレクトリにコピーする。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/Documents/Blog/octopress
+</span><span class='line'>cp ~/tmp/uploads/* source/images/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
+
+<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいにhttp://で始まっていたので、方針としてはhttp://orihubon.com/uploads/をざっくり消して/imagesに置き換えることにする。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd source</span>/_posts
+</span><span class='line'><span class="k">for </span>f in <span class="k">$(</span> ls <span class="k">)</span>; <span class="k">do  </span>ruby -ne <span class="s1">&#39;$_.gsub!(%r!http://orihubon.com/wp-content/uploads/!, &quot;/images/&quot;); puts $_;&#39;</span> &lt; <span class="nv">$f</span> &gt; tmp; mv tmp <span class="nv">$f</span>; <span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上のコードは単純に置換してるだけ。過去記事のaタグやimgタグ意外のテキストも置き換えるのですが、私の記事をgrepして確認したらなかったので、parseしなくていいやということでシンプルに置き換えた。</p>
+
+<p>生成して確認する。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake generate
+</span><span class='line'>rake preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>http://localhost:4000/にアクセスして確認する。</p>
+
+<p>deployし公開。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commitもしとく。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git add -A
+</span><span class='line'>git commit -m <span class="s2">&quot;Imported image files from old wordpress blog&quot;</span>
+</span><span class='line'>git push
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Wordpressからoctopressに移行した]]></title>
@@ -886,21 +953,6 @@ more help
     <id>http://niku4i.github.com/blog/2011/10/17/rozikuru,-erugofalsemikusudezaindeuebuyong</id>
     <content type="html"><![CDATA[<p style="text-align: right;">ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。</p>
 引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[memo for Perl Framewarks]]></title>
-    <link href="http://niku4i.github.com/blog/2011/10/15/memo-for-perl-framewarks/"/>
-    <updated>2011-10-15T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/10/15/memo-for-perl-framewarks</id>
-    <content type="html"><![CDATA[Catlyst is very heavy weight one .
-
-mojolicious is light weight one .
-
-&nbsp;
-
-重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | ni-blog]]></title>
   <link href="http://niku4i.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-11T22:33:30+09:00</updated>
+  <updated>2012-03-11T23:03:14+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Wordpressからoctopressに移行した(画像移行編)]]></title>
+    <link href="http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian/"/>
+    <updated>2012-03-11T22:36:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/03/11/wordpresskaraoctopressniyi-xing-sita-hua-xiang-yi-xing-bian</id>
+    <content type="html"><![CDATA[<p>このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。</p>
+
+<ul>
+<li>移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/</li>
+<li>移行後(octopress)の画像ファイル置き場は/images/</li>
+</ul>
+
+
+<p>Wordpressはxreaのサーバで運用していたので、sshでログインしてローカルのMacまでscpしてきた。 ~/tmp/uploads/ あたりに保存しとく。</p>
+
+<p>つづいてローカルのoctopressディレクトリにコピーする。
+<code>
+cd ~/Documents/Blog/octopress
+cp ~/tmp/uploads/* source/images/
+</code>
+source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
+
+<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいにhttp://で始まっていたので、方針としてはhttp://orihubon.com/uploads/をざっくり消して/imagesに置き換えることにする。
+<code>sh
+cd source/_posts
+for f in $( ls ); do  ruby -ne '$_.gsub!(%r!http://orihubon.com/wp-content/uploads/!, "/images/"); puts $_;' &lt; $f &gt; tmp; mv tmp $f; done
+</code>
+上のコードは単純に置換してるだけ。過去記事のaタグやimgタグ意外のテキストも置き換えるのですが、私の記事をgrepして確認したらなかったので、parseしなくていいやということでシンプルに置き換えた。</p>
+
+<p>生成して確認する。
+<code>
+rake generate
+rake preview
+</code>
+http://localhost:4000/にアクセスして確認する。</p>
+
+<p>deployし公開。
+<code>
+rake deploy
+</code></p>
+
+<p>commitもしとく。
+<code>
+git add -A
+git commit -m "Imported image files from old wordpress blog"
+git push
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Wordpressからoctopressに移行した]]></title>
