@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-02-17T01:33:38+09:00</updated>
+  <updated>2012-03-11T21:35:57+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -306,7 +306,7 @@ end</code></pre></noscript></div>
     <link href="http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano/"/>
     <updated>2012-02-09T00:00:00+09:00</updated>
     <id>http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano</id>
-    <content type="html"><![CDATA[<a href="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="http://orihubon.com/wp-content/uploads/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a>
+    <content type="html"><![CDATA[<a href="http://niku4i.github.com/images/tail-log-with-capistrano-image.jpg"><img class="size-medium wp-image-309" title="tail-log-with-capistrano-image" src="http://niku4i.github.com/images/tail-log-with-capistrano-image-300x133.jpg" alt="tail-log-with-capistrano-image" width="300" height="133" /></a>
 
 複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。
 
