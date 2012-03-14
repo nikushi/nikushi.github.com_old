@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="gitの勉強がてら、そのうちテーマファイルなどをgit管理してみます。
-">
+  <meta name="description" content="仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。 mod_dav_svnが必要なのでyum installする。 $ sudo yum install mod_dav_svn.x86_64 svn関連のapache設定。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/23/subversion-on-apache-toriaezudong-kushe-ding/">Subversion on Apache とりあえず動く設定</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-23T00:00:00+09:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。
+
+mod_dav_svnが必要なのでyum installする。
+<pre lang="shell">
+ $ sudo yum install mod_dav_svn.x86_64
+</pre>
+
+svn関連のapache設定。CentOSの流儀に従って /etc/conf.d/svn.conf とした。
+<pre lang="apache">
+<IfModule !mod_dav_svn.c>
+    LoadModule dav_svn_module modules/mod_dav_svn.so
+</IfModule>
+<Location /svn>
+    DAV svn
+    SVNParentPath /var/svn
+    SVNListParentPath on
+</Location>
+</pre>
+
+リポジトリが1個だけならくSVNPathを使えばよい。
+SVNParentPathを使うと、配下のディレクトリにある複数のリポジトリを対象としてくれるので設定ファイルを毎度書き換えなくて良い利点がある。
+
+複数のリポジトリで構成すると/var/svn以下は以下のようになる。
+<pre>
+  /var/svn/
+    + repos1/
+       + trunk/
+       + branches/
+       + tags/
+    + repos2/
+       + (略)
+</pre>
+
+ここで一つ不便を感じる点として、ブラウザでhttp://xxx/svn/にアクセスするとSVNモジュールがエラーページを吐く。GETリクエストを解釈できないためであるが、URI的にはリポジトリのlistを出力してほしいところだ。
+そこで、SVNListParentPath on だ。これだけ。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -446,43 +515,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-15T00:00:00+09:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote>この操作に成功すると、大量のスパムによって株価の人為的な高騰が促され、最終的には詐欺師が持ち株の売却を狙っている値に達します。その時点でスパム攻撃も終息するのが普通で、そうなると今度は株に対する関心が薄れ、評価額は元の安値まで下落します（これも市場で悪用されることがあります）。ポンプアンドダンプのスパム攻撃が成功すると、詐欺師はたった数日間でかなりの利益をあげることができます。</blockquote>
-引用元: <a href="http://www.symantec.com/connect/ja/blogs-217">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a>.
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -509,6 +541,10 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
       </li>
     
@@ -522,10 +558,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
     
       <li class="post">
         <a href="/blog/2012/02/14/hello/">Hello, World</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a>
       </li>
     
   </ul>

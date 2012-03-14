@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。
-引用元: ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド &hellip;">
+  <meta name="description" content="perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。 &nbsp; App::FatPackerを使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/appfatpacker/">App::FatPacker</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。
+
+&nbsp;
+
+<a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -478,71 +517,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/">WebSvnでリポジトリをtar.gzやzip化してダウンロードする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
-<pre lang="php">
-// For delivered tarballs, if option enabled...
-$config->setTarPath('/bin/');
-
-// For delivered GZIP'd files and tarballs, if option enabled...
-$config->setGZipPath('/usr/bin/');
-
-// download folder/file zipped ...
-$config->setZipPath('/usr/bin/');
-
-// You need tar and gzip installed on your system. Set the paths above if necessary
-//
-// Uncomment the line below to offer a tarball download option across all your
-// reposi
-$config->allowDownload();
-
-// Change the line below to set the download level across all your repositories.
-// 環境に合わせて調整
-$config->setMinDownloadLevel(1);
-</pre>
-
-
-$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
-<pre>
- /               0
-   project1/     1
-     - sub/      2
-   project2/     1
-</pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -569,6 +543,10 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
       </li>
     
@@ -582,10 +560,6 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
     
       <li class="post">
         <a href="/blog/2012/02/14/hello/">Hello, World</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a>
       </li>
     
   </ul>

@@ -9,8 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="小さめなwebアプリだとmojoとかdancerを使うのが良いのかね。apache+CGIとかmod_perlにするだけが方法じゃないんですね。
-">
+  <meta name="description" content="インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。 // For delivered tarballs, if option enabled...
+$config->setTarPath('/bin/'); // For delivered &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/">WebSvnでリポジトリをtar.gzやzip化してダウンロードする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
+<pre lang="php">
+// For delivered tarballs, if option enabled...
+$config->setTarPath('/bin/');
+
+// For delivered GZIP'd files and tarballs, if option enabled...
+$config->setGZipPath('/usr/bin/');
+
+// download folder/file zipped ...
+$config->setZipPath('/usr/bin/');
+
+// You need tar and gzip installed on your system. Set the paths above if necessary
+//
+// Uncomment the line below to offer a tarball download option across all your
+// reposi
+$config->allowDownload();
+
+// Change the line below to set the download level across all your repositories.
+// 環境に合わせて調整
+$config->setMinDownloadLevel(1);
+</pre>
+
+
+$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
+<pre>
+ /               0
+   project1/     1
+     - sub/      2
+   project2/     1
+</pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -481,76 +546,6 @@ use lib '/var/tmp/test/lib/perl5/site_perl';
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/23/subversion-on-apache-toriaezudong-kushe-ding/">Subversion on Apache とりあえず動く設定</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-23T00:00:00+09:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。
-
-mod_dav_svnが必要なのでyum installする。
-<pre lang="shell">
- $ sudo yum install mod_dav_svn.x86_64
-</pre>
-
-svn関連のapache設定。CentOSの流儀に従って /etc/conf.d/svn.conf とした。
-<pre lang="apache">
-<IfModule !mod_dav_svn.c>
-    LoadModule dav_svn_module modules/mod_dav_svn.so
-</IfModule>
-<Location /svn>
-    DAV svn
-    SVNParentPath /var/svn
-    SVNListParentPath on
-</Location>
-</pre>
-
-リポジトリが1個だけならくSVNPathを使えばよい。
-SVNParentPathを使うと、配下のディレクトリにある複数のリポジトリを対象としてくれるので設定ファイルを毎度書き換えなくて良い利点がある。
-
-複数のリポジトリで構成すると/var/svn以下は以下のようになる。
-<pre>
-  /var/svn/
-    + repos1/
-       + trunk/
-       + branches/
-       + tags/
-    + repos2/
-       + (略)
-</pre>
-
-ここで一つ不便を感じる点として、ブラウザでhttp://xxx/svn/にアクセスするとSVNモジュールがエラーページを吐く。GETリクエストを解釈できないためであるが、URI的にはリポジトリのlistを出力してほしいところだ。
-そこで、SVNListParentPath on だ。これだけ。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -577,6 +572,10 @@ SVNParentPathを使うと、配下のディレクトリにある複数のリポ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
       </li>
     
@@ -590,10 +589,6 @@ SVNParentPathを使うと、配下のディレクトリにある複数のリポ�
     
       <li class="post">
         <a href="/blog/2012/02/14/hello/">Hello, World</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a>
       </li>
     
   </ul>
