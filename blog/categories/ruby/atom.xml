@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://niku4i.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-15T02:18:51+09:00</updated>
+  <updated>2012-03-15T02:29:14+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -36,6 +36,11 @@
 The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.
 </code>
 という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って--with-gcc=clangをつけてインストールする方法があった。今回は--with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
+
+<p>以下、詳細。</p>
+
+<!-- more -->
+
 
 <h3>環境</h3>
 

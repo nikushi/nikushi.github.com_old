@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | ni-blog]]></title>
   <link href="http://niku4i.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-15T02:18:51+09:00</updated>
+  <updated>2012-03-15T02:29:14+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -19,6 +19,11 @@
     <updated>2012-03-15T01:57:00+09:00</updated>
     <id>http://niku4i.github.com/blog/2012/03/15/xcode-43-and-octopress</id>
     <content type="html"><![CDATA[<p><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">前回の記事</a>でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい<code>rake new_post['hoge']</code>したら<code>bundle install</code>しろと怒られたので実行してみたら途中で止まってしまいはまった。</p>
+
+<p>初めはXCodeまわりを疑ったが最終的にはoctopressのディレクトリのGemfileを修正して対応。以下その対応内容。</p>
+
+<!-- more -->
+
 
 <p><code>``
 $ cd path/to/octopress/
