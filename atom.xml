@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-11T23:34:43+09:00</updated>
+  <updated>2012-03-15T01:44:19+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,327 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Install rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1]]></title>
+    <link href="http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/"/>
+    <updated>2012-03-15T00:30:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431</id>
+    <content type="html"><![CDATA[<p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
+
+<p>Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。</p>
+
+<p>普通に考えて進めると、</p>
+
+<ol>
+<li>XCodeインストール</li>
+<li>rvm install</li>
+</ol>
+
+
+<p>するのだけど、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&#8211;with-gcc=clangをつけてインストールする方法があった。今回は&#8211;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
+
+<h3>環境</h3>
+
+<ul>
+<li>Mac OS X Version 10.7.3 Lion</li>
+<li>XCode 4.3.1</li>
+<li>gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)</li>
+<li>rvm 1.10.3</li>
+<li>rvm installするRuby
+
+<ul>
+<li>ruby-1.9.2-p318</li>
+<li>ruby-1.9.3-p125</li>
+</ul>
+</li>
+</ul>
+
+
+<p>このブログ=octopressが現時点で1.9.3に対応していないため、1.9.2-p318もインストールした。</p>
+
+<h3>rbenvをアンインストール</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rm -rf ~/.rbenv</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>rvmをインストール</h3>
+
+<p>公式ページの手順どおりやればよし。あえてコマンドは書かない。</p>
+
+<h3>XCode</h3>
+
+<p>XCode4.3からXCode本体とは別パッケージでgccやmake等のCLIツールだけのCommand Line Tools for XcodeというパッケージがApp Storeから入手できるようになった。</p>
+
+<p>Mac Book Airの容量を節約できるしXCodeのCLIツールしか使わないのでこれは嬉しいので、喜んでXCodeはインストールせずCommand Line Tools for Xcodeだけインストールして、rvm install &#8230; と進めていたのだけど、最終的にやはり必要ということが分かった。</p>
+
+<p>XCodeが結局必要な理由は話が先に飛ぶが、<code>rvm install ruby-1.9.2</code>の後octopress(このブログのシステム)用のgemをインストールする目的で<code>bundle install</code>する必要があったが、以下のとおりXCodeが見つからないというエラーが出てしまう。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake new_post['rbenvからrvmに変更した']
+</span><span class='line'>Could not find RedCloth-4.2.8 in any of the sources
+</span><span class='line'>Run `bundle install` to install missing gems.
+</span><span class='line'>mba208:octopress nikushi$ bundle install
+</span><span class='line'>Fetching gem metadata from http://rubygems.org/.......
+</span><span class='line'>Using rake (0.9.2)
+</span><span class='line'>Installing RedCloth (4.2.8) with native extensions
+</span><span class='line'>Installing posix-spawn (0.3.6) with native extensions
+</span><span class='line'>Installing albino (1.3.3)
+</span><span class='line'>Installing blankslate (2.1.2.4)
+</span><span class='line'>Installing chunky_png (1.2.1)
+</span><span class='line'>Installing fast-stemmer (1.0.0) with native extensions
+</span><span class='line'>Installing classifier (1.3.3)
+</span><span class='line'>Installing fssm (0.2.7)
+</span><span class='line'>Installing sass (3.1.5)
+</span><span class='line'>Installing compass (0.11.5)
+</span><span class='line'>Installing directory_watcher (1.4.0)
+</span><span class='line'>Installing ffi (1.0.9) with native extensions
+</span><span class='line'>Installing haml (3.1.2)
+</span><span class='line'>Installing kramdown (0.13.3)
+</span><span class='line'>Installing liquid (2.2.2)
+</span><span class='line'>Installing syntax (1.0.0)
+</span><span class='line'>Installing maruku (0.6.0)
+</span><span class='line'>Installing jekyll (0.11.0)
+</span><span class='line'>Installing rubypython (0.5.1)
+</span><span class='line'>Installing pygments.rb (0.1.3)
+</span><span class='line'>Installing rack (1.3.2)
+</span><span class='line'>Installing rb-fsevent (0.4.3.1) with native extensions Unfortunately, a fatal error has occurred. Please report this error to the Bundler issue tracker at https://github.com/carlhuda/bundler/issues so that we can fix it. Thanks!
+</span><span class='line'>/Users/nikushi/.rvm/rubies/ruby-1.9.2-p318/lib/ruby/site_ruby/1.9.1/rubygems/installer.rb:552:in `rescue in block in build_extensions': ERROR: Failed to build gem native extension. (Gem::Installer::ExtensionBuildError)
+</span><span class='line'>
+</span><span class='line'>        /Users/nikushi/.rvm/rubies/ruby-1.9.2-p318/bin/ruby extconf.rb
+</span><span class='line'>        creating Makefile
+</span><span class='line'>        xcode-select: Error: No Xcode folder is set. Run xcode-select -switch &lt;xcode_folder_path&gt; to set the path to the Xcode folder.
+</span><span class='line'>        extconf.rb:15:in `&lt;main&gt;': Could not find a suitable Xcode installation (RuntimeError)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>そういうわけでXCode4.3.1をインストール。App Storeからダウンロードする。Command Line ToolはApp Storeからインストールしてもいいし、XCode起動後にPreferenceの中からでもinstall可能。どちらでもよいみたい。</p>
+
+<p>xcode-selectコマンドでpathを確認して、セットされていないようなら-switchでセットする。XCode4.2系は/Developerだったのが4.3系からは/Application/Xcode.app/以下に変更になったらしい。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ xcode-select  -print-path
+</span><span class='line'>xcode-select: Error: No Xcode folder is set. Run xcode-select -switch &lt;xcode_folder_path&gt; to set the path to the Xcode folder.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>手動でセットする</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+</span><span class='line'>$ xcode-select  -print-path
+</span><span class='line'>/Applications/Xcode.app/Contents/Developer</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Command Line Toolsの確認</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ls /Applications/Xcode.app/Contents/Developer/usr/bin/
+</span><span class='line'>BuildStrings*                     gcc@                              mksdk*
+</span><span class='line'>CpMac*                            gcov@                             momc*
+</span><span class='line'>DeRez*                            gcov-4.2@                         nasm*
+</span><span class='line'>GetFileInfo*                      gdb*                              ndisasm*
+</span><span class='line'>ImageUnitAnalyzer*                git*                              nm*
+</span><span class='line'>MergePef*                         git-cvsserver*                    nmedit*
+</span><span class='line'>MvMac*                            git-receive-pack@                 opendiff*
+</span><span class='line'>PPCExplain*                       git-shell*                        otool*
+</span><span class='line'>ResMerger*                        git-upload-archive@               pagestuff*
+</span><span class='line'>Rez*                              git-upload-pack*                  projectInfo*
+</span><span class='line'>RezDet*                           gitk*                             ranlib@
+</span><span class='line'>RezWack*                          gnumake*                          rcs*
+</span><span class='line'>SetFile*                          gprof*                            rcs2log@
+</span><span class='line'>SplitForks*                       hdxml2manxml*                     rcsclean*
+</span><span class='line'>UnRezWack*                        headerdoc2html*                   rcsdiff*
+</span><span class='line'>agvtool*                          i686-apple-darwin11-llvm-g++-4.2@ rcsmerge*
+</span><span class='line'>amlint*                           i686-apple-darwin11-llvm-gcc-4.2@ rebase*
+</span><span class='line'>ar*                               ibtool*                           redo_prebinding*
+</span><span class='line'>as*                               ibtool3*                          resolveLinks*
+</span><span class='line'>c89*                              ibtoold*                          rlog*
+</span><span class='line'>c99*                              ident*                            sdef*
+</span><span class='line'>ci*                               install_name_tool*                sdp*
+</span><span class='line'>cmpdylib*                         instruments*                      segedit*
+</span><span class='line'>co*                               iprofiler*                        size*
+</span><span class='line'>codesign_allocate*                javaconfig*                       strip*
+</span><span class='line'>codesign_wrapper*                 javatool*                         svn*
+</span><span class='line'>cpp*                              ld*                               svnadmin*
+</span><span class='line'>ctf_insert*                       ld_classic*                       svndumpfilter*
+</span><span class='line'>cvs*                              libtool*                          svnlook*
+</span><span class='line'>cvsbug*                           lldb*                             svnserve*
+</span><span class='line'>desdp*                            llvm-cpp-4.2@                     svnsync*
+</span><span class='line'>docsetutil*                       llvm-g++@                         svnversion*
+</span><span class='line'>dsymutil*                         llvm-g++-4.2@                     unwinddump*
+</span><span class='line'>dvtexec*                          llvm-gcc@                         xcodebuild*
+</span><span class='line'>dwarfdump*                        llvm-gcc-4.2@                     xcrun*
+</span><span class='line'>dyldinfo*                         make*                             xed*
+</span><span class='line'>g++@                              mapc*                             xml2man*
+</span><span class='line'>gatherheaderdoc*                  merge*</span></code></pre></td></tr></table></div></figure>
+
+
+<p>いろいろ入った。
+ちなみに、 /usr/bin/以下にもgcc入ったけど競合しないのか?ネット上の情報をみると/Applicaitons/Xcode.app/Contents/Developer/usr/bin/は$PATHに通す必要はないらしい。まったく自信はない。</p>
+
+<p>/usr/bin/gcc -v</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/gcc -v
+</span><span class='line'>Using built-in specs.
+</span><span class='line'>Target: i686-apple-darwin11
+</span><span class='line'>Configured with: /private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/src/configure --disable-checking --enable-werror --prefix=/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2 --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-prefix=llvm- --program-transform-name=/^[cg][^.-]*$/s/$/-4.2/ --with-slibdir=/usr/lib --build=i686-apple-darwin11 --enable-llvm=/private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/dst-llvmCore/Developer/usr/local --program-prefix=i686-apple-darwin11- --host=x86_64-apple-darwin11 --target=i686-apple-darwin11 --with-gxx-include-dir=/usr/include/c++/4.2.1
+</span><span class='line'>Thread model: posix
+</span><span class='line'>gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/Applications/Xcode.app/Contents/Developer/usr/bin/gcc -v</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ /Applications/Xcode.app/Contents/Developer/usr/bin/gcc -v
+</span><span class='line'>Using built-in specs.
+</span><span class='line'>Target: i686-apple-darwin11
+</span><span class='line'>Configured with: /private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/src/configure --disable-checking --enable-werror --prefix=/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2 --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-prefix=llvm- --program-transform-name=/^[cg][^.-]*$/s/$/-4.2/ --with-slibdir=/usr/lib --build=i686-apple-darwin11 --enable-llvm=/private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/dst-llvmCore/Developer/usr/local --program-prefix=i686-apple-darwin11- --host=x86_64-apple-darwin11 --target=i686-apple-darwin11 --with-gxx-include-dir=/usr/include/c++/4.2.1
+</span><span class='line'>Thread model: posix
+</span><span class='line'>gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>同じgccなので気にしないで進む。</p>
+
+<h3>Compile Ruby</h3>
+
+<p>依存性のあるzlib、openssl、ncurses等を$HOME/.rvm/usr/以下にインストールしとく。zlibが入ってないとインストール後のgemの実行で失敗したので。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rvm pkg install ree_dependencies</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rubyをインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 1.9.2 --with-gcc=clang
+</span><span class='line'>$ rvm install 1.9.3 --with-gcc=clang</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8211;with-gcc=clangはLLVM gcc対応のため。毎回つけるの面倒くさいな。rvm側の今後のバージョンアップで改善されないかなと期待。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Install of ruby-1.9.2-p318 - #complete 
+</span><span class='line'>clang: error: unsupported option '--with-libyaml'
+</span><span class='line'>Ruby 'ruby-1.9.2-p318' was build using clang - but it's not (fully) supported, expect errors.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>成功するけど&#8211;with-libyamlはサポートしてないという警告がでた。とっても気になるのだけどとりあえず気にせず先に進めることにする。問題でないという自信はまったくない。</p>
+
+<p>デフォルトは1.9.3に。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm use 1.9.3-p125 --default
+</span><span class='line'>$ ruby -v
+</span><span class='line'>ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ irb
+</span><span class='line'>1.9.3p125 :001 &gt; "Enjoy Ruby with rvm"
+</span><span class='line'> =&gt; "Enjoy Ruby with rvm" </span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Wordpressからoctopressに移行した(画像移行編)]]></title>
@@ -943,16 +1264,6 @@ more help
 &nbsp;
 
 <a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス]]></title>
-    <link href="http://niku4i.github.com/blog/2011/10/17/rozikuru%2C-erugofalsemikusudezaindeuebuyong/"/>
-    <updated>2011-10-17T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/10/17/rozikuru,-erugofalsemikusudezaindeuebuyong</id>
-    <content type="html"><![CDATA[<p style="text-align: right;">ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。</p>
-引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.
 ]]></content>
   </entry>
   
