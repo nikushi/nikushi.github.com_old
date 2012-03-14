@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-15T02:16:46+09:00</updated>
+  <updated>2012-03-15T02:18:51+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -123,14 +123,14 @@
 </span><span class='line'>--- Gemfile.org     2012-03-15 00:28:04.000000000 +0900
 </span><span class='line'>+++ Gemfile     2012-03-15 00:28:19.000000000 +0900
 </span><span class='line'>@@ -10,7 +10,7 @@
-</span><span class='line'>gem 'haml', '&gt;= 3.1'
-</span><span class='line'>gem 'compass', '&gt;= 0.11'
-</span><span class='line'>gem 'rubypants'
+</span><span class='line'>   gem 'haml', '&gt;= 3.1'
+</span><span class='line'>   gem 'compass', '&gt;= 0.11'
+</span><span class='line'>   gem 'rubypants'
 </span><span class='line'>-  gem 'rb-fsevent'
 </span><span class='line'>+  gem 'rb-fsevent', :git =&gt; 'git://github.com/ttilley/rb-fsevent.git', :branch =&gt; 'pre-compiled-gem-one-off'
-</span><span class='line'>gem 'stringex'
-</span><span class='line'>gem 'liquid', '2.2.2'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>   gem 'stringex'
+</span><span class='line'>   gem 'liquid', '2.2.2'
+</span><span class='line'> end</span></code></pre></td></tr></table></div></figure>
 
 
 <p>変更後、<code>$ bundle install</code>。通った。rvmのインストールの下りからここに至るまで長かった。XCodeでどれだけの人がはまっるんだろう。</p>

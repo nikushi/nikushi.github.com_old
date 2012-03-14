@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | ni-blog]]></title>
   <link href="http://niku4i.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-15T02:16:46+09:00</updated>
+  <updated>2012-03-15T02:18:51+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -79,14 +79,14 @@ $ diff -u Gemfile.org Gemfile
 --- Gemfile.org     2012-03-15 00:28:04.000000000 +0900
 +++ Gemfile     2012-03-15 00:28:19.000000000 +0900
 @@ -10,7 +10,7 @@
-gem 'haml', '&gt;= 3.1'
-gem 'compass', '&gt;= 0.11'
-gem 'rubypants'
+   gem 'haml', '&gt;= 3.1'
+   gem 'compass', '&gt;= 0.11'
+   gem 'rubypants'
 -  gem 'rb-fsevent'
 +  gem 'rb-fsevent', :git =&gt; 'git://github.com/ttilley/rb-fsevent.git', :branch =&gt; 'pre-compiled-gem-one-off'
-gem 'stringex'
-gem 'liquid', '2.2.2'
-end
+   gem 'stringex'
+   gem 'liquid', '2.2.2'
+ end
 </code></p>
 
 <p>変更後、<code>$ bundle install</code>。通った。rvmのインストールの下りからここに至るまで長かった。XCodeでどれだけの人がはまっるんだろう。</p>
