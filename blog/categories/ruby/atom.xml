@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://niku4i.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-15T01:44:19+09:00</updated>
+  <updated>2012-03-15T01:48:10+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Install rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1]]></title>
+    <title type="html"><![CDATA[Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1]]></title>
     <link href="http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/"/>
     <updated>2012-03-15T00:30:00+09:00</updated>
     <id>http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431</id>
@@ -193,7 +193,7 @@ gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)
 </code>
 同じgccなので気にしないで進む。</p>
 
-<h3>Compile Ruby</h3>
+<h3>Compiling Ruby</h3>
 
 <p>依存性のあるzlib、openssl、ncurses等を$HOME/.rvm/usr/以下にインストールしとく。zlibが入ってないとインストール後のgemの実行で失敗したので。
 <code>
