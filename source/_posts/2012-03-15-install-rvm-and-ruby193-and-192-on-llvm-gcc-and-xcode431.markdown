@@ -1,0 +1,207 @@
+---
+layout: post
+title: "Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1"
+date: 2012-03-15 00:30
+comments: true
+categories: 
+ - 'Ruby'
+tags:
+ - 'rvm'
+ - 'Ruby'
+ - 'XCode'
+---
+
+XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。
+
+Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。
+
+普通に考えて進めると、
+
+1. XCodeインストール
+1. rvm install
+
+するのだけど、
+
+```
+The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.
+```
+という出力で終了する。ネット上の情報を見ると[osx-gcc-installer](https://github.com/kennethreitz/osx-gcc-installer/downloads)をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って--with-gcc=clangをつけてインストールする方法があった。今回は--with-gcc=clangをつけてRubyをbuildした。詳細は後述。
+
+以下、詳細。
+
+<!-- more -->
+
+### 環境
+- Mac OS X Version 10.7.3 Lion
+- XCode 4.3.1
+- gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)
+- rvm 1.10.3
+- rvm installするRuby
+  - ruby-1.9.2-p318
+  - ruby-1.9.3-p125
+
+このブログ=octopressが現時点で1.9.3に対応していないため、1.9.2-p318もインストールした。
+
+### rbenvをアンインストール
+```
+$ rm -rf ~/.rbenv
+```
+
+### rvmをインストール
+公式ページの手順どおりやればよし。あえてコマンドは書かない。
+
+### XCode
+XCode4.3からXCode本体とは別パッケージでgccやmake等のCLIツールだけのCommand Line Tools for XcodeというパッケージがApp Storeから入手できるようになった。
+
+Mac Book Airの容量を節約できるしXCodeのCLIツールしか使わないのでこれは嬉しいので、喜んでXCodeはインストールせずCommand Line Tools for Xcodeだけインストールして、rvm install ... と進めていたのだけど、最終的にやはり必要ということが分かった。
+
+XCodeが結局必要な理由は話が先に飛ぶが、```rvm install ruby-1.9.2```の後octopress(このブログのシステム)用のgemをインストールする目的で```bundle install```する必要があったが、以下のとおりXCodeが見つからないというエラーが出てしまう。
+```
+$ rake new_post['rbenvからrvmに変更した']
+Could not find RedCloth-4.2.8 in any of the sources
+Run `bundle install` to install missing gems.
+mba208:octopress nikushi$ bundle install
+Fetching gem metadata from http://rubygems.org/.......
+Using rake (0.9.2)
+Installing RedCloth (4.2.8) with native extensions
+Installing posix-spawn (0.3.6) with native extensions
+Installing albino (1.3.3)
+Installing blankslate (2.1.2.4)
+Installing chunky_png (1.2.1)
+Installing fast-stemmer (1.0.0) with native extensions
+Installing classifier (1.3.3)
+Installing fssm (0.2.7)
+Installing sass (3.1.5)
+Installing compass (0.11.5)
+Installing directory_watcher (1.4.0)
+Installing ffi (1.0.9) with native extensions
+Installing haml (3.1.2)
+Installing kramdown (0.13.3)
+Installing liquid (2.2.2)
+Installing syntax (1.0.0)
+Installing maruku (0.6.0)
+Installing jekyll (0.11.0)
+Installing rubypython (0.5.1)
+Installing pygments.rb (0.1.3)
+Installing rack (1.3.2)
+Installing rb-fsevent (0.4.3.1) with native extensions Unfortunately, a fatal error has occurred. Please report this error to the Bundler issue tracker at https://github.com/carlhuda/bundler/issues so that we can fix it. Thanks!
+/Users/nikushi/.rvm/rubies/ruby-1.9.2-p318/lib/ruby/site_ruby/1.9.1/rubygems/installer.rb:552:in `rescue in block in build_extensions': ERROR: Failed to build gem native extension. (Gem::Installer::ExtensionBuildError)
+
+        /Users/nikushi/.rvm/rubies/ruby-1.9.2-p318/bin/ruby extconf.rb
+        creating Makefile
+        xcode-select: Error: No Xcode folder is set. Run xcode-select -switch <xcode_folder_path> to set the path to the Xcode folder.
+        extconf.rb:15:in `<main>': Could not find a suitable Xcode installation (RuntimeError)
+```
+
+そういうわけでXCode4.3.1をインストール。App Storeからダウンロードする。Command Line ToolはApp Storeからインストールしてもいいし、XCode起動後にPreferenceの中からでもinstall可能。どちらでもよいみたい。
+
+xcode-selectコマンドでpathを確認して、セットされていないようなら-switchでセットする。XCode4.2系は/Developerだったのが4.3系からは/Application/Xcode.app/以下に変更になったらしい。
+```
+$ xcode-select  -print-path
+xcode-select: Error: No Xcode folder is set. Run xcode-select -switch <xcode_folder_path> to set the path to the Xcode folder.
+```
+
+手動でセットする
+```
+$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+$ xcode-select  -print-path
+/Applications/Xcode.app/Contents/Developer
+```
+
+#### Command Line Toolsの確認
+```
+$ ls /Applications/Xcode.app/Contents/Developer/usr/bin/
+BuildStrings*                     gcc@                              mksdk*
+CpMac*                            gcov@                             momc*
+DeRez*                            gcov-4.2@                         nasm*
+GetFileInfo*                      gdb*                              ndisasm*
+ImageUnitAnalyzer*                git*                              nm*
+MergePef*                         git-cvsserver*                    nmedit*
+MvMac*                            git-receive-pack@                 opendiff*
+PPCExplain*                       git-shell*                        otool*
+ResMerger*                        git-upload-archive@               pagestuff*
+Rez*                              git-upload-pack*                  projectInfo*
+RezDet*                           gitk*                             ranlib@
+RezWack*                          gnumake*                          rcs*
+SetFile*                          gprof*                            rcs2log@
+SplitForks*                       hdxml2manxml*                     rcsclean*
+UnRezWack*                        headerdoc2html*                   rcsdiff*
+agvtool*                          i686-apple-darwin11-llvm-g++-4.2@ rcsmerge*
+amlint*                           i686-apple-darwin11-llvm-gcc-4.2@ rebase*
+ar*                               ibtool*                           redo_prebinding*
+as*                               ibtool3*                          resolveLinks*
+c89*                              ibtoold*                          rlog*
+c99*                              ident*                            sdef*
+ci*                               install_name_tool*                sdp*
+cmpdylib*                         instruments*                      segedit*
+co*                               iprofiler*                        size*
+codesign_allocate*                javaconfig*                       strip*
+codesign_wrapper*                 javatool*                         svn*
+cpp*                              ld*                               svnadmin*
+ctf_insert*                       ld_classic*                       svndumpfilter*
+cvs*                              libtool*                          svnlook*
+cvsbug*                           lldb*                             svnserve*
+desdp*                            llvm-cpp-4.2@                     svnsync*
+docsetutil*                       llvm-g++@                         svnversion*
+dsymutil*                         llvm-g++-4.2@                     unwinddump*
+dvtexec*                          llvm-gcc@                         xcodebuild*
+dwarfdump*                        llvm-gcc-4.2@                     xcrun*
+dyldinfo*                         make*                             xed*
+g++@                              mapc*                             xml2man*
+gatherheaderdoc*                  merge*
+```
+いろいろ入った。
+ちなみに、 /usr/bin/以下にもgcc入ったけど競合しないのか?ネット上の情報をみると/Applicaitons/Xcode.app/Contents/Developer/usr/bin/は$PATHに通す必要はないらしい。まったく自信はない。
+
+/usr/bin/gcc -v
+```
+$ /usr/bin/gcc -v
+Using built-in specs.
+Target: i686-apple-darwin11
+Configured with: /private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/src/configure --disable-checking --enable-werror --prefix=/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2 --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-prefix=llvm- --program-transform-name=/^[cg][^.-]*$/s/$/-4.2/ --with-slibdir=/usr/lib --build=i686-apple-darwin11 --enable-llvm=/private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/dst-llvmCore/Developer/usr/local --program-prefix=i686-apple-darwin11- --host=x86_64-apple-darwin11 --target=i686-apple-darwin11 --with-gxx-include-dir=/usr/include/c++/4.2.1
+Thread model: posix
+gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)
+```
+/Applications/Xcode.app/Contents/Developer/usr/bin/gcc -v
+```
+$ /Applications/Xcode.app/Contents/Developer/usr/bin/gcc -v
+Using built-in specs.
+Target: i686-apple-darwin11
+Configured with: /private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/src/configure --disable-checking --enable-werror --prefix=/Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2 --mandir=/share/man --enable-languages=c,objc,c++,obj-c++ --program-prefix=llvm- --program-transform-name=/^[cg][^.-]*$/s/$/-4.2/ --with-slibdir=/usr/lib --build=i686-apple-darwin11 --enable-llvm=/private/var/tmp/llvmgcc42/llvmgcc42-2336.9~22/dst-llvmCore/Developer/usr/local --program-prefix=i686-apple-darwin11- --host=x86_64-apple-darwin11 --target=i686-apple-darwin11 --with-gxx-include-dir=/usr/include/c++/4.2.1
+Thread model: posix
+gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00)
+```
+同じgccなので気にしないで進む。
+
+### Compiling Ruby
+依存性のあるzlib、openssl、ncurses等を$HOME/.rvm/usr/以下にインストールしとく。zlibが入ってないとインストール後のgemの実行で失敗したので。
+```
+rvm pkg install ree_dependencies
+```
+
+Rubyをインストール
+```
+$ rvm install 1.9.2 --with-gcc=clang
+$ rvm install 1.9.3 --with-gcc=clang
+```
+--with-gcc=clangはLLVM gcc対応のため。毎回つけるの面倒くさいな。rvm側の今後のバージョンアップで改善されないかなと期待。
+
+```
+Install of ruby-1.9.2-p318 - #complete 
+clang: error: unsupported option '--with-libyaml'
+Ruby 'ruby-1.9.2-p318' was build using clang - but it's not (fully) supported, expect errors.
+```
+成功するけど--with-libyamlはサポートしてないという警告がでた。とっても気になるのだけどとりあえず気にせず先に進めることにする。問題でないという自信はまったくない。
+
+デフォルトは1.9.3に。
+```
+$ rvm use 1.9.3-p125 --default
+$ ruby -v
+ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
+```
+
+```
+$ irb
+1.9.3p125 :001 > "Enjoy Ruby with rvm"
+ => "Enjoy Ruby with rvm" 
+```
