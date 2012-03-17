@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。 &nbsp; App::FatPackerを使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。 &hellip;">
+  <meta name="description" content="RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！ &nbsp; 物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/perlbrew/">Perlbrew</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！
+
+&nbsp;
+
+物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。
+
+インストール。rootにならず一般ユーザで。
+<pre lang="shell">curl -kL http://xrl.us/perlbrewinstall | bash</pre>
+curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。
+
+実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。
+<pre lang="shell">source ~/perl5/perlbrew/etc/bashrc</pre>
+インストール完了。
+
+&nbsp;
+
+さっそくperl 5.14.1に切り替えてみる。
+<pre lang="shell">perlbrew install perl-5.14.1
+perlbrew switch perl-5.14.1</pre>
+perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。
+
+テスト
+<pre lang="shell">$ perl -v 
+
+This is perl 5, version 14, subversion 1 (v5.14.1) built for darwin-2level 
+
+Copyright 1987-2011, Larry Wall</pre>
+成功！！
+
+もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。
+
+インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！
+<pre lang="shell">perlbrew exec myprogram.pl</pre>
+more help
+<pre lang="shell">perlbrew help</pre>
+&nbsp;
+
+参考にさせていただいたページ
+<ul>
+	<li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
+</ul>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -473,50 +549,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/15/pc-ji-neng-xing-aiuea-jins-yan-jing-%28meganemegane%29/">ディスプレイを見るときの負荷を軽減する眼鏡 by JINS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-15T00:00:00+09:00" pubdate data-updated="true">Sep 15<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">&nbsp;
-
-<a href="http://www.jins-jp.com/functional/pc.html"><img src='/images/img_pc_main.jpg' alt='' /></a>
-
-&nbsp;
-
-<a href="http://www.jins-jp.com/functional/pc.html">PC - 機能性アイウエア | JINS - 眼鏡（メガネ・めがね）</a>
-
-これは買って試す価値ありだな。最近、コードを書く時間が増えて余計に目がチラつくし欲しいところ。むしろこれまでこのジャンルが少なかったのが不思議なくらい。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -543,6 +575,10 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
@@ -556,10 +592,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
     
       <li class="post">
         <a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/14/hello/">Hello, World</a>
       </li>
     
   </ul>

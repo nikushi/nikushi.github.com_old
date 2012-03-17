@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="vにてビジュアルモード、jkhlを駆使して範囲指定 :にてコマンド指定するモードに入る すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする vimでコード書いてるときなど、 &hellip;">
+  <meta name="description" content="rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。 user$ bash -s stable rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。 じゃあということでcurlに- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">Curlでサーバ証明書の検証で失敗したとき</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
+
+<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
+rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
+
+じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
+
+根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
+<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,82 +514,6 @@ Framewark
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/18/perlbrew/">Perlbrew</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">RubyでいうところのRVMらしい。RVM使ったこと無いのでよく分からない。rootにならずとも、様々なperlバージョンをswitchしてテストとか出来るらしい。便利！
-
-&nbsp;
-
-物は試し。さっそくMacにインストールしてみよう。ドキュメントはhttp://www.perlbrew.pl/ を参考にする。
-
-インストール。rootにならず一般ユーザで。
-<pre lang="shell">curl -kL http://xrl.us/perlbrewinstall | bash</pre>
-curlでインストールするところがかっこいい。というかこのインストール方法なかなか他でも使えるので勉強になる。curlでシェルスクリプトを取得して、シェルスクリプトの中でさらにperlbrewという名前のperlスクリプトをダウンロードして、perlbrew install を実行するようだ。
-
-実行完了すると、 ~/.bashrc の末尾に以下1行を追記しろと言われるので従う。追記後、一旦シェルをexitして再度シェルに戻るか、$ source .bashrc してください。
-<pre lang="shell">source ~/perl5/perlbrew/etc/bashrc</pre>
-インストール完了。
-
-&nbsp;
-
-さっそくperl 5.14.1に切り替えてみる。
-<pre lang="shell">perlbrew install perl-5.14.1
-perlbrew switch perl-5.14.1</pre>
-perlbrew install perl-5.14.1を実行するとソースを取得してがしがしコンパイルしだすので結構時間かかる。
-
-テスト
-<pre lang="shell">$ perl -v 
-
-This is perl 5, version 14, subversion 1 (v5.14.1) built for darwin-2level 
-
-Copyright 1987-2011, Larry Wall</pre>
-成功！！
-
-もちろん、一旦シェルをexitして別シェルでperl -vをすると&#8230;. 5.8.8 などシステムにインストールされたバージョンに戻る! switchされる時間はあくまでswicthを実行したシェル上だけ。ふむふむ。
-
-インストールされている全バージョンでプログラムをテストする方法もあるようだ。便利！
-<pre lang="shell">perlbrew exec myprogram.pl</pre>
-more help
-<pre lang="shell">perlbrew help</pre>
-&nbsp;
-
-参考にさせていただいたページ
-<ul>
-	<li><a title="MacにperlbrewでPerl環境を作ってみた" href="http://d.hatena.ne.jp/pasela/20110703/perlbrew">MacにperlbrewでPerl環境を作ってみた | ぱせらんメモ</a></li>
-</ul>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -572,6 +540,10 @@ more help
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
@@ -585,10 +557,6 @@ more help
     
       <li class="post">
         <a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/14/hello/">Hello, World</a>
       </li>
     
   </ul>

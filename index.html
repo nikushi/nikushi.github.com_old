@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回の記事でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもいrake new_post['hoge']したらbundle installしろと怒られたので実行してみたら途中で止まってしまいはまった。 &hellip;">
+  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,121 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T05:32:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>octopressのソースファイルの管理</h3>
+
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。</p>
+
+<ol>
+<li><code>rake new_post['hoge']</code>で記事を作成</li>
+<li><code>rake deploy</code>で記事を公開</li>
+<li><code>git push</code>にてlocalhostのsourceブランチ -> github pagesのsourceブランチemote backup。</li>
+</ol>
+
+
+<p><code>rake deploy</code>するとgithubのmasterブランチにpublicディレクトリのみuploadされるのはよいが、<code>git push</code>にてsourceファイルも公開している。</p>
+
+<p>個人的にはソースファイルは公開しなくてよいかなと考えた。
+そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+
+<h3>リポジトリ作成</h3>
+
+<pre><code>mkdir -p ~/Dropbox/repos/ni-blog.git        
+cd ~/Dropbox/repos/ni-blog.git              
+git --bare init                           
+</code></pre>
+
+<h3>リモートリポジトリの追加</h3>
+
+<p>リモートリポジトリの確認
+現在のremoteのripositoryはoctopressとoriginの2種類。</p>
+
+<pre><code>$ cd path/to/octopress
+$ git remote -v                     
+octopress       git://github.com/imathis/octopress.git (fetc
+octopress       git://github.com/imathis/octopress.git (push
+origin  git@github.com:niku4i/niku4i.github.com.git (fetch) 
+origin  git@github.com:niku4i/niku4i.github.com.git (push)  
+</code></pre>
+
+<p>~/Dropbox/repos/ni-blog.gitをdropboxという名前で登録</p>
+
+<pre><code>git remote add dropbox ~/Dropbox/repos/ni-blog.git
+</code></pre>
+
+<p>確認</p>
+
+<pre><code>$ git remote -v                          
+dropbox /Users/nikushi/Dropbox/repos/ni-blog.git (fetch)       
+dropbox /Users/nikushi/Dropbox/repos/ni-blog.git (push)        
+octopress       git://github.com/imathis/octopress.git (fetch) 
+octopress       git://github.com/imathis/octopress.git (push)  
+origin  git@github.com:niku4i/niku4i.github.com.git (fetch)    
+origin  git@github.com:niku4i/niku4i.github.com.git (push)     
+</code></pre>
+
+<p>dropboxが追加されました。</p>
+
+<h3>Dropboxのリポジトリにソースファイルをpushする</h3>
+
+<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になる。</p>
+
+<pre><code>$ git push -u dropbox source                   
+Counting objects: 4110, done.                                        
+Delta compression using up to 4 threads.                             
+Compressing objects: 100% (1598/1598), done.                         
+Writing objects: 100% (4110/4110), 2.73 MiB, done.                   
+Total 4110 (delta 2307), reused 3836 (delta 2197)                    
+To /Users/nikushi/Dropbox/repos/ni-blog.git                          
+ * [new branch]      source -&gt; source                                
+ Branch source set up to track remote branch source from dropbox.     
+</code></pre>
+
+<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされる。</p>
+
+<p>本当にバックアップされたか確認する。<code>git clone</code>する際には-bでsourceブランチを指定する必要がある。</p>
+
+<pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
+git clone -b source ~/Dropbox/repos/ni-blog.git
+cd ni-blog
+ls
+</code></pre>
+
+<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更できた。しばらくこれで運用してみる。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1074,50 +1189,6 @@ idを変えるのは何かと面倒なこともあるが、すっきりした感
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">Curlでサーバ証明書の検証で失敗したとき</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
-
-<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
-rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
-
-じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
-
-根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
-<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1142,6 +1213,10 @@ rvmをインストールしたいので、公式ページに従い上のとお�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
@@ -1155,10 +1230,6 @@ rvmをインストールしたいので、公式ページに従い上のとお�
     
       <li class="post">
         <a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/14/hello/">Hello, World</a>
       </li>
     
   </ul>

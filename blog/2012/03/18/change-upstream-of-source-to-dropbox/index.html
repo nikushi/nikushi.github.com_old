@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Perlは楽しい - ni-blog</title>
+  <title>OctopressのソースリポジトリをDropboxに変更 - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="自然言語的(英語的)に書けるところは素敵だな。 my @words = qw( apple lemon orange );
-print $_ . 's' foreach @words; print a word with &#8216;s&#8217; for each word.
-とかね:) &hellip;">
+  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ print $_ . 's' foreach @words; print a word with &#8216;s&#8217; for each word.
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2011/09/02/perlhale-sii">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/03/18/change-upstream-of-source-to-dropbox">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +79,7 @@ print $_ . 's' foreach @words; print a word with &#8216;s&#8217; for each word.
   
   <header>
     
-      <h1 class="entry-title">Perlは楽しい</h1>
+      <h1 class="entry-title">OctopressのソースリポジトリをDropboxに変更</h1>
     
     
       <p class="meta">
@@ -97,24 +95,93 @@ print $_ . 's' foreach @words; print a word with &#8216;s&#8217; for each word.
   
 
 
-<time datetime="2011-09-02T00:00:00+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time>
+<time datetime="2012-03-18T05:32:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">自然言語的(英語的)に書けるところは素敵だな。
+<div class="entry-content"><h3>octopressのソースファイルの管理</h3>
 
-<pre lang="perl">
-my @words = qw( apple lemon orange );
-print $_ . 's' foreach @words;
-</pre>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。</p>
 
-print a word with &#8216;s&#8217; for each word.
-とかね:) cool!!
+<ol>
+<li><code>rake new_post['hoge']</code>で記事を作成</li>
+<li><code>rake deploy</code>で記事を公開</li>
+<li><code>git push</code>にてlocalhostのsourceブランチ -> github pagesのsourceブランチemote backup。</li>
+</ol>
 
-1つのプログラミング言語を理解するにはその言語を使う人の文化や特性を理解するとしっくりくる。
+
+<p><code>rake deploy</code>するとgithubのmasterブランチにpublicディレクトリのみuploadされるのはよいが、<code>git push</code>にてsourceファイルも公開している。</p>
+
+<p>個人的にはソースファイルは公開しなくてよいかなと考えた。
+そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+
+<h3>リポジトリ作成</h3>
+
+<pre><code>mkdir -p ~/Dropbox/repos/ni-blog.git        
+cd ~/Dropbox/repos/ni-blog.git              
+git --bare init                           
+</code></pre>
+
+<h3>リモートリポジトリの追加</h3>
+
+<p>リモートリポジトリの確認
+現在のremoteのripositoryはoctopressとoriginの2種類。</p>
+
+<pre><code>$ cd path/to/octopress
+$ git remote -v                     
+octopress       git://github.com/imathis/octopress.git (fetc
+octopress       git://github.com/imathis/octopress.git (push
+origin  git@github.com:niku4i/niku4i.github.com.git (fetch) 
+origin  git@github.com:niku4i/niku4i.github.com.git (push)  
+</code></pre>
+
+<p>~/Dropbox/repos/ni-blog.gitをdropboxという名前で登録</p>
+
+<pre><code>git remote add dropbox ~/Dropbox/repos/ni-blog.git
+</code></pre>
+
+<p>確認</p>
+
+<pre><code>$ git remote -v                          
+dropbox /Users/nikushi/Dropbox/repos/ni-blog.git (fetch)       
+dropbox /Users/nikushi/Dropbox/repos/ni-blog.git (push)        
+octopress       git://github.com/imathis/octopress.git (fetch) 
+octopress       git://github.com/imathis/octopress.git (push)  
+origin  git@github.com:niku4i/niku4i.github.com.git (fetch)    
+origin  git@github.com:niku4i/niku4i.github.com.git (push)     
+</code></pre>
+
+<p>dropboxが追加されました。</p>
+
+<h3>Dropboxのリポジトリにソースファイルをpushする</h3>
+
+<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になる。</p>
+
+<pre><code>$ git push -u dropbox source                   
+Counting objects: 4110, done.                                        
+Delta compression using up to 4 threads.                             
+Compressing objects: 100% (1598/1598), done.                         
+Writing objects: 100% (4110/4110), 2.73 MiB, done.                   
+Total 4110 (delta 2307), reused 3836 (delta 2197)                    
+To /Users/nikushi/Dropbox/repos/ni-blog.git                          
+ * [new branch]      source -&gt; source                                
+ Branch source set up to track remote branch source from dropbox.     
+</code></pre>
+
+<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされる。</p>
+
+<p>本当にバックアップされたか確認する。<code>git clone</code>する際には-bでsourceブランチを指定する必要がある。</p>
+
+<pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
+git clone -b source ~/Dropbox/repos/ni-blog.git
+cd ni-blog
+ls
+</code></pre>
+
+<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更できた。しばらくこれで運用してみる。</p>
 </div>
 
 
@@ -137,15 +204,21 @@ print a word with &#8216;s&#8217; for each word.
   
 
 
-<time datetime="2011-09-02T00:00:00+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time>
+<time datetime="2012-03-18T05:32:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2011/09/02/perlhale-sii/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2011/09/02/perlhale-sii/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/03/18/change-upstream-of-source-to-dropbox/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/03/18/change-upstream-of-source-to-dropbox/" >Tweet</a>
   
   
   
@@ -156,10 +229,8 @@ print a word with &#8216;s&#8217; for each word.
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/09/02/hulu-ri-ben-desabisukai-shi/" title="Previous Post: hulu 日本でサービス開始">&laquo; hulu 日本でサービス開始</a>
+        <a class="basic-alignment left" href="/blog/2012/03/15/xcode-43-and-octopress/" title="Previous Post: XCode 4.3とoctopress">&laquo; XCode 4.3とoctopress</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/09/03/basics-of-perl-web-portals/" title="next Post: Basics of Perl web portals">Basics of Perl web portals &raquo;</a>
       
     </p>
   </footer>

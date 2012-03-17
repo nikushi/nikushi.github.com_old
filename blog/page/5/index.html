@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。 mod_dav_svnが必要なのでyum installする。 $ sudo yum install mod_dav_svn.x86_64 svn関連のapache設定。 &hellip;">
+  <meta name="description" content="時には、perlが標準で読むモジュールディレクトリにインストールしたくないときもある。 例えば、テストで使ってみるときや、システム全体に適用しなくとも一部のコマンドだけで使いたいモジュールを適用する場合などだ。システム全体に影響しないパスにインストールすれば、影響範囲を気にせずモジュールを使える &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/26/cpanmoziyuruwoshou-dong-insutorusurufang-fa/">CPANモジュールを手動インストールする方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-26T00:00:00+09:00" pubdate data-updated="true">Aug 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">時には、perlが標準で読むモジュールディレクトリにインストールしたくないときもある。
+
+例えば、テストで使ってみるときや、システム全体に適用しなくとも一部のコマンドだけで使いたいモジュールを適用する場合などだ。システム全体に影響しないパスにインストールすれば、影響範囲を気にせずモジュールを使える。
+
+
+まずは、普通にインストールする場合。以下では/usr/lib以下あたりにインストールされる。
+<pre lang="shell">
+# perl -MCPAN -e shell
+cpan> insall HOGE
+</pre>
+
+次に、PREFIXを使って指定したディレクトリにインストールする場合。YAML.pmをインストールする例。
+<pre lang="shell">
+# wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/YAML-0.73.tar.gz
+# tar zxvf YAML-0.73.tar.gz 
+# cd YAML-0.73
+# perl Makefile.PL PREFIX=/var/tmp/test
+# make
+# make install
+</pre>
+この例では、/var/tmp/test/lib 以下にインストールされる。読み込むperlスクリプトでuse libを使って明示すればよい。
+<pre lang="perl">
+#!/usr/bin/perl
+
+use FindBin qw($Bin);
+use lib '/var/tmp/test/lib/perl5/site_perl';
+</pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,51 +532,6 @@ sub test {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/16/what-is-cissp/">What Is CISSP</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-16T00:00:00+09:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote>CISSP認定資格とは、(ISC)2SM（International Information Systems Security Certification Consortium）が
-
-認定を行っている国際的に認められた情報セキュリティ・プロフェッショナル認証資格です。
-
-Novell、Deloitte Touche Tohmatsu、大手ヘルスケアサービス企業その他主要企業において、
-
-CISSP認定資格の取得が情報セキュリティ関連業務従事者の必須事項とされており、
-
-世界各国で76,000名以上（2011年8月現在）がCISSP認定資格を保持しています。</blockquote>
-引用元: <a href="https://www.isc2.org/japan/what_index.html">(ISC)2 Japan</a>.
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -541,6 +558,10 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
@@ -554,10 +575,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
     
       <li class="post">
         <a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/14/hello/">Hello, World</a>
       </li>
     
   </ul>
