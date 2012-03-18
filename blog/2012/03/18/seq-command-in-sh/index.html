@@ -5,13 +5,21 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>viでタブをスペースに一括変換するには - ni-blog</title>
+  <title>seqコマンド - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="vi(vim)で編集中に、 &nbsp; :1,$!expand -4 &nbsp; とやればよい。
-引用元: viでタブをスペースに一括変換するには - 俺用メモ.
-">
+  <meta name="description" content="はずかしながらseqというコマンドというのを知らなかったのでメモ。 $ for i in seq 1 10; do expr $i \* 2; done
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20 Rubyだと普通にこうやりますね。 (1..10).each { |i| puts i * &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +28,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2011/08/18/videtabuwosupesuni%5B%3F%5D-gua-bian-huan-suruniha">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +89,7 @@
   
   <header>
     
-      <h1 class="entry-title">Viでタブをスペースに一括変換するには</h1>
+      <h1 class="entry-title">Seqコマンド</h1>
     
     
       <p class="meta">
@@ -97,23 +105,32 @@
   
 
 
-<time datetime="2011-08-18T00:00:00+09:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+<time datetime="2012-03-18T12:55:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><blockquote>vi(vim)で編集中に、
+<div class="entry-content"><p>はずかしながらseqというコマンドというのを知らなかったのでメモ。</p>
 
-&nbsp;
+<pre><code>$ for i in seq 1 10; do expr $i \* 2; done
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+</code></pre>
 
-:1,$!expand -4
+<p>Rubyだと普通にこうやりますね。</p>
 
-&nbsp;
-
-とやればよい。</blockquote>
-引用元: <a href="http://d.hatena.ne.jp/nyanplus/20110610/1307677456">viでタブをスペースに一括変換するには - 俺用メモ</a>.
+<pre><code>(1..10).each { |i| puts i * 2 }
+</code></pre>
 </div>
 
 
@@ -136,15 +153,21 @@
   
 
 
-<time datetime="2011-08-18T00:00:00+09:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+<time datetime="2012-03-18T12:55:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/shell-script/'>shell script</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2011/08/18/videtabuwosupesuni%5B%3F%5D-gua-bian-huan-suruniha/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2011/08/18/videtabuwosupesuni%5B%3F%5D-gua-bian-huan-suruniha/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh/" >Tweet</a>
   
   
   
@@ -155,10 +178,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/18/coding-week/" title="Previous Post: coding week">&laquo; coding week</a>
+        <a class="basic-alignment left" href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/" title="Previous Post: OctopressのソースリポジトリをDropboxに変更">&laquo; OctopressのソースリポジトリをDropboxに変更</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/08/19/perltiao-jian-yan-suan-zi/" title="next Post: Perl::条件演算子">Perl::条件演算子 &raquo;</a>
       
     </p>
   </footer>

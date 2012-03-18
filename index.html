@@ -9,7 +9,17 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。 &hellip;">
+  <meta name="description" content="はずかしながらseqというコマンドというのを知らなかったのでメモ。 $ for i in seq 1 10; do expr $i \* 2; done
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20 Rubyだと普通にこうやりますね。 (1..10).each { |i| puts i * &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +86,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/seq-command-in-sh/">Seqコマンド</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T12:55:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>はずかしながらseqというコマンドというのを知らなかったのでメモ。</p>
+
+<pre><code>$ for i in seq 1 10; do expr $i \* 2; done
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+</code></pre>
+
+<p>Rubyだと普通にこうやりますね。</p>
+
+<pre><code>(1..10).each { |i| puts i * 2 }
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1151,44 +1215,6 @@ herokuはとっても便利だ。数回コマンドだけでwebサイト作れ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/29/gai-ming/">改名</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">twitterの名前を@niku4iに変えた。以前のは_が含まれれて何かと不便で、githubだと_が使えないので-にしないといけなかったりだったので。
-
-idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1213,6 +1239,10 @@ idを変えるのは何かと面倒なこともあるが、すっきりした感
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
       </li>
     
@@ -1226,10 +1256,6 @@ idを変えるのは何かと面倒なこともあるが、すっきりした感
     
       <li class="post">
         <a href="/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/">Wordpressからoctopressに移行した(画像移行編)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a>
       </li>
     
   </ul>
