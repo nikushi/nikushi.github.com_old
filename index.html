@@ -123,15 +123,11 @@
 
 <p><a href="https://gist.github.com/2134897">instag.rb</a>をダウンロードし<code>plugins/</code>ディレクトリに配置してください。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd /var/tmp/
-</span><span class='line'>git clone git://gist.github.com/2134897.git
-</span><span class='line'>mv 2134897/instag.rb path/to/octopress/plugins
-</span><span class='line'>rm -rf 2134897/</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>cd /var/tmp/
+git clone git://gist.github.com/2134897.git
+mv 2134897/instag.rb path/to/octopress/plugins
+rm -rf 2134897/
+</code></pre>
 
 <h3>使い方</h3>
 
@@ -139,14 +135,14 @@
 {% instag [class name(s)] http://instagr.am/p/IYYs5bo0jd/ [width [height]] [title text | "title text" ["alt text"]] }
 
 # Examples:
-# {% instag http://instagr.am/p/IYYs5bo0jd/ }
-# {% instag left half http://instagr.am/p/IYYs5bo0jd/ my title }
-# {% instag left half http://instagr.am/p/IYYs5bo0jd/ 150 150 "my title" "our title" }
+{% instag http://instagr.am/p/IYYs5bo0jd/ }
+{% instag left half http://instagr.am/p/IYYs5bo0jd/ my title }
+{% instag left half http://instagr.am/p/IYYs5bo0jd/ 150 150 "my title" "our title" }
 
 # Output:
-# &lt;img src="http://path/to/istagram/image.jpg"&gt;
-# &lt;img class="left half" src="http://path/to/instagram/image.jpg" title="my title" alt="my title"&gt;
-# &lt;img class="left half" src="http://path/to/instagram/image.jpg" width="150" height="150" title="my title" alt="our title"&gt;
+&lt;img src="http://path/to/istagram/image.jpg"&gt;
+&lt;img class="left half" src="http://path/to/instagram/image.jpg" title="my title" alt="my title"&gt;
+&lt;img class="left half" src="http://path/to/instagram/image.jpg" width="150" height="150" title="my title" alt="our title"&gt;
 </code></pre>
 
 <h3>例</h3>
@@ -167,7 +163,7 @@
 
 <p><img src="http://distilleryimage1.instagram.com/2a3e47fa724611e181bd12313817987b_7.jpg" width="125" height="125" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
 
-<p><a href="https://gist.github.com/2134897">instag.rb</a>のコードは標準で付属するimage.rbプラグインをまねて作った。ざっと作ったので例外処理がゆるい。</p>
+<p><a href="https://gist.github.com/2134897">instag.rb</a>はスクラッチから書いたわけではなく、標準で付属するimage.rbプラグインをまねて作った。ざっと作ったので例外処理がゆるい。</p>
 
 <p>InstagramのページURLから画像を取得方法は<a href="http://instagram.com/developer/embedding/">Embedding Endpoints</a>の機能を利用した。この方法は認証キーを取得しなくとも利用できるので、できることは限られるけど認証がないので簡単。こんな感じ。</p>
 
