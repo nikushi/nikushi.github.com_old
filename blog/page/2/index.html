@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="twitterの名前を@niku4iに変えた。以前のは_が含まれれて何かと不便で、githubだと_が使えないので-にしないといけなかったりだったので。 idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。
-">
+  <meta name="description" content="現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。 というわけでさっそくマイクロWebアプリを作ってみた。 Random Password Generator &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。
+
+というわけでさっそくマイクロWebアプリを作ってみた。
+<ul>
+	<li><a title="Random Password Generator" href="http://makepasswdx.herokuapp.com/">Random Password Generator</a></li>
+	<li><a title="ソース" href="https://github.com/niku4i/makepasswdx">ソース</a></li>
+</ul>
+シンプルにランダム文字列返すだけ。
+
+実はこれ昔作ったPerl CGIの焼き直し。昔、ランダム文字列pass付きzipで添付ファイルをメールするけど、文字列を都度考えるのは面倒ですとオペさん(事務のおねえさん)が言うのでその時はPerl CGI版を社内向に作った。Sinatraで焼き直してみた。
+<div>Sinatraは<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にコードを書く。</div>
+herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考に。
+
+最初はSinatraを勉強するつもりだったけど後半はherokuとgitの勉強もできた。herokuへのdeploy方法とか細かいところはリ<a href="https://github.com/niku4i/makepasswdx/blob/master/README">ポジトリのREADME</a>に書いた。
+
+herokuはとっても便利だ。数回コマンドだけでwebサイト作れる。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -462,42 +512,6 @@ App::Cmdが有名どころのようだ。
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/18/yapcasia-tokyo/">YAPC::Asia Tokyo</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -524,6 +538,10 @@ App::Cmdが有名どころのようだ。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">Octopressにinstagramの写真を挿入するtag pluginを作ってみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a>
       </li>
     
@@ -537,10 +555,6 @@ App::Cmdが有名どころのようだ。
     
       <li class="post">
         <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/">Wordpressからoctopressに移行した(画像移行編)</a>
       </li>
     
   </ul>

@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Wordpressからoctopressに移行した(画像移行編) - ni-blog</title>
+  <title>Octopressにinstagramの写真を挿入するtag pluginを作ってみた - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。 移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/
-移行後(octopress)の画像ファイル置き場は/images/ &hellip;">
+  <meta name="description" content="Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、Octopress向けプラグイン instag を作ってみた。 instag.rb 概要 {% instag http://instagr.am/p/IYYs5bo0jd/ } &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/03/20/instagram-tag-plugin-for-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">Wordpressからoctopressに移行した(画像移行編)</h1>
+      <h1 class="entry-title">Octopressにinstagramの写真を挿入するtag Pluginを作ってみた</h1>
     
     
       <p class="meta">
@@ -96,72 +95,96 @@
   
 
 
-<time datetime="2012-03-11T22:36:00+09:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+<time datetime="2012-03-20T20:39:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。</p>
+<div class="entry-content"><p>Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、Octopress向けプラグイン instag を作ってみた。</p>
 
-<ul>
-<li>移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/</li>
-<li>移行後(octopress)の画像ファイル置き場は/images/</li>
-</ul>
+<p><a href="https://gist.github.com/2134897">instag.rb</a></p>
 
+<h3>概要</h3>
 
-<p>Wordpressはxreaのサーバで運用していたので、sshでログインしてローカルのMacまでscpしてきた。 ~/tmp/uploads/ あたりに保存しとく。</p>
+<pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ }
+</code></pre>
 
-<p>つづいてローカルのoctopressディレクトリにコピーする。</p>
+<p>記事中でタグが使えます。表示させたいinstagramページのURLは知っておく必要があります。</p>
+
+<h3>インストール</h3>
+
+<p><a href="https://gist.github.com/2134897">instag.rb</a>をダウンロードし<code>plugins/</code>ディレクトリに配置してください。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/Documents/Blog/octopress
-</span><span class='line'>cp ~/tmp/uploads/* source/images/</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /var/tmp/
+</span><span class='line'>git clone git://gist.github.com/2134897.git
+</span><span class='line'>mv 2134897/instag.rb path/to/octopress/plugins
+</span><span class='line'>rm -rf 2134897/</span></code></pre></td></tr></table></div></figure>
 
 
-<p>source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
+<h3>使い方</h3>
 
-<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいにhttp://で始まっていたので、方針としてはhttp://orihubon.com/uploads/をざっくり消して/imagesに置き換えることにする。</p>
+<pre><code># Syntax:
+{% instag [class name(s)] http://instagr.am/p/IYYs5bo0jd/ [width [height]] [title text | "title text" ["alt text"]] }
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd source</span>/_posts
-</span><span class='line'><span class="k">for </span>f in <span class="k">$(</span> ls <span class="k">)</span>; <span class="k">do  </span>ruby -ne <span class="s1">&#39;$_.gsub!(%r!http://orihubon.com/wp-content/uploads/!, &quot;/images/&quot;); puts $_;&#39;</span> &lt; <span class="nv">$f</span> &gt; tmp; mv tmp <span class="nv">$f</span>; <span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure>
+# Examples:
+# {% instag http://instagr.am/p/IYYs5bo0jd/ }
+# {% instag left half http://instagr.am/p/IYYs5bo0jd/ my title }
+# {% instag left half http://instagr.am/p/IYYs5bo0jd/ 150 150 "my title" "our title" }
 
+# Output:
+# &lt;img src="http://path/to/istagram/image.jpg"&gt;
+# &lt;img class="left half" src="http://path/to/instagram/image.jpg" title="my title" alt="my title"&gt;
+# &lt;img class="left half" src="http://path/to/instagram/image.jpg" width="150" height="150" title="my title" alt="our title"&gt;
+</code></pre>
 
-<p>上のコードは単純に置換してるだけ。過去記事のaタグやimgタグ意外のテキストも置き換えるのですが、私の記事をgrepして確認したらなかったので、parseしなくていいやということでシンプルに置き換えた。</p>
+<h3>例</h3>
 
-<p>生成して確認する。</p>
+<p>今日、中野駅近くのベジタブル料理専門のカフェレストランに行ってきたときの写真で試します。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake generate
-</span><span class='line'>rake preview
-</span></code></pre></td></tr></table></div></figure>
+<p>標準サイズ</p>
 
+<pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ }
+</code></pre>
 
-<p>http://localhost:4000/にアクセスして確認する。</p>
+<p><img src="http://distilleryimage1.instagram.com/2a3e47fa724611e181bd12313817987b_7.jpg" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
 
-<p>deployし公開。</p>
+<p>125x125に縮小</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake deploy
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ 125 125 }
+</code></pre>
 
+<p><img src="http://distilleryimage1.instagram.com/2a3e47fa724611e181bd12313817987b_7.jpg" width="125" height="125" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
 
-<p>commitもしとく。</p>
+<p><a href="https://gist.github.com/2134897">instag.rb</a>のコードは標準で付属するimage.rbプラグインをまねて作った。ざっと作ったので例外処理がゆるい。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>InstagramのページURLから画像を取得方法は<a href="http://instagram.com/developer/embedding/">Embedding Endpoints</a>の機能を利用した。この方法は認証キーを取得しなくとも利用できるので、できることは限られるけど認証がないので簡単。こんな感じ。</p>
+
+<figure class='code'><figcaption><span>sample</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>git add -A
-</span><span class='line'>git commit -m <span class="s2">&quot;Imported image files from old wordpress blog&quot;</span>
-</span><span class='line'>git push
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://api.instagram.com/oembed?url=&#39;</span> <span class="o">+</span> <span class="n">url</span>
+</span><span class='line'>    <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>現状キャッシュしてないので<code>rake generate</code>する度に問い合わせして遅い。気が向いたらキャッシュするといったことを実装するかも。同じようなプラグインでgist_tag.rbというのが標準でありまして、こいつを拝見するとキャッシュしてるので真似れば出来そうではある。</p>
+
+<p>次はサイドバーにInstagramの画像を表示したくなるが誰か作ってくれないかなと期待。OctopressはWordpressに比べて圧倒的にプラグインの数が少ないのが難点ですがこうやって作れるのもまあ魅力かな。</p>
 </div>
 
 
@@ -184,7 +207,7 @@
   
 
 
-<time datetime="2012-03-11T22:36:00+09:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+<time datetime="2012-03-20T20:39:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -198,7 +221,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/03/20/instagram-tag-plugin-for-octopress/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/03/20/instagram-tag-plugin-for-octopress/" >Tweet</a>
   
   
   
@@ -209,10 +232,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/14/migration-from-wordpress-to-octopress/" title="Previous Post: Wordpressからoctopressに移行した">&laquo; Wordpressからoctopressに移行した</a>
+        <a class="basic-alignment left" href="/blog/2012/03/18/seq-command-in-sh/" title="Previous Post: seqコマンド">&laquo; seqコマンド</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/" title="next Post: Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1 &raquo;</a>
       
     </p>
   </footer>
