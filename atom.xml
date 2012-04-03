@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-20T22:38:31+09:00</updated>
+  <updated>2012-04-03T21:01:21+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -31,6 +31,9 @@
 </code></pre>
 
 <p>記事中でタグが使えます。表示したいinstagramページのURLは知っておく必要があります。</p>
+
+<!-- more -->
+
 
 <h3>インストール</h3>
 
@@ -67,41 +70,61 @@ rm -rf 2134897/
 <pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ }
 </code></pre>
 
-<p><img src="http://distilleryimage1.instagram.com/2a3e47fa724611e181bd12313817987b_7.jpg" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
+<p><img src="http://distilleryimage1.s3.amazonaws.com/2a3e47fa724611e181bd12313817987b_7.jpg" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
 
 <p>125x125に縮小</p>
 
 <pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ 125 125 }
 </code></pre>
 
-<p><img src="http://distilleryimage1.instagram.com/2a3e47fa724611e181bd12313817987b_7.jpg" width="125" height="125" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
+<p><img src="http://distilleryimage1.s3.amazonaws.com/2a3e47fa724611e181bd12313817987b_7.jpg" width="125" height="125" title="dal curry!!! yumyum" alt="dal curry!!! yumyum"></p>
 
-<p><a href="https://gist.github.com/2134897">instag.rb</a>はスクラッチから書いたわけではなく、標準で付属するimage.rbプラグインをまねて作った。ざっと作ったので例外処理がゆるい。</p>
+<p><a href="https://gist.github.com/2134897">instag.rb</a>はスクラッチから書いたわけではなく、標準で付属するimage.rbプラグインとgist_tag.rbプラグイン参考にしました。</p>
 
-<p>InstagramのページURLから画像を取得方法は<a href="http://instagram.com/developer/embedding/">Embedding Endpoints</a>の機能を利用した。この方法は認証キーを取得しなくとも利用できるので、できることは限られるけど認証がないので簡単。こんな感じ。</p>
+<p>InstagramのページURLから画像を取得方法は<a href="http://instagram.com/developer/embedding/">Embedding Endpoints</a>の機能を利用しました。認証キーを取得しなくとも利用できるので簡単に利用できます。画像ページのURLから実際のjpgのURLを取得する方法はこんな感じです。</p>
 
-<figure class='code'><figcaption><span>sample</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<pre><code>require 'open-uri'
+require 'json'
+
+api  = 'http://api.instagram.com/oembed?url='
+page = 'http://instagr.am/p/IYYs5bo0jd/'
+p JSON.parse(open(url+page).read)
+ =&gt; {"provider_url"=&gt;"http://instagram.com/", "media_id"=&gt;"150979225957124317_1267257", "title"=&gt;"dal curry!!! yumyum", "url"=&gt;"http://distilleryimage1.s3.amazonaws.com/2a3e47fa724611e181bd12313817987b_7.jpg", "author_name"=&gt;"niku4i", "height"=&gt;612, "width"=&gt;612, "version"=&gt;"1.0", "author_url"=&gt;"http://instagram.com/", "author_id"=&gt;1267257, "type"=&gt;"photo", "provider_name"=&gt;"Instagram"} 
+</code></pre>
+
+<p><strong>2012/04/03 追記 キャッシュ対応しました</strong></p>
+
+<p>コードは<a href="https://gist.github.com/2134897">引き続きgist</a>からダウンロードできます。
+APIを参照するのみでは<code>rake generate</code>するたびに問い合わせるのでAPI問い合わせ結果をキャッシュするよう修正しました。なお、.instag-cache/というディレクトリ以下にキャッシュファイルが生成されますので、<code>git commti</code>しても含まれないように.gitignoreに.instag-cacheを追記してください。</p>
+
+<figure class='code'><figcaption><span>変更後の.gitignoreをgit diffコマンドで確認</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://api.instagram.com/oembed?url=&#39;</span> <span class="o">+</span> <span class="n">url</span>
-</span><span class='line'>    <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git diff .gitignore
+</span><span class='line'>diff --git a/.gitignore b/.gitignore
+</span><span class='line'>index 68a6830..c80293a 100644
+</span><span class='line'>--- a/.gitignore
+</span><span class='line'>+++ b/.gitignore
+</span><span class='line'>@@ -2,6 +2,7 @@
+</span><span class='line'> .DS_Store
+</span><span class='line'> .sass-cache
+</span><span class='line'> .gist-cache
+</span><span class='line'>+.instag-cache
+</span><span class='line'> .pygments-cache
+</span><span class='line'><span class="o">(</span>略<span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>現状キャッシュしてないので<code>rake generate</code>する度に問い合わせして遅い。気が向いたらキャッシュするといったことを実装するかも。同じようなプラグインでgist_tag.rbというのが標準でありまして、こいつを拝見するとキャッシュしてるので真似れば出来そうではある。</p>
-
-<p>次はサイドバーにInstagramの画像を表示したくなるが誰か作ってくれないかなと期待。OctopressはWordpressに比べて圧倒的にプラグインの数が少ないのが難点ですがこうやって作れるのもまあ魅力かな。</p>
-
-<p>Have happy life with Instagram!</p>
+<p>次はサイドバーにInstagramの画像を表示したくなりました。OctopressはWordpressに比べて圧倒的にプラグインの数が少ないのが難点ですがこうやって作れるは魅力的です。</p>
 ]]></content>
   </entry>
   
@@ -152,6 +175,9 @@ rm -rf 2134897/
 
 <p>個人的にはソースファイルは公開しなくてよいかなと考えた。
 そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+
+<!-- more -->
+
 
 <h3>リポジトリ作成</h3>
 
@@ -682,7 +708,10 @@ ls
     <link href="http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/"/>
     <updated>2012-03-11T22:36:00+09:00</updated>
     <id>http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files</id>
-    <content type="html"><![CDATA[<p>このブログはテキストメインであるが過去の記事にはいくつか画像も添付してて、移行後にリンク切れ状態になっていたので修正した。</p>
+    <content type="html"><![CDATA[<p>前回の記事とおり、ブログの過去の記事をWordpressからOctopressに移行したが、ブログの記事に貼付けた画像ファイルは移行後にリンク切れ状態のままでした。過去記事の画像を表示するよう修正します。</p>
+
+<!-- more -->
+
 
 <ul>
 <li>移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/</li>
@@ -759,6 +788,11 @@ ls
 
 <p>さらにoctopressはgithubやherokuと連携してサーバいらずでgit pushすればブログ公開があっというまにできる仕組み。
 gitやPasSに触れれてこれは一石二鳥。</p>
+
+<p>以下詳細。</p>
+
+<!-- more -->
+
 
 <h2>方針</h2>
 
@@ -1042,6 +1076,11 @@ end</code></pre></noscript></div>
 <p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
 
 <p>Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。</p>
+
+<p>以下詳細です。</p>
+
+<!-- more -->
+
 
 <h2>streamメソッドを使った例</h2>
 

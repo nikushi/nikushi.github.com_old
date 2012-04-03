@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | ni-blog]]></title>
   <link href="http://niku4i.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-03-20T22:38:31+09:00</updated>
+  <updated>2012-04-03T21:01:21+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -33,6 +33,9 @@
 
 <p>個人的にはソースファイルは公開しなくてよいかなと考えた。
 そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+
+<!-- more -->
+
 
 <h3>リポジトリ作成</h3>
 
