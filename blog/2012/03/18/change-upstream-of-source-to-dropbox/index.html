@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。 &hellip;">
+  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。 rake &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,19 +104,20 @@
 
 <div class="entry-content"><h3>octopressのソースファイルの管理</h3>
 
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。</p>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
 
 <ol>
 <li><code>rake new_post['hoge']</code>で記事を作成</li>
 <li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalhostのsourceブランチ -> github pagesのsourceブランチemote backup。</li>
+<li><code>git push</code>にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ</li>
 </ol>
 
 
-<p><code>rake deploy</code>するとgithubのmasterブランチにpublicディレクトリのみuploadされるのはよいが、<code>git push</code>にてsourceファイルも公開している。</p>
+<p><code>rake deploy</code>するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、&#8220;git push&#8220;`してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
-<p>個人的にはソースファイルは公開しなくてよいかなと考えた。
-そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+<p>そこで<code>git push</code>する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。</p>
+
+<p>以下、手順です。</p>
 
 <!-- more -->
 
@@ -161,7 +162,7 @@ origin  git@github.com:niku4i/niku4i.github.com.git (push)
 
 <h3>Dropboxのリポジトリにソースファイルをpushする</h3>
 
-<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になる。</p>
+<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になります。最初の1回だけ-uつきで実行します。</p>
 
 <pre><code>$ git push -u dropbox source                   
 Counting objects: 4110, done.                                        
@@ -174,17 +175,30 @@ To /Users/nikushi/Dropbox/repos/ni-blog.git
  Branch source set up to track remote branch source from dropbox.     
 </code></pre>
 
-<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされる。</p>
+<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされることになります。</p>
 
-<p>本当にバックアップされたか確認する。<code>git clone</code>する際には-bでsourceブランチを指定する必要がある。</p>
+<h3>バックアップからリカバリする</h3>
+
+<p>たとえば作業PCが壊れたり、旅行先のネットカフェで更新する場合ですね。(そもそもネカフェにはgitは入ってないか&#8230;!)</p>
+
+<p>本当にバックアップされたか確認してみます。<code>git clone</code>する際には-bでsourceブランチを指定する必要がありました。</p>
 
 <pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
 git clone -b source ~/Dropbox/repos/ni-blog.git
 cd ni-blog
-ls
 </code></pre>
 
-<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更できた。しばらくこれで運用してみる。</p>
+<p>この状態では、remoteはorigin=~/Dropbox/repos/ni-blog.gitのみがリモートリポジトリに設定されていますので、元々の設定に戻してあげます。現在のremoteの設定は<code>git remote -v</code>で確認してください。</p>
+
+<pre><code>git remote add octopress  git://github.com/imathis/octopress.git 
+git remote rename origin dropbox
+git remote add origin  git@github.com:niku4i/niku4i.github.com.git
+git push -u dropbox source                   
+</code></pre>
+
+<p>3つのremoteを設定し、dropboxリモートリポジトリをgit pushのデフォルトにしました。</p>
+
+<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更しましたのでしばらく運用してみます。</p>
 </div>
 
 
@@ -259,6 +273,10 @@ ls
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/03/mac-book-air-got-wet/">俺のMac Book Airが濡れた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">OctopressにInstagramの写真を挿入するTag Pluginを作ってみた</a>
       </li>
     
@@ -272,10 +290,6 @@ ls
     
       <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
       </li>
     
   </ul>

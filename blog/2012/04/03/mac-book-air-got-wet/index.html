@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Perl Moduleのバージョンを確認する方法 - ni-blog</title>
+  <title>俺のMac Book Airが濡れた - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。 例 $ perl -MTemplate -e '$Template::VERSION'
-2.14 モジュール内で定義された our $ &hellip;">
+  <meta name="description" content="Mac Book Air 13inchが水難に遭いました。 夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。 このとき、せめてウイスキかスピリタスにしとけば直ぐに揮発したのでは&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ Makefile.PLを作るとき依存するモジュールを記述するが、今使
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa">
+  <link rel="canonical" href="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +79,7 @@ Makefile.PLを作るとき依存するモジュールを記述するが、今使
   
   <header>
     
-      <h1 class="entry-title">Perl Moduleのバージョンを確認する方法</h1>
+      <h1 class="entry-title">俺のMac Book Airが濡れた</h1>
     
     
       <p class="meta">
@@ -97,23 +95,63 @@ Makefile.PLを作るとき依存するモジュールを記述するが、今使
   
 
 
-<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
+<time datetime="2012-04-03T21:59:00+09:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
+<div class="entry-content"><p>Mac Book Air 13inchが水難に遭いました。</p>
 
-例
-<pre code="shell">
-$ perl -MTemplate -e '$Template::VERSION'
-2.14
-</pre>
+<p>夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。</p>
 
-モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
+<p>このとき、せめてウイスキかスピリタスにしとけば直ぐに揮発したのでは&#8230;というどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
+
+<p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
+
+<p>最初気づかなかったんですターミナルで作業しても。</p>
+
+<pre><code>$ c hoge fuga
+-bash: c: command not found
+$ to
+-bash: to: command not found
+$ erl
+-bash: erl: command not found
+</code></pre>
+
+<p>お分かりでしょうか。最初ファイルシステム壊れたかとおもいましたが、正解は&#8217;p&#8217;がきかなくなりました。</p>
+
+<p>このままではインフラエンジニア業は卒業せざる終えなくなりますので、すぐにApple Store銀座店に駆け込みキーボード交換見積もりもらいました。
+Apple Storeの店員さんからは、1週間ほど寝かせて(水分飛ばして)起動するようなら交換しましょう、ということになりました。</p>
+
+<p>1週間後も無事に起動しましたので修理依頼になるわけですが、せっかくなので<code>stress</code>コマンドを使ってストレスかけても問題ないか(火ふいたり落ちたりしないか)見てみました。</p>
+
+<pre><code>$ brew install stress
+$ stress --cpu 4 --timeout 30m
+$ stress --io 4  --timeout 5m
+</code></pre>
+
+<p>10分もするとキーボード付近が暑くなってきます。お遊びなのでせいぜい30分程度で終わらせます。</p>
+
+<p>預けてわずか5日で交換完了しました。購入2ヶ月後、保証期間内ということで今回無料になりました。対応が早い!無償!すばらしや!!!</p>
+
+<p>水難は基本保証対象外なので水難であることを申告したくない気分にもなりますが、正直に言ったほうが後の対応も気持ちよくやってくれるので良いなとおもいました。</p>
+
+<p>ちなみに、Mac Book Air 水がかかる で検索するといくつか事例がありました。</p>
+
+<ul>
+<li>お風呂に水ためて洗う(ネタかとおもいます)</li>
+<li>薬局でアルコールかってきて洗う</li>
+</ul>
+
+
+<p>ネタですね。僕は試せませんでした。</p>
+
+<p>ノートPCで作業するときは水には注意しましょう。
+でもコーヒーは絶対やめられないなあ。</p>
+
+<p>おしまい。</p>
 </div>
 
 
@@ -136,15 +174,21 @@ $ perl -MTemplate -e '$Template::VERSION'
   
 
 
-<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
+<time datetime="2012-04-03T21:59:00+09:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mba/'>MBA</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet/" data-via="niku4i" data-counturl="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet/" >Tweet</a>
   
   
   
@@ -155,10 +199,8 @@ $ perl -MTemplate -e '$Template::VERSION'
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/" title="Previous Post: CLIツールのためのフレームワーク">&laquo; CLIツールのためのフレームワーク</a>
+        <a class="basic-alignment left" href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/" title="Previous Post: OctopressにInstagramの写真を挿入するTag Pluginを作ってみた">&laquo; OctopressにInstagramの写真を挿入するTag Pluginを作ってみた</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/" title="next Post: [Perl] perlstyle - perldoc.perl.org">[Perl] perlstyle - perldoc.perl.org &raquo;</a>
       
     </p>
   </footer>

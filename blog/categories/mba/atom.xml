@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: MBA | ni-blog]]></title>
+  <link href="http://niku4i.github.com/blog/categories/mba/atom.xml" rel="self"/>
+  <link href="http://niku4i.github.com/"/>
+  <updated>2012-04-03T22:44:08+09:00</updated>
+  <id>http://niku4i.github.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[俺のMac Book Airが濡れた]]></title>
+    <link href="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet/"/>
+    <updated>2012-04-03T21:59:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet</id>
+    <content type="html"><![CDATA[<p>Mac Book Air 13inchが水難に遭いました。</p>
+
+<p>夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。</p>
+
+<p>このとき、せめてウイスキかスピリタスにしとけば直ぐに揮発したのでは...というどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
+
+<p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
+
+<p>最初気づかなかったんですターミナルで作業しても。</p>
+
+<pre><code>$ c hoge fuga
+-bash: c: command not found
+$ to
+-bash: to: command not found
+$ erl
+-bash: erl: command not found
+</code></pre>
+
+<p>お分かりでしょうか。最初ファイルシステム壊れたかとおもいましたが、正解は'p'がきかなくなりました。</p>
+
+<p>このままではインフラエンジニア業は卒業せざる終えなくなりますので、すぐにApple Store銀座店に駆け込みキーボード交換見積もりもらいました。
+Apple Storeの店員さんからは、1週間ほど寝かせて(水分飛ばして)起動するようなら交換しましょう、ということになりました。</p>
+
+<p>1週間後も無事に起動しましたので修理依頼になるわけですが、せっかくなので<code>stress</code>コマンドを使ってストレスかけても問題ないか(火ふいたり落ちたりしないか)見てみました。</p>
+
+<pre><code>$ brew install stress
+$ stress --cpu 4 --timeout 30m
+$ stress --io 4  --timeout 5m
+</code></pre>
+
+<p>10分もするとキーボード付近が暑くなってきます。お遊びなのでせいぜい30分程度で終わらせます。</p>
+
+<p>預けてわずか5日で交換完了しました。購入2ヶ月後、保証期間内ということで今回無料になりました。対応が早い!無償!すばらしや!!!</p>
+
+<p>水難は基本保証対象外なので水難であることを申告したくない気分にもなりますが、正直に言ったほうが後の対応も気持ちよくやってくれるので良いなとおもいました。</p>
+
+<p>ちなみに、Mac Book Air 水がかかる で検索するといくつか事例がありました。</p>
+
+<ul>
+<li>お風呂に水ためて洗う(ネタかとおもいます)</li>
+<li>薬局でアルコールかってきて洗う</li>
+</ul>
+
+
+<p>ネタですね。僕は試せませんでした。</p>
+
+<p>ノートPCで作業するときは水には注意しましょう。
+でもコーヒーは絶対やめられないなあ。</p>
+
+<p>おしまい。</p>
+]]></content>
+  </entry>
+  
+</feed>

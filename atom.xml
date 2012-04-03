@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://niku4i.github.com/atom.xml" rel="self"/>
   <link href="http://niku4i.github.com/"/>
-  <updated>2012-04-03T21:01:21+09:00</updated>
+  <updated>2012-04-03T22:44:08+09:00</updated>
   <id>http://niku4i.github.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[俺のMac Book Airが濡れた]]></title>
+    <link href="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet/"/>
+    <updated>2012-04-03T21:59:00+09:00</updated>
+    <id>http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet</id>
+    <content type="html"><![CDATA[<p>Mac Book Air 13inchが水難に遭いました。</p>
+
+<p>夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。</p>
+
+<p>このとき、せめてウイスキかスピリタスにしとけば直ぐに揮発したのでは&#8230;というどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
+
+<p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
+
+<p>最初気づかなかったんですターミナルで作業しても。</p>
+
+<pre><code>$ c hoge fuga
+-bash: c: command not found
+$ to
+-bash: to: command not found
+$ erl
+-bash: erl: command not found
+</code></pre>
+
+<p>お分かりでしょうか。最初ファイルシステム壊れたかとおもいましたが、正解は&#8217;p&#8217;がきかなくなりました。</p>
+
+<p>このままではインフラエンジニア業は卒業せざる終えなくなりますので、すぐにApple Store銀座店に駆け込みキーボード交換見積もりもらいました。
+Apple Storeの店員さんからは、1週間ほど寝かせて(水分飛ばして)起動するようなら交換しましょう、ということになりました。</p>
+
+<p>1週間後も無事に起動しましたので修理依頼になるわけですが、せっかくなので<code>stress</code>コマンドを使ってストレスかけても問題ないか(火ふいたり落ちたりしないか)見てみました。</p>
+
+<pre><code>$ brew install stress
+$ stress --cpu 4 --timeout 30m
+$ stress --io 4  --timeout 5m
+</code></pre>
+
+<p>10分もするとキーボード付近が暑くなってきます。お遊びなのでせいぜい30分程度で終わらせます。</p>
+
+<p>預けてわずか5日で交換完了しました。購入2ヶ月後、保証期間内ということで今回無料になりました。対応が早い!無償!すばらしや!!!</p>
+
+<p>水難は基本保証対象外なので水難であることを申告したくない気分にもなりますが、正直に言ったほうが後の対応も気持ちよくやってくれるので良いなとおもいました。</p>
+
+<p>ちなみに、Mac Book Air 水がかかる で検索するといくつか事例がありました。</p>
+
+<ul>
+<li>お風呂に水ためて洗う(ネタかとおもいます)</li>
+<li>薬局でアルコールかってきて洗う</li>
+</ul>
+
+
+<p>ネタですね。僕は試せませんでした。</p>
+
+<p>ノートPCで作業するときは水には注意しましょう。
+でもコーヒーは絶対やめられないなあ。</p>
+
+<p>おしまい。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OctopressにInstagramの写真を挿入するTag Pluginを作ってみた]]></title>
@@ -133,7 +191,7 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
     <link href="http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh/"/>
     <updated>2012-03-18T12:55:00+09:00</updated>
     <id>http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh</id>
-    <content type="html"><![CDATA[<p>はずかしながらseqというコマンドというのを知らなかったのでメモ。</p>
+    <content type="html"><![CDATA[<p>seqというコマンドというのを知らなかったのでメモ。</p>
 
 <pre><code>$ for i in seq 1 10; do expr $i \* 2; done
 2
@@ -148,7 +206,7 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
 20
 </code></pre>
 
-<p>Rubyだと普通にこうやりますね。</p>
+<p>Rubyだとこうやるのかな。</p>
 
 <pre><code>(1..10).each { |i| puts i * 2 }
 </code></pre>
@@ -162,19 +220,20 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
     <id>http://niku4i.github.com/blog/2012/03/18/change-upstream-of-source-to-dropbox</id>
     <content type="html"><![CDATA[<h3>octopressのソースファイルの管理</h3>
 
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。</p>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
 
 <ol>
 <li><code>rake new_post['hoge']</code>で記事を作成</li>
 <li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalhostのsourceブランチ -> github pagesのsourceブランチemote backup。</li>
+<li><code>git push</code>にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ</li>
 </ol>
 
 
-<p><code>rake deploy</code>するとgithubのmasterブランチにpublicディレクトリのみuploadされるのはよいが、<code>git push</code>にてsourceファイルも公開している。</p>
+<p><code>rake deploy</code>するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、&#8220;git push&#8220;`してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
-<p>個人的にはソースファイルは公開しなくてよいかなと考えた。
-そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+<p>そこで<code>git push</code>する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。</p>
+
+<p>以下、手順です。</p>
 
 <!-- more -->
 
@@ -219,7 +278,7 @@ origin  git@github.com:niku4i/niku4i.github.com.git (push)
 
 <h3>Dropboxのリポジトリにソースファイルをpushする</h3>
 
-<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になる。</p>
+<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になります。最初の1回だけ-uつきで実行します。</p>
 
 <pre><code>$ git push -u dropbox source                   
 Counting objects: 4110, done.                                        
@@ -232,17 +291,30 @@ To /Users/nikushi/Dropbox/repos/ni-blog.git
  Branch source set up to track remote branch source from dropbox.     
 </code></pre>
 
-<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされる。</p>
+<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされることになります。</p>
 
-<p>本当にバックアップされたか確認する。<code>git clone</code>する際には-bでsourceブランチを指定する必要がある。</p>
+<h3>バックアップからリカバリする</h3>
+
+<p>たとえば作業PCが壊れたり、旅行先のネットカフェで更新する場合ですね。(そもそもネカフェにはgitは入ってないか&#8230;!)</p>
+
+<p>本当にバックアップされたか確認してみます。<code>git clone</code>する際には-bでsourceブランチを指定する必要がありました。</p>
 
 <pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
 git clone -b source ~/Dropbox/repos/ni-blog.git
 cd ni-blog
-ls
 </code></pre>
 
-<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更できた。しばらくこれで運用してみる。</p>
+<p>この状態では、remoteはorigin=~/Dropbox/repos/ni-blog.gitのみがリモートリポジトリに設定されていますので、元々の設定に戻してあげます。現在のremoteの設定は<code>git remote -v</code>で確認してください。</p>
+
+<pre><code>git remote add octopress  git://github.com/imathis/octopress.git 
+git remote rename origin dropbox
+git remote add origin  git@github.com:niku4i/niku4i.github.com.git
+git push -u dropbox source                   
+</code></pre>
+
+<p>3つのremoteを設定し、dropboxリモートリポジトリをgit pushのデフォルトにしました。</p>
+
+<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更しましたのでしばらく運用してみます。</p>
 ]]></content>
   </entry>
   
@@ -1390,22 +1462,26 @@ runは通常以下のようにリモートホスト上で実行するコマン�
     <link href="http://niku4i.github.com/blog/2012/01/29/sinatratoherokufalseomian-qiang/"/>
     <updated>2012-01-29T00:00:00+09:00</updated>
     <id>http://niku4i.github.com/blog/2012/01/29/sinatratoherokufalseomian-qiang</id>
-    <content type="html"><![CDATA[現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。
+    <content type="html"><![CDATA[<p>現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しいので、プライベートでも仕事でももっとコードを書けるべく勉強していきたいとおもいます。</p>
 
-というわけでさっそくマイクロWebアプリを作ってみた。
-<ul>
-	<li><a title="Random Password Generator" href="http://makepasswdx.herokuapp.com/">Random Password Generator</a></li>
-	<li><a title="ソース" href="https://github.com/niku4i/makepasswdx">ソース</a></li>
-</ul>
-シンプルにランダム文字列返すだけ。
+<p>さっそくですがRubyのお勉強。
+<a href="http://makepasswdx.herokuapp.com/">Random Password Generator</a>という名前の小さなアプリを
+herokuにリリースしました。シンプルにランダム文字列返すジェネレータです。</p>
 
-実はこれ昔作ったPerl CGIの焼き直し。昔、ランダム文字列pass付きzipで添付ファイルをメールするけど、文字列を都度考えるのは面倒ですとオペさん(事務のおねえさん)が言うのでその時はPerl CGI版を社内向に作った。Sinatraで焼き直してみた。
-<div>Sinatraは<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にコードを書く。</div>
-herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考に。
+<p><a href="https://github.com/niku4i/makepasswdx">ソースコード</a></p>
 
-最初はSinatraを勉強するつもりだったけど後半はherokuとgitの勉強もできた。herokuへのdeploy方法とか細かいところはリ<a href="https://github.com/niku4i/makepasswdx/blob/master/README">ポジトリのREADME</a>に書いた。
+<p>昔、会社のオペさん(事務のお姉ちゃん)が社外にメールするときにランダム文字列pass付きzipで添付ファイルをメールするために都度文字列を考えるのは面倒ですというので、そのときは社内用にPerl CGI版を作りました。今回Sinatraで焼き直し。</p>
 
-herokuはとっても便利だ。数回コマンドだけでwebサイト作れる。
+<p>SinatraはRuby on Railsよりも軽量でWebアプリ初心者には簡単そうだったので初めてでしたが、<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にしました。
+herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考にしました。公式ドキュメントですね。充実してます!! こういうときはぐぐって出てくるブログの日本ドキュメントを読むより公式(英語)を読む方が間違いないとおもいます。</p>
+
+<p>最初はWebアプリ作ろう!という動機からSinatraを勉強しましたが、公開場所をherokuに決めてからはherokuの使い方さることながらgitの勉強にもなりました。会社ではsubversionで今のところ足りているので、こういうところで積極的にgitに触れて勉強できるのはうれしい。</p>
+
+<p>herokuへのdeploy方法など今回勉強したところは<a href="https://github.com/niku4i/makepasswdx/blob/master/README">README</a>に書き残しました。</p>
+
+<p>herokuはとっても便利ですね。数回コマンドだけでWebサイトとして公開できる、すばらしいサービスと技術だとおもいました。</p>
+
+<p>お勉強アプリではありますが最後に一言。pull requestはお気軽にどうぞ!</p>
 ]]></content>
   </entry>
   
@@ -1538,15 +1614,6 @@ App::Cmdが有名どころのようだ。
 <div id="__ss_134444" style="width: 425px;">
 <div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rubyを始めたい方向けまとめ2011年秋版 - 223 Software]]></title>
-    <link href="http://niku4i.github.com/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/"/>
-    <updated>2011-11-02T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software</id>
-    <content type="html"><![CDATA[<a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.
 ]]></content>
   </entry>
   

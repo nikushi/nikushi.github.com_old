@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、プラグインを実装してみました。以下からダウンロードできます。 instag.rb 概要 {% instag http://instagr.am/p/IYYs5bo0jd/ } 記事中でタグが使えます &hellip;">
+  <meta name="description" content="Mac Book Air 13inchが水難に遭いました。 夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。 このとき、せめてウイスキかスピリタスにしとけば直ぐに揮発したのでは&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/03/mac-book-air-got-wet/">俺のMac Book Airが濡れた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-03T21:59:00+09:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Mac Book Air 13inchが水難に遭いました。</p>
+
+<p>夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。</p>
+
+<p>このとき、せめてウイスキかスピリタスにしとけば直ぐに揮発したのでは&#8230;というどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
+
+<p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
+
+<p>最初気づかなかったんですターミナルで作業しても。</p>
+
+<pre><code>$ c hoge fuga
+-bash: c: command not found
+$ to
+-bash: to: command not found
+$ erl
+-bash: erl: command not found
+</code></pre>
+
+<p>お分かりでしょうか。最初ファイルシステム壊れたかとおもいましたが、正解は&#8217;p&#8217;がきかなくなりました。</p>
+
+<p>このままではインフラエンジニア業は卒業せざる終えなくなりますので、すぐにApple Store銀座店に駆け込みキーボード交換見積もりもらいました。
+Apple Storeの店員さんからは、1週間ほど寝かせて(水分飛ばして)起動するようなら交換しましょう、ということになりました。</p>
+
+<p>1週間後も無事に起動しましたので修理依頼になるわけですが、せっかくなので<code>stress</code>コマンドを使ってストレスかけても問題ないか(火ふいたり落ちたりしないか)見てみました。</p>
+
+<pre><code>$ brew install stress
+$ stress --cpu 4 --timeout 30m
+$ stress --io 4  --timeout 5m
+</code></pre>
+
+<p>10分もするとキーボード付近が暑くなってきます。お遊びなのでせいぜい30分程度で終わらせます。</p>
+
+<p>預けてわずか5日で交換完了しました。購入2ヶ月後、保証期間内ということで今回無料になりました。対応が早い!無償!すばらしや!!!</p>
+
+<p>水難は基本保証対象外なので水難であることを申告したくない気分にもなりますが、正直に言ったほうが後の対応も気持ちよくやってくれるので良いなとおもいました。</p>
+
+<p>ちなみに、Mac Book Air 水がかかる で検索するといくつか事例がありました。</p>
+
+<ul>
+<li>お風呂に水ためて洗う(ネタかとおもいます)</li>
+<li>薬局でアルコールかってきて洗う</li>
+</ul>
+
+
+<p>ネタですね。僕は試せませんでした。</p>
+
+<p>ノートPCで作業するときは水には注意しましょう。
+でもコーヒーは絶対やめられないなあ。</p>
+
+<p>おしまい。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -158,7 +243,7 @@
   </header>
 
 
-  <div class="entry-content"><p>はずかしながらseqというコマンドというのを知らなかったのでメモ。</p>
+  <div class="entry-content"><p>seqというコマンドというのを知らなかったのでメモ。</p>
 
 <pre><code>$ for i in seq 1 10; do expr $i \* 2; done
 2
@@ -173,7 +258,7 @@
 20
 </code></pre>
 
-<p>Rubyだと普通にこうやりますね。</p>
+<p>Rubyだとこうやるのかな。</p>
 
 <pre><code>(1..10).each { |i| puts i * 2 }
 </code></pre>
@@ -214,19 +299,20 @@
 
   <div class="entry-content"><h3>octopressのソースファイルの管理</h3>
 
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。</p>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
 
 <ol>
 <li><code>rake new_post['hoge']</code>で記事を作成</li>
 <li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalhostのsourceブランチ -> github pagesのsourceブランチemote backup。</li>
+<li><code>git push</code>にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ</li>
 </ol>
 
 
-<p><code>rake deploy</code>するとgithubのmasterブランチにpublicディレクトリのみuploadされるのはよいが、<code>git push</code>にてsourceファイルも公開している。</p>
+<p><code>rake deploy</code>するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、&#8220;git push&#8220;`してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
-<p>個人的にはソースファイルは公開しなくてよいかなと考えた。
-そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。</p>
+<p>そこで<code>git push</code>する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。</p>
+
+<p>以下、手順です。</p>
 
 </div>
   
@@ -542,53 +628,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-09T00:00:00+09:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/tail-log-with-capistrano-image.jpg" alt="tail-log-with-capistrano-image" /></p>
-
-<p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
-
-<p>Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。</p>
-
-<p>以下詳細です。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/09/streaming-log-with-capistrano/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -613,6 +652,10 @@ gitやPasSに触れれてこれは一石二鳥。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/03/mac-book-air-got-wet/">俺のMac Book Airが濡れた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">OctopressにInstagramの写真を挿入するTag Pluginを作ってみた</a>
       </li>
     
@@ -626,10 +669,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
     
       <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
       </li>
     
   </ul>

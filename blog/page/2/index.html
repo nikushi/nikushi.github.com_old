@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。 というわけでさっそくマイクロWebアプリを作ってみた。 Random Password Generator &hellip;">
+  <meta name="description" content="複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。 Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,53 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-09T00:00:00+09:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/tail-log-with-capistrano-image.jpg" alt="tail-log-with-capistrano-image" /></p>
+
+<p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
+
+<p>Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。</p>
+
+<p>以下詳細です。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/09/streaming-log-with-capistrano/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/01/29/sinatratoherokufalseomian-qiang/">Sinatraで作ったWebアプリをHerokuにデプロイする</a></h1>
     
     
@@ -105,22 +152,26 @@
   </header>
 
 
-  <div class="entry-content">現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しい。というわけで今年はもっとコードを書けるべく勉強していきたい。
+  <div class="entry-content"><p>現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しいので、プライベートでも仕事でももっとコードを書けるべく勉強していきたいとおもいます。</p>
 
-というわけでさっそくマイクロWebアプリを作ってみた。
-<ul>
-	<li><a title="Random Password Generator" href="http://makepasswdx.herokuapp.com/">Random Password Generator</a></li>
-	<li><a title="ソース" href="https://github.com/niku4i/makepasswdx">ソース</a></li>
-</ul>
-シンプルにランダム文字列返すだけ。
+<p>さっそくですがRubyのお勉強。
+<a href="http://makepasswdx.herokuapp.com/">Random Password Generator</a>という名前の小さなアプリを
+herokuにリリースしました。シンプルにランダム文字列返すジェネレータです。</p>
 
-実はこれ昔作ったPerl CGIの焼き直し。昔、ランダム文字列pass付きzipで添付ファイルをメールするけど、文字列を都度考えるのは面倒ですとオペさん(事務のおねえさん)が言うのでその時はPerl CGI版を社内向に作った。Sinatraで焼き直してみた。
-<div>Sinatraは<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にコードを書く。</div>
-herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考に。
+<p><a href="https://github.com/niku4i/makepasswdx">ソースコード</a></p>
 
-最初はSinatraを勉強するつもりだったけど後半はherokuとgitの勉強もできた。herokuへのdeploy方法とか細かいところはリ<a href="https://github.com/niku4i/makepasswdx/blob/master/README">ポジトリのREADME</a>に書いた。
+<p>昔、会社のオペさん(事務のお姉ちゃん)が社外にメールするときにランダム文字列pass付きzipで添付ファイルをメールするために都度文字列を考えるのは面倒ですというので、そのときは社内用にPerl CGI版を作りました。今回Sinatraで焼き直し。</p>
 
-herokuはとっても便利だ。数回コマンドだけでwebサイト作れる。
+<p>SinatraはRuby on Railsよりも軽量でWebアプリ初心者には簡単そうだったので初めてでしたが、<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にしました。
+herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考にしました。公式ドキュメントですね。充実してます!! こういうときはぐぐって出てくるブログの日本ドキュメントを読むより公式(英語)を読む方が間違いないとおもいます。</p>
+
+<p>最初はWebアプリ作ろう!という動機からSinatraを勉強しましたが、公開場所をherokuに決めてからはherokuの使い方さることながらgitの勉強にもなりました。会社ではsubversionで今のところ足りているので、こういうところで積極的にgitに触れて勉強できるのはうれしい。</p>
+
+<p>herokuへのdeploy方法など今回勉強したところは<a href="https://github.com/niku4i/makepasswdx/blob/master/README">README</a>に書き残しました。</p>
+
+<p>herokuはとっても便利ですね。数回コマンドだけでWebサイトとして公開できる、すばらしいサービスと技術だとおもいました。</p>
+
+<p>お勉強アプリではありますが最後に一言。pull requestはお気軽にどうぞ!</p>
 </div>
   
   
@@ -476,42 +527,6 @@ App::Cmdが有名どころのようだ。
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-02T00:00:00+09:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -538,6 +553,10 @@ App::Cmdが有名どころのようだ。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/03/mac-book-air-got-wet/">俺のMac Book Airが濡れた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">OctopressにInstagramの写真を挿入するTag Pluginを作ってみた</a>
       </li>
     
@@ -551,10 +570,6 @@ App::Cmdが有名どころのようだ。
     
       <li class="post">
         <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a>
       </li>
     
   </ul>
