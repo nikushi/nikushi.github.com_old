@@ -17,6 +17,10 @@ Wordpressは数年使っていて機能豊富でテーマも充実してるし�
 さらにoctopressはgithubやherokuと連携してサーバいらずでgit pushすればブログ公開があっというまにできる仕組み。
 gitやPasSに触れれてこれは一石二鳥。
 
+以下詳細。
+
+<!-- more -->
+
 ## 方針
  - Wordpressのデータベースから直接データはひっこぬかない
  - Wordpressの投稿データはxmlでexport

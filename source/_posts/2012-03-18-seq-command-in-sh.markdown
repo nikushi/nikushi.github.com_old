@@ -7,7 +7,7 @@ categories:
  - 'shell script'
 ---
 
-はずかしながらseqというコマンドというのを知らなかったのでメモ。
+seqというコマンドというのを知らなかったのでメモ。
     $ for i in seq 1 10; do expr $i \* 2; done
     2
     4
@@ -20,5 +20,5 @@ categories:
     18
     20
 
-Rubyだと普通にこうやりますね。
+Rubyだとこうやるのかな。
     (1..10).each { |i| puts i * 2 }

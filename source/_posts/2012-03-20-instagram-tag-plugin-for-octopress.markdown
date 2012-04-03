@@ -18,6 +18,8 @@ Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入�
     {{ "{% instag http://instagr.am/p/IYYs5bo0jd/ "%}}}
 記事中でタグが使えます。表示したいinstagramページのURLは知っておく必要があります。
 
+<!-- more -->
+
 ### インストール
 [instag.rb](https://gist.github.com/2134897)をダウンロードし```plugins/```ディレクトリに配置してください。
     cd /var/tmp/
@@ -50,22 +52,36 @@ Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入�
     {{ '{% instag http://instagr.am/p/IYYs5bo0jd/ 125 125 '%}}}
 {% instag http://instagr.am/p/IYYs5bo0jd/ 125 125 %}
 
-[instag.rb](https://gist.github.com/2134897)はスクラッチから書いたわけではなく、標準で付属するimage.rbプラグインをまねて作った。ざっと作ったので例外処理がゆるい。
+[instag.rb](https://gist.github.com/2134897)はスクラッチから書いたわけではなく、標準で付属するimage.rbプラグインとgist_tag.rbプラグイン参考にしました。
 
-InstagramのページURLから画像を取得方法は[Embedding Endpoints](http://instagram.com/developer/embedding/)の機能を利用した。この方法は認証キーを取得しなくとも利用できるので、できることは限られるけど認証がないので簡単。こんな感じ。
+InstagramのページURLから画像を取得方法は[Embedding Endpoints](http://instagram.com/developer/embedding/)の機能を利用しました。認証キーを取得しなくとも利用できるので簡単に利用できます。画像ページのURLから実際のjpgのURLを取得する方法はこんな感じです。
 
-```ruby sample
     require 'open-uri'
     require 'json'
 
-    def get_info(url)
-        url = 'http://api.instagram.com/oembed?url=' + url
-        JSON.parse(open(url).read)
-    end
+    api  = 'http://api.instagram.com/oembed?url='
+    page = 'http://instagr.am/p/IYYs5bo0jd/'
+    p JSON.parse(open(url+page).read)
+     => {"provider_url"=>"http://instagram.com/", "media_id"=>"150979225957124317_1267257", "title"=>"dal curry!!! yumyum", "url"=>"http://distilleryimage1.s3.amazonaws.com/2a3e47fa724611e181bd12313817987b_7.jpg", "author_name"=>"niku4i", "height"=>612, "width"=>612, "version"=>"1.0", "author_url"=>"http://instagram.com/", "author_id"=>1267257, "type"=>"photo", "provider_name"=>"Instagram"} 
+
+**2012/04/03 追記 キャッシュ対応しました**
+
+コードは[引き続きgist](https://gist.github.com/2134897)からダウンロードできます。
+APIを参照するのみでは```rake generate```するたびに問い合わせるのでAPI問い合わせ結果をキャッシュするよう修正しました。なお、.instag-cache/というディレクトリ以下にキャッシュファイルが生成されますので、```git commti```しても含まれないように.gitignoreに.instag-cacheを追記してください。
+```sh 変更後の.gitignoreをgit diffコマンドで確認
+$ git diff .gitignore 
+diff --git a/.gitignore b/.gitignore
+index 68a6830..c80293a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,6 +2,7 @@
+ .DS_Store
+ .sass-cache
+ .gist-cache
++.instag-cache
+ .pygments-cache
+(略)
 ```
 
-現状キャッシュしてないので```rake generate```する度に問い合わせして遅い。気が向いたらキャッシュするといったことを実装するかも。同じようなプラグインでgist_tag.rbというのが標準でありまして、こいつを拝見するとキャッシュしてるので真似れば出来そうではある。
+次はサイドバーにInstagramの画像を表示したくなりました。OctopressはWordpressに比べて圧倒的にプラグインの数が少ないのが難点ですがこうやって作れるは魅力的です。
 
-次はサイドバーにInstagramの画像を表示したくなるが誰か作ってくれないかなと期待。OctopressはWordpressに比べて圧倒的にプラグインの数が少ないのが難点ですがこうやって作れるのもまあ魅力かな。
-
-Have happy life with Instagram!

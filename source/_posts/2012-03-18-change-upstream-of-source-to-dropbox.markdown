@@ -10,17 +10,19 @@ tags:
 ---
 
 ### octopressのソースファイルの管理
-[Deploying to Github Pages](http://octopress.org/docs/deploying/github/)の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成される。この環境でblogの記事を書くときは以下のワークフローをになってるとおもう。
+[Deploying to Github Pages](http://octopress.org/docs/deploying/github/)の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。
 
 1. ```rake new_post['hoge']```で記事を作成
 1. ```rake deploy```で記事を公開
-1. ```git push```にてlocalhostのsourceブランチ -> github pagesのsourceブランチemote backup。 
+1. ```git push```にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ
 
-```rake deploy```するとgithubのmasterブランチにpublicディレクトリのみuploadされるのはよいが、```git push```にてsourceファイルも公開している。
- 
-個人的にはソースファイルは公開しなくてよいかなと考えた。
-そこで、sourceブランチはgithub上にはpushするのではなく、 Dropbox上にリポジトリを作成し管理することにする。
+```rake deploy```するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、``git push```してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。
 
+そこで```git push```する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。
+
+以下、手順です。
+
+<!-- more -->
 
 ### リポジトリ作成
     mkdir -p ~/Dropbox/repos/ni-blog.git        
@@ -49,7 +51,7 @@ tags:
 dropboxが追加されました。
 
 ### Dropboxのリポジトリにソースファイルをpushする
-まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降```git push```(引数なし)で実行可能になる。
+まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降```git push```(引数なし)で実行可能になります。最初の1回だけ-uつきで実行します。
     $ git push -u dropbox source                   
     Counting objects: 4110, done.                                        
     Delta compression using up to 4 threads.                             
@@ -59,12 +61,21 @@ dropboxが追加されました。
     To /Users/nikushi/Dropbox/repos/ni-blog.git                          
      * [new branch]      source -> source                                
      Branch source set up to track remote branch source from dropbox.     
-以後```git push```を実行するとDropboxのリポジトリにバックアップされる。
+以後```git push```を実行するとDropboxのリポジトリにバックアップされることになります。
 
-本当にバックアップされたか確認する。```git clone```する際には-bでsourceブランチを指定する必要がある。
+### バックアップからリカバリする
+たとえば作業PCが壊れたり、旅行先のネットカフェで更新する場合ですね。(そもそもネカフェにはgitは入ってないか...!)
+
+本当にバックアップされたか確認してみます。```git clone```する際には-bでsourceブランチを指定する必要がありました。
     mkdir ~/tmp/ && cd ~/tmp/
     git clone -b source ~/Dropbox/repos/ni-blog.git
     cd ni-blog
-    ls
 
-rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更できた。しばらくこれで運用してみる。
+この状態では、remoteはorigin=~/Dropbox/repos/ni-blog.gitのみがリモートリポジトリに設定されていますので、元々の設定に戻してあげます。現在のremoteの設定は```git remote -v```で確認してください。
+    git remote add octopress  git://github.com/imathis/octopress.git 
+    git remote rename origin dropbox
+    git remote add origin  git@github.com:niku4i/niku4i.github.com.git
+    git push -u dropbox source                   
+3つのremoteを設定し、dropboxリモートリポジトリをgit pushのデフォルトにしました。
+
+rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更しましたのでしばらく運用してみます。

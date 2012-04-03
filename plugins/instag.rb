@@ -1,4 +1,5 @@
-# Title: A Liquid tag for Jekyll sites that allows embedding image file on Instagram.
+# Title: A Liquid tag for Jekyll sites that allows embedding image file on 
+#        Instagram.
 # Authors: Nobuhiro Nikushi https://twitter.com/#!/niku4i
 # Description: Easily embed image file on Instagram page.
 #
@@ -21,46 +22,91 @@ require 'json'
 module Jekyll
 
   class InsTag < Liquid::Tag
-    @img = nil
-    @instagram = nil
-
-    def initialize(tag_name, markup, tokens)
+    def initialize(tag_name, text, token)
       super
-      attributes = ['class', 'src', 'width', 'height', 'title']
-
-      if markup =~ /(?<class>\S.*\s+)?(?<src>https?:\/\/\S+)(?:\s+(?<width>\d+))?(?:\s+(?<height>\d+))?(?<title>\s+.+)?/i
-        @img = attributes.reduce({}) { |img, attr| img[attr] = $~[attr].strip if $~[attr]; img }
-        @instagram = get_info(@img['src']) if @img['src']
-        @img['src'] = @instagram.fetch('url', nil)
-        if /(?:"|')(?<title>[^"']+)?(?:"|')\s+(?:"|')(?<alt>[^"']+)?(?:"|')/ =~ @img['title']
-          @img['title']  = title
-          @img['alt']    = alt
-        else
-          if @img['title']
-            @img['alt']    = @img['title'].gsub!(/"/, '&#34;') 
-          elsif @instagram['title']
-            @img['title'] = @instagram['title'] 
-            @img['alt'] = @instagram['title']
-          end
-        end
-        @img['class'].gsub!(/"/, '') if @img['class']
-      end
+      @text = text
+      @cache_disabled = false
+      @cache_folder   = File.expand_path "../.instag-cache", File.dirname(__FILE__)
+      FileUtils.mkdir_p @cache_folder
     end
 
     def render(context)
-      if @img
-        "<img #{@img.collect {|k,v| "#{k}=\"#{v}\"" if v}.join(" ")}>"
+      attributes = ['class', 'src', 'width', 'height', 'title']
+      img = nil
+
+      if @text =~ /(?<class>\S.*\s+)?(?<src>https?:\/\/\S+)(?:\s+(?<width>\d+))?(?:\s+(?<height>\d+))?(?<title>\s+.+)?/i
+        img = attributes.reduce({}) { |h, attr| h[attr] = $~[attr].strip if $~[attr]; h }
+        code = get_code_for img['src']
+        instagram = get_cache_for(img['src']) || get_from_web(img['src'])
+
+        img['src'] = instagram.fetch('url', nil)
+        if /(?:"|')(?<title>[^"']+)?(?:"|')\s+(?:"|')(?<alt>[^"']+)?(?:"|')/ =~ img['title']
+          img['title'] = title
+          img['alt']   = alt
+        else
+          if img['title']
+            img['alt'] = img['title'].gsub!(/"/, '&#34;') 
+          elsif instagram['title']
+            img['title'] = instagram['title'] 
+            img['alt']   = instagram['title']
+          end
+        end
+        img['class'].gsub!(/"/, '') if img['class']
+      end
+
+      if img
+        "<img #{img.collect {|k,v| "#{k}=\"#{v}\"" if v}.join(" ")}>"
       else
-        "Error processing input, expected syntax: {% instag [class name(s)] http[s]://path/to/instagram/image.jpg [width [height]] [title text | \"title text\" [\"alt text\"]] %}"
+        ""
       end
     end
 
-    private 
-    def get_info(url)
+    def get_cache_for(url)
+      return nil if @cache_disabled
+      code = get_code_for url
+      return nil unless code
+      cache_file = get_cache_file_for code
+      JSON.parse(File.read(cache_file)) if File.exist? cache_file
+    end
+
+    def get_code_for(url)
+      if url =~ %r|http://instagr.am/p/(\w+)/?|
+        $1
+      else
+        return nil
+      end
+    end
+
+    def get_cache_file_for(code)
+      bad_chars = /[^a-zA-Z0-9\-_.]/
+      code      = code.gsub bad_chars, ''
+      File.join @cache_folder, "#{code}.cache"
+    end
+
+    def get_from_web(url)
+      code = get_code_for url
       url = 'http://api.instagram.com/oembed?url=' + url
-      JSON.parse(open(url).read)
+      data = JSON.parse(open(url).read)
+      cache code, data unless @cache_disabled
+      data
+    end
+
+    def cache(code, data)
+      cache_file = get_cache_file_for code
+      File.open(cache_file, "w") do |io|
+        io.write(JSON.generate(data))
+      end
     end
   end
+
+  class InsTagNoCache < InsTag
+    def initialize(tag_name, text, token)
+      super
+      @cache_disabled = true
+    end
+  end
+
 end
 
 Liquid::Template.register_tag('instag', Jekyll::InsTag)
+Liquid::Template.register_tag('instagnocache', Jekyll::InsTagNoCache)
