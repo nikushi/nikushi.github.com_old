@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
-  <link href="http://niku4i.github.com/blog/categories/ruby/atom.xml" rel="self"/>
-  <link href="http://niku4i.github.com/"/>
-  <updated>2012-04-03T22:50:37+09:00</updated>
-  <id>http://niku4i.github.com/</id>
+  <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2012-04-03T22:51:48+09:00</updated>
+  <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/"/>
+    <link href="http://orihubon.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/"/>
     <updated>2012-03-15T00:30:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431</id>
+    <id>http://orihubon.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431</id>
     <content type="html"><![CDATA[<p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
 
 <p>Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。</p>

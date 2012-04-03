@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[ni-blog]]></title>
-  <link href="http://niku4i.github.com/atom.xml" rel="self"/>
-  <link href="http://niku4i.github.com/"/>
-  <updated>2012-04-03T22:50:37+09:00</updated>
-  <id>http://niku4i.github.com/</id>
+  <link href="http://orihubon.com/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2012-04-03T22:51:48+09:00</updated>
+  <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mac Book Airが水没したので]]></title>
-    <link href="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet/"/>
+    <link href="http://orihubon.com/blog/2012/04/03/mac-book-air-got-wet/"/>
     <updated>2012-04-03T21:59:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet</id>
+    <id>http://orihubon.com/blog/2012/04/03/mac-book-air-got-wet</id>
     <content type="html"><![CDATA[<p>Mac Book Air 13inchが水難に遭いました。</p>
 
 <p>夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。</p>
@@ -73,9 +73,9 @@ $ stress --io 4  --timeout 5m
   
   <entry>
     <title type="html"><![CDATA[OctopressにInstagramの写真を挿入するTag Pluginを作ってみた]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/20/instagram-tag-plugin-for-octopress/"/>
+    <link href="http://orihubon.com/blog/2012/03/20/instagram-tag-plugin-for-octopress/"/>
     <updated>2012-03-20T20:39:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/20/instagram-tag-plugin-for-octopress</id>
+    <id>http://orihubon.com/blog/2012/03/20/instagram-tag-plugin-for-octopress</id>
     <content type="html"><![CDATA[<p>Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、プラグインを実装してみました。以下からダウンロードできます。</p>
 
 <ul>
@@ -188,9 +188,9 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
   
   <entry>
     <title type="html"><![CDATA[seqコマンド]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh/"/>
+    <link href="http://orihubon.com/blog/2012/03/18/seq-command-in-sh/"/>
     <updated>2012-03-18T12:55:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh</id>
+    <id>http://orihubon.com/blog/2012/03/18/seq-command-in-sh</id>
     <content type="html"><![CDATA[<p>seqというコマンドというのを知らなかったのでメモ。</p>
 
 <pre><code>$ for i in seq 1 10; do expr $i \* 2; done
@@ -215,9 +215,9 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
   
   <entry>
     <title type="html"><![CDATA[OctopressのソースリポジトリをDropboxに変更]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/18/change-upstream-of-source-to-dropbox/"/>
+    <link href="http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox/"/>
     <updated>2012-03-18T05:32:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/18/change-upstream-of-source-to-dropbox</id>
+    <id>http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox</id>
     <content type="html"><![CDATA[<h3>octopressのソースファイルの管理</h3>
 
 <p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
@@ -320,10 +320,10 @@ git push -u dropbox source
   
   <entry>
     <title type="html"><![CDATA[XCode 4.3とoctopress]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/15/xcode-43-and-octopress/"/>
+    <link href="http://orihubon.com/blog/2012/03/15/xcode-43-and-octopress/"/>
     <updated>2012-03-15T01:57:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/15/xcode-43-and-octopress</id>
-    <content type="html"><![CDATA[<p><a href="http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">前回の記事</a>でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい<code>rake new_post['hoge']</code>したら<code>bundle install</code>しろと怒られたので実行してみたら途中で止まってしまいはまった。</p>
+    <id>http://orihubon.com/blog/2012/03/15/xcode-43-and-octopress</id>
+    <content type="html"><![CDATA[<p><a href="http://orihubon.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">前回の記事</a>でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい<code>rake new_post['hoge']</code>したら<code>bundle install</code>しろと怒られたので実行してみたら途中で止まってしまいはまった。</p>
 
 <p>初めはXCodeまわりを疑ったが最終的にはoctopressのディレクトリのGemfileを修正して対応。以下その対応内容。</p>
 
@@ -451,9 +451,9 @@ git push -u dropbox source
   
   <entry>
     <title type="html"><![CDATA[Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/"/>
+    <link href="http://orihubon.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/"/>
     <updated>2012-03-15T00:30:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431</id>
+    <id>http://orihubon.com/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431</id>
     <content type="html"><![CDATA[<p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
 
 <p>Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。</p>
@@ -777,9 +777,9 @@ git push -u dropbox source
   
   <entry>
     <title type="html"><![CDATA[Wordpressからoctopressに移行した(画像移行編)]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/"/>
+    <link href="http://orihubon.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/"/>
     <updated>2012-03-11T22:36:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files</id>
+    <id>http://orihubon.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files</id>
     <content type="html"><![CDATA[<p>前回の記事とおり、ブログの過去の記事をWordpressからOctopressに移行したが、ブログの記事に貼付けた画像ファイルは移行後にリンク切れ状態のままでした。過去記事の画像を表示するよう修正します。</p>
 
 <!-- more -->
@@ -847,9 +847,9 @@ git push -u dropbox source
   
   <entry>
     <title type="html"><![CDATA[Wordpressからoctopressに移行した]]></title>
-    <link href="http://niku4i.github.com/blog/2012/02/14/migration-from-wordpress-to-octopress/"/>
+    <link href="http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress/"/>
     <updated>2012-02-14T15:53:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/02/14/migration-from-wordpress-to-octopress</id>
+    <id>http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress</id>
     <content type="html"><![CDATA[<p>Wordpressからoctopressに移行した。</p>
 
 <p>移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。</p>
@@ -1088,9 +1088,9 @@ end</code></pre></noscript></div>
   
   <entry>
     <title type="html"><![CDATA[Hello, World]]></title>
-    <link href="http://niku4i.github.com/blog/2012/02/14/hello/"/>
+    <link href="http://orihubon.com/blog/2012/02/14/hello/"/>
     <updated>2012-02-14T11:08:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/02/14/hello</id>
+    <id>http://orihubon.com/blog/2012/02/14/hello</id>
     <content type="html"><![CDATA[<h2>A first post always says</h2>
 
 <figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1121,9 +1121,9 @@ end</code></pre></noscript></div>
   
   <entry>
     <title type="html"><![CDATA[PerlでHashの初期値をセットする]]></title>
-    <link href="http://niku4i.github.com/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/"/>
+    <link href="http://orihubon.com/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/"/>
     <updated>2012-02-13T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru</id>
+    <id>http://orihubon.com/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru</id>
     <content type="html"><![CDATA[<pre lang="perl">sub conf{
     my %arg = (
         lang =>; 'perl',
@@ -1140,10 +1140,10 @@ end</code></pre></noscript></div>
   
   <entry>
     <title type="html"><![CDATA[Streaming Log with Capistrano]]></title>
-    <link href="http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano/"/>
+    <link href="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/"/>
     <updated>2012-02-09T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/02/09/streaming-log-with-capistrano</id>
-    <content type="html"><![CDATA[<p><img src="http://niku4i.github.com/images/tail-log-with-capistrano-image.jpg" alt="tail-log-with-capistrano-image" /></p>
+    <id>http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano</id>
+    <content type="html"><![CDATA[<p><img src="http://orihubon.com/images/tail-log-with-capistrano-image.jpg" alt="tail-log-with-capistrano-image" /></p>
 
 <p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
 
@@ -1459,9 +1459,9 @@ runは通常以下のようにリモートホスト上で実行するコマン�
   
   <entry>
     <title type="html"><![CDATA[Sinatraで作ったWebアプリをHerokuにデプロイする]]></title>
-    <link href="http://niku4i.github.com/blog/2012/01/29/sinatratoherokufalseomian-qiang/"/>
+    <link href="http://orihubon.com/blog/2012/01/29/sinatratoherokufalseomian-qiang/"/>
     <updated>2012-01-29T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/01/29/sinatratoherokufalseomian-qiang</id>
+    <id>http://orihubon.com/blog/2012/01/29/sinatratoherokufalseomian-qiang</id>
     <content type="html"><![CDATA[<p>現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しいので、プライベートでも仕事でももっとコードを書けるべく勉強していきたいとおもいます。</p>
 
 <p>さっそくですがRubyのお勉強。
@@ -1487,9 +1487,9 @@ herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ru
   
   <entry>
     <title type="html"><![CDATA[改名]]></title>
-    <link href="http://niku4i.github.com/blog/2012/01/29/gai-ming/"/>
+    <link href="http://orihubon.com/blog/2012/01/29/gai-ming/"/>
     <updated>2012-01-29T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/01/29/gai-ming</id>
+    <id>http://orihubon.com/blog/2012/01/29/gai-ming</id>
     <content type="html"><![CDATA[twitterの名前を@niku4iに変えた。以前のは_が含まれれて何かと不便で、githubだと_が使えないので-にしないといけなかったりだったので。
 
 idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。
@@ -1498,9 +1498,9 @@ idを変えるのは何かと面倒なこともあるが、すっきりした感
   
   <entry>
     <title type="html"><![CDATA[curlでサーバ証明書の検証で失敗したとき]]></title>
-    <link href="http://niku4i.github.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/"/>
+    <link href="http://orihubon.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/"/>
     <updated>2012-01-20T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki</id>
+    <id>http://orihubon.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki</id>
     <content type="html"><![CDATA[rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
 
 <pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
@@ -1515,9 +1515,9 @@ rvmをインストールしたいので、公式ページに従い上のとお�
   
   <entry>
     <title type="html"><![CDATA[[vim]ビジュアルモード選択範囲だけ置換]]></title>
-    <link href="http://niku4i.github.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/"/>
+    <link href="http://orihubon.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/"/>
     <updated>2012-01-10T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan</id>
+    <id>http://orihubon.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan</id>
     <content type="html"><![CDATA[<ol>
 	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
 	<li>:にてコマンド指定するモードに入る</li>
@@ -1529,9 +1529,9 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
   
   <entry>
     <title type="html"><![CDATA[logrotateの動作をテストする]]></title>
-    <link href="http://niku4i.github.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/"/>
+    <link href="http://orihubon.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/"/>
     <updated>2012-01-06T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru</id>
+    <id>http://orihubon.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru</id>
     <content type="html"><![CDATA[<pre lang="shell">
 $ logrotate -dv file.conf
 </pre>
@@ -1541,9 +1541,9 @@ $ logrotate -dv file.conf
   
   <entry>
     <title type="html"><![CDATA[[Perl] colored logging by log4perl]]></title>
-    <link href="http://niku4i.github.com/blog/2011/12/03/perl-colored-logging-by-log4perl/"/>
+    <link href="http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl/"/>
     <updated>2011-12-03T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/12/03/perl-colored-logging-by-log4perl</id>
+    <id>http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl</id>
     <content type="html"><![CDATA[Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
 
 &nbsp;
@@ -1558,18 +1558,18 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
   
   <entry>
     <title type="html"><![CDATA[[Perl] perlstyle - perldoc.perl.org]]></title>
-    <link href="http://niku4i.github.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/"/>
+    <link href="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/"/>
     <updated>2011-12-01T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org</id>
+    <id>http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org</id>
     <content type="html"><![CDATA[Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl Moduleのバージョンを確認する方法]]></title>
-    <link href="http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/"/>
+    <link href="http://orihubon.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/"/>
     <updated>2011-11-24T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa</id>
+    <id>http://orihubon.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa</id>
     <content type="html"><![CDATA[たまにしかしないので、忘れないようメモ。
 Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
 
@@ -1585,9 +1585,9 @@ $ perl -MTemplate -e '$Template::VERSION'
   
   <entry>
     <title type="html"><![CDATA[CLIツールのためのフレームワーク]]></title>
-    <link href="http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/"/>
+    <link href="http://orihubon.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/"/>
     <updated>2011-11-03T00:00:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku</id>
+    <id>http://orihubon.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku</id>
     <content type="html"><![CDATA[ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
 
 &nbsp;

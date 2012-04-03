@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: shell script | ni-blog]]></title>
-  <link href="http://niku4i.github.com/blog/categories/shell-script/atom.xml" rel="self"/>
-  <link href="http://niku4i.github.com/"/>
-  <updated>2012-04-03T22:50:37+09:00</updated>
-  <id>http://niku4i.github.com/</id>
+  <link href="http://orihubon.com/blog/categories/shell-script/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2012-04-03T22:51:48+09:00</updated>
+  <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[seqコマンド]]></title>
-    <link href="http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh/"/>
+    <link href="http://orihubon.com/blog/2012/03/18/seq-command-in-sh/"/>
     <updated>2012-03-18T12:55:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/03/18/seq-command-in-sh</id>
+    <id>http://orihubon.com/blog/2012/03/18/seq-command-in-sh</id>
     <content type="html"><![CDATA[<p>seqというコマンドというのを知らなかったのでメモ。</p>
 
 <pre><code>$ for i in seq 1 10; do expr $i \* 2; done

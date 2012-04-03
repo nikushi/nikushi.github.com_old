@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: MBA | ni-blog]]></title>
-  <link href="http://niku4i.github.com/blog/categories/mba/atom.xml" rel="self"/>
-  <link href="http://niku4i.github.com/"/>
-  <updated>2012-04-03T22:50:37+09:00</updated>
-  <id>http://niku4i.github.com/</id>
+  <link href="http://orihubon.com/blog/categories/mba/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2012-04-03T22:51:48+09:00</updated>
+  <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mac Book Airが水没したので]]></title>
-    <link href="http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet/"/>
+    <link href="http://orihubon.com/blog/2012/04/03/mac-book-air-got-wet/"/>
     <updated>2012-04-03T21:59:00+09:00</updated>
-    <id>http://niku4i.github.com/blog/2012/04/03/mac-book-air-got-wet</id>
+    <id>http://orihubon.com/blog/2012/04/03/mac-book-air-got-wet</id>
     <content type="html"><![CDATA[<p>Mac Book Air 13inchが水難に遭いました。</p>
 
 <p>夜、日本酒飲みながら使ってた僕がすべて悪いのです。10ミリリットルくらいの量がキーボード上部右側から被弾。速攻でタオルで拭きましたが若干キーボードから浸水しました。</p>
