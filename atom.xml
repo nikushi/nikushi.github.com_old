@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2012-04-09T02:09:11+09:00</updated>
+  <updated>2012-04-09T02:14:01+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,9 +18,7 @@
     <link href="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/"/>
     <updated>2012-04-09T01:49:00+09:00</updated>
     <id>http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted</id>
-    <content type="html"><![CDATA[<p>通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。</p>
-
-<p>Rubyで取得するコードを書いてみました。</p>
+    <content type="html"><![CDATA[<p>TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。</p>
 
 <!-- more -->
 
