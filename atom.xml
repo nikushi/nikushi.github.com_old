@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2012-04-09T02:17:08+09:00</updated>
+  <updated>2012-04-09T02:19:27+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -77,9 +77,13 @@ It turns out,
 
 <p>ちなみに、idはページ中のHTMLのdata-idというパラメタから取得しないと分かりません。nokogiriとかでスクレイピングする方法があるようです。</p>
 
-<p>以下を参考にしました。
-- <a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a>
-- <a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する - ギークを夢見るじょーぶん男子 </a></p>
+<p>以下を参考にしました。</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a></li>
+<li><a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する - ギークを夢見るじょーぶん男子 </a></li>
+</ul>
+
 ]]></content>
   </entry>
   
