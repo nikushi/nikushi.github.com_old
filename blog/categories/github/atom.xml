@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: github | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/github/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2012-04-09T02:09:11+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Gist on command line]]></title>
+    <link href="http://orihubon.com/blog/2012/04/09/gist-on-command-line/"/>
+    <updated>2012-04-09T01:23:00+09:00</updated>
+    <id>http://orihubon.com/blog/2012/04/09/gist-on-command-line</id>
+    <content type="html"><![CDATA[<p><code>gist</code>コマンドを使うとコマンドラインからGistに投稿できることを知りましたのでメモします。</p>
+
+<p>インストール</p>
+
+<pre><code>$ brew install gist
+
+$ gist &lt; file.txt
+</code></pre>
+
+<p>または</p>
+
+<pre><code>$ gist file.txt
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

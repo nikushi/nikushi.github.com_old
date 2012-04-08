@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="を始めた。以前はジョギングをたまにしてたんだけど、ジョギング=有酸素運動より無酸素運動が良いらしい。 腹筋、腕立て、スクワットをそれぞれ3セット。間に1分間の休憩を入れるのがいいらしい。反動は使わずゆっくりとが基本ということでした。かなりキツく、翌日筋肉痛。 &hellip;">
+  <meta name="description" content="Catalystは癖がありそう。学習コストが高めだけど、なれると楽しくなりそう。個人でアプリケーション作るときに使ってみよう。 CGI::Applicationは初めてでも学習コスト少なく使えそう。運用ツールとか内製ツールなど気づいたメンバでメンテしやすさを考えると、こちらを使ってみるかな。 参考 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,127 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/14/webapurifalsehuremuwakufalsememoperl/">Webアプリのフレームワークのメモ(Perl)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-14T00:00:00+09:00" pubdate data-updated="true">Oct 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Catalystは癖がありそう。学習コストが高めだけど、なれると楽しくなりそう。個人でアプリケーション作るときに使ってみよう。
+
+CGI::Applicationは初めてでも学習コスト少なく使えそう。運用ツールとか内製ツールなど気づいたメンバでメンテしやすさを考えると、こちらを使ってみるかな。
+
+参考:<a href="http://naoya.dyndns.org/~naoya/mt/archives/001682.html">Perl の MVC フレームワーク Catalyst に入門してみた</a>
+
+<strong>2012/01/05 追記:</strong> 後になって読み返すとPerlでやるならRubyとかPythonでやったほうが断然楽だな、ともおもう。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl/">外部コマンドを実行した時の戻り値判定(Perl)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。
+
+<strong>system()</strong>
+<pre lang="perl">if ( system( $command ) ) {
+    warn "fail";
+} else {
+    print "success";
+}</pre>
+if ! system() ではないことに注意。
+&nbsp;
+<strong>`xxx` back quote</strong>
+<pre lang="perl">$buffer = `$command`;
+if ( $? != 0 ) { # if false
+    warn "fail";
+} else {
+    print "success\n";
+    print "buffer=$buffer";
+}
+$?に戻り値が入る。0以外はfalse。</pre>
+&nbsp;
+
+<strong>open()</strong>
+<pre lang="perl">open(OUTPUT, ’sort >foo’)  # pipe to sort
+    or die "Can’t start sort: $!";
+#...                        # print stuff to output
+close OUTPUT                # wait for sort to finish
+    or warn $! ? "Error closing sort pipe: $!" # 純粋にcloseが失敗した場合(外部コマンドのfailではなく)
+               : "Exit status $? from sort";   # 外部コマンドがnon-zeroでexitしｓた場合</pre>
+外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
+$ perldoc perlfunc に詳しく説明されています。
+
+&nbsp;
+
+system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。
+<pre lang="perl">open ( IN , "ping 202.232.0.1 -c 3 |" ) or die $!;
+while(){
+    chomp;
+    print $_ . "\n";
+}
+close IN;</pre>
+こちらは都度出力してくれる。
+<pre lang="perl">my $buffer = `ping 202.232.0.1 -c 3`;
+print $buffer;</pre>
+こちらは、pingが終了するまで出力を得られない。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -424,90 +545,6 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/03/basics-of-perl-web-portals/">Basics of Perl Web Portals</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><a href="http://www.ibm.com/developerworks/aix/library/au-perlweb_revision/index.html?ca=drs-">Basics of Perl web portals</a>.
-<blockquote>Summary: Perl is a powerful scripting language that can be used to perform small operations from the command line or power a complete web portal. Understanding techniques for making safe and secure Perl CGI scripts is vital to developing a web portal that does not compromise the integrity of a server or the web site&#8217;s data. This article explains several techniques that will help developers create secure Perl CGI scripts and handle errors, before looking at a simpler method for building web applications like portals using the Plack system.</blockquote>
-carp()は最近覚えたので個人的にはホット。 モジュール内ではdie()は使ってはダメだとおもっていたがcarpを使うとしっくりくる、のかな。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/02/perlhale-sii/">Perlは楽しい</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-02T00:00:00+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">自然言語的(英語的)に書けるところは素敵だな。
-
-<pre lang="perl">
-my @words = qw( apple lemon orange );
-print $_ . 's' foreach @words;
-</pre>
-
-print a word with &#8216;s&#8217; for each word.
-とかね:) cool!!
-
-1つのプログラミング言語を理解するにはその言語を使う人の文化や特性を理解するとしっくりくる。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -534,6 +571,14 @@ print a word with &#8216;s&#8217; for each word.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a>
       </li>
     
@@ -543,14 +588,6 @@ print a word with &#8216;s&#8217; for each word.
     
       <li class="post">
         <a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
   </ul>

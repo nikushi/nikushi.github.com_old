@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="自宅のMac Book Air 13inchが水難にあいました記録。 夜、日本酒飲みながら使ってた僕がすべて悪いのですが10ミリリットルくらいの量がキーボード上部右側から被弾。すぐにタオルで拭きましたが若干キーボードから浸水しました。 せめてウイスキかスピリタスにしとけば直ぐに揮発したなw&# &hellip;">
+  <meta name="description" content="通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。 Rubyで取得するコードを書いてみました。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,97 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-09T01:49:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。</p>
+
+<p>Rubyで取得するコードを書いてみました。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/09/gist-on-command-line/">Gist on Command Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-09T01:23:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><code>gist</code>コマンドを使うとコマンドラインからGistに投稿できることを知りましたのでメモします。</p>
+
+<p>インストール</p>
+
+<pre><code>$ brew install gist
+
+$ gist &lt; file.txt
+</code></pre>
+
+<p>または</p>
+
+<pre><code>$ gist file.txt
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a></h1>
     
     
@@ -113,50 +204,12 @@
 
 <p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
 
-<p>最初気づかなかったんですターミナルで作業しても。</p>
-
-<pre><code>$ c hoge fuga
--bash: c: command not found
-$ to
--bash: to: command not found
-$ erl
--bash: erl: command not found
-</code></pre>
-
-<p>お分かりでしょうか。最初ファイルシステム壊れたかとおもいましたが、正解は&#8217;p&#8217;がきかなくなりました。</p>
-
-<p>このままではインフラエンジニア業は卒業せざる終えなくなりますので、すぐにApple Store銀座店に駆け込みキーボード交換見積もりもらいました。
-Apple Storeの店員さんからは、1週間ほど寝かせて(水分飛ばして)起動するようなら交換しましょう、ということになりました。</p>
-
-<p>1週間後も無事に起動しましたので修理依頼になるわけですが、せっかくなので<code>stress</code>コマンドを使ってストレスかけても問題ないか(火ふいたり落ちたりしないか)見てみました。</p>
-
-<pre><code>$ brew install stress
-$ stress --cpu 4 --timeout 30m
-$ stress --io 4  --timeout 5m
-</code></pre>
-
-<p>10分もするとキーボード付近が暑くなってきます。お遊びなのでせいぜい30分程度で終わらせます。</p>
-
-<p>預けてわずか5日で交換完了しました。購入2ヶ月後、保証期間内ということで今回無料になりました。対応が早い!無償!すばらしや!!!</p>
-
-<p>水難は基本保証対象外なので水難であることを申告したくない気分にもなりますが、正直に言ったほうが後の対応も気持ちよくやってくれるので良いなとおもいました。</p>
-
-<p>ちなみに、Mac Book Air 水がかかる で検索するといくつか事例がありました。</p>
-
-<ul>
-<li>お風呂に水ためて洗う(ネタかとおもいます)</li>
-<li>薬局でアルコールかってきて洗う</li>
-</ul>
-
-
-<p>ネタですね。僕は試せませんでした。</p>
-
-<p>ノートPCで作業するときは水には注意しましょう。
-でもコーヒーは絶対やめられないなあ。</p>
-
-<p>おしまい。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/03/mac-book-air-got-wet/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -522,112 +575,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/14/hello/">Hello, World</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>A first post always says</h2>
-
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-13T00:00:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="perl">sub conf{
-    my %arg = (
-        lang =>; 'perl',
-        rank =>; 1,
-        @_ # ここが決め手!           
-    );
-    # ...
-}</pre>
-参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a>
-
-&nbsp;
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -652,6 +599,14 @@ gitやPasSに触れれてこれは一石二鳥。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a>
       </li>
     
@@ -661,14 +616,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
     
       <li class="post">
         <a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
   </ul>

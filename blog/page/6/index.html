@@ -9,7 +9,12 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="&#12381;&#12429;&#12381;&#12429;&#32224;&#20999;&#12364;&#36843;&#12387;&#12390;&#12365;&#12383;&#12479;&#12473;&#12463;&#35299;&#28040;&#12395;&# &hellip;">
+  <meta name="description" content="条件演算子を覚えた。
+#my $a = "abc\n";
+my $a = "";
+print test( $a ); sub test { my $t = shift; return $t ? $t : "no data\n";
+}
+条件式 ? 条件式が真の時 : 偽の時 上の例だと、$ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +81,98 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/19/perltiao-jian-yan-suan-zi/">Perl::条件演算子</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-19T00:00:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">条件演算子を覚えた。
+<pre lang="perl">#my $a = "abc\n";
+my $a = "";
+print test( $a );
+
+sub test {
+    my $t = shift;
+    return $t ? $t : "no data\n";
+}</pre>
+条件式 ? 条件式が真の時 : 偽の時
+
+上の例だと、$aに値があれば$aを、undefなら&#8221;no data¥n&#8221;を返す。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/18/videtabuwosupesuni%5B%3F%5D-gua-bian-huan-suruniha/">Viでタブをスペースに一括変換するには</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T00:00:00+09:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>vi(vim)で編集中に、
+
+&nbsp;
+
+:1,$!expand -4
+
+&nbsp;
+
+とやればよい。</blockquote>
+引用元: <a href="http://d.hatena.ne.jp/nyanplus/20110610/1307677456">viでタブをスペースに一括変換するには - 俺用メモ</a>.
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -389,87 +486,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/12/fu-shu-hosutodetong-shi-nikomandowoshi-xing-suru/">複数ホストで同時にコマンドを実行する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-12T00:00:00+09:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">psshとかpdshとかいろいろ世の中あるようです。
-面白いとおもったのが<a href="http://www.cyberciti.biz/tips/execute-commands-on-multiple-linux-or-unix-servers-part-ii.html">Tentakel</a>のインタラクティブモード。
-
-リモートホストのshellを見ながらコマンド打てるので面白いな。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/12/bie-rehatu-ran-ni/">別れは突然に</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-12T00:00:00+09:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">仕事帰り。今日は一杯飲んで帰らないと、という気分で錦糸町のいきつけのバーへ。
-
-数年良く知るバーテンさん(黒人)が今週土末で辞めちゃうと知る。アメリカへ留学するんだって。頑張ってくれ。
-
-たまたま久々に寄って知れたのも縁ありだな。彼が居ないお店も寂しい。
-
-別れは突然に。もう会うことだろうが、頑張ってくれ。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -496,6 +512,14 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a>
       </li>
     
@@ -505,14 +529,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
     
       <li class="post">
         <a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
   </ul>

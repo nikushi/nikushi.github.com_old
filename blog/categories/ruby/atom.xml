@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2012-04-03T22:56:03+09:00</updated>
+  <updated>2012-04-09T02:09:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TEDの英文を取得する]]></title>
+    <link href="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/"/>
+    <updated>2012-04-09T01:49:00+09:00</updated>
+    <id>http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted</id>
+    <content type="html"><![CDATA[<p>通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。</p>
+
+<p>Rubyで取得するコードを書いてみました。</p>
+
+<!-- more -->
+
+
+<p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
+
+<p><div><script src='https://gist.github.com/2338391.js?file='></script>
+<noscript><pre><code>#!/usr/bin/env ruby
+
+#
+# Dump subtitle in text for TED
+#
+
+require 'json'
+require 'open-uri'
+
+base_url = 'http://www.ted.com/talks/subtitles'
+id = 1183
+url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
+
+data = JSON.parse(open(url).read)
+if data &amp;&amp; data.key?('captions')
+  data['captions'].each do |sentence|
+    puts sentence['content']
+    puts 
+  end
+end 
+</code></pre></noscript></div>
+</p>
+
+<p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
+
+<p>```
+$ ./teddump.rb
+A few years ago,</p>
+
+<p>I felt like I was stuck in a rut,</p>
+
+<p>so I decided to follow in the footsteps</p>
+
+<p>of the great American philosopher, Morgan Spurlock,</p>
+
+<p>and try something new for 30 days.</p>
+
+<p>The idea is actually pretty simple.</p>
+
+<p>Think about something you've always wanted to add to your life</p>
+
+<p>and try it for the next 30 days.</p>
+
+<p>It turns out,</p>
+
+<p>30 days is just about the right amount of time
+```</p>
+
+<p>できた!</p>
+
+<p>以下を参考にしました。
+- <a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a>
+- <a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する - ギークを夢見るじょーぶん男子 </a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1]]></title>

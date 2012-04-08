@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2012-04-03T22:56:03+09:00</updated>
+  <updated>2012-04-09T02:09:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TEDの英文を取得する]]></title>
+    <link href="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/"/>
+    <updated>2012-04-09T01:49:00+09:00</updated>
+    <id>http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted</id>
+    <content type="html"><![CDATA[<p>通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。</p>
+
+<p>Rubyで取得するコードを書いてみました。</p>
+
+<!-- more -->
+
+
+<p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
+
+<div><script src='https://gist.github.com/2338391.js?file='></script>
+<noscript><pre><code>#!/usr/bin/env ruby
+
+#
+# Dump subtitle in text for TED
+#
+
+require 'json'
+require 'open-uri'
+
+base_url = 'http://www.ted.com/talks/subtitles'
+id = 1183
+url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
+
+data = JSON.parse(open(url).read)
+if data &amp;&amp; data.key?('captions')
+  data['captions'].each do |sentence|
+    puts sentence['content']
+    puts 
+  end
+end 
+</code></pre></noscript></div>
+
+
+<p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ./teddump.rb
+</span><span class='line'>A few years ago,
+</span><span class='line'>
+</span><span class='line'>I felt like I was stuck in a rut,
+</span><span class='line'>
+</span><span class='line'>so I decided to follow in the footsteps
+</span><span class='line'>
+</span><span class='line'>of the great American philosopher, Morgan Spurlock,
+</span><span class='line'>
+</span><span class='line'>and try something new for 30 days.
+</span><span class='line'>
+</span><span class='line'>The idea is actually pretty simple.
+</span><span class='line'>
+</span><span class='line'>Think about something you've always wanted to add to your life
+</span><span class='line'>
+</span><span class='line'>and try it for the next 30 days.
+</span><span class='line'>
+</span><span class='line'>It turns out, 
+</span><span class='line'>
+</span><span class='line'>30 days is just about the right amount of time</span></code></pre></td></tr></table></div></figure>
+
+
+<p>できた!</p>
+
+<p>以下を参考にしました。
+- <a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a>
+- <a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する - ギークを夢見るじょーぶん男子 </a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Gist on command line]]></title>
+    <link href="http://orihubon.com/blog/2012/04/09/gist-on-command-line/"/>
+    <updated>2012-04-09T01:23:00+09:00</updated>
+    <id>http://orihubon.com/blog/2012/04/09/gist-on-command-line</id>
+    <content type="html"><![CDATA[<p><code>gist</code>コマンドを使うとコマンドラインからGistに投稿できることを知りましたのでメモします。</p>
+
+<p>インストール</p>
+
+<pre><code>$ brew install gist
+
+$ gist &lt; file.txt
+</code></pre>
+
+<p>または</p>
+
+<pre><code>$ gist file.txt
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac Book Airが水没したので]]></title>
@@ -25,6 +136,9 @@
 <p>せめてウイスキかスピリタスにしとけば直ぐに揮発したなw&#8230;とかどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
 
 <p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
+
+<!-- more -->
+
 
 <p>最初気づかなかったんですターミナルで作業しても。</p>
 
@@ -1562,58 +1676,6 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
     <updated>2011-12-01T00:00:00+09:00</updated>
     <id>http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org</id>
     <content type="html"><![CDATA[Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Perl Moduleのバージョンを確認する方法]]></title>
-    <link href="http://orihubon.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/"/>
-    <updated>2011-11-24T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa</id>
-    <content type="html"><![CDATA[たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
-
-例
-<pre code="shell">
-$ perl -MTemplate -e '$Template::VERSION'
-2.14
-</pre>
-
-モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CLIツールのためのフレームワーク]]></title>
-    <link href="http://orihubon.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/"/>
-    <updated>2011-11-03T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2011/11/03/cliturufalsetamefalsehuremuwaku</id>
-    <content type="html"><![CDATA[ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
-
-&nbsp;
-
-最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
-結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。
-
-&nbsp;
-
-書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。
-
-<strong>追記</strong>
-
-選べる。
-<ul>
-	<li>App::Cmd</li>
-	<li>App::CLI</li>
-	<li>CLI::Dispatch</li>
-</ul>
-App::Cmdが有名どころのようだ。
-
-&nbsp;
-<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
-<div id="__ss_134444" style="width: 425px;">
-<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
-</div>
 ]]></content>
   </entry>
   

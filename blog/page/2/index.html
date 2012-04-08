@@ -9,7 +9,16 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。 Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、 &hellip;">
+  <meta name="description" content="A first post always says Hello, World1
+2
+3
+4
+5
+6
+7
+class Hello def self.world &quot;Hello, World!&quot; end
+end puts Hello.world return1
+=&gt; &quot; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +85,112 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/14/hello/">Hello, World</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>A first post always says</h2>
+
+<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
+</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-13T00:00:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><pre lang="perl">sub conf{
+    my %arg = (
+        lang =>; 'perl',
+        rank =>; 1,
+        @_ # ここが決め手!           
+    );
+    # ...
+}</pre>
+参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a>
+
+&nbsp;
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -421,112 +536,6 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/">Perl Moduleのバージョンを確認する方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
-
-例
-<pre code="shell">
-$ perl -MTemplate -e '$Template::VERSION'
-2.14
-</pre>
-
-モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/">CLIツールのためのフレームワーク</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
-
-&nbsp;
-
-最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
-結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。
-
-&nbsp;
-
-書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。
-
-<strong>追記</strong>
-
-選べる。
-<ul>
-	<li>App::Cmd</li>
-	<li>App::CLI</li>
-	<li>CLI::Dispatch</li>
-</ul>
-App::Cmdが有名どころのようだ。
-
-&nbsp;
-<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
-<div id="__ss_134444" style="width: 425px;">
-<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -553,6 +562,14 @@ App::Cmdが有名どころのようだ。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a>
       </li>
     
@@ -562,14 +579,6 @@ App::Cmdが有名どころのようだ。
     
       <li class="post">
         <a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a>
       </li>
     
   </ul>

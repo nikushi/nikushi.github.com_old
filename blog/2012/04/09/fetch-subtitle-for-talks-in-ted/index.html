@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Tokyo Cabinet - ni-blog</title>
+  <title>TEDの英文を取得する - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="使ってみようTokyo Cabinet 本稿では、巷で話題の軽量データベースライブラリTokyo Cabinetの概要と使い方について説明します。
-引用元: 開発メモ: 使ってみようTokyo Cabinet. メモ。しかしネーミングの由来はなんだろう。東京で開発したからとかなのか?はたして。
-">
+  <meta name="description" content="通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。 Rubyで取得するコードを書いてみました。 URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。 #!/usr/bin/env &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/09/07/tokyo-cabinet">
+  <link rel="canonical" href="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">Tokyo Cabinet</h1>
+      <h1 class="entry-title">TEDの英文を取得する</h1>
     
     
       <p class="meta">
@@ -97,19 +95,95 @@
   
 
 
-<time datetime="2011-09-07T00:00:00+09:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+<time datetime="2012-04-09T01:49:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><blockquote>使ってみようTokyo Cabinet
+<div class="entry-content"><p>通勤電車の中でひたすらTEDのすばらしいトークを聞いて暗記したかったので英文をテキストで取得できないかと調べてみたら簡単に取得できるようです。</p>
 
-本稿では、巷で話題の軽量データベースライブラリTokyo Cabinetの概要と使い方について説明します。</blockquote>
-引用元: <a href="http://fallabs.com/blog-ja/promenade.cgi?id=72">開発メモ: 使ってみようTokyo Cabinet</a>.
+<p>Rubyで取得するコードを書いてみました。</p>
 
-メモ。しかしネーミングの由来はなんだろう。東京で開発したからとかなのか?はたして。
+<!-- more -->
+
+
+<p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
+
+<div><script src='https://gist.github.com/2338391.js?file='></script>
+<noscript><pre><code>#!/usr/bin/env ruby
+
+#
+# Dump subtitle in text for TED
+#
+
+require 'json'
+require 'open-uri'
+
+base_url = 'http://www.ted.com/talks/subtitles'
+id = 1183
+url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
+
+data = JSON.parse(open(url).read)
+if data &amp;&amp; data.key?('captions')
+  data['captions'].each do |sentence|
+    puts sentence['content']
+    puts 
+  end
+end 
+</code></pre></noscript></div>
+
+
+<p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ./teddump.rb
+</span><span class='line'>A few years ago,
+</span><span class='line'>
+</span><span class='line'>I felt like I was stuck in a rut,
+</span><span class='line'>
+</span><span class='line'>so I decided to follow in the footsteps
+</span><span class='line'>
+</span><span class='line'>of the great American philosopher, Morgan Spurlock,
+</span><span class='line'>
+</span><span class='line'>and try something new for 30 days.
+</span><span class='line'>
+</span><span class='line'>The idea is actually pretty simple.
+</span><span class='line'>
+</span><span class='line'>Think about something you've always wanted to add to your life
+</span><span class='line'>
+</span><span class='line'>and try it for the next 30 days.
+</span><span class='line'>
+</span><span class='line'>It turns out, 
+</span><span class='line'>
+</span><span class='line'>30 days is just about the right amount of time</span></code></pre></td></tr></table></div></figure>
+
+
+<p>できた!</p>
+
+<p>以下を参考にしました。
+- <a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a>
+- <a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する - ギークを夢見るじょーぶん男子 </a></p>
 </div>
 
 
@@ -132,15 +206,21 @@
   
 
 
-<time datetime="2011-09-07T00:00:00+09:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+<time datetime="2012-04-09T01:49:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/09/07/tokyo-cabinet/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/09/07/tokyo-cabinet/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/" >Tweet</a>
   
   
   
@@ -151,10 +231,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/09/03/du-hang-xu-ke-shu-esta/" title="Previous Post: 渡航許可書 ESTA">&laquo; 渡航許可書 ESTA</a>
+        <a class="basic-alignment left" href="/blog/2012/04/09/gist-on-command-line/" title="Previous Post: Gist on command line">&laquo; Gist on command line</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/09/11/web-app-with-perl-without-using-apache/" title="next Post: web app with perl without using apache">web app with perl without using apache &raquo;</a>
       
     </p>
   </footer>
