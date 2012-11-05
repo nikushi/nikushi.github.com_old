@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。 rake &hellip;">
+  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。 rake &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,20 +104,18 @@
 
 <div class="entry-content"><h3>octopressのソースファイルの管理</h3>
 
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
 
 <ol>
 <li><code>rake new_post['hoge']</code>で記事を作成</li>
 <li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ</li>
+<li><code>git push</code>にてlocalのsourceブランチをgithub.comにpush(sourceファイルのバックアップ)</li>
 </ol>
 
 
-<p><code>rake deploy</code>するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、&#8220;git push&#8220;`してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
+<p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
-<p>そこで<code>git push</code>する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。</p>
-
-<p>以下、手順です。</p>
+<p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
 
 <!-- more -->
 
@@ -132,12 +130,12 @@ git --bare init
 <h3>リモートリポジトリの追加</h3>
 
 <p>リモートリポジトリの確認
-現在のremoteのripositoryはoctopressとoriginの2種類。</p>
+現在のremoteはoctopressとoriginの2種類。</p>
 
 <pre><code>$ cd path/to/octopress
 $ git remote -v                     
-octopress       git://github.com/imathis/octopress.git (fetc
-octopress       git://github.com/imathis/octopress.git (push
+octopress       git://github.com/imathis/octopress.git (fetch)
+octopress       git://github.com/imathis/octopress.git (push)
 origin  git@github.com:niku4i/niku4i.github.com.git (fetch) 
 origin  git@github.com:niku4i/niku4i.github.com.git (push)  
 </code></pre>
@@ -179,8 +177,6 @@ To /Users/nikushi/Dropbox/repos/ni-blog.git
 
 <h3>バックアップからリカバリする</h3>
 
-<p>たとえば作業PCが壊れたり、旅行先のネットカフェで更新する場合ですね。(そもそもネカフェにはgitは入ってないか&#8230;!)</p>
-
 <p>本当にバックアップされたか確認してみます。<code>git clone</code>する際には-bでsourceブランチを指定する必要がありました。</p>
 
 <pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
@@ -199,6 +195,12 @@ git push -u dropbox source
 <p>3つのremoteを設定し、dropboxリモートリポジトリをgit pushのデフォルトにしました。</p>
 
 <p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更しましたのでしばらく運用してみます。</p>
+
+<p><strong>2012/11/05 追記</strong>
+最終的には、github.comをremoteにする運用に戻しました。</p>
+
+<pre><code>git push -u origin source
+</code></pre>
 </div>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2012-04-09T02:19:27+09:00</updated>
+  <updated>2012-11-05T13:05:13+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -318,20 +318,18 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
     <id>http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox</id>
     <content type="html"><![CDATA[<h3>octopressのソースファイルの管理</h3>
 
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
 
 <ol>
 <li><code>rake new_post['hoge']</code>で記事を作成</li>
 <li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ</li>
+<li><code>git push</code>にてlocalのsourceブランチをgithub.comにpush(sourceファイルのバックアップ)</li>
 </ol>
 
 
-<p><code>rake deploy</code>するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、&#8220;git push&#8220;`してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
+<p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
-<p>そこで<code>git push</code>する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。</p>
-
-<p>以下、手順です。</p>
+<p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
 
 <!-- more -->
 
@@ -346,12 +344,12 @@ git --bare init
 <h3>リモートリポジトリの追加</h3>
 
 <p>リモートリポジトリの確認
-現在のremoteのripositoryはoctopressとoriginの2種類。</p>
+現在のremoteはoctopressとoriginの2種類。</p>
 
 <pre><code>$ cd path/to/octopress
 $ git remote -v                     
-octopress       git://github.com/imathis/octopress.git (fetc
-octopress       git://github.com/imathis/octopress.git (push
+octopress       git://github.com/imathis/octopress.git (fetch)
+octopress       git://github.com/imathis/octopress.git (push)
 origin  git@github.com:niku4i/niku4i.github.com.git (fetch) 
 origin  git@github.com:niku4i/niku4i.github.com.git (push)  
 </code></pre>
@@ -393,8 +391,6 @@ To /Users/nikushi/Dropbox/repos/ni-blog.git
 
 <h3>バックアップからリカバリする</h3>
 
-<p>たとえば作業PCが壊れたり、旅行先のネットカフェで更新する場合ですね。(そもそもネカフェにはgitは入ってないか&#8230;!)</p>
-
 <p>本当にバックアップされたか確認してみます。<code>git clone</code>する際には-bでsourceブランチを指定する必要がありました。</p>
 
 <pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
@@ -413,6 +409,12 @@ git push -u dropbox source
 <p>3つのremoteを設定し、dropboxリモートリポジトリをgit pushのデフォルトにしました。</p>
 
 <p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更しましたのでしばらく運用してみます。</p>
+
+<p><strong>2012/11/05 追記</strong>
+最終的には、github.comをremoteにする運用に戻しました。</p>
+
+<pre><code>git push -u origin source
+</code></pre>
 ]]></content>
   </entry>
   
@@ -1556,30 +1558,11 @@ runは通常以下のようにリモートホスト上で実行するコマン�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Sinatraで作ったWebアプリをHerokuにデプロイする]]></title>
+    <title type="html"><![CDATA[Sinatratoherokufalseomian Qiang]]></title>
     <link href="http://orihubon.com/blog/2012/01/29/sinatratoherokufalseomian-qiang/"/>
     <updated>2012-01-29T00:00:00+09:00</updated>
     <id>http://orihubon.com/blog/2012/01/29/sinatratoherokufalseomian-qiang</id>
-    <content type="html"><![CDATA[<p>現在の仕事ではコードは書かなくてもやっていける位置にはあるし、書くことは求められないのだけど、やはり自分で作れた方が楽しいので、プライベートでも仕事でももっとコードを書けるべく勉強していきたいとおもいます。</p>
-
-<p>さっそくですがRubyのお勉強。
-<a href="http://makepasswdx.herokuapp.com/">Random Password Generator</a>という名前の小さなアプリを
-herokuにリリースしました。シンプルにランダム文字列返すジェネレータです。</p>
-
-<p><a href="https://github.com/niku4i/makepasswdx">ソースコード</a></p>
-
-<p>昔、会社のオペさん(事務のお姉ちゃん)が社外にメールするときにランダム文字列pass付きzipで添付ファイルをメールするために都度文字列を考えるのは面倒ですというので、そのときは社内用にPerl CGI版を作りました。今回Sinatraで焼き直し。</p>
-
-<p>SinatraはRuby on Railsよりも軽量でWebアプリ初心者には簡単そうだったので初めてでしたが、<a href="http://www.sinatrarb.com/intro.html">Sinatra: README</a>を参考にしました。
-herokuは<a href="http://devcenter.heroku.com/articles/ruby">Get Started with Ruby on Cedar</a>を参考にしました。公式ドキュメントですね。充実してます!! こういうときはぐぐって出てくるブログの日本ドキュメントを読むより公式(英語)を読む方が間違いないとおもいます。</p>
-
-<p>最初はWebアプリ作ろう!という動機からSinatraを勉強しましたが、公開場所をherokuに決めてからはherokuの使い方さることながらgitの勉強にもなりました。会社ではsubversionで今のところ足りているので、こういうところで積極的にgitに触れて勉強できるのはうれしい。</p>
-
-<p>herokuへのdeploy方法など今回勉強したところは<a href="https://github.com/niku4i/makepasswdx/blob/master/README">README</a>に書き残しました。</p>
-
-<p>herokuはとっても便利ですね。数回コマンドだけでWebサイトとして公開できる、すばらしいサービスと技術だとおもいました。</p>
-
-<p>お勉強アプリではありますが最後に一言。pull requestはお気軽にどうぞ!</p>
+    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   

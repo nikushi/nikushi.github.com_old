@@ -350,20 +350,18 @@ $ gist &lt; file.txt
 
   <div class="entry-content"><h3>octopressのソースファイルの管理</h3>
 
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローをになってるようです。</p>
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
 
 <ol>
 <li><code>rake new_post['hoge']</code>で記事を作成</li>
 <li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalhostのsourceブランチをgithubのsourceブランチにpushしバックアップ</li>
+<li><code>git push</code>にてlocalのsourceブランチをgithub.comにpush(sourceファイルのバックアップ)</li>
 </ol>
 
 
-<p><code>rake deploy</code>するとgithub側のmasterブランチにpublicディレクトリのみuploadされるようです。これはよいのですが、&#8220;git push&#8220;`してupstreamにpushするとgithub上に全部公開するのですが、個人的にはソースファイルは公開しなくてよいかなあと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
+<p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
-<p>そこで<code>git push</code>する先のremoteリポジトリとしてDropbox上にリポジトリを作成し管理することにしました。</p>
-
-<p>以下、手順です。</p>
+<p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
 
 </div>
   
