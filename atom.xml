@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-07T00:26:47+09:00</updated>
+  <updated>2013-01-07T00:29:00+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -25,6 +25,11 @@
 <p>github上に置いたドットファイルをマスタとして扱い、各PCにリポジトリを<code>git clone</code>してシンボリックリンクを張れば済みます。</p>
 
 <p>しかしながら、<code>ln</code>コマンドで1ファイルづつリンク作るのもPC台数が複数あると面倒くさく怠慢により機能しなくなることが予想されます。 <a href="http://dotfiles.github.com/">Github dotfiles</a> にはdotfilesの管理にまつわる先人の知恵が紹介されていましたので、この中からカジュアルそうなツールで <a href="https://github.com/technicalpickles/homesick">homesick</a> を導入しました。他にも事例はあるので自分の好みにあう方法を探すのもよいでしょう。</p>
+
+<p>以下、詳細。</p>
+
+<!-- more -->
+
 
 <h3>dotfiles</h3>
 

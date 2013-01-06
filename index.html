@@ -116,47 +116,14 @@
 
 <p>しかしながら、<code>ln</code>コマンドで1ファイルづつリンク作るのもPC台数が複数あると面倒くさく怠慢により機能しなくなることが予想されます。 <a href="http://dotfiles.github.com/">Github dotfiles</a> にはdotfilesの管理にまつわる先人の知恵が紹介されていましたので、この中からカジュアルそうなツールで <a href="https://github.com/technicalpickles/homesick">homesick</a> を導入しました。他にも事例はあるので自分の好みにあう方法を探すのもよいでしょう。</p>
 
-<h3>dotfiles</h3>
+<p>以下、詳細。</p>
 
-<p>github上に<code>dotfiles</code>という名前で専用リポジトリを作りましょう。名前は何でもいいです。
-なお、homesickの特性上、github上のリポジトリルートに<code>home</code>ディレクトリを作成して<code>home</code>ディレクトリ以下にドットファイルを置く必要がありました。
-参考までに(参考にならないですが) <a href="https://github.com/niku4i/dotfiles">私のリポジトリ</a> です。</p>
-
-<h3>homesick</h3>
-
-<p>gemコマンドでインストールできます。</p>
-
-<pre><code>$ gem install homesick
-</code></pre>
-
-<p>github上のdotfilesリポジトリをhomesickに登録します。<code>~/.homesick/</code>以下に<code>git clone</code>されます。</p>
-
-<pre><code>$ homesick clone git@github.com:niku4i/dotfiles.git
-</code></pre>
-
-<p>登録したリポジトリのドットファイルを<code>~/</code>以下に適用。</p>
-
-<pre><code>$ homesick symlink dotfiles
-</code></pre>
-
-<p>既にローカルPC上に同じドットファイルがある場合、上書く前にy/nで訪ねられますのでご安心を。</p>
-
-<p>現在homesickに登録されたリポジトリ一覧を確認</p>
-
-<pre><code>$ homesick list
-dotfiles  git@github.com:niku4i/dotfiles.git
-</code></pre>
-
-<p>githubのリポジトリをpull(ローカルのドットファイルが更新される)</p>
-
-<pre><code>$ homesick pull dotfiles
-</code></pre>
-
-<p>細かい使い方は<code>homesick help</code>を参照してください。</p>
-
-<p><code>homesick clone</code>では複数のリポジトリを登録できるので、Github Enterpriseを導入しているような会社であれば会社用のドットファイルリポジトリ、全PC共通のドットファイルはgithub.comに、といった使い方もできて便利だとおもいました。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">Read on &rarr;</a>
+    </footer>
   
 
 
