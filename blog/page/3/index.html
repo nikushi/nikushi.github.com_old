@@ -9,9 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。 例 $ perl -MTemplate -e '$Template::VERSION'
-2.14 モジュール内で定義された our $ &hellip;">
+  <meta name="description" content="ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。 &nbsp; 最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,51 +79,6 @@ Makefile.PLを作るとき依存するモジュールを記述するが、今使
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/">Perl Moduleのバージョンを確認する方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
-
-例
-<pre code="shell">
-$ perl -MTemplate -e '$Template::VERSION'
-2.14
-</pre>
-
-モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -436,43 +389,6 @@ more help
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/10/17/rozikuru%2C-erugofalsemikusudezaindeuebuyong/">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-17T00:00:00+09:00" pubdate data-updated="true">Oct 17<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p style="text-align: right;">ロジクールは17日、ウェブ用ホイール搭載のマウス「ロジクールワイヤレスマウスM525」を発表した。販売開始は11月4日。価格はオープンで、同社Web直販価格は3,980円。</p>
-引用元: <a href="http://www.rbbtoday.com/article/2011/10/17/82060.html">ロジクール、エルゴノミクスデザインでウェブ用ホイール搭載のワイヤレスマウス | RBB TODAY ブロードバンド、回線・サービスのニュース</a>.
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2011/10/15/memo-for-perl-framewarks/">Memo for Perl Framewarks</a></h1>
     
     
@@ -515,7 +431,7 @@ mojolicious is light weight one .
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/10/15/40kg-song-liao-wu-liao-de./">40kg 送料無料で。</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl/">外部コマンドを実行した時の戻り値判定(Perl)</a></h1>
     
     
       <p class="meta">
@@ -531,16 +447,135 @@ mojolicious is light weight one .
   
 
 
-<time datetime="2011-10-15T00:00:00+09:00" pubdate data-updated="true">Oct 15<span>th</span>, 2011</time>
+<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content">amazonで注文したダンベルが届いた。20kg x 2。 重さを調節できるのでいろいろな筋肉で使える。まっするまっする。
+  <div class="entry-content">perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。
 
-配達のお兄さん大変そうだった。<br /><br /><a href="/images/20111015-214413.jpg"><img src="/images/20111015-214413.jpg" alt="20111015-214413.jpg" class="alignnone size-full" /></a>
+<strong>system()</strong>
+<pre lang="perl">if ( system( $command ) ) {
+    warn "fail";
+} else {
+    print "success";
+}</pre>
+if ! system() ではないことに注意。
+&nbsp;
+<strong>`xxx` back quote</strong>
+<pre lang="perl">$buffer = `$command`;
+if ( $? != 0 ) { # if false
+    warn "fail";
+} else {
+    print "success\n";
+    print "buffer=$buffer";
+}
+$?に戻り値が入る。0以外はfalse。</pre>
+&nbsp;
+
+<strong>open()</strong>
+<pre lang="perl">open(OUTPUT, ’sort >foo’)  # pipe to sort
+    or die "Can’t start sort: $!";
+#...                        # print stuff to output
+close OUTPUT                # wait for sort to finish
+    or warn $! ? "Error closing sort pipe: $!" # 純粋にcloseが失敗した場合(外部コマンドのfailではなく)
+               : "Exit status $? from sort";   # 外部コマンドがnon-zeroでexitしｓた場合</pre>
+外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
+$ perldoc perlfunc に詳しく説明されています。
+
+&nbsp;
+
+system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。
+<pre lang="perl">open ( IN , "ping 202.232.0.1 -c 3 |" ) or die $!;
+while(){
+    chomp;
+    print $_ . "\n";
+}
+close IN;</pre>
+こちらは都度出力してくれる。
+<pre lang="perl">my $buffer = `ping 202.232.0.1 -c 3`;
+print $buffer;</pre>
+こちらは、pingが終了するまで出力を得られない。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/10/jin-tore/">筋トレ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">を始めた。以前はジョギングをたまにしてたんだけど、ジョギング=有酸素運動より無酸素運動が良いらしい。
+
+腹筋、腕立て、スクワットをそれぞれ3セット。間に1分間の休憩を入れるのがいいらしい。反動は使わずゆっくりとが基本ということでした。かなりキツく、翌日筋肉痛。
+
+amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽちってしまった。たっぷり2kgも来たw これは太れということだな。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/10/hawai/">ハワイ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><a href="http://www.flickr.com/photos/aziat/6213602359/" title="Waikiki Beach by Nixie+, on Flickr"><img src="http://farm7.static.flickr.com/6161/6213602359_6d255cb8f3.jpg" width="500" height="333" alt="Waikiki Beach"></a>
+
+行って来ましたー。6泊8日。帰国してはや2週間。すっかり日本は秋ですね。
 </div>
   
   

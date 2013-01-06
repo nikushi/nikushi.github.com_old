@@ -283,44 +283,6 @@ end puts Hello.world return1
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/01/29/gai-ming/">改名</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-29T00:00:00+09:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">twitterの名前を@niku4iに変えた。以前のは_が含まれれて何かと不便で、githubだと_が使えないので-にしないといけなかったりだったので。
-
-idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">Curlでサーバ証明書の検証で失敗したとき</a></h1>
     
     
@@ -513,6 +475,51 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
 
   <div class="entry-content">Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/">Perl Moduleのバージョンを確認する方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
+
+例
+<pre code="shell">
+$ perl -MTemplate -e '$Template::VERSION'
+2.14
+</pre>
+
+モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
 </div>
   
   

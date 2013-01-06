@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-05T23:17:28+09:00</updated>
+  <updated>2013-01-06T23:37:41+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -1567,17 +1567,6 @@ runは通常以下のようにリモートホスト上で実行するコマン�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[改名]]></title>
-    <link href="http://orihubon.com/blog/2012/01/29/gai-ming/"/>
-    <updated>2012-01-29T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/01/29/gai-ming</id>
-    <content type="html"><![CDATA[twitterの名前を@niku4iに変えた。以前のは_が含まれれて何かと不便で、githubだと_が使えないので-にしないといけなかったりだったので。
-
-idを変えるのは何かと面倒なこともあるが、すっきりした感があって満足。
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[curlでサーバ証明書の検証で失敗したとき]]></title>
     <link href="http://orihubon.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/"/>
     <updated>2012-01-20T00:00:00+09:00</updated>
@@ -1643,6 +1632,24 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
     <updated>2011-12-01T00:00:00+09:00</updated>
     <id>http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org</id>
     <content type="html"><![CDATA[Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Perl Moduleのバージョンを確認する方法]]></title>
+    <link href="http://orihubon.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/"/>
+    <updated>2011-11-24T00:00:00+09:00</updated>
+    <id>http://orihubon.com/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa</id>
+    <content type="html"><![CDATA[たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
+
+例
+<pre code="shell">
+$ perl -MTemplate -e '$Template::VERSION'
+2.14
+</pre>
+
+モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
 ]]></content>
   </entry>
   
