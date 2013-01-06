@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>[Perl] perlstyle - perldoc.perl.org - ni-blog</title>
+  <title>homesickとgithubでドットファイルを管理する - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Perl コーディングスタイルガイドライン perlstyle - perldoc.perl.org.
-">
+  <meta name="description" content="お正月に時間があったのでPC環境のうちドットファイルのマスタファイルをgithub上で管理するようしました。また管理を楽にするため homesick を導入しました。 動機としては、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -83,7 +82,7 @@
   
   <header>
     
-      <h1 class="entry-title">[Perl] Perlstyle - perldoc.perl.org</h1>
+      <h1 class="entry-title">Homesickとgithubでドットファイルを管理する</h1>
     
     
       <p class="meta">
@@ -99,14 +98,60 @@
   
 
 
-<time datetime="2011-12-01T00:00:00+09:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time>
+<time datetime="2013-01-06T23:42:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
+<div class="entry-content"><p>お正月に時間があったのでPC環境のうちドットファイルのマスタファイルをgithub上で管理するようしました。また管理を楽にするため <a href="https://github.com/technicalpickles/homesick" title="homesick">homesick</a> を導入しました。</p>
+
+<p>動機としては、昨年転職してから会社PCがMacになり家と会社のMacで設定が微妙に異なることがあり煩わしいので揃えてしまおうとおもったためです。</p>
+
+<p>github上に置いたドットファイルをマスタとして扱い、各PCにリポジトリを<code>git clone</code>してシンボリックリンクを張れば済みます。</p>
+
+<p>しかしながら、<code>ln</code>コマンドで1ファイルづつリンク作るのもPC台数が複数あると面倒くさく怠慢により機能しなくなることが予想されます。 <a href="http://dotfiles.github.com/">Github dotfiles</a> にはdotfilesの管理にまつわる先人の知恵が紹介されていましたので、この中からカジュアルそうなツールで <a href="https://github.com/technicalpickles/homesick">homesick</a> を導入しました。他にも事例はあるので自分の好みにあう方法を探すのもよいでしょう。</p>
+
+<h3>dotfiles</h3>
+
+<p>github上に<code>dotfiles</code>という名前で専用リポジトリを作りましょう。名前は何でもいいです。
+なお、homesickの特性上、github上のリポジトリルートに<code>home</code>ディレクトリを作成して<code>home</code>ディレクトリ以下にドットファイルを置く必要がありました。
+参考までに(参考にならないですが) <a href="https://github.com/niku4i/dotfiles">私のリポジトリ</a> です。</p>
+
+<h3>homesick</h3>
+
+<p>gemコマンドでインストールできます。</p>
+
+<pre><code>$ gem install homesick
+</code></pre>
+
+<p>github上のdotfilesリポジトリをhomesickに登録します。<code>~/.homesick/</code>以下に<code>git clone</code>されます。</p>
+
+<pre><code>$ homesick clone git@github.com:niku4i/dotfiles.git
+</code></pre>
+
+<p>登録したリポジトリのドットファイルを<code>~/</code>以下に適用。</p>
+
+<pre><code>$ homesick symlink dotfiles
+</code></pre>
+
+<p>既にローカルPC上に同じドットファイルがある場合、上書く前にy/nで訪ねられますのでご安心を。</p>
+
+<p>現在homesickに登録されたリポジトリ一覧を確認</p>
+
+<pre><code>$ homesick list
+dotfiles  git@github.com:niku4i/dotfiles.git
+</code></pre>
+
+<p>githubのリポジトリをpull(ローカルのドットファイルが更新される)</p>
+
+<pre><code>$ homesick pull dotfiles
+</code></pre>
+
+<p>細かい使い方は<code>homesick help</code>を参照してください。</p>
+
+<p><code>homesick clone</code>では複数のリポジトリを登録できるので、Github Enterpriseを導入しているような会社であれば会社用のドットファイルリポジトリ、全PC共通のドットファイルはgithub.comに、といった使い方もできて便利だとおもいました。</p>
 </div>
 
 
@@ -129,7 +174,7 @@
   
 
 
-<time datetime="2011-12-01T00:00:00+09:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time>
+<time datetime="2013-01-06T23:42:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2013</time>
       
 
 
@@ -137,7 +182,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/" >Tweet</a>
   
   
   
@@ -148,10 +193,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/" title="Previous Post: Perl Moduleのバージョンを確認する方法">&laquo; Perl Moduleのバージョンを確認する方法</a>
+        <a class="basic-alignment left" href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/" title="Previous Post: TEDの英文を取得する">&laquo; TEDの英文を取得する</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/12/03/perl-colored-logging-by-log4perl/" title="Next Post: [Perl] colored logging by log4perl">[Perl] colored logging by log4perl &raquo;</a>
       
     </p>
   </footer>
