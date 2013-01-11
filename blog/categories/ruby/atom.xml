@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-07T00:29:00+09:00</updated>
+  <updated>2013-01-12T02:16:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[capistrano-colorized-stream gemで虹色のログライフを。]]></title>
+    <link href="http://orihubon.com/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/"/>
+    <updated>2013-01-12T01:03:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow</id>
+    <content type="html"><![CDATA[<p>1年前に書いた<a href="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a>というポストが巡り巡って<a href="https://github.com/sonots/capistrano-colorized-stream">gem</a>で利用できるようになりました、というお話。</p>
+
+<blockquote class="twitter-tweet" data-in-reply-to="288609436531052544" lang="ja"><p>@<a href="https://twitter.com/sonots">sonots</a> だいぶ昔書いたのでいけてなコードですが、こんな感じでしょうか。<a href="http://t.co/nifOD1YA" title="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">orihubon.com/blog/2012/02/0…</a></p>&mdash; Nobuhiro Nikushiさん (@niku4i) <a href="https://twitter.com/niku4i/status/288612474276691968" data-datetime="2013-01-08T11:45:50+00:00">1月 8, 2013</a></blockquote>
+
+
+<script async src="http://orihubon.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><a href="https://twitter.com/sonots/">@sonots</a>さんがCapistranoの話題のツイートしてて、昔似たことをやったので過去のポストを教えてあげたところgemになった!</p>
+
+<blockquote class="twitter-tweet" lang="ja"><p>@<a href="https://twitter.com/niku4i">niku4i</a> gemにしてみましたよ！ <a href="https://t.co/Q2tjd0kj" title="https://github.com/sonots/capistrano-colorized-stream">github.com/sonots/capistr…</a></p>&mdash; そのっつ (SEO Naotoshi)さん (@sonots) <a href="https://twitter.com/sonots/status/289690981152989184" data-datetime="2013-01-11T11:11:26+00:00">1月 11, 2013</a></blockquote>
+
+
+<script async src="http://orihubon.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><a href="https://github.com/sonots/capistrano-colorized-stream">capistrano-colorized-stream</a></p>
+
+<p><a href="https://twitter.com/sonots/">@sonots</a>さん仕事早い。</p>
+
+<p>せっかくgemにしていただいたので僕はこれをネタにブログを書くことにしました。</p>
+
+<p>せっかくだしコードを読んでどう変わったか確認しました。</p>
+
+<!-- more -->
+
+
+<p><code>ruby
+alias_method :stream_without_color, :stream
+alias_method :stream, :stream_with_color
+</code>
+  * 既存メソッド(<code>stream()</code>)の機能は残しつつ、alias_methodで上書くことができるんですね
+  * 実は<code>alias</code>との違いがピンときていないのでまた別途</p>
+
+<p>試してみた。
+``` ruby
+class A
+  def hello</p>
+
+<pre><code>'Hello!'
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>class A
+  def aisatsu</p>
+
+<pre><code>'Konichiwa!'
+</code></pre>
+
+<p>  end
+  alias_method :greet, :hello
+  alias_method :hello, :aisatsu
+end</p>
+
+<p>A.new.hello # => "Konichiwa!"
+A.new.greet # => "Hello!"
+<code>``
+</code>A#hello<code>が日本語に変更しつつ、</code>A#greet`にてオリジナルの英語で挨拶することができました。</p>
+
+<p><code>ruby
+lines = out.split(/\r?\n/m, -1)
+</code>
+  * <code>/\n/</code>ではなく<code>/\r?\n/</code>と各とCRLFとLFをサポートする
+  * splitの第2引数に負の値を与え、改行のみの行を空要素として配列を返す</p>
+
+<p><code>
+def colorize_host(host)
+  @colors ||= {}
+  @colors[host] ||= String.colors[str2acsii(host) % String.colors.size]
+  host.colorize(@colors[host])
+end
+</code>
+  * Hashでインスタンス変数を用意してキャッシュさせ高速化</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[TEDの英文を取得する]]></title>

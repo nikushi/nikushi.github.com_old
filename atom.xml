@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-07T00:29:00+09:00</updated>
+  <updated>2013-01-12T02:16:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,123 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[capistrano-colorized-stream gemで虹色のログライフを。]]></title>
+    <link href="http://orihubon.com/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/"/>
+    <updated>2013-01-12T01:03:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow</id>
+    <content type="html"><![CDATA[<p>1年前に書いた<a href="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a>というポストが巡り巡って<a href="https://github.com/sonots/capistrano-colorized-stream">gem</a>で利用できるようになりました、というお話。</p>
+
+<blockquote class="twitter-tweet" data-in-reply-to="288609436531052544" lang="ja"><p>@<a href="https://twitter.com/sonots">sonots</a> だいぶ昔書いたのでいけてなコードですが、こんな感じでしょうか。<a href="http://t.co/nifOD1YA" title="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">orihubon.com/blog/2012/02/0…</a></p>&mdash; Nobuhiro Nikushiさん (@niku4i) <a href="https://twitter.com/niku4i/status/288612474276691968" data-datetime="2013-01-08T11:45:50+00:00">1月 8, 2013</a></blockquote>
+
+
+<script async src="http://orihubon.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><a href="https://twitter.com/sonots/">@sonots</a>さんがCapistranoの話題のツイートしてて、昔似たことをやったので過去のポストを教えてあげたところgemになった!</p>
+
+<blockquote class="twitter-tweet" lang="ja"><p>@<a href="https://twitter.com/niku4i">niku4i</a> gemにしてみましたよ！ <a href="https://t.co/Q2tjd0kj" title="https://github.com/sonots/capistrano-colorized-stream">github.com/sonots/capistr…</a></p>&mdash; そのっつ (SEO Naotoshi)さん (@sonots) <a href="https://twitter.com/sonots/status/289690981152989184" data-datetime="2013-01-11T11:11:26+00:00">1月 11, 2013</a></blockquote>
+
+
+<script async src="http://orihubon.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><a href="https://github.com/sonots/capistrano-colorized-stream">capistrano-colorized-stream</a></p>
+
+<p><a href="https://twitter.com/sonots/">@sonots</a>さん仕事早い。</p>
+
+<p>せっかくgemにしていただいたので僕はこれをネタにブログを書くことにしました。</p>
+
+<p>せっかくだしコードを読んでどう変わったか確認しました。</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">alias_method</span> <span class="ss">:stream_without_color</span><span class="p">,</span> <span class="ss">:stream</span>
+</span><span class='line'><span class="n">alias_method</span> <span class="ss">:stream</span><span class="p">,</span> <span class="ss">:stream_with_color</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>既存メソッド(<code>stream()</code>)の機能は残しつつ、alias_methodで上書くことができるんですね</li>
+<li>実は<code>alias</code>との違いがピンときていないのでまた別途</li>
+</ul>
+
+
+<p>試してみた。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">hello</span>
+</span><span class='line'>    <span class="s1">&#39;Hello!&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">A</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">aisatsu</span>
+</span><span class='line'>    <span class="s1">&#39;Konichiwa!&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">alias_method</span> <span class="ss">:greet</span><span class="p">,</span> <span class="ss">:hello</span>
+</span><span class='line'>  <span class="n">alias_method</span> <span class="ss">:hello</span><span class="p">,</span> <span class="ss">:aisatsu</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">hello</span> <span class="c1"># =&gt; &quot;Konichiwa!&quot; </span>
+</span><span class='line'><span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">greet</span> <span class="c1"># =&gt; &quot;Hello!&quot; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>A#hello</code>が日本語に変更しつつ、<code>A#greet</code>にてオリジナルの英語で挨拶することができました。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\r?\n/m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>/\n/</code>ではなく<code>/\r?\n/</code>と各とCRLFとLFをサポートする</li>
+<li>splitの第2引数に負の値を与え、改行のみの行を空要素として配列を返す</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">colorize_host</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@colors</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>  <span class="vi">@colors</span><span class="o">[</span><span class="n">host</span><span class="o">]</span> <span class="o">||=</span> <span class="nb">String</span><span class="o">.</span><span class="n">colors</span><span class="o">[</span><span class="n">str2acsii</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="o">%</span> <span class="nb">String</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">size</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">host</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="vi">@colors</span><span class="o">[</span><span class="n">host</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Hashでインスタンス変数を用意してキャッシュさせ高速化</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[homesickとgithubでドットファイルを管理する]]></title>
@@ -1683,15 +1800,6 @@ warnだったら黄色、fatalだったら赤、infoは緑といった感じで�
 log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
 たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Perl] perlstyle - perldoc.perl.org]]></title>
-    <link href="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/"/>
-    <updated>2011-12-01T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org</id>
-    <content type="html"><![CDATA[Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
 ]]></content>
   </entry>
   
