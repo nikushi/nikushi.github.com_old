@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-12T02:16:49+09:00</updated>
+  <updated>2013-01-13T21:10:55+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -38,16 +38,16 @@
 
 <p><a href="https://twitter.com/sonots/">@sonots</a>さん仕事早い。</p>
 
-<p>せっかくgemにしていただいたので僕はこれをネタにブログを書くことにしました。</p>
-
-<p>せっかくだしコードを読んでどう変わったか確認しました。</p>
+<p>gemにしていただいたので僕はこれをネタにブログを書くことにしました。</p>
 
 <!-- more -->
 
 
+<h3>コードを読んでみた</h3>
 
+<h4>alias_method</h4>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>lib/capistrano/colorized_stream.rb </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">alias_method</span> <span class="ss">:stream_without_color</span><span class="p">,</span> <span class="ss">:stream</span>
 </span><span class='line'><span class="n">alias_method</span> <span class="ss">:stream</span><span class="p">,</span> <span class="ss">:stream_with_color</span>
@@ -55,7 +55,7 @@
 
 
 <ul>
-<li>既存メソッド(<code>stream()</code>)の機能は残しつつ、alias_methodで上書くことができるんですね</li>
+<li>alias_methodを使うと既存メソッドは残しつつ、alias_methodで上書くことができるんですね</li>
 <li>実は<code>alias</code>との違いがピンときていないのでまた別途</li>
 </ul>
 
@@ -99,34 +99,21 @@
 
 <p><code>A#hello</code>が日本語に変更しつつ、<code>A#greet</code>にてオリジナルの英語で挨拶することができました。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<h4>String#split</h4>
+
+<figure class='code'><figcaption><span>lib/capistrano/colorized_stream.rb </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\r?\n/m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
 <li><code>/\n/</code>ではなく<code>/\r?\n/</code>と各とCRLFとLFをサポートする</li>
-<li>splitの第2引数に負の値を与え、改行のみの行を空要素として配列を返す</li>
+<li>splitの第2引数に負の値を与え、改行のみの行を空要素として配列を返す。すると改行がどの位置にあるか気にしなくてもよくなる(!)。</li>
 </ul>
 
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">colorize_host</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
-</span><span class='line'>  <span class="vi">@colors</span> <span class="o">||=</span> <span class="p">{}</span>
-</span><span class='line'>  <span class="vi">@colors</span><span class="o">[</span><span class="n">host</span><span class="o">]</span> <span class="o">||=</span> <span class="nb">String</span><span class="o">.</span><span class="n">colors</span><span class="o">[</span><span class="n">str2acsii</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="o">%</span> <span class="nb">String</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">size</span><span class="o">]</span>
-</span><span class='line'>  <span class="n">host</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="vi">@colors</span><span class="o">[</span><span class="n">host</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Hashでインスタンス変数を用意してキャッシュさせ高速化</li>
-</ul>
-
+<p>この<code>split</code>の第2引数のようにRubyのコアクラスのAPIの知識に深ければ小さくコードが書ける実例だなとおもいました。
+このあたりは<a href="http://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E-Ruby-%E3%81%BE%E3%81%A4%E3%82%82%E3%81%A8-%E3%82%86%E3%81%8D%E3%81%B2%E3%82%8D/dp/4873113946">プログラミング言語 Ruby</a>の9章Rubyプラットフォームが充実してますね。難しいコードを書いたな&#8230;.というときは標準のAPIで対応できないか、考え直してみるとよさそうですね。</p>
 ]]></content>
   </entry>
   
