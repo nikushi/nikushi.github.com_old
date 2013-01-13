@@ -1,11 +1,12 @@
 ---
 layout: post
-title: "capistrano-colorized-stream gemで虹色のログライフを。"
+title: "Twitterにリプライしたらgemが出来たお話"
 date: 2013-01-12 01:03
 comments: true
 categories: 
   - 'Ruby'
 tags:
+  - 'Twitter'
   - 'Capistrano'
   - 'Ruby'
   - 'gem'
