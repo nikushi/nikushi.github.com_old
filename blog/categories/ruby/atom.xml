@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-02-18T08:18:48+09:00</updated>
+  <updated>2013-02-18T08:30:26+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -20,13 +20,41 @@
     <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
     <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
 
-<pre><code># parson.as_document =&gt; Moped::BSON::Document
+<pre><code>class Person
+  include Mongoid::Document
+  field :name, type: String
+end
+
+Person.create name: 'a'
 
 person = Person.first
 puts Moped::BSON::Document.serialize(parson.as_document).size
 </code></pre>
 
-<p>PersonクラスはMongoid::Documentクラスをincludeしています。MongoDBにおいて1オブジェクトの最大サイズは16MBらしいので、10万個くらいのデータセットをembedして持たせた場合に、embed元オブジェクトサイズがどの程度になる(16MBに収まるか)調べたときのメモ。</p>
+<p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
+
+<p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
+
+<pre><code>class Person
+  include Mongoid::Document
+  field :name, type: String
+  embeds_many :children
+end
+
+class Child
+  include Mongoid::Document
+  embeded_in :person
+  field :age
+end
+
+Person.create name: 'a'
+person = Person.first
+person.children &lt;&lt; たくさんデータ入れる
+
+Person.first   # loadに時間がかかる!
+</code></pre>
+
+<p>relationにした場合、子供はloadされないので時間がかかりません。</p>
 ]]></content>
   </entry>
   
