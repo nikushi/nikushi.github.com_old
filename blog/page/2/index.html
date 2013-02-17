@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回の記事とおり、ブログの過去の記事をWordpressからOctopressに移行したが、ブログの記事に貼付けた画像ファイルは移行後にリンク切れ状態のままでした。過去記事の画像を表示するよう修正します。 ">
+  <meta name="description" content="XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。 Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing Rvm and Ruby1.9.3/1.9.2 on LLVM Gcc and XCode4.3.1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T00:30:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
+
+<p>Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。</p>
+
+<p>普通に考えて進めると、</p>
+
+<ol>
+<li>XCodeインストール</li>
+<li>rvm install</li>
+</ol>
+
+
+<p>するのだけど、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&#8211;with-gcc=clangをつけてインストールする方法があった。今回は&#8211;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
+
+<p>以下、詳細。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -486,50 +547,6 @@ $ logrotate -dv file.conf
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/">[Perl] Colored Logging by Log4perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
-
-&nbsp;
-
-warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
-<pre>log4perl.category = DEBUG, Screen
-log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
-
-たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -561,6 +578,10 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/13/calculate-bson-objects-size/">BSONオブジェクトのデータサイズを確認する方法(Ruby)</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/">Twitterにリプライしたらgemが出来たお話</a>
       </li>
     
@@ -574,10 +595,6 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
     
       <li class="post">
         <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a>
       </li>
     
   </ul>

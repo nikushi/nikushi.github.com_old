@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-13T21:18:15+09:00</updated>
+  <updated>2013-02-18T08:18:48+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BSONオブジェクトのデータサイズを確認する方法(Ruby)]]></title>
+    <link href="http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/"/>
+    <updated>2013-02-13T15:06:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
+    <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
+
+<pre><code># parson.as_document =&gt; Moped::BSON::Document
+
+person = Person.first
+puts Moped::BSON::Document.serialize(parson.as_document).size
+</code></pre>
+
+<p>PersonクラスはMongoid::Documentクラスをincludeしています。MongoDBにおいて1オブジェクトの最大サイズは16MBらしいので、10万個くらいのデータセットをembedして持たせた場合に、embed元オブジェクトサイズがどの程度になる(16MBに収まるか)調べたときのメモ。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Twitterにリプライしたらgemが出来たお話]]></title>

@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Perl コーディングスタイルガイドライン perlstyle - perldoc.perl.org.
-">
+  <meta name="description" content="Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +79,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/">[Perl] Colored Logging by Log4perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
+
+&nbsp;
+
+warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
+<pre>log4perl.category = DEBUG, Screen
+log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
+
+たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -508,85 +551,6 @@ mojolicious is light weight one .
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/12/wai-bu-komandowoshi-xing-sitashi-falseli-rizhi-pan-ding-perl/">外部コマンドを実行した時の戻り値判定(Perl)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。
-
-<strong>system()</strong>
-<pre lang="perl">if ( system( $command ) ) {
-    warn "fail";
-} else {
-    print "success";
-}</pre>
-if ! system() ではないことに注意。
-&nbsp;
-<strong>`xxx` back quote</strong>
-<pre lang="perl">$buffer = `$command`;
-if ( $? != 0 ) { # if false
-    warn "fail";
-} else {
-    print "success\n";
-    print "buffer=$buffer";
-}
-$?に戻り値が入る。0以外はfalse。</pre>
-&nbsp;
-
-<strong>open()</strong>
-<pre lang="perl">open(OUTPUT, ’sort >foo’)  # pipe to sort
-    or die "Can’t start sort: $!";
-#...                        # print stuff to output
-close OUTPUT                # wait for sort to finish
-    or warn $! ? "Error closing sort pipe: $!" # 純粋にcloseが失敗した場合(外部コマンドのfailではなく)
-               : "Exit status $? from sort";   # 外部コマンドがnon-zeroでexitしｓた場合</pre>
-外部コマンドがfailすると、close()はfalseを返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。
-$ perldoc perlfunc に詳しく説明されています。
-
-&nbsp;
-
-system()かback quoteでおおむね代用できるけど、たとえばping 1.2.3.4 -c 3 (pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteはプログラムが終了する3秒間は出力を得られない。一方open()だと都度ストリームで出力してくれるのでイライラしなくてよい。個人的にopen()のこの使い方をする際のエラー処理をどうするかが分からず、結構調べたのでここにメモした。
-<pre lang="perl">open ( IN , "ping 202.232.0.1 -c 3 |" ) or die $!;
-while(){
-    chomp;
-    print $_ . "\n";
-}
-close IN;</pre>
-こちらは都度出力してくれる。
-<pre lang="perl">my $buffer = `ping 202.232.0.1 -c 3`;
-print $buffer;</pre>
-こちらは、pingが終了するまで出力を得られない。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -618,6 +582,10 @@ print $buffer;</pre>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/13/calculate-bson-objects-size/">BSONオブジェクトのデータサイズを確認する方法(Ruby)</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/">Twitterにリプライしたらgemが出来たお話</a>
       </li>
     
@@ -631,10 +599,6 @@ print $buffer;</pre>
     
       <li class="post">
         <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a>
       </li>
     
   </ul>

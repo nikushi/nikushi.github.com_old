@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-01-13T21:18:15+09:00</updated>
+  <updated>2013-02-18T08:18:48+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BSONオブジェクトのデータサイズを確認する方法(Ruby)]]></title>
+    <link href="http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/"/>
+    <updated>2013-02-13T15:06:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
+    <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
+
+<pre><code># parson.as_document =&gt; Moped::BSON::Document
+
+person = Person.first
+puts Moped::BSON::Document.serialize(parson.as_document).size
+</code></pre>
+
+<p>PersonクラスはMongoid::Documentクラスをincludeしています。MongoDBにおいて1オブジェクトの最大サイズは16MBらしいので、10万個くらいのデータセットをembedして持たせた場合に、embed元オブジェクトサイズがどの程度になる(16MBに収まるか)調べたときのメモ。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Twitterにリプライしたらgemが出来たお話]]></title>
@@ -1772,23 +1789,6 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
 $ logrotate -dv file.conf
 </pre>
 でdry-run。
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Perl] colored logging by log4perl]]></title>
-    <link href="http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl/"/>
-    <updated>2011-12-03T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl</id>
-    <content type="html"><![CDATA[Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
-
-&nbsp;
-
-warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
-<pre>log4perl.category = DEBUG, Screen
-log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
-
-たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
 ]]></content>
   </entry>
   
