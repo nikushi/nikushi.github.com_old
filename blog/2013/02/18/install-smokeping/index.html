@@ -5,12 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>上野 - ni-blog</title>
+  <title>SmokePingをインストールしてみた - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="お盆の日曜日、上野にて人と会う。暑さを避けて喫茶店へ。 昭和の雰囲気あるいい喫茶店だった。コーヒーフロート¥750。高いな、東京価格。でもコーヒーがしっかりしてて美味しかったから良し。
-">
+  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。
+- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
+- 監視対象ホストのネットワークレイテンシ可視化
+- pingロスリストの可視化
+- 閾値監視、通知
+- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/08/14/shang-ye/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/02/18/install-smokeping/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -83,7 +87,7 @@
   
   <header>
     
-      <h1 class="entry-title">上野</h1>
+      <h1 class="entry-title">SmokePingをインストールしてみた</h1>
     
     
       <p class="meta">
@@ -99,16 +103,121 @@
   
 
 
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+<time datetime="2013-02-18T16:41:00+09:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">お盆の日曜日、上野にて人と会う。暑さを避けて喫茶店へ。
+<div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
 
-昭和の雰囲気あるいい喫茶店だった。コーヒーフロート¥750。高いな、東京価格。でもコーヒーがしっかりしてて美味しかったから良し。<br /><br /><a href="/images/20110814-162612.jpg"><img src="/images/20110814-162612.jpg" alt="20110814-162612.jpg" class="alignnone size-full" /></a>
+<p>SmokePingの概要は以下のとおりです。
+- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
+- 監視対象ホストのネットワークレイテンシ可視化
+- pingロスリストの可視化
+- 閾値監視、通知
+- ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
+
+<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+
+<h3>1. RRDTool</h3>
+
+<pre><code>yum install rrdtool rrdtool-devel rrdtoo-perl   
+</code></pre>
+
+<h3>2. fping</h3>
+
+<p>sourceからインストールしました。fpingをroot権限で実行させるためsetuidしました。</p>
+
+<pre><code>mkdir ~/src/ ; cd ~/src/
+wget http://oss.oetiker.ch/smokeping/pub/fping-2.4b2_to4-ipv6.tar.gz
+tar zxvf fping-2.4b2_to4-ipv6.tar.gz
+cd fping-2.4b2_to4-ipv6
+./configure --prefix=/usr/local/smokeping
+make
+su -
+make install
+chmod u+s /usr/local/sbin/fping
+</code></pre>
+
+<h3>3. Perl Modules</h3>
+
+<p>公式に書いてあるCPANモジュールをcpanでインストールします。optionalなモジュールは必要ないので入れてません。</p>
+
+<pre><code># perl -MCPAIN -e shell
+cpan&gt; install FCGI CGI CGI::Fast Config::Grammar LWP
+</code></pre>
+
+<h3>4. SmokePingのインストール</h3>
+
+<p>こちらもソースからインストールします。</p>
+
+<pre><code>cd ~/src
+wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.8.tar.gz
+tar zxvf smokeping-2.6.8.tar.gz
+cd smokeping-2.6.8
+./configure --prefix=/usr/local/smokeping
+/usr/bin/gmake install
+mkdir -p /usr/local/smokeping/cache
+mkdir -p /usr/local/smokeping/data
+mkdir -p /usr/local/smokeping/var
+mkdir /usr/local/smokeping/var/log
+chown -R smokeping:smokeping /usr/local/smokeping
+chmod -R g+rw /usr/local/smokeping/cache
+chmod 600 /usr/local/smokeping/etc/smokeping_secrets.dist
+</code></pre>
+
+<p>smokepingユーザを作ります。</p>
+
+<pre><code>useradd smokeping
+usermod -G smokeping apache
+</code></pre>
+
+<h3>5. SmokePingのコンフィグ</h3>
+
+<p><code>etc/config.dist</code>を<code>etc/smokeping.conf</code>にリネームしてサンプルを参考に設定する。</p>
+
+<h3>6. 起動</h3>
+
+<p>pingを定期実行するsmokepingデーモンを上げます。</p>
+
+<p>ためしに起動する</p>
+
+<pre><code>su - smokeping -m -c /usr/local/smokeping/bin/smokeping --config=/usr/local/smokeping/etc/smokeping.conf --debug
+</code></pre>
+
+<p>問題なければinitスクリプトから起動する。initスクリプトは適当に作ったのを<a href="https://gist.github.com/niku4i/4975644">gist</a>に上げました。</p>
+
+<h3>7. apacheの設定</h3>
+
+<p>以下を<code>/etc/httpd/conf.d/smokeping.conf</code>に。</p>
+
+<div><script src='https://gist.github.com/4976007.js?file='></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>cgi用に以下を作った</p>
+
+<div><script src='https://gist.github.com/4976014.js?file='></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<h3>その他</h3>
+
+<p>コンフィグの構文チェック</p>
+
+<pre><code>smokeping --check --config=/path/to/config
+</code></pre>
+
+<p>デバッグモード実行</p>
+
+<pre><code>smokeping --config=/path/to/config --debug
+</code></pre>
+
+<h3>所感</h3>
+
+<p>しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
 </div>
 
 
@@ -131,15 +240,21 @@
   
 
 
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+<time datetime="2013-02-18T16:41:00+09:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/server/'>Server</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/08/14/shang-ye/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/08/14/shang-ye/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/02/18/install-smokeping/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/02/18/install-smokeping/" >Tweet</a>
   
   
   
@@ -150,10 +265,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/14/bekontonian-shou/" title="Previous Post: ベーコンと年収">&laquo; ベーコンと年収</a>
+        <a class="basic-alignment left" href="/blog/2013/02/13/calculate-bson-objects-size/" title="Previous Post: BSONオブジェクトのデータサイズを確認する方法(Ruby)">&laquo; BSONオブジェクトのデータサイズを確認する方法(Ruby)</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/" title="Next Post: 世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community &raquo;</a>
       
     </p>
   </footer>

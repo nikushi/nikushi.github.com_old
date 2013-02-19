@@ -9,9 +9,12 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="BSON Objectのサイズを求める方法。 class Person include Mongoid::Document field :name, type: String
-end Person.create name: 'a' person = Person.first
-puts Moped &hellip;">
+  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。
+- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
+- 監視対象ホストのネットワークレイテンシ可視化
+- pingロスリストの可視化
+- 閾値監視、通知
+- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +84,149 @@ puts Moped &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-18T16:41:00+09:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
+
+<p>SmokePingの概要は以下のとおりです。
+- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
+- 監視対象ホストのネットワークレイテンシ可視化
+- pingロスリストの可視化
+- 閾値監視、通知
+- ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
+
+<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+
+<h3>1. RRDTool</h3>
+
+<pre><code>yum install rrdtool rrdtool-devel rrdtoo-perl   
+</code></pre>
+
+<h3>2. fping</h3>
+
+<p>sourceからインストールしました。fpingをroot権限で実行させるためsetuidしました。</p>
+
+<pre><code>mkdir ~/src/ ; cd ~/src/
+wget http://oss.oetiker.ch/smokeping/pub/fping-2.4b2_to4-ipv6.tar.gz
+tar zxvf fping-2.4b2_to4-ipv6.tar.gz
+cd fping-2.4b2_to4-ipv6
+./configure --prefix=/usr/local/smokeping
+make
+su -
+make install
+chmod u+s /usr/local/sbin/fping
+</code></pre>
+
+<h3>3. Perl Modules</h3>
+
+<p>公式に書いてあるCPANモジュールをcpanでインストールします。optionalなモジュールは必要ないので入れてません。</p>
+
+<pre><code># perl -MCPAIN -e shell
+cpan&gt; install FCGI CGI CGI::Fast Config::Grammar LWP
+</code></pre>
+
+<h3>4. SmokePingのインストール</h3>
+
+<p>こちらもソースからインストールします。</p>
+
+<pre><code>cd ~/src
+wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.8.tar.gz
+tar zxvf smokeping-2.6.8.tar.gz
+cd smokeping-2.6.8
+./configure --prefix=/usr/local/smokeping
+/usr/bin/gmake install
+mkdir -p /usr/local/smokeping/cache
+mkdir -p /usr/local/smokeping/data
+mkdir -p /usr/local/smokeping/var
+mkdir /usr/local/smokeping/var/log
+chown -R smokeping:smokeping /usr/local/smokeping
+chmod -R g+rw /usr/local/smokeping/cache
+chmod 600 /usr/local/smokeping/etc/smokeping_secrets.dist
+</code></pre>
+
+<p>smokepingユーザを作ります。</p>
+
+<pre><code>useradd smokeping
+usermod -G smokeping apache
+</code></pre>
+
+<h3>5. SmokePingのコンフィグ</h3>
+
+<p><code>etc/config.dist</code>を<code>etc/smokeping.conf</code>にリネームしてサンプルを参考に設定する。</p>
+
+<h3>6. 起動</h3>
+
+<p>pingを定期実行するsmokepingデーモンを上げます。</p>
+
+<p>ためしに起動する</p>
+
+<pre><code>su - smokeping -m -c /usr/local/smokeping/bin/smokeping --config=/usr/local/smokeping/etc/smokeping.conf --debug
+</code></pre>
+
+<p>問題なければinitスクリプトから起動する。initスクリプトは適当に作ったのを<a href="https://gist.github.com/niku4i/4975644">gist</a>に上げました。</p>
+
+<h3>7. apacheの設定</h3>
+
+<p>以下を<code>/etc/httpd/conf.d/smokeping.conf</code>に。</p>
+
+<div><script src='https://gist.github.com/4976007.js?file='></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>cgi用に以下を作った</p>
+
+<div><script src='https://gist.github.com/4976014.js?file='></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<h3>その他</h3>
+
+<p>コンフィグの構文チェック</p>
+
+<pre><code>smokeping --check --config=/path/to/config
+</code></pre>
+
+<p>デバッグモード実行</p>
+
+<pre><code>smokeping --config=/path/to/config --debug
+</code></pre>
+
+<h3>所感</h3>
+
+<p>しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -561,49 +707,6 @@ $ gist &lt; file.txt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-15T01:57:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">前回の記事</a>でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい<code>rake new_post['hoge']</code>したら<code>bundle install</code>しろと怒られたので実行してみたら途中で止まってしまいはまった。</p>
-
-<p>初めはXCodeまわりを疑ったが最終的にはoctopressのディレクトリのGemfileを修正して対応。以下その対応内容。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/15/xcode-43-and-octopress/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -633,6 +736,10 @@ $ gist &lt; file.txt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/13/calculate-bson-objects-size/">BSONオブジェクトのデータサイズを確認する方法(Ruby)</a>
       </li>
     
@@ -646,10 +753,6 @@ $ gist &lt; file.txt
     
       <li class="post">
         <a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/09/gist-on-command-line/">Gist on command line</a>
       </li>
     
   </ul>
