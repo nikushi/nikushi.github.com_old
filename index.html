@@ -9,12 +9,10 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。
-- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-- 監視対象ホストのネットワークレイテンシ可視化
-- pingロスリストの可視化
-- 閾値監視、通知
-- &hellip;">
+  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。 smokepingデーモンが対象に対して定期的にpingポーリング
+監視対象ホストのネットワークレイテンシ可視化
+閾値監視、通知
+ping以外にもHTTPやDNSなどを使うこともできる 以下、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -115,114 +113,24 @@
 
   <div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
 
-<p>SmokePingの概要は以下のとおりです。
-- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-- 監視対象ホストのネットワークレイテンシ可視化
-- pingロスリストの可視化
-- 閾値監視、通知
-- ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
+<p>SmokePingの概要は以下のとおりです。</p>
 
-<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
-
-<h3>1. RRDTool</h3>
-
-<pre><code>yum install rrdtool rrdtool-devel rrdtoo-perl   
-</code></pre>
-
-<h3>2. fping</h3>
-
-<p>sourceからインストールしました。fpingをroot権限で実行させるためsetuidしました。</p>
-
-<pre><code>mkdir ~/src/ ; cd ~/src/
-wget http://oss.oetiker.ch/smokeping/pub/fping-2.4b2_to4-ipv6.tar.gz
-tar zxvf fping-2.4b2_to4-ipv6.tar.gz
-cd fping-2.4b2_to4-ipv6
-./configure --prefix=/usr/local/smokeping
-make
-su -
-make install
-chmod u+s /usr/local/sbin/fping
-</code></pre>
-
-<h3>3. Perl Modules</h3>
-
-<p>公式に書いてあるCPANモジュールをcpanでインストールします。optionalなモジュールは必要ないので入れてません。</p>
-
-<pre><code># perl -MCPAIN -e shell
-cpan&gt; install FCGI CGI CGI::Fast Config::Grammar LWP
-</code></pre>
-
-<h3>4. SmokePingのインストール</h3>
-
-<p>こちらもソースからインストールします。</p>
-
-<pre><code>cd ~/src
-wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.8.tar.gz
-tar zxvf smokeping-2.6.8.tar.gz
-cd smokeping-2.6.8
-./configure --prefix=/usr/local/smokeping
-/usr/bin/gmake install
-mkdir -p /usr/local/smokeping/cache
-mkdir -p /usr/local/smokeping/data
-mkdir -p /usr/local/smokeping/var
-mkdir /usr/local/smokeping/var/log
-chown -R smokeping:smokeping /usr/local/smokeping
-chmod -R g+rw /usr/local/smokeping/cache
-chmod 600 /usr/local/smokeping/etc/smokeping_secrets.dist
-</code></pre>
-
-<p>smokepingユーザを作ります。</p>
-
-<pre><code>useradd smokeping
-usermod -G smokeping apache
-</code></pre>
-
-<h3>5. SmokePingのコンフィグ</h3>
-
-<p><code>etc/config.dist</code>を<code>etc/smokeping.conf</code>にリネームしてサンプルを参考に設定する。</p>
-
-<h3>6. 起動</h3>
-
-<p>pingを定期実行するsmokepingデーモンを上げます。</p>
-
-<p>ためしに起動する</p>
-
-<pre><code>su - smokeping -m -c /usr/local/smokeping/bin/smokeping --config=/usr/local/smokeping/etc/smokeping.conf --debug
-</code></pre>
-
-<p>問題なければinitスクリプトから起動する。initスクリプトは適当に作ったのを<a href="https://gist.github.com/niku4i/4975644">gist</a>に上げました。</p>
-
-<h3>7. apacheの設定</h3>
-
-<p>以下を<code>/etc/httpd/conf.d/smokeping.conf</code>に。</p>
-
-<div><script src='https://gist.github.com/4976007.js?file='></script>
-<noscript><pre><code></code></pre></noscript></div>
+<ul>
+<li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
+<li>監視対象ホストのネットワークレイテンシ可視化</li>
+<li>閾値監視、通知</li>
+<li>ping以外にもHTTPやDNSなどを使うこともできる</li>
+</ul>
 
 
-<p>cgi用に以下を作った</p>
+<p>以下、インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
 
-<div><script src='https://gist.github.com/4976014.js?file='></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<h3>その他</h3>
-
-<p>コンフィグの構文チェック</p>
-
-<pre><code>smokeping --check --config=/path/to/config
-</code></pre>
-
-<p>デバッグモード実行</p>
-
-<pre><code>smokeping --config=/path/to/config --debug
-</code></pre>
-
-<h3>所感</h3>
-
-<p>しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/18/install-smokeping/">Read on &rarr;</a>
+    </footer>
   
 
 

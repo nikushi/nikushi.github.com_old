@@ -9,12 +9,10 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。
-- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-- 監視対象ホストのネットワークレイテンシ可視化
-- pingロスリストの可視化
-- 閾値監視、通知
-- &hellip;">
+  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。 smokepingデーモンが対象に対して定期的にpingポーリング
+監視対象ホストのネットワークレイテンシ可視化
+閾値監視、通知
+ping以外にもHTTPやDNSなどを使うこともできる 以下、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -112,14 +110,20 @@
 
 <div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
 
-<p>SmokePingの概要は以下のとおりです。
-- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-- 監視対象ホストのネットワークレイテンシ可視化
-- pingロスリストの可視化
-- 閾値監視、通知
-- ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
+<p>SmokePingの概要は以下のとおりです。</p>
 
-<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+<ul>
+<li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
+<li>監視対象ホストのネットワークレイテンシ可視化</li>
+<li>閾値監視、通知</li>
+<li>ping以外にもHTTPやDNSなどを使うこともできる</li>
+</ul>
+
+
+<p>以下、インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+
+<!-- more -->
+
 
 <h3>1. RRDTool</h3>
 
