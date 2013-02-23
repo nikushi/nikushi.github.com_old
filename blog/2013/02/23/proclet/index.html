@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>8/14 dinner - ni-blog</title>
+  <title>Procletを使ってみた - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="盛岡冷麺をお土産にもらったので作ってみた。うまうま。
-">
+  <meta name="description" content="最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
+RubyでいうところのForeman、PerlのProcletを使ってみました!! インストール $ cpanm Proclet 簡単ですね! Procfileを書く。 $ vim &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/08/14/814-dinner/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/02/23/proclet/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">8/14 Dinner</h1>
+      <h1 class="entry-title">Procletを使ってみた</h1>
     
     
       <p class="meta">
@@ -99,14 +99,45 @@
   
 
 
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+<time datetime="2013-02-23T13:34:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">盛岡冷麺をお土産にもらったので作ってみた。うまうま。<br /><br /><a href="/images/20110814-185711.jpg"><img src="/images/20110814-185711.jpg" alt="20110814-185711.jpg" class="alignnone size-full" /></a>
+<div class="entry-content"><p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
+RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>
+
+<p>インストール</p>
+
+<pre><code>$ cpanm Proclet
+</code></pre>
+
+<p>簡単ですね!</p>
+
+<p>Procfileを書く。</p>
+
+<pre><code>$ vim Procfile
+web: carton exec -Ilib -- plackup -r app.psgi
+</code></pre>
+
+<p>ほかにworkerなど立ち上げるプロセスがあれば行区切りで書けばOK。</p>
+
+<p>起動させてみる</p>
+
+<pre><code>$ proclet start --color
+13:33:16 web.1      | Watching ./lib app.psgi for file updates.
+13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
+</code></pre>
+
+<p>&#8211;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
+
+<pre><code>$ cat .foreman
+color: 1
+</code></pre>
+
+<p>Happy Hacking!</p>
 </div>
 
 
@@ -129,15 +160,21 @@
   
 
 
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+<time datetime="2013-02-23T13:34:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/perl/'>Perl</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/08/14/814-dinner/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/08/14/814-dinner/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/02/23/proclet/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/02/23/proclet/" >Tweet</a>
   
   
   
@@ -148,10 +185,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/12/fu-shu-hosutodetong-shi-nikomandowoshi-xing-suru/" title="Previous Post: 複数ホストで同時にコマンドを実行する">&laquo; 複数ホストで同時にコマンドを実行する</a>
+        <a class="basic-alignment left" href="/blog/2013/02/18/install-smokeping/" title="Previous Post: SmokePingをインストールしてみた">&laquo; SmokePingをインストールしてみた</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/08/14/bekontonian-shou/" title="Next Post: ベーコンと年収">ベーコンと年収 &raquo;</a>
       
     </p>
   </footer>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Perl | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/perl/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2013-02-23T18:12:41+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Procletを使ってみた]]></title>
+    <link href="http://orihubon.com/blog/2013/02/23/proclet/"/>
+    <updated>2013-02-23T13:34:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/23/proclet</id>
+    <content type="html"><![CDATA[<p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
+RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>
+
+<p>インストール</p>
+
+<pre><code>$ cpanm Proclet
+</code></pre>
+
+<p>簡単ですね!</p>
+
+<p>Procfileを書く。</p>
+
+<pre><code>$ vim Procfile
+web: carton exec -Ilib -- plackup -r app.psgi
+</code></pre>
+
+<p>ほかにworkerなど立ち上げるプロセスがあれば行区切りで書けばOK。</p>
+
+<p>起動させてみる</p>
+
+<pre><code>$ proclet start --color
+13:33:16 web.1      | Watching ./lib app.psgi for file updates.
+13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
+</code></pre>
+
+<p>--colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
+
+<pre><code>$ cat .foreman
+color: 1
+</code></pre>
+
+<p>Happy Hacking!</p>
+]]></content>
+  </entry>
+  
+</feed>

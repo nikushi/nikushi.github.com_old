@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回の記事でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもいrake new_post['hoge']したらbundle installしろと怒られたので実行してみたら途中で止まってしまいはまった。 &hellip;">
+  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。 rake &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T05:32:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>octopressのソースファイルの管理</h3>
+
+<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
+
+<ol>
+<li><code>rake new_post['hoge']</code>で記事を作成</li>
+<li><code>rake deploy</code>で記事を公開</li>
+<li><code>git push</code>にてlocalのsourceブランチをgithub.comにpush(sourceファイルのバックアップ)</li>
+</ol>
+
+
+<p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
+
+<p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -510,47 +564,6 @@ rvmをインストールしたいので、公式ページに従い上のとお�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[Vim]ビジュアルモード選択範囲だけ置換</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
-	<li>:にてコマンド指定するモードに入る</li>
-	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
-</ol>
-vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -582,6 +595,10 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
       </li>
     
@@ -595,10 +612,6 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
     
       <li class="post">
         <a href="/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">homesickとgithubでドットファイルを管理する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/">TEDの英文を取得する</a>
       </li>
     
   </ul>

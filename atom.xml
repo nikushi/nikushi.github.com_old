@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-02-19T22:24:18+09:00</updated>
+  <updated>2013-02-23T18:12:41+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,13 +14,54 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Procletを使ってみた]]></title>
+    <link href="http://orihubon.com/blog/2013/02/23/proclet/"/>
+    <updated>2013-02-23T13:34:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/23/proclet</id>
+    <content type="html"><![CDATA[<p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
+RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>
+
+<p>インストール</p>
+
+<pre><code>$ cpanm Proclet
+</code></pre>
+
+<p>簡単ですね!</p>
+
+<p>Procfileを書く。</p>
+
+<pre><code>$ vim Procfile
+web: carton exec -Ilib -- plackup -r app.psgi
+</code></pre>
+
+<p>ほかにworkerなど立ち上げるプロセスがあれば行区切りで書けばOK。</p>
+
+<p>起動させてみる</p>
+
+<pre><code>$ proclet start --color
+13:33:16 web.1      | Watching ./lib app.psgi for file updates.
+13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
+</code></pre>
+
+<p>&#8211;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
+
+<pre><code>$ cat .foreman
+color: 1
+</code></pre>
+
+<p>Happy Hacking!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[SmokePingをインストールしてみた]]></title>
     <link href="http://orihubon.com/blog/2013/02/18/install-smokeping/"/>
     <updated>2013-02-18T16:41:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/02/18/install-smokeping</id>
     <content type="html"><![CDATA[<p>SmokePingをインストールしたメモ。</p>
 
-<p>SmokePingの概要は以下のとおりです。</p>
+<p>SmokePingの概要は以下のとおりです。
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 
 <ul>
 <li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
@@ -34,6 +75,17 @@
 
 <!-- more -->
 
+
+<p>=======
+- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
+- 監視対象ホストのネットワークレイテンシ可視化
+- pingロスリストの可視化
+- 閾値監視、通知
+- ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
+
+<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+
+<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>5c308c39398c637644556346890f27655416e76b</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
 
 <h3>1. RRDTool</h3>
 
@@ -131,7 +183,14 @@ usermod -G smokeping apache
 
 <h3>所感</h3>
 
-<p>しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
+
+<p>=======
+Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかる。
+alert機能を使える点は良いとおもうが最近だとGrowthForecastとかで可視化できるから、可視化だけならSmokePing使うほどでもないというのが正直な感想。</p>
+
+<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>5c308c39398c637644556346890f27655416e76b</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
 ]]></content>
   </entry>
   
@@ -1913,20 +1972,6 @@ rvmをインストールしたいので、公式ページに従い上のとお�
 
 根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
 <pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[vim]ビジュアルモード選択範囲だけ置換]]></title>
-    <link href="http://orihubon.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/"/>
-    <updated>2012-01-10T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan</id>
-    <content type="html"><![CDATA[<ol>
-	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
-	<li>:にてコマンド指定するモードに入る</li>
-	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
-</ol>
-vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
 ]]></content>
   </entry>
   
