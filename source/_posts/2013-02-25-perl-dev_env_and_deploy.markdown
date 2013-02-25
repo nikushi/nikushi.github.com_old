@@ -39,8 +39,9 @@ categories:
 ``` daemontools script
     #!/bin/sh
     export HOME=/home/myapp
+    export PLACK_ENV=production
     cd $HOME/myappexec
-    setuidgid myapp ./script/start.sh
+    exec setuidgid myapp ./script/start.sh
 ```
 
 ``` script/start.sh
