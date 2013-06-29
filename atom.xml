@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-06-29T16:11:27+09:00</updated>
+  <updated>2013-06-29T16:46:04+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,695 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL チートシート]]></title>
+    <link href="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/"/>
+    <updated>2013-04-07T13:04:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。</p>
+
+<h3>起動</h3>
+
+<pre><code># mysqld_safe --user=_mysql &amp;
+</code></pre>
+
+<h3>停止</h3>
+
+<pre><code># mysqladmin -uroot shutdown
+</code></pre>
+
+<!-- more -->
+
+
+<h3>接続</h3>
+
+<h4>接続</h4>
+
+<p>testデータベースへ接続</p>
+
+<pre><code>$ mysql test
+</code></pre>
+
+<h4>ユーザ名指指定</h4>
+
+<p>hogeユーザ権限でtestデータベースへ接続。-pではパスワード指定しない</p>
+
+<pre><code>$ mysql -u hoge -p test
+Password: 
+</code></pre>
+
+<h4>リモートのMySQLサーバへ接続</h4>
+
+<pre><code>$ mysql -u hoge -p --host=192.168.1.1 --port=1000 test
+</code></pre>
+
+<h4>ソケットファイルを使って接続</h4>
+
+<pre><code>$ mysql --socket=/tmp/ownsocket_file test
+</code></pre>
+
+<h3>データベース選択</h3>
+
+<pre><code>$ mysql
+&gt; USE test
+</code></pre>
+
+<h3>ページャを設定</h3>
+
+<p>SELECT文等で出力が大量の場合、ページャを用いる</p>
+
+<pre><code>&gt; pager less
+</code></pre>
+
+<p>ページャをオフにする場合</p>
+
+<pre><code>&gt; nopager
+</code></pre>
+
+<h3>ヘルプの表示</h3>
+
+<p>mysqlコマンドが持つコマンド群と使い方の説明を表示。SQL文用の説明ではない。SQL文ではないので末尾に;は不要。</p>
+
+<pre><code>&gt; help
+</code></pre>
+
+<h3>テーブル作成</h3>
+
+<p>aテーブルをcというフィールド付きで作成</p>
+
+<pre><code>&gt; CREATE TABLE a (c CHAR(100));
+</code></pre>
+
+<p>複数のフィールドを指定してテーブルを作成</p>
+
+<pre><code>&gt; CREATE TABLE t1 ( id INT, dep INT, name CHAR(30) );
+</code></pre>
+
+<h3>テーブル作成(ストレージエンジンの指定)</h3>
+
+<pre><code>&gt; CREATE TABLE t2 ( id INT, dep INT, name CHAR(30) ) ENGINE=InnoDB;
+</code></pre>
+
+<h3>テーブル作成(キャラクタセットの指定)</h3>
+
+<pre><code>&gt; CREATE TABLE t3 ( id INT, dep INT, name CHAR(30) ) CHARACTER SET utf8;
+</code></pre>
+
+<h3>テーブルのリネーム</h3>
+
+<pre><code>&gt; ALTER TABLE old_table RENAME TO new_table;
+</code></pre>
+
+<h3>テーブル定義の確認</h3>
+
+<p>SHOW CREATE TABLE文を使用して、ストレージエンジン、テーブル、フィールドキャラクタセット等確認できる。</p>
+
+<pre><code>&gt; SHOW CREATE TABLE t1;
+</code></pre>
+
+<h3>データベースの情報確認</h3>
+
+<p>SHOW TABLE STATUS文を使うと、データベースに存在するすべてのテーブルの情報を確認可能。LIKE &lsquo;テーブル名&#8217;を使うと特定テーブルに限定可能。</p>
+
+<p>テーブルaの詳細情報を縦型出力で出力</p>
+
+<pre><code>&gt; SHOW TABLE STATUS LIKE 'a'\G
+*************************** 1. row ***************************
+           Name: a
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 19
+ Avg_row_length: 862
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-04-07 13:41:36
+    Update_time: NULL
+     Check_time: NULL
+      Collation: latin1_swedish_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>version 5.0以上では、information_schema.TABLES テーブルから情報参照も可能</p>
+
+<pre><code>&gt; SELECT * FROM information_schema.TABLES WHERE TABLE_SCHEMA='test' AND TABLE_NAME='t1'\G
+*************************** 1. row ***************************
+  TABLE_CATALOG: def
+   TABLE_SCHEMA: test
+     TABLE_NAME: t1
+     TABLE_TYPE: BASE TABLE
+         ENGINE: InnoDB
+        VERSION: 10
+     ROW_FORMAT: Compact
+     TABLE_ROWS: 1
+ AVG_ROW_LENGTH: 16384
+    DATA_LENGTH: 16384
+MAX_DATA_LENGTH: 0
+   INDEX_LENGTH: 0
+      DATA_FREE: 0
+ AUTO_INCREMENT: NULL
+    CREATE_TIME: 2013-04-07 14:10:03
+    UPDATE_TIME: NULL
+     CHECK_TIME: NULL
+TABLE_COLLATION: latin1_swedish_ci
+       CHECKSUM: NULL
+ CREATE_OPTIONS:
+  TABLE_COMMENT:
+1 row in set (0.00 sec)
+</code></pre>
+
+<h3>テーブルのフィールドの構造確認</h3>
+
+<p>SHOW文またはDESC文を使う</p>
+
+<pre><code>mysql&gt; DESC t1;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int(11)  | YES  |     | NULL    |       |
+| dep   | int(11)  | YES  |     | NULL    |       |
+| name  | char(30) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+&gt; DESC t1;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int(11)  | YES  |     | NULL    |       |
+| dep   | int(11)  | YES  |     | NULL    |       |
+| name  | char(30) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+</code></pre>
+
+<p>version 5.0以上ならばinformation_schema.COLUMNSテーブルを参照することで同等のことが可能</p>
+
+<h3>テーブル一覧を確認</h3>
+
+<pre><code>&gt; SHOW TABLES
+</code></pre>
+
+<h3>複数のフィールドに値をセットしたレコードを挿入</h3>
+
+<pre><code>&gt; INSERT INTO a(c,d) VALUES ('123abc','246ace')
+</code></pre>
+
+<h3>フィールドの追加</h3>
+
+<p>テーブルaにdというCHAR(100)のフィールドをフィールド最後に追加。COLUMNは省略可能</p>
+
+<pre><code>&gt; ALTER TABLE a ADD COLUMN d CHAR(100);
+or
+&gt; ALTER TABLE a ADD d CHAR(100);
+</code></pre>
+
+<p>フィールドを指定した位置に追加。FIRSTなら先頭、AFTERは指定したフィールドの次に追加。BEFOREは無い。</p>
+
+<pre><code>&gt; ALTER TABLE a ADD COLUMN b CHAR(50) FIRST;
+&gt; ALTER TABLE a ADD COLUMN f CHAR(50) AFTER e;
+</code></pre>
+
+<h3>フィールドの削除</h3>
+
+<pre><code>&gt; ALTER TABLE a DROP COLUMN f;
+</code></pre>
+
+<h3>フィールドの変更</h3>
+
+<p>名前や型を変更できる。下の例はeフィールドをe2にリネームしつつ、型をCHAR(50)に変換。</p>
+
+<pre><code>&gt; ALTER TABLE a CHANGE COLUMN e e2 CHAR(50);
+</code></pre>
+
+<h3>フィールド型の変換</h3>
+
+<pre><code>&gt; ALTER TABLE a MODIFY e2 CHAR(100);
+</code></pre>
+
+<h3>ストレージエンジンの変更</h3>
+
+<p>テーブルのストレージエンジンを変更する</p>
+
+<pre><code>&gt; ALTER TABLE a ENGINE=MyISAM;
+</code></pre>
+
+<h3>テーブルの破棄</h3>
+
+<pre><code>&gt; DROP TABLE a;
+</code></pre>
+
+<h3>レコード追加</h3>
+
+<p>フィールドの値セットしてレコード追加。指定されなかったフィールドにはデフォルト値が入る。</p>
+
+<pre><code>&gt; INSERT INTO a (c) VALUES ('123abc');
+</code></pre>
+
+<p>複数フィールドの値セットしてレコード追加。指定されなかったフィールドにはデフォルト値が入る。</p>
+
+<pre><code>&gt; INSERT INTO a (b,c) VALUES ('1', '2');
+</code></pre>
+
+<p>最初の()を省略すると VALUESの()はすべてのフィールドの値が含まれることが期待される。個数が足りない場合はエラーになる。</p>
+
+<pre><code>&gt; INSERT INTO a VALUES (1,'2','3','4');
+</code></pre>
+
+<h3>データの検索</h3>
+
+<p>テーブルaのすべてのレコードを表示</p>
+
+<pre><code>&gt; SELECT * FROM a;
+</code></pre>
+
+<h3>特定フィールドに限定した検索</h3>
+
+<p>テーブルaのc,dフィールドのレコードを表示</p>
+
+<pre><code>&gt; SELECT c,d FROM a;
+</code></pre>
+
+<h3>レコードの縦表示</h3>
+
+<p>フィールド数が多くて横1行に収まらなく見づらい場合。1レコード毎に縦表示させる。;の代わりに\Gを末尾にする。</p>
+
+<pre><code>&gt; SELECT c,d FROM a\G
+</code></pre>
+
+<p>結果</p>
+
+<pre><code>&gt; SELECT c,d FROM a\G
+*************************** 1. row ***************************
+c: 123abc
+d: NULL
+*************************** 2. row ***************************
+c: 123abc
+d: NULL
+2 rows in set (0.00 sec)
+</code></pre>
+
+<h3>特定値を含むレコードの抽出</h3>
+
+<pre><code>&gt; CREATE TABLE a ( id INT, name CHAR(50), age INT );
+Query OK, 0 rows affected (0.02 sec)
+
+&gt; INSERT INTO a VALUES (1, 'John', 30);
+&gt; INSERT INTO a VALUES (2, 'Smith', 24);
+&gt; INSERT INTO a VALUES (3, 'Alice', 18);
+&gt; DESC a;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int(11)  | YES  |     | NULL    |       |
+| name  | char(50) | YES  |     | NULL    |       |
+| age   | int(11)  | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+</code></pre>
+
+<p>名前がJohn</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE name = 'John';
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | John |   30 |
++------+------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>名前がJohn以外</p>
+
+<pre><code>mysql&gt; SELECT * FROM a WHERE name != 'John';
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    2 | Smith |   24 |
+|    3 | Alice |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>年齢が20より上</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE age &gt; 20;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | John  |   30 |
+|    2 | Smith |   24 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>名前がAから始まる人(パターン検索)</p>
+
+<p>%は0文字以上の任意の文字列の意味</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE name LIKE 'A%';
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    3 | Alice |   18 |
++------+-------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>AND</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE id &lt;= 2 AND age &gt; 25;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | John |   30 |
++------+------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE age &gt; 25 OR name LIKE 'A%';
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | John  |   30 |
+|    3 | Alice |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>IN</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE name IN ( 'Alice', 'John' );
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | John  |   30 |
+|    3 | Alice |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<h3>SELECT結果のソート</h3>
+
+<pre><code>&gt; INSERT INTO a VALUES (0, 'Bob', 65);
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
+
+<p>昇順</p>
+
+<pre><code>&gt; SELECT * FROM a ORDER BY id;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    0 | Bob   |   65 |
+|    1 | John  |   30 |
+|    2 | Smith |   24 |
+|    3 | Alice |   18 |
++------+-------+------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p>降順</p>
+
+<pre><code>&gt; SELECT * FROM a ORDER BY id DESC;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    3 | Alice |   18 |
+|    2 | Smith |   24 |
+|    1 | John  |   30 |
+|    0 | Bob   |   65 |
++------+-------+------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p>ソート基準のフィールドを複数指定</p>
+
+<pre><code>&gt; SELECT * FROM a ORDER BY id, name;
+</code></pre>
+
+<h3>データの更新</h3>
+
+<p>UPDATEを使う。key=value[, key=value] で複数指定もできる。</p>
+
+<pre><code>&gt; UPDATE  a SET note="hello";
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+&gt; SELECT * FROM a;
++------+-----------+------+-------+
+| id   | name      | age  | note  |
++------+-----------+------+-------+
+|    1 | John      |   30 | hello |
+|    2 | Smith     |   24 | hello |
+|    3 | Alice     |   18 | hello |
+|    0 | Bob       |   65 | hello |
+|    5 | Christian |   65 | hello |
++------+-----------+------+-------+
+5 rows in set (0.00 sec)
+</code></pre>
+
+<p>特定レコードの特定フィールドを更新するにはWHERE句を使う。</p>
+
+<pre><code>&gt; UPDATE  a SET age=19 WHERE name='Alice';
+</code></pre>
+
+<h3>テーブルからすべてのレコードを削除</h3>
+
+<p>テーブルからすべてのレコードを削除する。テーブルは削除されない</p>
+
+<pre><code>&gt; DELETE FROM b;
+</code></pre>
+
+<h3>テーブルから特定のレコードを削除</h3>
+
+<p>特定のレコードだけを削除したい場合はWHERE句を使う</p>
+
+<pre><code>DELETE  FROM b WHERE age &gt; 10;
+</code></pre>
+
+<h3>リダイレクト(SQLを記述したファイルを実行)</h3>
+
+<pre><code>$ cat sql.txt
+SELECT * FROM a;
+$ mysql test &lt; sql.txt
+
+c       d       e
+123abc  NULL    NULL
+123abc  NULL    NULL
+NULL    1       NULL
+a       1       NULL
+a       1       NULL
+
+$
+</code></pre>
+
+<p>上の例では枠線は表示されない。枠線を表示したい場合は-tを使う</p>
+
+<pre><code>$ mysql -t test &lt; sql.txt
++--------+------+------+
+| c      | d    | e    |
++--------+------+------+
+| 123abc | NULL | NULL |
+| 123abc | NULL | NULL |
+| NULL   | 1    | NULL |
+| a      | 1    | NULL |
+| a      | 1    |      |
++--------+------+------+
+</code></pre>
+
+<h3>リダイレクト(実行結果をファイルに出力)</h3>
+
+<p>&lsquo;>&#8217;上書き、&rsquo;>>&lsquo;追記</p>
+
+<pre><code>$ mysql test &gt; out
+SELECT * FROM a;
+quit
+$
+$ cat out
+c       d       e
+123abc  NULL    NULL
+123abc  NULL    NULL
+NULL    1       NULL
+a       1       NULL
+a       1       NULL
+</code></pre>
+
+<h3>リダイレクト(&lt; と > を同時に使う)</h3>
+
+<p>SQL文をファイルから読み込み実行。実行結果をファイルに保存</p>
+
+<pre><code>$ cat sql.txt
+SELECT c FROM a;
+$ mysql test &lt; sql.txt &gt; out
+$
+$ cat out |head
+c
+123abc
+123abc
+NULL
+a
+a
+a
+a
+a
+a
+</code></pre>
+
+<h3>パイプ</h3>
+
+<p>パイプを使ってSQL文を実行できる</p>
+
+<pre><code>$ echo 'SELECT * FROM a' | mysql test | head
+c       d       e
+123abc  NULL    NULL
+123abc  NULL    NULL
+NULL    1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+</code></pre>
+
+<h3>データベースの作成</h3>
+
+<p>testという名前のデータベースを作成</p>
+
+<pre><code>$ mysqladmin -uroot -p create test
+</code></pre>
+
+<p>もしくはSQL文を使う</p>
+
+<pre><code>&gt; CREATE DATABASE test;
+</code></pre>
+
+<p>キャラクタセットを指定しデータベースを作成する</p>
+
+<pre><code>&gt; CREATE DATABASE test DEFAULT CHARACTER SET utf8;
+</code></pre>
+
+<h3>データベースの削除</h3>
+
+<p>testという名前のデータベースを削除</p>
+
+<pre><code>$ mysqladmin -uroot -p drop test
+</code></pre>
+
+<p>もしくはSQL文を使う</p>
+
+<pre><code>&gt; DROP DATABASE test;
+</code></pre>
+
+<h3>データベース作成時のクエリを確認</h3>
+
+<pre><code>&gt; SHOW CREATE DATABASE test;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[前日日付のファイル名でローテートし圧縮するlogrotateの設定例]]></title>
+    <link href="http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/"/>
+    <updated>2013-03-07T15:57:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name</id>
+    <content type="html"><![CDATA[<p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
+
+<div><script src='https://gist.github.com/5105939.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>一部説明</p>
+
+<pre><code>ifempty        # 空ファイルでもローテートする。
+               # 過去ログを`ls | wc -l`などするときに
+               # 日数と数を合わせたいので。
+dateext        # ローテートしたファイルに実行時の日付を
+               # 付ける。ただし、00:00以降にlogrotateを実行する
+               # 場合は、ログ内容と日付が乖離するので別途
+               # lastactionで日付を前日分に変えている。
+extension .log # ローテート後のファイル名の場所の末尾に.log 
+               # を持ってくる。 圧縮する場合は.log.gzになる。
+               # 本オプション指定ない場合はapp.log-yyyymmdd となり
+               # 微妙なので調整のため。
+lastaction     # 最後に実行するコマンド
+               # postrotateを使わないのはpostrotateはcompressする前
+               # に実行されるため。compressしてlastactionが実行される。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Perl環境構築作りのチート]]></title>
+    <link href="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/"/>
+    <updated>2013-02-25T09:30:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
+    <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
+
+<p>調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1)[<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">http://www.slideshare.net/ImaiHayato/niigatapm-1</a>]</p>
+
+<p>以下、自分用にメモします。</p>
+
+<!--more-->
+
+
+<h3>開発環境</h3>
+
+<pre><code>$ curl -kL http://install.perlbrew.pl | bash
+$ echo 'source ~/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bash_profile
+$ source ~/.bash_profile
+$ perlbrew install perl-5.17.9
+$ perlbrew switch perl-5.17.9
+$ perlbrew install-cpanm
+$ cpanm carton
+$ cpanm proclet # 必要であれば
+</code></pre>
+
+<h3>デプロイ先</h3>
+
+<pre><code>$ sudo useradd -m myapp &amp;&amp; sudo su - myapp
+# perl環境構築(略)
+myapp$ git clone url myapp
+myapp$ cd myapp
+myapp$ carton install
+myapp$ carton exec -- prove
+</code></pre>
+
+<h3>daemontoolsスクリプト</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
+</span><span class='line'>export HOME=/home/myapp
+</span><span class='line'>export PLACK_ENV=production
+</span><span class='line'>cd $HOME/myappexec
+</span><span class='line'>exec setuidgid myapp ./script/start.sh</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>source $HOME/perl5/perlbrew/etc/bashrc
+</span><span class='line'>carton exec -- myapp</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Procletを使ってみた]]></title>
@@ -1625,353 +2314,6 @@ end</code></pre></noscript></div>
 参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a>
 
 &nbsp;
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Streaming Log with Capistrano]]></title>
-    <link href="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/"/>
-    <updated>2012-02-09T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano</id>
-    <content type="html"><![CDATA[<p><img src="http://orihubon.com/images/tail-log-with-capistrano-image.jpg" alt="tail-log-with-capistrano-image" /></p>
-
-<p>複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。</p>
-
-<p>Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、要望的に足りないところがあったので最終的にはstreamメソッドを拡張し対応しました。さらにcolorize gemモジュールを使って色をつけてみやすくしました。</p>
-
-<p>以下詳細です。</p>
-
-<!-- more -->
-
-
-<h2>streamメソッドを使った例</h2>
-
-<p>まずは、Capistranoのstreamメソッドを使って試します。
-カレントディレクトリにCapfileというファイル名で以下を保存してください。</p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">server</span> <span class="n">server1</span><span class="p">,</span> <span class="ss">:web</span>
-</span><span class='line'><span class="n">server</span> <span class="n">server2</span><span class="p">,</span> <span class="ss">:web</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;tail -f accees_log&quot;</span>
-</span><span class='line'><span class="n">task</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="ss">:web</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">stream</span> <span class="s2">&quot;tail -f /var/log/apache/access_log ; true&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>実行</p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cap</span> <span class="n">tail</span>
-</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>capコマンドが見つからない場合はCapistranoがインストールされていないかもしれません。capコマンドはカレントディレクトリのCapfileという名前を探して読み込みます。引数に指定したtailタスクを実行します。
-上の例では一見うまくいっていますが、複数ホストのログが単純にログがストリームされるだけなので１つのログがどのサーバのログか分かりません。微妙です。</p>
-
-<h2>runメソッドにブロックを渡す方法</h2>
-
-<p>次に別のアプローチとしてrunメソッドを使った方法を試してみました。
-runは通常以下のようにリモートホスト上で実行するコマンドを引数に書きます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;hoge&quot;</span>
-</span><span class='line'><span class="n">task</span> <span class="ss">:uptime</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;uptime&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>runにはコマンドを引数に渡すだけなく、ブロックを渡して出力を加工したりできます。Capfileを以下のように修正します。<a href="http://errtheblog.com/posts/19-streaming-capistrano">http://errtheblog.com/posts/19-streaming-capistrano</a></p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;tail -f accees_log&quot;</span>
-</span><span class='line'><span class="n">task</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="ss">:web</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;tail -f /var/log/apache/access_log ; true&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ch</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">out</span><span class="o">|</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="k">break</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="ss">:err</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ブロック変数に指定したoutにリモートで実行したコマンドの標準出力がストアされます。chはセッションの情報とかが保存されるようです。
-こによりログの左側にサーバ名が付加されます。</p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cap</span> <span class="n">tail</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>しかしすぐに問題が見つかりました。tail -fの標準出力は複数行をまとめたバルクデータとしてoutにストアされるらしく、上のコードだと1行ごとには処理できません。ですので1行ごとにホスト名を先頭に付加できませんでした。</p>
-
-<h2>streamメソッドを拡張</h2>
-
-<p>そこで、ここからはいっきに進みますが、以下のとおり標準のstreamメソッドを拡張しました。さらにcolorizeモジュールを使ってホスト名毎に色づけをして、どのサーバのログかを見やすくしてみました。</p>
-
-<p>まず色をつけるためcolorizeモジュールを利用します。</p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">colorize</span> <span class="o">--</span><span class="n">remote</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>inspect-stream.rbという名前で以下の内容でファイルを作成します。</p>
-
-<figure class='code'><figcaption><span>inspect-stream.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;colorize&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">unless</span> <span class="no">Capistrano</span><span class="o">::</span><span class="no">Configuration</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:instance</span><span class="p">)</span>
-</span><span class='line'>      <span class="nb">abort</span> <span class="s2">&quot;requires Capistrano 2&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">module</span> <span class="nn">Capistrano</span>
-</span><span class='line'>  <span class="k">class</span> <span class="nc">Configuration</span>
-</span><span class='line'>    <span class="k">module</span> <span class="nn">Actions</span>
-</span><span class='line'>      <span class="k">module</span> <span class="nn">Inspect</span>
-</span><span class='line'>        <span class="c1"># 標準のstreamメソッドを拡張する</span>
-</span><span class='line'>        <span class="c1"># 各行の先頭にホスト名を出力しつつ、ホスト名毎に色づけする</span>
-</span><span class='line'>        <span class="k">def</span> <span class="nf">stream</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="nb">trap</span><span class="p">(</span><span class="s2">&quot;INT&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s1">&#39;Interupted&#39;</span><span class="p">;</span> <span class="nb">exit</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="c1"># out の 最終行のchunk dataを一時保存するHash</span>
-</span><span class='line'>          <span class="c1"># keyはホスト名</span>
-</span><span class='line'>          <span class="n">last</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span class='line'>          <span class="n">invoke_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">ch</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">out</span><span class="o">|</span>
-</span><span class='line'>            <span class="n">a</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\n/m</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">if</span> <span class="n">out</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">chr</span>  <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</span><span class='line'>              <span class="n">a</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span><span class="p">)</span>
-</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>              <span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shift</span>
-</span><span class='line'>              <span class="n">a</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">+</span> <span class="n">tmp</span><span class="p">)</span>
-</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>            <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">if</span> <span class="n">out</span><span class="o">[-</span><span class="mi">1</span><span class="o">].</span><span class="n">chr</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>              <span class="n">last</span><span class="o">[</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]]</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">pop</span>
-</span><span class='line'>            <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">a</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
-</span><span class='line'>              <span class="nb">puts</span> <span class="n">colorize_by_host</span><span class="p">(</span><span class="n">ch</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">line</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="ss">:out</span>
-</span><span class='line'>            <span class="k">end</span>
-</span><span class='line'>            <span class="nb">warn</span> <span class="s2">&quot;[err :: </span><span class="si">#{</span><span class="n">ch</span><span class="o">[</span><span class="ss">:server</span><span class="o">]</span><span class="si">}</span><span class="s2">] </span><span class="si">#{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="ss">:err</span>
-</span><span class='line'>          <span class="k">end</span>
-</span><span class='line'>        <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kp">private</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">def</span> <span class="nf">colorize_by_host</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
-</span><span class='line'>          <span class="n">color</span> <span class="o">=</span> <span class="o">[</span> <span class="ss">:light_blue</span><span class="p">,</span> <span class="ss">:yellow</span><span class="p">,</span> <span class="ss">:magenta</span><span class="p">,</span> <span class="ss">:cyan</span><span class="p">,</span> <span class="ss">:light_red</span><span class="p">,</span> <span class="ss">:light_green</span><span class="p">,</span> <span class="ss">:light_yellow</span><span class="p">,</span> <span class="ss">:light_blue</span><span class="p">,</span> <span class="ss">:light_magenta</span><span class="p">,</span> <span class="ss">:light_cyan</span><span class="p">,</span> <span class="ss">:light_white</span> <span class="o">]</span>
-</span><span class='line'>          <span class="n">host</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span> <span class="n">color</span><span class="o">[</span><span class="n">str2acsii</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="o">%</span> <span class="n">color</span><span class="o">.</span><span class="n">size</span><span class="o">]</span> <span class="p">)</span>
-</span><span class='line'>        <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">def</span> <span class="nf">str2acsii</span><span class="p">(</span><span class="n">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span class='line'>          <span class="n">acsii</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>          <span class="n">str</span><span class="o">.</span><span class="n">each_byte</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
-</span><span class='line'>            <span class="n">acsii</span> <span class="o">+=</span> <span class="n">c</span><span class="o">.</span><span class="n">to_s</span>
-</span><span class='line'>          <span class="k">end</span>
-</span><span class='line'>          <span class="n">acsii</span><span class="o">.</span><span class="n">to_i</span>
-</span><span class='line'>        <span class="k">end</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Capfileではrequireでinspect-stream.rbを読み込みます。</p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;./inspect-stream&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">server</span> <span class="n">server1</span><span class="p">,</span> <span class="ss">:web</span>
-</span><span class='line'><span class="n">server</span> <span class="n">server2</span><span class="p">,</span> <span class="ss">:web</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;tail -f accees_log&quot;</span>
-</span><span class='line'><span class="n">task</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="ss">:web</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">stream</span> <span class="s2">&quot;tail -f /var/log/apache/access_log ; true&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>task側ではstreamを実行しているだけなのですっきりしました。</p>
-
-<p>実行します。</p>
-
-<figure class='code'><figcaption><span>Capfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cap</span> <span class="n">tail</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mo">04</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server1</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mo">05</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /index.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span><span class='line'><span class="n">server2</span><span class="p">:</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="o">-</span> <span class="o">-</span> <span class="o">[</span><span class="mo">05</span><span class="o">/</span><span class="no">Feb</span><span class="o">/</span><span class="mi">2012</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mo">07</span> <span class="o">+</span><span class="mi">0900</span><span class="o">]</span> <span class="s2">&quot;HEAD /style.css HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>preタグの都合で色をつけれませんでしたが、実際にはserver1は黄色、server2は青など色付けされます</p>
-
-<h2>まとめ</h2>
-
-<ul>
-<li>Capistranoを使ってtail -f /var/log/some.log を複数ホスト上で同時実行して管理ホスト側でまとめてみることができました。</li>
-<li>最終的にはstreamメソッドを定義しなおし、colorizeモジュールを使ってサーバ毎に色を変えました。</li>
-</ul>
-
-
-<p>今このサーバが使われてるんだなというのが可視化できておもしろいです。色がつくだけでログ調査が数倍楽しくなりました。</p>
-
-<p>ログが多すぎる場合は高速でログが流れますのであまり使えないとはおもいますが、用途によっては使いやすいかとおもいます。実際の現場ではsyslogやfluentdなどでログをログサーバに転送してログサーバで見るのが普通でしょう。この使い方は、ちょっとしたログを確認したいとき用途とか、syslogでとばせない環境だったりとかニッチなシーンでは役に立つ場合があるとおもいます。</p>
-
-<p>Rubyは初心者レベルで勉強中のためやり方が間違ってるとか別のやり方があるとかあればぜひ教えてください。</p>
-
-<p><strong>(2013/01/10) 更新 <a href="https://twitter.com/sonots/">@sonots</a>さんが<a href="https://github.com/sonots/capistrano-colorized-stream">gem</a>にしてくれました!!</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Sinatratoherokufalseomian Qiang]]></title>
-    <link href="http://orihubon.com/blog/2012/01/29/sinatratoherokufalseomian-qiang/"/>
-    <updated>2012-01-29T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/01/29/sinatratoherokufalseomian-qiang</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[curlでサーバ証明書の検証で失敗したとき]]></title>
-    <link href="http://orihubon.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/"/>
-    <updated>2012-01-20T00:00:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki</id>
-    <content type="html"><![CDATA[rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
-
-<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
-rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
-
-じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
-
-根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
-<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
 ]]></content>
   </entry>
   

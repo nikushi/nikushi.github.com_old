@@ -1,0 +1,858 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MySQL チートシート - ni-blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。 起動 # mysqld_safe --user=_mysql &amp; 停止 # mysqladmin -uroot shutdown 接続 接続 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-262568-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">ni-blog</a></h1>
+  
+    <h2>keep memo memo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:orihubon.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MySQL チートシート</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:04:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。</p>
+
+<h3>起動</h3>
+
+<pre><code># mysqld_safe --user=_mysql &amp;
+</code></pre>
+
+<h3>停止</h3>
+
+<pre><code># mysqladmin -uroot shutdown
+</code></pre>
+
+<!-- more -->
+
+
+<h3>接続</h3>
+
+<h4>接続</h4>
+
+<p>testデータベースへ接続</p>
+
+<pre><code>$ mysql test
+</code></pre>
+
+<h4>ユーザ名指指定</h4>
+
+<p>hogeユーザ権限でtestデータベースへ接続。-pではパスワード指定しない</p>
+
+<pre><code>$ mysql -u hoge -p test
+Password: 
+</code></pre>
+
+<h4>リモートのMySQLサーバへ接続</h4>
+
+<pre><code>$ mysql -u hoge -p --host=192.168.1.1 --port=1000 test
+</code></pre>
+
+<h4>ソケットファイルを使って接続</h4>
+
+<pre><code>$ mysql --socket=/tmp/ownsocket_file test
+</code></pre>
+
+<h3>データベース選択</h3>
+
+<pre><code>$ mysql
+&gt; USE test
+</code></pre>
+
+<h3>ページャを設定</h3>
+
+<p>SELECT文等で出力が大量の場合、ページャを用いる</p>
+
+<pre><code>&gt; pager less
+</code></pre>
+
+<p>ページャをオフにする場合</p>
+
+<pre><code>&gt; nopager
+</code></pre>
+
+<h3>ヘルプの表示</h3>
+
+<p>mysqlコマンドが持つコマンド群と使い方の説明を表示。SQL文用の説明ではない。SQL文ではないので末尾に;は不要。</p>
+
+<pre><code>&gt; help
+</code></pre>
+
+<h3>テーブル作成</h3>
+
+<p>aテーブルをcというフィールド付きで作成</p>
+
+<pre><code>&gt; CREATE TABLE a (c CHAR(100));
+</code></pre>
+
+<p>複数のフィールドを指定してテーブルを作成</p>
+
+<pre><code>&gt; CREATE TABLE t1 ( id INT, dep INT, name CHAR(30) );
+</code></pre>
+
+<h3>テーブル作成(ストレージエンジンの指定)</h3>
+
+<pre><code>&gt; CREATE TABLE t2 ( id INT, dep INT, name CHAR(30) ) ENGINE=InnoDB;
+</code></pre>
+
+<h3>テーブル作成(キャラクタセットの指定)</h3>
+
+<pre><code>&gt; CREATE TABLE t3 ( id INT, dep INT, name CHAR(30) ) CHARACTER SET utf8;
+</code></pre>
+
+<h3>テーブルのリネーム</h3>
+
+<pre><code>&gt; ALTER TABLE old_table RENAME TO new_table;
+</code></pre>
+
+<h3>テーブル定義の確認</h3>
+
+<p>SHOW CREATE TABLE文を使用して、ストレージエンジン、テーブル、フィールドキャラクタセット等確認できる。</p>
+
+<pre><code>&gt; SHOW CREATE TABLE t1;
+</code></pre>
+
+<h3>データベースの情報確認</h3>
+
+<p>SHOW TABLE STATUS文を使うと、データベースに存在するすべてのテーブルの情報を確認可能。LIKE &lsquo;テーブル名&#8217;を使うと特定テーブルに限定可能。</p>
+
+<p>テーブルaの詳細情報を縦型出力で出力</p>
+
+<pre><code>&gt; SHOW TABLE STATUS LIKE 'a'\G
+*************************** 1. row ***************************
+           Name: a
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 19
+ Avg_row_length: 862
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-04-07 13:41:36
+    Update_time: NULL
+     Check_time: NULL
+      Collation: latin1_swedish_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>version 5.0以上では、information_schema.TABLES テーブルから情報参照も可能</p>
+
+<pre><code>&gt; SELECT * FROM information_schema.TABLES WHERE TABLE_SCHEMA='test' AND TABLE_NAME='t1'\G
+*************************** 1. row ***************************
+  TABLE_CATALOG: def
+   TABLE_SCHEMA: test
+     TABLE_NAME: t1
+     TABLE_TYPE: BASE TABLE
+         ENGINE: InnoDB
+        VERSION: 10
+     ROW_FORMAT: Compact
+     TABLE_ROWS: 1
+ AVG_ROW_LENGTH: 16384
+    DATA_LENGTH: 16384
+MAX_DATA_LENGTH: 0
+   INDEX_LENGTH: 0
+      DATA_FREE: 0
+ AUTO_INCREMENT: NULL
+    CREATE_TIME: 2013-04-07 14:10:03
+    UPDATE_TIME: NULL
+     CHECK_TIME: NULL
+TABLE_COLLATION: latin1_swedish_ci
+       CHECKSUM: NULL
+ CREATE_OPTIONS:
+  TABLE_COMMENT:
+1 row in set (0.00 sec)
+</code></pre>
+
+<h3>テーブルのフィールドの構造確認</h3>
+
+<p>SHOW文またはDESC文を使う</p>
+
+<pre><code>mysql&gt; DESC t1;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int(11)  | YES  |     | NULL    |       |
+| dep   | int(11)  | YES  |     | NULL    |       |
+| name  | char(30) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+&gt; DESC t1;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int(11)  | YES  |     | NULL    |       |
+| dep   | int(11)  | YES  |     | NULL    |       |
+| name  | char(30) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+</code></pre>
+
+<p>version 5.0以上ならばinformation_schema.COLUMNSテーブルを参照することで同等のことが可能</p>
+
+<h3>テーブル一覧を確認</h3>
+
+<pre><code>&gt; SHOW TABLES
+</code></pre>
+
+<h3>複数のフィールドに値をセットしたレコードを挿入</h3>
+
+<pre><code>&gt; INSERT INTO a(c,d) VALUES ('123abc','246ace')
+</code></pre>
+
+<h3>フィールドの追加</h3>
+
+<p>テーブルaにdというCHAR(100)のフィールドをフィールド最後に追加。COLUMNは省略可能</p>
+
+<pre><code>&gt; ALTER TABLE a ADD COLUMN d CHAR(100);
+or
+&gt; ALTER TABLE a ADD d CHAR(100);
+</code></pre>
+
+<p>フィールドを指定した位置に追加。FIRSTなら先頭、AFTERは指定したフィールドの次に追加。BEFOREは無い。</p>
+
+<pre><code>&gt; ALTER TABLE a ADD COLUMN b CHAR(50) FIRST;
+&gt; ALTER TABLE a ADD COLUMN f CHAR(50) AFTER e;
+</code></pre>
+
+<h3>フィールドの削除</h3>
+
+<pre><code>&gt; ALTER TABLE a DROP COLUMN f;
+</code></pre>
+
+<h3>フィールドの変更</h3>
+
+<p>名前や型を変更できる。下の例はeフィールドをe2にリネームしつつ、型をCHAR(50)に変換。</p>
+
+<pre><code>&gt; ALTER TABLE a CHANGE COLUMN e e2 CHAR(50);
+</code></pre>
+
+<h3>フィールド型の変換</h3>
+
+<pre><code>&gt; ALTER TABLE a MODIFY e2 CHAR(100);
+</code></pre>
+
+<h3>ストレージエンジンの変更</h3>
+
+<p>テーブルのストレージエンジンを変更する</p>
+
+<pre><code>&gt; ALTER TABLE a ENGINE=MyISAM;
+</code></pre>
+
+<h3>テーブルの破棄</h3>
+
+<pre><code>&gt; DROP TABLE a;
+</code></pre>
+
+<h3>レコード追加</h3>
+
+<p>フィールドの値セットしてレコード追加。指定されなかったフィールドにはデフォルト値が入る。</p>
+
+<pre><code>&gt; INSERT INTO a (c) VALUES ('123abc');
+</code></pre>
+
+<p>複数フィールドの値セットしてレコード追加。指定されなかったフィールドにはデフォルト値が入る。</p>
+
+<pre><code>&gt; INSERT INTO a (b,c) VALUES ('1', '2');
+</code></pre>
+
+<p>最初の()を省略すると VALUESの()はすべてのフィールドの値が含まれることが期待される。個数が足りない場合はエラーになる。</p>
+
+<pre><code>&gt; INSERT INTO a VALUES (1,'2','3','4');
+</code></pre>
+
+<h3>データの検索</h3>
+
+<p>テーブルaのすべてのレコードを表示</p>
+
+<pre><code>&gt; SELECT * FROM a;
+</code></pre>
+
+<h3>特定フィールドに限定した検索</h3>
+
+<p>テーブルaのc,dフィールドのレコードを表示</p>
+
+<pre><code>&gt; SELECT c,d FROM a;
+</code></pre>
+
+<h3>レコードの縦表示</h3>
+
+<p>フィールド数が多くて横1行に収まらなく見づらい場合。1レコード毎に縦表示させる。;の代わりに\Gを末尾にする。</p>
+
+<pre><code>&gt; SELECT c,d FROM a\G
+</code></pre>
+
+<p>結果</p>
+
+<pre><code>&gt; SELECT c,d FROM a\G
+*************************** 1. row ***************************
+c: 123abc
+d: NULL
+*************************** 2. row ***************************
+c: 123abc
+d: NULL
+2 rows in set (0.00 sec)
+</code></pre>
+
+<h3>特定値を含むレコードの抽出</h3>
+
+<pre><code>&gt; CREATE TABLE a ( id INT, name CHAR(50), age INT );
+Query OK, 0 rows affected (0.02 sec)
+
+&gt; INSERT INTO a VALUES (1, 'John', 30);
+&gt; INSERT INTO a VALUES (2, 'Smith', 24);
+&gt; INSERT INTO a VALUES (3, 'Alice', 18);
+&gt; DESC a;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int(11)  | YES  |     | NULL    |       |
+| name  | char(50) | YES  |     | NULL    |       |
+| age   | int(11)  | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+</code></pre>
+
+<p>名前がJohn</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE name = 'John';
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | John |   30 |
++------+------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>名前がJohn以外</p>
+
+<pre><code>mysql&gt; SELECT * FROM a WHERE name != 'John';
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    2 | Smith |   24 |
+|    3 | Alice |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>年齢が20より上</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE age &gt; 20;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | John  |   30 |
+|    2 | Smith |   24 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>名前がAから始まる人(パターン検索)</p>
+
+<p>%は0文字以上の任意の文字列の意味</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE name LIKE 'A%';
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    3 | Alice |   18 |
++------+-------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>AND</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE id &lt;= 2 AND age &gt; 25;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | John |   30 |
++------+------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE age &gt; 25 OR name LIKE 'A%';
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | John  |   30 |
+|    3 | Alice |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>IN</p>
+
+<pre><code>&gt; SELECT * FROM a WHERE name IN ( 'Alice', 'John' );
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | John  |   30 |
+|    3 | Alice |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<h3>SELECT結果のソート</h3>
+
+<pre><code>&gt; INSERT INTO a VALUES (0, 'Bob', 65);
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
+
+<p>昇順</p>
+
+<pre><code>&gt; SELECT * FROM a ORDER BY id;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    0 | Bob   |   65 |
+|    1 | John  |   30 |
+|    2 | Smith |   24 |
+|    3 | Alice |   18 |
++------+-------+------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p>降順</p>
+
+<pre><code>&gt; SELECT * FROM a ORDER BY id DESC;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    3 | Alice |   18 |
+|    2 | Smith |   24 |
+|    1 | John  |   30 |
+|    0 | Bob   |   65 |
++------+-------+------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p>ソート基準のフィールドを複数指定</p>
+
+<pre><code>&gt; SELECT * FROM a ORDER BY id, name;
+</code></pre>
+
+<h3>データの更新</h3>
+
+<p>UPDATEを使う。key=value[, key=value] で複数指定もできる。</p>
+
+<pre><code>&gt; UPDATE  a SET note="hello";
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+&gt; SELECT * FROM a;
++------+-----------+------+-------+
+| id   | name      | age  | note  |
++------+-----------+------+-------+
+|    1 | John      |   30 | hello |
+|    2 | Smith     |   24 | hello |
+|    3 | Alice     |   18 | hello |
+|    0 | Bob       |   65 | hello |
+|    5 | Christian |   65 | hello |
++------+-----------+------+-------+
+5 rows in set (0.00 sec)
+</code></pre>
+
+<p>特定レコードの特定フィールドを更新するにはWHERE句を使う。</p>
+
+<pre><code>&gt; UPDATE  a SET age=19 WHERE name='Alice';
+</code></pre>
+
+<h3>テーブルからすべてのレコードを削除</h3>
+
+<p>テーブルからすべてのレコードを削除する。テーブルは削除されない</p>
+
+<pre><code>&gt; DELETE FROM b;
+</code></pre>
+
+<h3>テーブルから特定のレコードを削除</h3>
+
+<p>特定のレコードだけを削除したい場合はWHERE句を使う</p>
+
+<pre><code>DELETE  FROM b WHERE age &gt; 10;
+</code></pre>
+
+<h3>リダイレクト(SQLを記述したファイルを実行)</h3>
+
+<pre><code>$ cat sql.txt
+SELECT * FROM a;
+$ mysql test &lt; sql.txt
+
+c       d       e
+123abc  NULL    NULL
+123abc  NULL    NULL
+NULL    1       NULL
+a       1       NULL
+a       1       NULL
+
+$
+</code></pre>
+
+<p>上の例では枠線は表示されない。枠線を表示したい場合は-tを使う</p>
+
+<pre><code>$ mysql -t test &lt; sql.txt
++--------+------+------+
+| c      | d    | e    |
++--------+------+------+
+| 123abc | NULL | NULL |
+| 123abc | NULL | NULL |
+| NULL   | 1    | NULL |
+| a      | 1    | NULL |
+| a      | 1    |      |
++--------+------+------+
+</code></pre>
+
+<h3>リダイレクト(実行結果をファイルに出力)</h3>
+
+<p>&lsquo;>&#8217;上書き、&rsquo;>>&lsquo;追記</p>
+
+<pre><code>$ mysql test &gt; out
+SELECT * FROM a;
+quit
+$
+$ cat out
+c       d       e
+123abc  NULL    NULL
+123abc  NULL    NULL
+NULL    1       NULL
+a       1       NULL
+a       1       NULL
+</code></pre>
+
+<h3>リダイレクト(&lt; と > を同時に使う)</h3>
+
+<p>SQL文をファイルから読み込み実行。実行結果をファイルに保存</p>
+
+<pre><code>$ cat sql.txt
+SELECT c FROM a;
+$ mysql test &lt; sql.txt &gt; out
+$
+$ cat out |head
+c
+123abc
+123abc
+NULL
+a
+a
+a
+a
+a
+a
+</code></pre>
+
+<h3>パイプ</h3>
+
+<p>パイプを使ってSQL文を実行できる</p>
+
+<pre><code>$ echo 'SELECT * FROM a' | mysql test | head
+c       d       e
+123abc  NULL    NULL
+123abc  NULL    NULL
+NULL    1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+a       1       NULL
+</code></pre>
+
+<h3>データベースの作成</h3>
+
+<p>testという名前のデータベースを作成</p>
+
+<pre><code>$ mysqladmin -uroot -p create test
+</code></pre>
+
+<p>もしくはSQL文を使う</p>
+
+<pre><code>&gt; CREATE DATABASE test;
+</code></pre>
+
+<p>キャラクタセットを指定しデータベースを作成する</p>
+
+<pre><code>&gt; CREATE DATABASE test DEFAULT CHARACTER SET utf8;
+</code></pre>
+
+<h3>データベースの削除</h3>
+
+<p>testという名前のデータベースを削除</p>
+
+<pre><code>$ mysqladmin -uroot -p drop test
+</code></pre>
+
+<p>もしくはSQL文を使う</p>
+
+<pre><code>&gt; DROP DATABASE test;
+</code></pre>
+
+<h3>データベース作成時のクエリを確認</h3>
+
+<pre><code>&gt; SHOW CREATE DATABASE test;
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:04:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mysql/'>MySQL</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/" title="Previous Post: 前日日付のファイル名でローテートし圧縮するlogrotateの設定例">&laquo; 前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://orihubon.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://orihubon.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="http://orihubon.com/atom.xml" alt="subscribe feed"><img src="/images/rss.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>渋谷で働くインフラエンジニアブログ。プログラミング、Linuxなどの技術系の話題を中心に書いています。</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("niku4i", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/niku4i" class="twitter-follow-button" data-show-count="false">Follow @niku4i</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
+  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

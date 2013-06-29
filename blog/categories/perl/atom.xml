@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-06-29T16:11:27+09:00</updated>
+  <updated>2013-06-29T16:46:04+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Perl環境構築作りのチート]]></title>
+    <link href="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/"/>
+    <updated>2013-02-25T09:30:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
+    <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
+
+<p>調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1)[<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">http://www.slideshare.net/ImaiHayato/niigatapm-1</a>]</p>
+
+<p>以下、自分用にメモします。</p>
+
+<!--more-->
+
+
+<h3>開発環境</h3>
+
+<pre><code>$ curl -kL http://install.perlbrew.pl | bash
+$ echo 'source ~/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bash_profile
+$ source ~/.bash_profile
+$ perlbrew install perl-5.17.9
+$ perlbrew switch perl-5.17.9
+$ perlbrew install-cpanm
+$ cpanm carton
+$ cpanm proclet # 必要であれば
+</code></pre>
+
+<h3>デプロイ先</h3>
+
+<pre><code>$ sudo useradd -m myapp &amp;&amp; sudo su - myapp
+# perl環境構築(略)
+myapp$ git clone url myapp
+myapp$ cd myapp
+myapp$ carton install
+myapp$ carton exec -- prove
+</code></pre>
+
+<h3>daemontoolsスクリプト</h3>
+
+<p>```</p>
+
+<pre><code>#!/bin/sh
+export HOME=/home/myapp
+export PLACK_ENV=production
+cd $HOME/myappexec
+exec setuidgid myapp ./script/start.sh
+</code></pre>
+
+<p>```</p>
+
+<p>```</p>
+
+<pre><code>source $HOME/perl5/perlbrew/etc/bashrc
+carton exec -- myapp
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Procletを使ってみた]]></title>

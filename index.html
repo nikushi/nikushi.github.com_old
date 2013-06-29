@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
-RubyでいうところのForeman、PerlのProcletを使ってみました!! インストール $ cpanm Proclet 簡単ですね! Procfileを書く。 $ vim &hellip;">
+  <meta name="description" content="MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。 起動 # mysqld_safe --user=_mysql &amp; 停止 # mysqladmin -uroot shutdown ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +21,6 @@ RubyでいうところのForeman、PerlのProcletを使ってみました!! イ�
   <link rel="canonical" href="http://orihubon.com/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
@@ -30,8 +28,6 @@ RubyでいうところのForeman、PerlのProcletを使ってみました!! イ�
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-
 
   
   <script type="text/javascript">
@@ -58,7 +54,7 @@ RubyでいうところのForeman、PerlのProcletを使ってみました!! イ�
 </hgroup>
 
 </header>
-  <!-- <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
@@ -75,11 +71,165 @@ RubyでいうところのForeman、PerlのProcletを使ってみました!! イ�
   <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
-</nav> -->
+</nav>
   <div id="main">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T13:04:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。</p>
+
+<h3>起動</h3>
+
+<pre><code># mysqld_safe --user=_mysql &amp;
+</code></pre>
+
+<h3>停止</h3>
+
+<pre><code># mysqladmin -uroot shutdown
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/04/07/mysql-cheat-sheet/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-07T15:57:00+09:00" pubdate data-updated="true">Mar 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
+
+<div><script src='https://gist.github.com/5105939.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>一部説明</p>
+
+<pre><code>ifempty        # 空ファイルでもローテートする。
+               # 過去ログを`ls | wc -l`などするときに
+               # 日数と数を合わせたいので。
+dateext        # ローテートしたファイルに実行時の日付を
+               # 付ける。ただし、00:00以降にlogrotateを実行する
+               # 場合は、ログ内容と日付が乖離するので別途
+               # lastactionで日付を前日分に変えている。
+extension .log # ローテート後のファイル名の場所の末尾に.log 
+               # を持ってくる。 圧縮する場合は.log.gzになる。
+               # 本オプション指定ない場合はapp.log-yyyymmdd となり
+               # 微妙なので調整のため。
+lastaction     # 最後に実行するコマンド
+               # postrotateを使わないのはpostrotateはcompressする前
+               # に実行されるため。compressしてlastactionが実行される。
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-25T09:30:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ステージや本番での環境構築まわりについて調べてみた。</p>
+
+<p>調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1)[<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">http://www.slideshare.net/ImaiHayato/niigatapm-1</a>]</p>
+
+<p>以下、自分用にメモします。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/25/perl-dev_env_and_deploy/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -473,165 +623,11 @@ $ gist &lt; file.txt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/03/mac-book-air-got-wet/">Mac Book Airが水没したので</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-03T21:59:00+09:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自宅のMac Book Air 13inchが水難にあいました記録。</p>
-
-<p>夜、日本酒飲みながら使ってた僕がすべて悪いのですが10ミリリットルくらいの量がキーボード上部右側から被弾。すぐにタオルで拭きましたが若干キーボードから浸水しました。</p>
-
-<p>せめてウイスキかスピリタスにしとけば直ぐに揮発したなw&hellip;とかどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
-
-<p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/04/03/mac-book-air-got-wet/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">OctopressにInstagramの写真を挿入するTag Pluginを作ってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-20T20:39:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、プラグインを実装してみました。以下からダウンロードできます。</p>
-
-<ul>
-<li><a href="https://gist.github.com/2134897">instag.rb</a></li>
-</ul>
-
-
-<h3>概要</h3>
-
-<pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ }
-</code></pre>
-
-<p>記事中でタグが使えます。表示したいinstagramページのURLは知っておく必要があります。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/18/seq-command-in-sh/">Seqコマンド</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-18T12:55:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>seqというコマンドというのを知らなかったのでメモ。</p>
-
-<pre><code>$ for i in seq 1 10; do expr $i \* 2; done
-2
-4
-6
-8
-10
-12
-14
-16
-18
-20
-</code></pre>
-
-<p>Rubyだとこうやるのかな。</p>
-
-<pre><code>(1..10).each { |i| puts i * 2 }
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
-    <a href="archives">Blog Archives</a>
+    <a href="/blog/archives">Blog Archives</a>
     
   </div>
 </div>
@@ -649,11 +645,22 @@ $ gist &lt; file.txt
 <section>
   <h1>About Me</h1>
   <p>渋谷で働くインフラエンジニアブログ。プログラミング、Linuxなどの技術系の話題を中心に書いています。</p>
-  <p>メッセージは<a href="https://twitter.com/#!/niku4i">@niku4i</a>へお願いします。</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a>
@@ -661,18 +668,6 @@ $ gist &lt; file.txt
     
       <li class="post">
         <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/13/calculate-bson-objects-size/">BSONオブジェクトのデータサイズを確認する方法(Ruby)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/">Twitterにリプライしたらgemが出来たお話</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">homesickとgithubでドットファイルを管理する</a>
       </li>
     
   </ul>
@@ -707,6 +702,8 @@ $ gist &lt; file.txt
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - niku4i -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
+  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
 </p>
 
 </footer>

@@ -9,9 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="vi(vim)で編集中に、 &nbsp; :1,$!expand -4 &nbsp; とやればよい。
-引用元: viでタブをスペースに一括変換するには - 俺用メモ.
-">
+  <meta name="description" content="仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。 mod_dav_svnが必要なのでyum installする。 $ sudo yum install mod_dav_svn.x86_64 svn関連のapache設定。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +21,6 @@
   <link rel="canonical" href="http://orihubon.com/blog/page/6/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
@@ -31,8 +28,6 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-
 
   
   <script type="text/javascript">
@@ -59,7 +54,7 @@
 </hgroup>
 
 </header>
-  <!-- <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
@@ -76,11 +71,158 @@
   <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
-</nav> -->
+</nav>
   <div id="main">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/23/subversion-on-apache-toriaezudong-kushe-ding/">Subversion on Apache とりあえず動く設定</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-23T00:00:00+09:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。
+
+mod_dav_svnが必要なのでyum installする。
+<pre lang="shell">
+ $ sudo yum install mod_dav_svn.x86_64
+</pre>
+
+svn関連のapache設定。CentOSの流儀に従って /etc/conf.d/svn.conf とした。
+<pre lang="apache">
+<IfModule !mod_dav_svn.c>
+    LoadModule dav_svn_module modules/mod_dav_svn.so
+</IfModule>
+<Location /svn>
+    DAV svn
+    SVNParentPath /var/svn
+    SVNListParentPath on
+</Location>
+</pre>
+
+リポジトリが1個だけならくSVNPathを使えばよい。
+SVNParentPathを使うと、配下のディレクトリにある複数のリポジトリを対象としてくれるので設定ファイルを毎度書き換えなくて良い利点がある。
+
+複数のリポジトリで構成すると/var/svn以下は以下のようになる。
+<pre>
+  /var/svn/
+    + repos1/
+       + trunk/
+       + branches/
+       + tags/
+    + repos2/
+       + (略)
+</pre>
+
+ここで一つ不便を感じる点として、ブラウザでhttp://xxx/svn/にアクセスするとSVNモジュールがエラーページを吐く。GETリクエストを解釈できないためであるが、URI的にはリポジトリのlistを出力してほしいところだ。
+そこで、SVNListParentPath on だ。これだけ。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/20/perlsaburutin/">Perl::サブルーチン</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-20T00:00:00+09:00" pubdate data-updated="true">Aug 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">coding week の続き。
+
+サブルーチンはviの画面内に収まるくらいの行数でまとめる、くらいを基準にするのがまとまり良いね。
+
+なんとかCLIのインタフェース用コマンドの外枠の設計とコーディングまで出来上がった感じ。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/20/memofluxflex/">メモ::fluxflex</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-20T00:00:00+09:00" pubdate data-updated="true">Aug 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">https://www.fluxflex.com/
+PaaS系のサービス、なのかな。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -365,124 +507,11 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/14/bekontonian-shou/">ベーコンと年収</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">稼ぎいうんは、どれだけ他人の欲を満たせとるか、それが数字にそのまま現れとるんやで。
-
-「夢をかなえるゾウ」より
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/14/814-dinner/">8/14 Dinner</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">盛岡冷麺をお土産にもらったので作ってみた。うまうま。<br /><br /><a href="/images/20110814-185711.jpg"><img src="/images/20110814-185711.jpg" alt="20110814-185711.jpg" class="alignnone size-full" /></a>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/12/fu-shu-hosutodetong-shi-nikomandowoshi-xing-suru/">複数ホストで同時にコマンドを実行する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-12T00:00:00+09:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">psshとかpdshとかいろいろ世の中あるようです。
-面白いとおもったのが<a href="http://www.cyberciti.biz/tips/execute-commands-on-multiple-linux-or-unix-servers-part-ii.html">Tentakel</a>のインタラクティブモード。
-
-リモートホストのshellを見ながらコマンド打てるので面白いな。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
     
-    <a href="archives">Blog Archives</a>
+    <a href="/blog/archives">Blog Archives</a>
     
     <a class="next" href="/blog/page/5/">Newer &rarr;</a>
     
@@ -502,11 +531,22 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
 <section>
   <h1>About Me</h1>
   <p>渋谷で働くインフラエンジニアブログ。プログラミング、Linuxなどの技術系の話題を中心に書いています。</p>
-  <p>メッセージは<a href="https://twitter.com/#!/niku4i">@niku4i</a>へお願いします。</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a>
@@ -514,18 +554,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
     
       <li class="post">
         <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/13/calculate-bson-objects-size/">BSONオブジェクトのデータサイズを確認する方法(Ruby)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/">Twitterにリプライしたらgemが出来たお話</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">homesickとgithubでドットファイルを管理する</a>
       </li>
     
   </ul>
@@ -560,6 +588,8 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - niku4i -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
+  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
 </p>
 
 </footer>

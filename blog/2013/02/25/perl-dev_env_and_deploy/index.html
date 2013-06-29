@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Perl環境構築作りのチート - ni-blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="ステージや本番での環境構築まわりについて調べてみた。 調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1)[http://www.slideshare.net/ImaiHayato/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-262568-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">ni-blog</a></h1>
+  
+    <h2>keep memo memo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:orihubon.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Perl環境構築作りのチート</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-25T09:30:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>ステージや本番での環境構築まわりについて調べてみた。</p>
+
+<p>調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1)[<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">http://www.slideshare.net/ImaiHayato/niigatapm-1</a>]</p>
+
+<p>以下、自分用にメモします。</p>
+
+<!--more-->
+
+
+<h3>開発環境</h3>
+
+<pre><code>$ curl -kL http://install.perlbrew.pl | bash
+$ echo 'source ~/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bash_profile
+$ source ~/.bash_profile
+$ perlbrew install perl-5.17.9
+$ perlbrew switch perl-5.17.9
+$ perlbrew install-cpanm
+$ cpanm carton
+$ cpanm proclet # 必要であれば
+</code></pre>
+
+<h3>デプロイ先</h3>
+
+<pre><code>$ sudo useradd -m myapp &amp;&amp; sudo su - myapp
+# perl環境構築(略)
+myapp$ git clone url myapp
+myapp$ cd myapp
+myapp$ carton install
+myapp$ carton exec -- prove
+</code></pre>
+
+<h3>daemontoolsスクリプト</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
+</span><span class='line'>export HOME=/home/myapp
+</span><span class='line'>export PLACK_ENV=production
+</span><span class='line'>cd $HOME/myappexec
+</span><span class='line'>exec setuidgid myapp ./script/start.sh</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>source $HOME/perl5/perlbrew/etc/bashrc
+</span><span class='line'>carton exec -- myapp</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-25T09:30:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/perl/'>Perl</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/23/proclet/" title="Previous Post: Procletを使ってみた">&laquo; Procletを使ってみた</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/" title="Next Post: 前日日付のファイル名でローテートし圧縮するlogrotateの設定例">前日日付のファイル名でローテートし圧縮するlogrotateの設定例 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://orihubon.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://orihubon.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="http://orihubon.com/atom.xml" alt="subscribe feed"><img src="/images/rss.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>渋谷で働くインフラエンジニアブログ。プログラミング、Linuxなどの技術系の話題を中心に書いています。</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("niku4i", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/niku4i" class="twitter-follow-button" data-show-count="false">Follow @niku4i</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
+  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
