@@ -1,18 +1,19 @@
 ---
 layout: post
-title: "モダンなPerl環境構築作りのチート"
+title: "Perl環境構築作りのチート"
 date: 2013-02-25 09:30
 comments: true
 categories: 
   - 'Perl'
 ---
 
-ステージや本番でどうデプロイするのか調べてみた。
+ステージや本番での環境構築まわりについて調べてみた。
 
-調べたかったことはこのスライドにまとまっています!素晴らしい。
-(モダンかもしれないPerlウェブアプリケーション開発入門 - Nigata.pm teck talk#1)[http://www.slideshare.net/ImaiHayato/niigatapm-1]
+調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 - Nigata.pm teck talk#1)[http://www.slideshare.net/ImaiHayato/niigatapm-1]
 
-自分用にメモします。
+以下、自分用にメモします。
+
+<!--more-->
 
 ### 開発環境
 
@@ -23,7 +24,7 @@ categories:
     $ perlbrew switch perl-5.17.9
     $ perlbrew install-cpanm
     $ cpanm carton
-    $ cpanm proclet # お好みで
+    $ cpanm proclet # 必要であれば
 
 ### デプロイ先
 
@@ -36,7 +37,7 @@ categories:
 
 ### daemontoolsスクリプト
 
-``` daemontools script
+``` 
     #!/bin/sh
     export HOME=/home/myapp
     export PLACK_ENV=production
@@ -44,9 +45,8 @@ categories:
     exec setuidgid myapp ./script/start.sh
 ```
 
-``` script/start.sh
+``` 
     source $HOME/perl5/perlbrew/etc/bashrc
     carton exec -- myapp
 ```
-
 

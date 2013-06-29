@@ -9,6 +9,8 @@ tags:
   - 'MySQL'
 ---
 
+MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。
+
 ### 起動
 
     # mysqld_safe --user=_mysql &
@@ -16,6 +18,8 @@ tags:
 ### 停止
 
     # mysqladmin -uroot shutdown
+
+<!-- more -->
 
 ### 接続
 
