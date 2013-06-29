@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-06-29T16:46:04+09:00</updated>
+  <updated>2013-06-29T16:48:26+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -749,8 +749,7 @@ color: 1
     <id>http://orihubon.com/blog/2013/02/18/install-smokeping</id>
     <content type="html"><![CDATA[<p>SmokePingをインストールしたメモ。</p>
 
-<p>SmokePingの概要は以下のとおりです。
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<p>SmokePingの概要は以下のとおりです。</p>
 
 <ul>
 <li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
@@ -760,21 +759,10 @@ color: 1
 </ul>
 
 
-<p>以下、インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+<p>以下、インストールしたときのメモ。</p>
 
 <!-- more -->
 
-
-<p>=======
-&ndash; 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-&ndash; 監視対象ホストのネットワークレイテンシ可視化
-&ndash; pingロスリストの可視化
-&ndash; 閾値監視、通知
-&ndash; ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
-
-<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
-
-<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>5c308c39398c637644556346890f27655416e76b</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
 
 <h3>1. RRDTool</h3>
 
@@ -869,17 +857,6 @@ usermod -G smokeping apache
 
 <pre><code>smokeping --config=/path/to/config --debug
 </code></pre>
-
-<h3>所感</h3>
-
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
-
-<p>=======
-Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかる。
-alert機能を使える点は良いとおもうが最近だとGrowthForecastとかで可視化できるから、可視化だけならSmokePing使うほどでもないというのが正直な感想。</p>
-
-<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>5c308c39398c637644556346890f27655416e76b</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
 ]]></content>
   </entry>
   

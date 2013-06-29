@@ -9,10 +9,10 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD smokepingデーモンが対象に対して定期的にpingポーリング
+  <meta name="description" content="SmokePingをインストールしたメモ。 SmokePingの概要は以下のとおりです。 smokepingデーモンが対象に対して定期的にpingポーリング
 監視対象ホストのネットワークレイテンシ可視化
-閾値監視、通知 &hellip;">
+閾値監視、通知
+ping以外にもHTTPやDNSなどを使うこともできる 以下、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,8 +107,7 @@
 
 <div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
 
-<p>SmokePingの概要は以下のとおりです。
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<p>SmokePingの概要は以下のとおりです。</p>
 
 <ul>
 <li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
@@ -118,21 +117,10 @@
 </ul>
 
 
-<p>以下、インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
+<p>以下、インストールしたときのメモ。</p>
 
 <!-- more -->
 
-
-<p>=======
-&ndash; 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-&ndash; 監視対象ホストのネットワークレイテンシ可視化
-&ndash; pingロスリストの可視化
-&ndash; 閾値監視、通知
-&ndash; ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
-
-<p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
-
-<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>5c308c39398c637644556346890f27655416e76b</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
 
 <h3>1. RRDTool</h3>
 
@@ -227,17 +215,6 @@ usermod -G smokeping apache
 
 <pre><code>smokeping --config=/path/to/config --debug
 </code></pre>
-
-<h3>所感</h3>
-
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-しばらく動かしてると時間帯によって変動するところが見つかったりして結構面白い。ただ、Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかるのが難点。</p>
-
-<p>=======
-Apacheが必要な点や、CPANモジュール入れたり結構インストールの手間がかかる。
-alert機能を使える点は良いとおもうが最近だとGrowthForecastとかで可視化できるから、可視化だけならSmokePing使うほどでもないというのが正直な感想。</p>
-
-<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>5c308c39398c637644556346890f27655416e76b</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
 </div>
 
 
