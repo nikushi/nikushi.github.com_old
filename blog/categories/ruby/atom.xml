@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-02-23T18:12:41+09:00</updated>
+  <updated>2013-06-29T15:35:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -151,29 +151,7 @@ lines = out.split(/\r?\n/m, -1)
 
 <p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
 
-<p><div><script src='https://gist.github.com/2338391.js?file='></script>
-<noscript><pre><code>#!/usr/bin/env ruby
-
-#
-# Dump subtitle in text for TED
-#
-
-require 'json'
-require 'open-uri'
-
-base_url = 'http://www.ted.com/talks/subtitles'
-id = 1183
-url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
-
-data = JSON.parse(open(url).read)
-if data &amp;&amp; data.key?('captions')
-  data['captions'].each do |sentence|
-    puts sentence['content']
-    puts 
-  end
-end 
-</code></pre></noscript></div>
-</p>
+<p>{% gist 2338391 %}</p>
 
 <p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
 
