@@ -128,7 +128,7 @@
 
 <p>source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
 
-<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいにhttp://で始まっていたので、方針としてはhttp://orihubon.com/uploads/をざっくり消して/imagesに置き換えることにする。</p>
+<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいに<a href="http://%E3%81%A7%E5%A7%8B%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%80%81%E6%96%B9%E9%87%9D%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AFhttp://orihubon.com/uploads/%E3%82%92%E3%81%96%E3%81%A3%E3%81%8F%E3%82%8A%E6%B6%88%E3%81%97%E3%81%A6/images%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%80%82">http://%E3%81%A7%E5%A7%8B%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%80%81%E6%96%B9%E9%87%9D%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AFhttp://orihubon.com/uploads/%E3%82%92%E3%81%96%E3%81%A3%E3%81%8F%E3%82%8A%E6%B6%88%E3%81%97%E3%81%A6/images%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%80%82</a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -148,7 +148,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>http://localhost:4000/にアクセスして確認する。</p>
+<p><a href="http://localhost:4000/%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%97%E3%81%A6%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%82">http://localhost:4000/%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%97%E3%81%A6%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%82</a></p>
 
 <p>deployし公開。</p>
 

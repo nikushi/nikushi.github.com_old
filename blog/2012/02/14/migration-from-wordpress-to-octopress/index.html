@@ -111,7 +111,7 @@
 <p>移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。</p>
 
 <p>Wordpressは数年使っていて機能豊富でテーマも充実してるし管理画面も使いやすく、正直あまり不満はない。
-でもWordpress = PHPなんだよね。PHP&#8230; 別にPHP嫌いなわけではない。今年はRubyを勉強すると決めているので、
+でもWordpress = PHPなんだよね。PHP&hellip; 別にPHP嫌いなわけではない。今年はRubyを勉強すると決めているので、
 ならば周りのツールもみんなRubyにしよー! という流れ。</p>
 
 <p>さらにoctopressはgithubやherokuと連携してサーバいらずでgit pushすればブログ公開があっというまにできる仕組み。
@@ -136,7 +136,7 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
 <h3>Wordpressの管理画面から投稿データをxml形式でエクスポート</h3>
 
-<p>ツール -> エクスポート というのが標準で備わっている。Wordpressを去るのにWordpressは便利だというのは皮肉か。
+<p>ツール &ndash;> エクスポート というのが標準で備わっている。Wordpressを去るのにWordpressは便利だというのは皮肉か。
 タグやカテゴリ、タグのページは不要なのでエクスポート対象は&#8221;投稿&#8221;だけにする。
 適当な作業ディレクトリにwordpress.xmlという名前で保存する。以下の例であればwordpress.xmlを~/tmp/migration/に保存</p>
 
@@ -159,7 +159,7 @@ wordpressdotcom.rbを利用してそれなりにデータ変換ができたが�
 
 <p>そこでオリジナルのwordpressdoccom.rbを拝借しつつ、コードを少し修正。以下のコードを用いる。</p>
 
-<div><script src='https://gist.github.com/1824307.js?file='></script>
+<div><script src='https://gist.github.com/1824307.js'></script>
 <noscript><pre><code># coding: utf-8
 
 require 'rubygems'
@@ -241,12 +241,12 @@ end</code></pre></noscript></div>
 <h3>修正ポイント</h3>
 
 <ul>
-<li>permalinkを生成する箇所で一度 nkf &#8211;url-input -w して文字コードをプレーンにし、さらにto_urlメソッドで日本語をローマ字に変換する。</li>
+<li>permalinkを生成する箇所で一度 nkf &mdash;url-input -w して文字コードをプレーンにし、さらにto_urlメソッドで日本語をローマ字に変換する。</li>
 <li>記事のデータをputsする際にもnkf -Lu -wするようにした。</li>
 </ul>
 
 
-<p>to_urlメソッドはrequre &#8216;stringex&#8217;することでStringクラスのメソッドとしてto_urlが追加される。to_urlメソッドを使うと漢字でも強制的に
+<p>to_urlメソッドはrequre &lsquo;stringex&#8217;することでStringクラスのメソッドとしてto_urlが追加される。to_urlメソッドを使うと漢字でも強制的に
 ローマ字に変換する模様。octopressでrake new_postする際のコードを参考に。</p>
 
 <p>では改めて変換作業を行う</p>
@@ -292,9 +292,9 @@ end</code></pre></noscript></div>
 
 
 <p>rake deployを実行するとrake pushが内部で呼び出される。rake pushは内部で
-- git add .
-- git commit
-- git push origin master
+&ndash; git add .
+&ndash; git commit
+&ndash; git push origin master
 を実行するので、rake deployを実行するとコミットと公開まで自動的に実行してくれる。</p>
 
 <p>git push origin masterは、origin = githubのusername/username.github.comレポジトリ に master = localの_public/ディレクトリ以下をpushする。</p>

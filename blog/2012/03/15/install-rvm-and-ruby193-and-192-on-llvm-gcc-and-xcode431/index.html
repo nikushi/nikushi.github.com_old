@@ -123,7 +123,7 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.</span></code></pre></td></tr></table></div></figure>
 
 
-<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&#8211;with-gcc=clangをつけてインストールする方法があった。今回は&#8211;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
+<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&mdash;with-gcc=clangをつけてインストールする方法があった。今回は&mdash;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
 
 <p>以下、詳細。</p>
 
@@ -163,7 +163,7 @@
 
 <p>XCode4.3からXCode本体とは別パッケージでgccやmake等のCLIツールだけのCommand Line Tools for XcodeというパッケージがApp Storeから入手できるようになった。</p>
 
-<p>Mac Book Airの容量を節約できるしXCodeのCLIツールしか使わないのでこれは嬉しいので、喜んでXCodeはインストールせずCommand Line Tools for Xcodeだけインストールして、rvm install &#8230; と進めていたのだけど、最終的にやはり必要ということが分かった。</p>
+<p>Mac Book Airの容量を節約できるしXCodeのCLIツールしか使わないのでこれは嬉しいので、喜んでXCodeはインストールせずCommand Line Tools for Xcodeだけインストールして、rvm install &hellip; と進めていたのだけど、最終的にやはり必要ということが分かった。</p>
 
 <p>XCodeが結局必要な理由は話が先に飛ぶが、<code>rvm install ruby-1.9.2</code>の後octopress(このブログのシステム)用のgemをインストールする目的で<code>bundle install</code>する必要があったが、以下のとおりXCodeが見つからないというエラーが出てしまう。</p>
 
@@ -392,7 +392,7 @@
 </span><span class='line'>$ rvm install 1.9.3 --with-gcc=clang</span></code></pre></td></tr></table></div></figure>
 
 
-<p>&#8211;with-gcc=clangはLLVM gcc対応のため。毎回つけるの面倒くさいな。rvm側の今後のバージョンアップで改善されないかなと期待。</p>
+<p>&mdash;with-gcc=clangはLLVM gcc対応のため。毎回つけるの面倒くさいな。rvm側の今後のバージョンアップで改善されないかなと期待。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -402,7 +402,7 @@
 </span><span class='line'>Ruby 'ruby-1.9.2-p318' was build using clang - but it's not (fully) supported, expect errors.</span></code></pre></td></tr></table></div></figure>
 
 
-<p>成功するけど&#8211;with-libyamlはサポートしてないという警告がでた。とっても気になるのだけどとりあえず気にせず先に進めることにする。問題でないという自信はまったくない。</p>
+<p>成功するけど&mdash;with-libyamlはサポートしてないという警告がでた。とっても気になるのだけどとりあえず気にせず先に進めることにする。問題でないという自信はまったくない。</p>
 
 <p>デフォルトは1.9.3に。</p>
 

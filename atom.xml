@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-02-23T18:12:41+09:00</updated>
+  <updated>2013-06-29T16:11:27+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -43,7 +43,7 @@ web: carton exec -Ilib -- plackup -r app.psgi
 13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
 </code></pre>
 
-<p>&#8211;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
+<p>&mdash;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
 
 <pre><code>$ cat .foreman
 color: 1
@@ -77,11 +77,11 @@ color: 1
 
 
 <p>=======
-- 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
-- 監視対象ホストのネットワークレイテンシ可視化
-- pingロスリストの可視化
-- 閾値監視、通知
-- ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
+&ndash; 監視対象を登録するとsmokepingデーモンが対象に対して定期的にpingポーリング
+&ndash; 監視対象ホストのネットワークレイテンシ可視化
+&ndash; pingロスリストの可視化
+&ndash; 閾値監視、通知
+&ndash; ping以外にcurlでHTTPのレスポンス可視化、とかもできます</p>
 
 <p>インストールしたときの超手抜きメモ。詳しくは公式ページを見てね。</p>
 
@@ -159,13 +159,13 @@ usermod -G smokeping apache
 
 <p>以下を<code>/etc/httpd/conf.d/smokeping.conf</code>に。</p>
 
-<div><script src='https://gist.github.com/4976007.js?file='></script>
+<div><script src='https://gist.github.com/4976007.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 
 
 <p>cgi用に以下を作った</p>
 
-<div><script src='https://gist.github.com/4976014.js?file='></script>
+<div><script src='https://gist.github.com/4976014.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
 
 
@@ -339,7 +339,7 @@ Person.first   # loadに時間がかかる!
 
 
 <p>この<code>split</code>の第2引数のようにRubyのコアクラスのAPIの知識に深ければ小さくコードが書ける実例だなとおもいました。
-このあたりは<a href="http://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E-Ruby-%E3%81%BE%E3%81%A4%E3%82%82%E3%81%A8-%E3%82%86%E3%81%8D%E3%81%B2%E3%82%8D/dp/4873113946">プログラミング言語 Ruby</a>の9章Rubyプラットフォームが充実してますね。難しいコードを書いたな&#8230;.というときは標準のAPIで対応できないか、考え直してみるとよさそうですね。</p>
+このあたりは<a href="http://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E-Ruby-%E3%81%BE%E3%81%A4%E3%82%82%E3%81%A8-%E3%82%86%E3%81%8D%E3%81%B2%E3%82%8D/dp/4873113946">プログラミング言語 Ruby</a>の9章Rubyプラットフォームが充実してますね。難しいコードを書いたな&hellip;.というときは標準のAPIで対応できないか、考え直してみるとよさそうですね。</p>
 ]]></content>
   </entry>
   
@@ -415,7 +415,7 @@ dotfiles  git@github.com:niku4i/dotfiles.git
 
 <p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
 
-<div><script src='https://gist.github.com/2338391.js?file='></script>
+<div><script src='https://gist.github.com/2338391.js'></script>
 <noscript><pre><code>#!/usr/bin/env ruby
 
 #
@@ -471,7 +471,7 @@ It turns out,
 
 <ul>
 <li><a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a></li>
-<li><a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する - ギークを夢見るじょーぶん男子 </a></li>
+<li><a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する &ndash; ギークを夢見るじょーぶん男子 </a></li>
 </ul>
 
 ]]></content>
@@ -507,7 +507,7 @@ $ gist &lt; file.txt
 
 <p>夜、日本酒飲みながら使ってた僕がすべて悪いのですが10ミリリットルくらいの量がキーボード上部右側から被弾。すぐにタオルで拭きましたが若干キーボードから浸水しました。</p>
 
-<p>せめてウイスキかスピリタスにしとけば直ぐに揮発したなw&#8230;とかどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
+<p>せめてウイスキかスピリタスにしとけば直ぐに揮発したなw&hellip;とかどうでもいい後悔の念が少しだけ頭をよぎりました。</p>
 
 <p>翌日欲にかられて起動してみましたところ、異常が見つかりました。</p>
 
@@ -901,7 +901,7 @@ git push -u dropbox source
 
 <ul>
 <li><a href="http://zanshin.net/2012/02/17/rvm-and-xcode-4-dot-3/">RVM and Xcode 4.3</a></li>
-<li><a href="http://d.karashi.org/20120303.html#p01">&#8220;[ruby][OSX]OS X で rb-fsevent のインストールに失敗するので pre-compiled 版に変更した&#8221;</a></li>
+<li><a href="http://d.karashi.org/20120303.html#p01">&ldquo;[ruby][OSX]OS X で rb-fsevent のインストールに失敗するので pre-compiled 版に変更した&rdquo;</a></li>
 </ul>
 
 
@@ -962,7 +962,7 @@ git push -u dropbox source
 </pre></td><td class='code'><pre><code class=''><span class='line'>The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.</span></code></pre></td></tr></table></div></figure>
 
 
-<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&#8211;with-gcc=clangをつけてインストールする方法があった。今回は&#8211;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
+<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&mdash;with-gcc=clangをつけてインストールする方法があった。今回は&mdash;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
 
 <p>以下、詳細。</p>
 
@@ -1002,7 +1002,7 @@ git push -u dropbox source
 
 <p>XCode4.3からXCode本体とは別パッケージでgccやmake等のCLIツールだけのCommand Line Tools for XcodeというパッケージがApp Storeから入手できるようになった。</p>
 
-<p>Mac Book Airの容量を節約できるしXCodeのCLIツールしか使わないのでこれは嬉しいので、喜んでXCodeはインストールせずCommand Line Tools for Xcodeだけインストールして、rvm install &#8230; と進めていたのだけど、最終的にやはり必要ということが分かった。</p>
+<p>Mac Book Airの容量を節約できるしXCodeのCLIツールしか使わないのでこれは嬉しいので、喜んでXCodeはインストールせずCommand Line Tools for Xcodeだけインストールして、rvm install &hellip; と進めていたのだけど、最終的にやはり必要ということが分かった。</p>
 
 <p>XCodeが結局必要な理由は話が先に飛ぶが、<code>rvm install ruby-1.9.2</code>の後octopress(このブログのシステム)用のgemをインストールする目的で<code>bundle install</code>する必要があったが、以下のとおりXCodeが見つからないというエラーが出てしまう。</p>
 
@@ -1231,7 +1231,7 @@ git push -u dropbox source
 </span><span class='line'>$ rvm install 1.9.3 --with-gcc=clang</span></code></pre></td></tr></table></div></figure>
 
 
-<p>&#8211;with-gcc=clangはLLVM gcc対応のため。毎回つけるの面倒くさいな。rvm側の今後のバージョンアップで改善されないかなと期待。</p>
+<p>&mdash;with-gcc=clangはLLVM gcc対応のため。毎回つけるの面倒くさいな。rvm側の今後のバージョンアップで改善されないかなと期待。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1241,7 +1241,7 @@ git push -u dropbox source
 </span><span class='line'>Ruby 'ruby-1.9.2-p318' was build using clang - but it's not (fully) supported, expect errors.</span></code></pre></td></tr></table></div></figure>
 
 
-<p>成功するけど&#8211;with-libyamlはサポートしてないという警告がでた。とっても気になるのだけどとりあえず気にせず先に進めることにする。問題でないという自信はまったくない。</p>
+<p>成功するけど&mdash;with-libyamlはサポートしてないという警告がでた。とっても気になるのだけどとりあえず気にせず先に進めることにする。問題でないという自信はまったくない。</p>
 
 <p>デフォルトは1.9.3に。</p>
 
@@ -1293,7 +1293,7 @@ git push -u dropbox source
 
 <p>source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
 
-<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいにhttp://で始まっていたので、方針としてはhttp://orihubon.com/uploads/をざっくり消して/imagesに置き換えることにする。</p>
+<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいに<a href="http://%E3%81%A7%E5%A7%8B%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%80%81%E6%96%B9%E9%87%9D%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AFhttp://orihubon.com/uploads/%E3%82%92%E3%81%96%E3%81%A3%E3%81%8F%E3%82%8A%E6%B6%88%E3%81%97%E3%81%A6/images%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%80%82">http://%E3%81%A7%E5%A7%8B%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%80%81%E6%96%B9%E9%87%9D%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AFhttp://orihubon.com/uploads/%E3%82%92%E3%81%96%E3%81%A3%E3%81%8F%E3%82%8A%E6%B6%88%E3%81%97%E3%81%A6/images%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%80%82</a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1313,7 +1313,7 @@ git push -u dropbox source
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>http://localhost:4000/にアクセスして確認する。</p>
+<p><a href="http://localhost:4000/%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%97%E3%81%A6%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%82">http://localhost:4000/%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%97%E3%81%A6%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%82</a></p>
 
 <p>deployし公開。</p>
 
@@ -1345,7 +1345,7 @@ git push -u dropbox source
 <p>移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。</p>
 
 <p>Wordpressは数年使っていて機能豊富でテーマも充実してるし管理画面も使いやすく、正直あまり不満はない。
-でもWordpress = PHPなんだよね。PHP&#8230; 別にPHP嫌いなわけではない。今年はRubyを勉強すると決めているので、
+でもWordpress = PHPなんだよね。PHP&hellip; 別にPHP嫌いなわけではない。今年はRubyを勉強すると決めているので、
 ならば周りのツールもみんなRubyにしよー! という流れ。</p>
 
 <p>さらにoctopressはgithubやherokuと連携してサーバいらずでgit pushすればブログ公開があっというまにできる仕組み。
@@ -1370,7 +1370,7 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
 <h3>Wordpressの管理画面から投稿データをxml形式でエクスポート</h3>
 
-<p>ツール -> エクスポート というのが標準で備わっている。Wordpressを去るのにWordpressは便利だというのは皮肉か。
+<p>ツール &ndash;> エクスポート というのが標準で備わっている。Wordpressを去るのにWordpressは便利だというのは皮肉か。
 タグやカテゴリ、タグのページは不要なのでエクスポート対象は&#8221;投稿&#8221;だけにする。
 適当な作業ディレクトリにwordpress.xmlという名前で保存する。以下の例であればwordpress.xmlを~/tmp/migration/に保存</p>
 
@@ -1393,7 +1393,7 @@ wordpressdotcom.rbを利用してそれなりにデータ変換ができたが�
 
 <p>そこでオリジナルのwordpressdoccom.rbを拝借しつつ、コードを少し修正。以下のコードを用いる。</p>
 
-<div><script src='https://gist.github.com/1824307.js?file='></script>
+<div><script src='https://gist.github.com/1824307.js'></script>
 <noscript><pre><code># coding: utf-8
 
 require 'rubygems'
@@ -1475,12 +1475,12 @@ end</code></pre></noscript></div>
 <h3>修正ポイント</h3>
 
 <ul>
-<li>permalinkを生成する箇所で一度 nkf &#8211;url-input -w して文字コードをプレーンにし、さらにto_urlメソッドで日本語をローマ字に変換する。</li>
+<li>permalinkを生成する箇所で一度 nkf &mdash;url-input -w して文字コードをプレーンにし、さらにto_urlメソッドで日本語をローマ字に変換する。</li>
 <li>記事のデータをputsする際にもnkf -Lu -wするようにした。</li>
 </ul>
 
 
-<p>to_urlメソッドはrequre &#8216;stringex&#8217;することでStringクラスのメソッドとしてto_urlが追加される。to_urlメソッドを使うと漢字でも強制的に
+<p>to_urlメソッドはrequre &lsquo;stringex&#8217;することでStringクラスのメソッドとしてto_urlが追加される。to_urlメソッドを使うと漢字でも強制的に
 ローマ字に変換する模様。octopressでrake new_postする際のコードを参考に。</p>
 
 <p>では改めて変換作業を行う</p>
@@ -1526,9 +1526,9 @@ end</code></pre></noscript></div>
 
 
 <p>rake deployを実行するとrake pushが内部で呼び出される。rake pushは内部で
-- git add .
-- git commit
-- git push origin master
+&ndash; git add .
+&ndash; git commit
+&ndash; git push origin master
 を実行するので、rake deployを実行するとコミットと公開まで自動的に実行してくれる。</p>
 
 <p>git push origin masterは、origin = githubのusername/username.github.comレポジトリ に master = localの_public/ディレクトリ以下をpushする。</p>
