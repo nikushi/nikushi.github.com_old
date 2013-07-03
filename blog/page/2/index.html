@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="自宅のMac Book Air 13inchが水難にあいました記録。 夜、日本酒飲みながら使ってた僕がすべて悪いのですが10ミリリットルくらいの量がキーボード上部右側から被弾。すぐにタオルで拭きましたが若干キーボードから浸水しました。 せめてウイスキかスピリタスにしとけば直ぐに揮発したなw& &hellip;">
+  <meta name="description" content="gistコマンドを使うとコマンドラインからGistに投稿できることを知りましたのでメモします。 インストール $ brew install gist $ gist &lt; file.txt または $ gist file.txt ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/09/gist-on-command-line/">Gist on Command Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-09T01:23:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><code>gist</code>コマンドを使うとコマンドラインからGistに投稿できることを知りましたのでメモします。</p>
+
+<p>インストール</p>
+
+<pre><code>$ brew install gist
+
+$ gist &lt; file.txt
+</code></pre>
+
+<p>または</p>
+
+<pre><code>$ gist file.txt
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -542,52 +590,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-13T00:00:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="perl">sub conf{
-    my %arg = (
-        lang =>; 'perl',
-        rank =>; 1,
-        @_ # ここが決め手!           
-    );
-    # ...
-}</pre>
-参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a>
-
-&nbsp;
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -618,6 +620,10 @@ gitやPasSに触れれてこれは一石二鳥。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/03/yokohama-dot-ex-on-20130703/">yokohama.ex #2 に参加してきたよ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
       </li>
     
@@ -631,10 +637,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
     
       <li class="post">
         <a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>
       </li>
     
   </ul>

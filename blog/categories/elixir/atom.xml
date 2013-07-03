@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Elixir | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/elixir/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2013-07-03T23:30:41+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[yokohama.ex #2 に参加してきたよ]]></title>
+    <link href="http://orihubon.com/blog/2013/07/03/yokohama-dot-ex-on-20130703/"/>
+    <updated>2013-07-03T23:02:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/03/yokohama-dot-ex-on-20130703</id>
+    <content type="html"><![CDATA[<p>2013/07/03(水) 開催された <a href="http://www.zusaar.com/event/822004">yokohama.ex #2</a> に参加してきました! 場所はDeNA@渋谷ヒカリエ。</p>
+
+<p>会の趣旨は <a href="http://elixir-lang.org/">elixir-lang.org</a>のGETTING STARTEDをみんなで読んで勉強しましょう、といったところ。</p>
+
+<p>前回(第1回)はyokohama.rbの中でElixir紹介がてらGETTING STARTEDの1章から2.6.4までを読んだ、そうです。僕は参加してませんでしたので今回にあたって密かに一人独習したわけですが、@sonots さんが<a href="https://docs.google.com/presentation/d/1Tl-NTgGiW6V6QCCi2Hy0V81XZTjkAWEC22yTWE8ChP4/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.p">復習資料</a> を作成してくれていて今日の会はこの復習資料からスタート! 英文で読んだ後でまとまった日本語で再度インプットするとすーっと浸みいります。とても助かりました。</p>
+
+<p>今回はSection2.6.5 TryからSection3の最後まで。プロジェクタにホームページの英文を映して代表の人が読みながらサンプルコードをiexで実行、あれこれ言い合う感じで進められていました。</p>
+
+<p>Elixirにもの申すレベルではないのでElixirには言及しませんが、会の進め方については1つ1つ順番に読み進めるスタイルなのでElixir初心者であっても取っ付きやすかったとおもいます!!!</p>
+
+<p>普段Ruby、Perlなどを使ってるので関数型言語の考え方は頭の体操になりました! 英語の速読にも良い会でした:)</p>
+
+<p>次回#3も予定されています。まだ追いつけるとおもますので興味がありましたら次回参加してみたらいかがでしょうか。</p>
+]]></content>
+  </entry>
+  
+</feed>
