@@ -25,7 +25,7 @@ TwitterBootstrapであらかじめ用意されているアイコンの使い方�
 
 使い方2 - CSSのcontentマークアップにユニコードを埋め込む
 
-    .thumbs-up {
+    .thumbs-up:before {
       font-size: 20px;
       font-family: FontAwesome;
       content: '\F164';
