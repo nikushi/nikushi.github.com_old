@@ -11,11 +11,11 @@ tags:
   - 'Bootstrap'
 ---
 
-[http://fortawesome.github.io/Font-Awesome/](Font Awesome)
+[Font Awesome](http://fortawesome.github.io/Font-Awesome/)
 
 Bootstrap向けのicon系Webフォントを提供するライブラリ。
 
-Railsで使うには[https://github.com/bokmann/font-awesome-rails](font-awesome-rails)をGemfileに書いて適切にimportすればOKです。
+Railsで使うには [font-awesome-rails](https://github.com/bokmann/font-awesome-rails)をGemfileに書いて適切にimportすればOKです。
 
 使い方1 - iタグ使う
 
@@ -31,6 +31,6 @@ TwitterBootstrapであらかじめ用意されているアイコンの使い方�
       content: '\F164';
     }
 
-contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば[http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/](thumbs-up)であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!
+contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば[thumbs-up](http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/)であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!
 
 という感じで簡単ながらFont Awesomeの紹介でした。
