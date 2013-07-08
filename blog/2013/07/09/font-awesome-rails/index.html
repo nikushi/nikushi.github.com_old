@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>[Perl] perlstyle - perldoc.perl.org - ni-blog</title>
+  <title>Font AwesomeをRailsで使ってみた - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Perl コーディングスタイルガイドライン perlstyle - perldoc.perl.org.
-">
+  <meta name="description" content="http://fortawesome.github.io/Font-Awesome/ Bootstrap向けのicon系Webフォントを提供するライブラリ。 Railsで使うにはhttps://github.com/bokmann/font-awesome- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/07/09/font-awesome-rails/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">[Perl] Perlstyle - perldoc.perl.org</h1>
+      <h1 class="entry-title">Font AwesomeをRailsで使ってみた</h1>
     
     
       <p class="meta">
@@ -96,14 +95,38 @@
   
 
 
-<time datetime="2011-12-01T00:00:00+09:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time>
+<time datetime="2013-07-09T00:42:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">Perl コーディングスタイルガイドライン  <a href="http://perldoc.perl.org/perlstyle.html">perlstyle - perldoc.perl.org</a>.
+<div class="entry-content"><p><a href="Font%20Awesome">http://fortawesome.github.io/Font-Awesome/</a></p>
+
+<p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
+
+<p>Railsで使うには<a href="font-awesome-rails">https://github.com/bokmann/font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
+
+<p>使い方1 &ndash; iタグ使う</p>
+
+<pre><code>&lt;i class="icon-thumbs-up"&gt;&lt;/i&gt; icon-thumbs-up
+</code></pre>
+
+<p>TwitterBootstrapであらかじめ用意されているアイコンの使い方と同じです。ただFont Awesomeの場合、画像ではなくフォントとして扱われるのでfont-colorで色を調整したり出来ます。</p>
+
+<p>使い方2 &ndash; CSSのcontentマークアップにユニコードを埋め込む</p>
+
+<pre><code>.thumbs-up {
+  font-size: 20px;
+  font-family: FontAwesome;
+  content: '\F164';
+}
+</code></pre>
+
+<p>contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば<a href="thumbs-up">http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/</a>であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!</p>
+
+<p>という感じで簡単ながらFont Awesomeの紹介でした。</p>
 </div>
 
 
@@ -126,15 +149,21 @@
   
 
 
-<time datetime="2011-12-01T00:00:00+09:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time>
+<time datetime="2013-07-09T00:42:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>Rails</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/07/09/font-awesome-rails/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/07/09/font-awesome-rails/" >Tweet</a>
   
   
   
@@ -145,10 +174,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/" title="Previous Post: Perl Moduleのバージョンを確認する方法">&laquo; Perl Moduleのバージョンを確認する方法</a>
+        <a class="basic-alignment left" href="/blog/2013/07/09/jsfiddle-js-test/" title="Previous Post: jsFiddleでjavascriptお手軽動作確認">&laquo; jsFiddleでjavascriptお手軽動作確認</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/12/03/perl-colored-logging-by-log4perl/" title="Next Post: [Perl] colored logging by log4perl">[Perl] colored logging by log4perl &raquo;</a>
       
     </p>
   </footer>
