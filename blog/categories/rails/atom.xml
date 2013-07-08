@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-09T00:59:22+09:00</updated>
+  <updated>2013-07-09T01:00:29+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -33,7 +33,7 @@
 
 <p>使い方2 &ndash; CSSのcontentマークアップにユニコードを埋め込む</p>
 
-<pre><code>.thumbs-up {
+<pre><code>.thumbs-up:before {
   font-size: 20px;
   font-family: FontAwesome;
   content: '\F164';
