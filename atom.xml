@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-03T23:30:41+09:00</updated>
+  <updated>2013-07-09T00:41:37+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[jsFiddleでjavascriptお手軽動作確認]]></title>
+    <link href="http://orihubon.com/blog/2013/07/09/jsfiddle-js-test/"/>
+    <updated>2013-07-09T00:16:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/09/jsfiddle-js-test</id>
+    <content type="html"><![CDATA[<p>Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる <a href="http://jsfiddle.net/">jsFiddle</a> がお勧めです!</p>
+
+<p><a href="http://jsfiddle.net/niku4i/5pg4m/">jQuery-UIのaccordion pluginの動作確認をしてみた例</a></p>
+
+<p>使ってみた感想としては、css、html、javascriptのコードをフォームに入力して Run! ボタンを押すだけでとても簡単でした。</p>
+
+<p>また、jsFiddleはgithub.comのgistに近い感覚でJavaScriptやCSSを試すことが出来るので、作った画面をSkypeやIRCで他人と共有できる点が優れています。StackOverflowでjs系で検索すると結構な確率で見ますね。</p>
+
+<p>jQueryなどのライブラリの選択やバージョンの変更も左側のメニューからポチポチやるだけで切り替えれて簡単。</p>
+
+<p>また、Ajax系の動作確認も可能です。サーバサイドのエンドポイントが必要ですが、jsFiddleでは <code>/echo/json/</code>, <code>/echo/html/</code>といったリクエストをresponseとしてechoするダミーのエンドポイントが提供されています。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[yokohama.ex #2 に参加してきたよ]]></title>
@@ -2260,39 +2279,6 @@ end</code></pre></noscript></div>
 
 
 <p>本番のブログにアップされたか確認して問題なければ完了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello, World]]></title>
-    <link href="http://orihubon.com/blog/2012/02/14/hello/"/>
-    <updated>2012-02-14T11:08:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/02/14/hello</id>
-    <content type="html"><![CDATA[<h2>A first post always says</h2>
-
-<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
-</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
