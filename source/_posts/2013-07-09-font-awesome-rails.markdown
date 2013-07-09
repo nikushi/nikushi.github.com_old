@@ -27,7 +27,7 @@ TwitterBootstrapであらかじめ用意されているアイコンの使い方�
 
     .thumbs-up:before {
       font-size: 20px;
-      font-family: FontAwesome;
+      font-family: 'FontAwesome';
       content: '\F164';
     }
 
