@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>[Perl] colored logging by log4perl - ni-blog</title>
+  <title>便利なカラーピッカー 0 to 255 - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、 &hellip;">
+  <meta name="description" content="世の中カラーピッカーを提供するWebサイトはたくさんありますが、0to255がとても使いやすかったのでメモ。 ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/07/09/0-to-255-color-picker/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">[Perl] Colored Logging by Log4perl</h1>
+      <h1 class="entry-title">便利なカラーピッカー 0 to 255</h1>
     
     
       <p class="meta">
@@ -95,22 +96,16 @@
   
 
 
-<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
+<time datetime="2013-07-09T23:59:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
+<div class="entry-content"><p>世の中カラーピッカーを提供するWebサイトはたくさんありますが、<a href="http://0to255.com/">0to255</a>がとても使いやすかったのでメモ。</p>
 
-&nbsp;
-
-warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
-<pre>log4perl.category = DEBUG, Screen
-log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
-
-たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
+<p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
 </div>
 
 
@@ -133,15 +128,21 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
   
 
 
-<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
+<time datetime="2013-07-09T23:59:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/web/'>Web</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/12/03/perl-colored-logging-by-log4perl/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/07/09/0-to-255-color-picker/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/07/09/0-to-255-color-picker/" >Tweet</a>
   
   
   
@@ -152,10 +153,8 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/12/01/perl-perlstyle-perldoc-perl-org/" title="Previous Post: [Perl] perlstyle - perldoc.perl.org">&laquo; [Perl] perlstyle - perldoc.perl.org</a>
+        <a class="basic-alignment left" href="/blog/2013/07/09/font-awesome-rails/" title="Previous Post: Font AwesomeをRailsで使ってみた">&laquo; Font AwesomeをRailsで使ってみた</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/" title="Next Post: logrotateの動作をテストする">logrotateの動作をテストする &raquo;</a>
       
     </p>
   </footer>

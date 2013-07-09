@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-09T01:00:29+09:00</updated>
+  <updated>2013-07-10T00:11:38+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[便利なカラーピッカー 0 to 255]]></title>
+    <link href="http://orihubon.com/blog/2013/07/09/0-to-255-color-picker/"/>
+    <updated>2013-07-09T23:59:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/09/0-to-255-color-picker</id>
+    <content type="html"><![CDATA[<p>世の中カラーピッカーを提供するWebサイトはたくさんありますが、<a href="http://0to255.com/">0to255</a>がとても使いやすかったのでメモ。</p>
+
+<p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Font AwesomeをRailsで使ってみた]]></title>
@@ -35,7 +46,7 @@
 
 <pre><code>.thumbs-up:before {
   font-size: 20px;
-  font-family: FontAwesome;
+  font-family: 'FontAwesome';
   content: '\F164';
 }
 </code></pre>
@@ -2000,76 +2011,6 @@ git push -u dropbox source
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ irb
 </span><span class='line'>1.9.3p125 :001 &gt; "Enjoy Ruby with rvm"
 </span><span class='line'> =&gt; "Enjoy Ruby with rvm" </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Wordpressからoctopressに移行した(画像移行編)]]></title>
-    <link href="http://orihubon.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/"/>
-    <updated>2012-03-11T22:36:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files</id>
-    <content type="html"><![CDATA[<p>前回の記事とおり、ブログの過去の記事をWordpressからOctopressに移行したが、ブログの記事に貼付けた画像ファイルは移行後にリンク切れ状態のままでした。過去記事の画像を表示するよう修正します。</p>
-
-<!-- more -->
-
-
-<ul>
-<li>移行前(Wordpress)の画像ファイル置き場は/wp-content/uploads/</li>
-<li>移行後(octopress)の画像ファイル置き場は/images/</li>
-</ul>
-
-
-<p>Wordpressはxreaのサーバで運用していたので、sshでログインしてローカルのMacまでscpしてきた。 ~/tmp/uploads/ あたりに保存しとく。</p>
-
-<p>つづいてローカルのoctopressディレクトリにコピーする。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/Documents/Blog/octopress
-</span><span class='line'>cp ~/tmp/uploads/* source/images/</span></code></pre></td></tr></table></div></figure>
-
-
-<p>source/images以下にコピーすると、<code>rake deploy</code>すると<code>http://username.github.com/images/</code>以下にマップされるみたい。</p>
-
-<p>続いて過去記事のaタグとimgタグの修正。過去記事を確認したら、 <code>&lt;a href="http://orihubon.com/wp-contents/uploads/hogehoge.jpg"&gt;</code>みたいに<a href="http://%E3%81%A7%E5%A7%8B%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%80%81%E6%96%B9%E9%87%9D%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AFhttp://orihubon.com/uploads/%E3%82%92%E3%81%96%E3%81%A3%E3%81%8F%E3%82%8A%E6%B6%88%E3%81%97%E3%81%A6/images%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%80%82">http://%E3%81%A7%E5%A7%8B%E3%81%BE%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%80%81%E6%96%B9%E9%87%9D%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AFhttp://orihubon.com/uploads/%E3%82%92%E3%81%96%E3%81%A3%E3%81%8F%E3%82%8A%E6%B6%88%E3%81%97%E3%81%A6/images%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%80%82</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd source</span>/_posts
-</span><span class='line'><span class="k">for </span>f in <span class="k">$(</span> ls <span class="k">)</span>; <span class="k">do  </span>ruby -ne <span class="s1">&#39;$_.gsub!(%r!http://orihubon.com/wp-content/uploads/!, &quot;/images/&quot;); puts $_;&#39;</span> &lt; <span class="nv">$f</span> &gt; tmp; mv tmp <span class="nv">$f</span>; <span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上のコードは単純に置換してるだけ。過去記事のaタグやimgタグ意外のテキストも置き換えるのですが、私の記事をgrepして確認したらなかったので、parseしなくていいやということでシンプルに置き換えた。</p>
-
-<p>生成して確認する。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake generate
-</span><span class='line'>rake preview
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://localhost:4000/%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%97%E3%81%A6%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%82">http://localhost:4000/%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%97%E3%81%A6%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%82</a></p>
-
-<p>deployし公開。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake deploy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>commitもしとく。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>git add -A
-</span><span class='line'>git commit -m <span class="s2">&quot;Imported image files from old wordpress blog&quot;</span>
-</span><span class='line'>git push
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

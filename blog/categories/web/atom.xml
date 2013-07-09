@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Web | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/web/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2013-07-10T00:11:38+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[便利なカラーピッカー 0 to 255]]></title>
+    <link href="http://orihubon.com/blog/2013/07/09/0-to-255-color-picker/"/>
+    <updated>2013-07-09T23:59:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/09/0-to-255-color-picker</id>
+    <content type="html"><![CDATA[<p>世の中カラーピッカーを提供するWebサイトはたくさんありますが、<a href="http://0to255.com/">0to255</a>がとても使いやすかったのでメモ。</p>
+
+<p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
+]]></content>
+  </entry>
+  
+</feed>
