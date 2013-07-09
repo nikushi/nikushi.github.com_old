@@ -9,7 +9,7 @@ categories:
 
 ステージや本番での環境構築まわりについて調べてみた。
 
-調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 - Nigata.pm teck talk#1)[http://www.slideshare.net/ImaiHayato/niigatapm-1]
+調べたかったことはこのスライドにまとまっていた。[モダンかもしれないPerlウェブアプリケーション開発入門 - Nigata.pm teck talk#1](http://www.slideshare.net/ImaiHayato/niigatapm-1)
 
 以下、自分用にメモします。
 
