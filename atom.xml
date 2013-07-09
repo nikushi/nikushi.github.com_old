@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-10T00:37:55+09:00</updated>
+  <updated>2013-07-10T00:40:07+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -731,7 +731,7 @@ lastaction     # 最後に実行するコマンド
     <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
     <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
 
-<p>調べたかったことはこのスライドにまとまっていた。(モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1)[<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">http://www.slideshare.net/ImaiHayato/niigatapm-1</a>]</p>
+<p>調べたかったことはこのスライドにまとまっていた。<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1</a></p>
 
 <p>以下、自分用にメモします。</p>
 
