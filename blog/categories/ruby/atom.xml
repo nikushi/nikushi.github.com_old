@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-10T00:40:07+09:00</updated>
+  <updated>2013-07-26T17:57:44+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BUNDLE_FROZENとかBUNDLE_WITHOUT]]></title>
+    <link href="http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without/"/>
+    <updated>2013-07-26T16:37:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without</id>
+    <content type="html"><![CDATA[<p>bundlerの<code>--deployment</code>や<code>--without</code>に関してはまったことのメモ。</p>
+
+<!--more-->
+
+
+<h3>bundle install &mdash;deployment</h3>
+
+<p><code>--deployment</code>をつけ実行すると<code>vendor/bundle</code>以下にgemがインストールされます。deploymentの名の通り本番環境でインストールする場合を想定したコマンドです。</p>
+
+<p>```</p>
+
+<pre><code>$ bundle install --deployment
+</code></pre>
+
+<p>```</p>
+
+<h3>BUNDLE_FROZEN</h3>
+
+<p><code>--deployment</code>の名のとおり本番環境でインストールする場合を想定したコマンドですが、うっかり開発環境で実行してしまって少々はまってしまいました。</p>
+
+<p>開発環境でGemfileに新しくgemを追加したので、<code>bundle install</code>しようとします。すると</p>
+
+<p><code>``
+$ bundle install
+You are trying to install in deployment mode after changing
+your Gemfile. Run</code>bundle install` elsewhere and add the
+updated Gemfile.lock to version control.</p>
+
+<p>If this is a development machine, remove the Gemfile freeze
+by running <code>bundle install --no-deployment</code>.</p>
+
+<p>You have added to the Gemfile:
+* colorize
+```</p>
+
+<p>とエラーがでます。<code>bundle install --deployment</code>を1度でも実行すると<code>.bundle/config</code>が更新され<code>BUNDLE_FROZEN: 1</code>が付加されるようです。</p>
+
+<p>これを解除するには、<code>bundle install --no-deployment</code>を1度実行するか、<code>.bundle/config</code>を直接編集して<code>BUNDLE_FROZEN: 1</code>の行を削除してしまうかする必要があります。</p>
+
+<h3>BUNDLE_WITHOUT</h3>
+
+<p><code>--without</code>というオプションがあります。以下のように使います。本番環境ではdevelopmentやtestグループのgemは不要なのでwithoutでinstall対象から除外することができます。</p>
+
+<p><code>
+  $ bundle install --deployment --without development test
+</code></p>
+
+<p>ただ、これも<code>--without</code>つきで実行すると<code>.bundle/config</code>に保存されてしまいます。</p>
+
+<h2>```</h2>
+
+<p>BUNDLE_WITHOUT: development test
+```</p>
+
+<p>うっかり開発環境で実行してしまうと、その後、<code>bundle exec rspec</code>などやろうとすると以下のエラーが発生します。rspec-coreはGemに含まれませんと。</p>
+
+<p><code>
+$ bundle exec rpsec
+/Users/name/.rbenv/versions/2.0.0-p195/lib/ruby/gems/2.0.0/gems/bundler-1.3.5/lib/bundler/rubygems_integration.rb:214:in `block in replace_gem': rspec-core is not part of the bundle. Add it to Gemfile. (Gem::LoadError)
+</code></p>
+
+<p>この場合も、<code>.bundle/config</code>を編集してBUNDLE_WITHOUTの行を削除すれば良いです。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BSONオブジェクトのデータサイズを確認する方法(Ruby)]]></title>
@@ -152,27 +222,7 @@ lines = out.split(/\r?\n/m, -1)
 <p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
 
 <p><div><script src='https://gist.github.com/2338391.js'></script>
-<noscript><pre><code>#!/usr/bin/env ruby
-
-#
-# Dump subtitle in text for TED
-#
-
-require 'json'
-require 'open-uri'
-
-base_url = 'http://www.ted.com/talks/subtitles'
-id = 1183
-url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
-
-data = JSON.parse(open(url).read)
-if data &amp;&amp; data.key?('captions')
-  data['captions'].each do |sentence|
-    puts sentence['content']
-    puts 
-  end
-end 
-</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 </p>
 
 <p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>

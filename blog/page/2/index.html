@@ -9,7 +9,9 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="1年前に書いたStreaming Log With Capistranoというポストが巡り巡ってgemで利用できるようになりました、というお話。 @sonots だいぶ昔書いたのでいけてなコードですが、こんな感じでしょうか。orihubon.com/blog/2012/02/0…&mdash; &hellip;">
+  <meta name="description" content="BSON Objectのサイズを求める方法。 class Person include Mongoid::Document field :name, type: String
+end Person.create name: 'a' person = Person.first
+puts Moped &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +78,78 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/13/calculate-bson-objects-size/">BSONオブジェクトのデータサイズを確認する方法(Ruby)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T15:06:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>BSON Objectのサイズを求める方法。</p>
+
+<pre><code>class Person
+  include Mongoid::Document
+  field :name, type: String
+end
+
+Person.create name: 'a'
+
+person = Person.first
+puts Moped::BSON::Document.serialize(parson.as_document).size
+</code></pre>
+
+<p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
+
+<p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
+
+<pre><code>class Person
+  include Mongoid::Document
+  field :name, type: String
+  embeds_many :children
+end
+
+class Child
+  include Mongoid::Document
+  embeded_in :person
+  field :age
+end
+
+Person.create name: 'a'
+person = Person.first
+person.children &lt;&lt; たくさんデータ入れる
+
+Person.first   # loadに時間がかかる!
+</code></pre>
+
+<p>relationにした場合、子供はloadされないので時間がかかりません。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -527,67 +601,6 @@ $ gist &lt; file.txt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing Rvm and Ruby1.9.3/1.9.2 on LLVM Gcc and XCode4.3.1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-15T00:30:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
-
-<p>Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。</p>
-
-<p>普通に考えて進めると、</p>
-
-<ol>
-<li>XCodeインストール</li>
-<li>rvm install</li>
-</ol>
-
-
-<p>するのだけど、</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supported by ruby and gems, please read `rvm requirements`.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&mdash;with-gcc=clangをつけてインストールする方法があった。今回は&mdash;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
-
-<p>以下、詳細。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -618,6 +631,10 @@ $ gist &lt; file.txt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/09/0-to-255-color-picker/">便利なカラーピッカー 0 to 255</a>
       </li>
     
@@ -631,10 +648,6 @@ $ gist &lt; file.txt
     
       <li class="post">
         <a href="/blog/2013/07/03/yokohama-dot-ex-on-20130703/">yokohama.ex #2 に参加してきたよ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
       </li>
     
   </ul>

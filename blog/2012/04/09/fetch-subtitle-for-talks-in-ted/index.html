@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。 URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。 #!/usr/bin/env ruby #
-# Dump subtitle in &hellip;">
+  <meta name="description" content="TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。 URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。 Matt Cutts: Try something new for 30 days &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -111,27 +110,7 @@
 <p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
 
 <div><script src='https://gist.github.com/2338391.js'></script>
-<noscript><pre><code>#!/usr/bin/env ruby
-
-#
-# Dump subtitle in text for TED
-#
-
-require 'json'
-require 'open-uri'
-
-base_url = 'http://www.ted.com/talks/subtitles'
-id = 1183
-url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
-
-data = JSON.parse(open(url).read)
-if data &amp;&amp; data.key?('captions')
-  data['captions'].each do |sentence|
-    puts sentence['content']
-    puts 
-  end
-end 
-</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 
 
 <p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
@@ -247,6 +226,10 @@ It turns out,
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/09/0-to-255-color-picker/">便利なカラーピッカー 0 to 255</a>
       </li>
     
@@ -260,10 +243,6 @@ It turns out,
     
       <li class="post">
         <a href="/blog/2013/07/03/yokohama-dot-ex-on-20130703/">yokohama.ex #2 に参加してきたよ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a>
       </li>
     
   </ul>
