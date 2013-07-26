@@ -5,6 +5,7 @@
 .instag-cache
 .pygments-cache
 .preview-mode
+.ruby-version
 _deploy
 public
 sass.old
