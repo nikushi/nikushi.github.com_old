@@ -7,7 +7,9 @@ categories:
   - 'Ruby'
 ---
 
-bundlerに関するメモ。
+bundlerの`--deployment`や`--without`に関してはまったことのメモ。
+
+<!--more-->
 
 ### bundle install --deployment 
 `--deployment`をつけ実行すると`vendor/bundle`以下にgemがインストールされます。deploymentの名の通り本番環境でインストールする場合を想定したコマンドです。
