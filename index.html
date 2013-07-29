@@ -9,8 +9,23 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、 1
-ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed &hellip;">
+  <meta name="description" content="やっつけ感ある手順であるがこんな感じ。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+cd /data/vm
+qemu-img create -f qcow2 server01.img 10G
+virt-install -n server01 \
+-r 1024 \
+--disk path &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +92,70 @@ ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed &h
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T22:58:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>やっつけ感ある手順であるがこんな感じ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /data/vm
+</span><span class='line'>qemu-img create -f qcow2 server01.img 10G
+</span><span class='line'>virt-install -n server01 \
+</span><span class='line'>-r 1024 \
+</span><span class='line'>--disk path=/data/vm/server01.img,size=10,format=qcow2 \
+</span><span class='line'>--virt-type=kvm \
+</span><span class='line'>--vcpus=2 \
+</span><span class='line'>--os-type linux \
+</span><span class='line'>--os-variant=rhel6 \
+</span><span class='line'>--network bridge=br0 \
+</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=en \ 
+</span><span class='line'>--cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -532,73 +611,6 @@ lastaction     # 最後に実行するコマンド
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-23T13:34:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
-RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>
-
-<p>インストール</p>
-
-<pre><code>$ cpanm Proclet
-</code></pre>
-
-<p>簡単ですね!</p>
-
-<p>Procfileを書く。</p>
-
-<pre><code>$ vim Procfile
-web: carton exec -Ilib -- plackup -r app.psgi
-</code></pre>
-
-<p>ほかにworkerなど立ち上げるプロセスがあれば行区切りで書けばOK。</p>
-
-<p>起動させてみる</p>
-
-<pre><code>$ proclet start --color
-13:33:16 web.1      | Watching ./lib app.psgi for file updates.
-13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
-</code></pre>
-
-<p>&mdash;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
-
-<pre><code>$ cat .foreman
-color: 1
-</code></pre>
-
-<p>Happy Hacking!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -627,6 +639,10 @@ color: 1
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a>
       </li>
     
@@ -640,10 +656,6 @@ color: 1
     
       <li class="post">
         <a href="/blog/2013/07/09/font-awesome-rails/">Font AwesomeをRailsで使ってみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/jsfiddle-js-test/">jsFiddleでjavascriptお手軽動作確認</a>
       </li>
     
   </ul>

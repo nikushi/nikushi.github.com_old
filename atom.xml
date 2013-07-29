@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-29T16:51:12+09:00</updated>
+  <updated>2013-07-29T23:03:18+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール]]></title>
+    <link href="http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/"/>
+    <updated>2013-07-29T22:58:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install</id>
+    <content type="html"><![CDATA[<p>やっつけ感ある手順であるがこんな感じ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /data/vm
+</span><span class='line'>qemu-img create -f qcow2 server01.img 10G
+</span><span class='line'>virt-install -n server01 \
+</span><span class='line'>-r 1024 \
+</span><span class='line'>--disk path=/data/vm/server01.img,size=10,format=qcow2 \
+</span><span class='line'>--virt-type=kvm \
+</span><span class='line'>--vcpus=2 \
+</span><span class='line'>--os-type linux \
+</span><span class='line'>--os-variant=rhel6 \
+</span><span class='line'>--network bridge=br0 \
+</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=en \ 
+</span><span class='line'>--cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ActiveRecordのtypeフィールドについて]]></title>
@@ -1545,113 +1582,6 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
 <p>Rubyだとこうやるのかな。</p>
 
 <pre><code>(1..10).each { |i| puts i * 2 }
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[OctopressのソースリポジトリをDropboxに変更]]></title>
-    <link href="http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox/"/>
-    <updated>2012-03-18T05:32:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox</id>
-    <content type="html"><![CDATA[<h3>octopressのソースファイルの管理</h3>
-
-<p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
-
-<ol>
-<li><code>rake new_post['hoge']</code>で記事を作成</li>
-<li><code>rake deploy</code>で記事を公開</li>
-<li><code>git push</code>にてlocalのsourceブランチをgithub.comにpush(sourceファイルのバックアップ)</li>
-</ol>
-
-
-<p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
-
-<p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
-
-<!-- more -->
-
-
-<h3>リポジトリ作成</h3>
-
-<pre><code>mkdir -p ~/Dropbox/repos/ni-blog.git        
-cd ~/Dropbox/repos/ni-blog.git              
-git --bare init                           
-</code></pre>
-
-<h3>リモートリポジトリの追加</h3>
-
-<p>リモートリポジトリの確認
-現在のremoteはoctopressとoriginの2種類。</p>
-
-<pre><code>$ cd path/to/octopress
-$ git remote -v                     
-octopress       git://github.com/imathis/octopress.git (fetch)
-octopress       git://github.com/imathis/octopress.git (push)
-origin  git@github.com:niku4i/niku4i.github.com.git (fetch) 
-origin  git@github.com:niku4i/niku4i.github.com.git (push)  
-</code></pre>
-
-<p>~/Dropbox/repos/ni-blog.gitをdropboxという名前で登録</p>
-
-<pre><code>git remote add dropbox ~/Dropbox/repos/ni-blog.git
-</code></pre>
-
-<p>確認</p>
-
-<pre><code>$ git remote -v                          
-dropbox /Users/nikushi/Dropbox/repos/ni-blog.git (fetch)       
-dropbox /Users/nikushi/Dropbox/repos/ni-blog.git (push)        
-octopress       git://github.com/imathis/octopress.git (fetch) 
-octopress       git://github.com/imathis/octopress.git (push)  
-origin  git@github.com:niku4i/niku4i.github.com.git (fetch)    
-origin  git@github.com:niku4i/niku4i.github.com.git (push)     
-</code></pre>
-
-<p>dropboxが追加されました。</p>
-
-<h3>Dropboxのリポジトリにソースファイルをpushする</h3>
-
-<p>まずbareで作成したDropboxのリポジトリにpush。-uを指定することで以降<code>git push</code>(引数なし)で実行可能になります。最初の1回だけ-uつきで実行します。</p>
-
-<pre><code>$ git push -u dropbox source                   
-Counting objects: 4110, done.                                        
-Delta compression using up to 4 threads.                             
-Compressing objects: 100% (1598/1598), done.                         
-Writing objects: 100% (4110/4110), 2.73 MiB, done.                   
-Total 4110 (delta 2307), reused 3836 (delta 2197)                    
-To /Users/nikushi/Dropbox/repos/ni-blog.git                          
- * [new branch]      source -&gt; source                                
- Branch source set up to track remote branch source from dropbox.     
-</code></pre>
-
-<p>以後<code>git push</code>を実行するとDropboxのリポジトリにバックアップされることになります。</p>
-
-<h3>バックアップからリカバリする</h3>
-
-<p>本当にバックアップされたか確認してみます。<code>git clone</code>する際には-bでsourceブランチを指定する必要がありました。</p>
-
-<pre><code>mkdir ~/tmp/ &amp;&amp; cd ~/tmp/
-git clone -b source ~/Dropbox/repos/ni-blog.git
-cd ni-blog
-</code></pre>
-
-<p>この状態では、remoteはorigin=~/Dropbox/repos/ni-blog.gitのみがリモートリポジトリに設定されていますので、元々の設定に戻してあげます。現在のremoteの設定は<code>git remote -v</code>で確認してください。</p>
-
-<pre><code>git remote add octopress  git://github.com/imathis/octopress.git 
-git remote rename origin dropbox
-git remote add origin  git@github.com:niku4i/niku4i.github.com.git
-git push -u dropbox source                   
-</code></pre>
-
-<p>3つのremoteを設定し、dropboxリモートリポジトリをgit pushのデフォルトにしました。</p>
-
-<p>rake deployにてgithubに記事をアップロード、git pushにてDropboxにバックアップするワークフローに変更しましたのでしばらく運用してみます。</p>
-
-<p><strong>2012/11/05 追記</strong>
-最終的には、github.comをremoteにする運用に戻しました。</p>
-
-<pre><code>git push -u origin source
 </code></pre>
 ]]></content>
   </entry>

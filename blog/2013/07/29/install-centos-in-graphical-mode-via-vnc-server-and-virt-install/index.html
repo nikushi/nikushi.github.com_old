@@ -5,12 +5,27 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Basics of Perl web portals - ni-blog</title>
+  <title>virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Basics of Perl web portals.
-Summary: Perl is a powerful scripting language that can be used to perform small operations from the command line or &hellip;">
+  <meta name="description" content="やっつけ感ある手順であるがこんな感じ。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+cd /data/vm
+qemu-img create -f qcow2 server01.img 10G
+virt-install -n server01 \
+-r 1024 \
+--disk path &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +34,7 @@ Summary: Perl is a powerful scripting language that can be used to perform small
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/09/03/basics-of-perl-web-portals/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +95,7 @@ Summary: Perl is a powerful scripting language that can be used to perform small
   
   <header>
     
-      <h1 class="entry-title">Basics of Perl Web Portals</h1>
+      <h1 class="entry-title">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</h1>
     
     
       <p class="meta">
@@ -96,16 +111,42 @@ Summary: Perl is a powerful scripting language that can be used to perform small
   
 
 
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+<time datetime="2013-07-29T22:58:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><a href="http://www.ibm.com/developerworks/aix/library/au-perlweb_revision/index.html?ca=drs-">Basics of Perl web portals</a>.
-<blockquote>Summary: Perl is a powerful scripting language that can be used to perform small operations from the command line or power a complete web portal. Understanding techniques for making safe and secure Perl CGI scripts is vital to developing a web portal that does not compromise the integrity of a server or the web site&#8217;s data. This article explains several techniques that will help developers create secure Perl CGI scripts and handle errors, before looking at a simpler method for building web applications like portals using the Plack system.</blockquote>
-carp()は最近覚えたので個人的にはホット。 モジュール内ではdie()は使ってはダメだとおもっていたがcarpを使うとしっくりくる、のかな。
+<div class="entry-content"><p>やっつけ感ある手順であるがこんな感じ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /data/vm
+</span><span class='line'>qemu-img create -f qcow2 server01.img 10G
+</span><span class='line'>virt-install -n server01 \
+</span><span class='line'>-r 1024 \
+</span><span class='line'>--disk path=/data/vm/server01.img,size=10,format=qcow2 \
+</span><span class='line'>--virt-type=kvm \
+</span><span class='line'>--vcpus=2 \
+</span><span class='line'>--os-type linux \
+</span><span class='line'>--os-variant=rhel6 \
+</span><span class='line'>--network bridge=br0 \
+</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=en \ 
+</span><span class='line'>--cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso</span></code></pre></td></tr></table></div></figure>
+
+
+
 </div>
 
 
@@ -128,15 +169,21 @@ carp()は最近覚えたので個人的にはホット。 モジュール内で�
   
 
 
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+<time datetime="2013-07-29T22:58:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/09/03/basics-of-perl-web-portals/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/09/03/basics-of-perl-web-portals/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/" >Tweet</a>
   
   
   
@@ -147,10 +194,8 @@ carp()は最近覚えたので個人的にはホット。 モジュール内で�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/09/02/perlhale-sii/" title="Previous Post: Perlは楽しい">&laquo; Perlは楽しい</a>
+        <a class="basic-alignment left" href="/blog/2013/07/29/type-column-of-activerecord/" title="Previous Post: ActiveRecordのtypeフィールドについて">&laquo; ActiveRecordのtypeフィールドについて</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/09/03/du-hang-xu-ke-shu-esta/" title="Next Post: 渡航許可書 ESTA">渡航許可書 ESTA &raquo;</a>
       
     </p>
   </footer>
