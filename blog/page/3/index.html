@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。 Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。 &hellip;">
+  <meta name="description" content="前回の記事でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもいrake new_post['hoge']したらbundle installしろと怒られたので実行してみたら途中で止まってしまいはまった。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T01:57:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">前回の記事</a>でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい<code>rake new_post['hoge']</code>したら<code>bundle install</code>しろと怒られたので実行してみたら途中で止まってしまいはまった。</p>
+
+<p>初めはXCodeまわりを疑ったが最終的にはoctopressのディレクトリのGemfileを修正して対応。以下その対応内容。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/15/xcode-43-and-octopress/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -505,45 +548,6 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/">Logrotateの動作をテストする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="shell">
-$ logrotate -dv file.conf
-</pre>
-でdry-run。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -574,6 +578,10 @@ $ logrotate -dv file.conf
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
       </li>
     
@@ -587,10 +595,6 @@ $ logrotate -dv file.conf
     
       <li class="post">
         <a href="/blog/2013/07/09/jsfiddle-js-test/">jsFiddleでjavascriptお手軽動作確認</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/03/yokohama-dot-ex-on-20130703/">yokohama.ex #2 に参加してきたよ</a>
       </li>
     
   </ul>

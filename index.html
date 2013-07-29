@@ -9,7 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="bundlerの--deploymentや--withoutに関してはまったことのメモ。 ">
+  <meta name="description" content="ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、 1
+ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T16:26:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed to locate the subclass: 'abc123'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Graph.inheritance_column to use another column for that information.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>という例外に遭遇します。ActiveRecordでは&#8221;type&#8221;フィールドはSTIという機能により予約されています。 <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">ActiveRecordのSTIの説明</a>にtypeフィールドは継承関係にあるクラス名を保存するフィールドであることが書かれています。</p>
+
+<blockquote><p>Active Record allows inheritance by storing the name of the class in a column
+that by default is named “type” (can be changed by overwriting
+Base.inheritance_column).</p></blockquote>
+
+<p>このエラーを回避するには以下どちらかで対応します。</p>
+
+<ol>
+<li>typeというフィールド名を使うのをやめて別の名前を使う。</li>
+<li>もしくは、STIで使うフィールド名を変えてしまう。</li>
+</ol>
+
+
+<p>2のケースでは以下のようにします。</p>
+
+<figure class='code'><figcaption><span>app/models/campany.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Company</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">inheritance_column</span> <span class="o">=</span> <span class="s1">&#39;sti_type&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ケースバイケースですが、ある案件ではtypeフィールドをどうしても使いたかったので2の方法を取りました。type名以外の選択が可能であれば1のケースが良いとおもいます。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -531,59 +599,6 @@ color: 1
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-18T16:41:00+09:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
-
-<p>SmokePingの概要は以下のとおりです。</p>
-
-<ul>
-<li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
-<li>監視対象ホストのネットワークレイテンシ可視化</li>
-<li>閾値監視、通知</li>
-<li>ping以外にもHTTPやDNSなどを使うこともできる</li>
-</ul>
-
-
-<p>以下、インストールしたときのメモ。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/02/18/install-smokeping/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -612,6 +627,10 @@ color: 1
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
       </li>
     
@@ -625,10 +644,6 @@ color: 1
     
       <li class="post">
         <a href="/blog/2013/07/09/jsfiddle-js-test/">jsFiddleでjavascriptお手軽動作確認</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/03/yokohama-dot-ex-on-20130703/">yokohama.ex #2 に参加してきたよ</a>
       </li>
     
   </ul>

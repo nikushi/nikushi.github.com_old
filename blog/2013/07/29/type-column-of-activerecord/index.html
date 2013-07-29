@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community - ni-blog</title>
+  <title>ActiveRecordのtypeフィールドについて - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="この操作に成功すると、大量のスパムによって株価の人為的な高騰が促され、最終的には詐欺師が持ち株の売却を狙っている値に達します。その時点でスパム攻撃も終息するのが普通で、そうなると今度は株に対する関心が薄れ、評価額は元の安値まで下落します（これも市場で悪用されることがあります）。 &hellip;">
+  <meta name="description" content="ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、 1
+ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/07/29/type-column-of-activerecord/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</h1>
+      <h1 class="entry-title">ActiveRecordのtypeフィールドについて</h1>
     
     
       <p class="meta">
@@ -95,15 +96,45 @@
   
 
 
-<time datetime="2011-08-15T00:00:00+09:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+<time datetime="2013-07-29T16:26:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><blockquote>この操作に成功すると、大量のスパムによって株価の人為的な高騰が促され、最終的には詐欺師が持ち株の売却を狙っている値に達します。その時点でスパム攻撃も終息するのが普通で、そうなると今度は株に対する関心が薄れ、評価額は元の安値まで下落します（これも市場で悪用されることがあります）。ポンプアンドダンプのスパム攻撃が成功すると、詐欺師はたった数日間でかなりの利益をあげることができます。</blockquote>
-引用元: <a href="http://www.symantec.com/connect/ja/blogs-217">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a>.
+<div class="entry-content"><p>ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed to locate the subclass: 'abc123'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Graph.inheritance_column to use another column for that information.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>という例外に遭遇します。ActiveRecordでは&#8221;type&#8221;フィールドはSTIという機能により予約されています。 <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">ActiveRecordのSTIの説明</a>にtypeフィールドは継承関係にあるクラス名を保存するフィールドであることが書かれています。</p>
+
+<blockquote><p>Active Record allows inheritance by storing the name of the class in a column
+that by default is named “type” (can be changed by overwriting
+Base.inheritance_column).</p></blockquote>
+
+<p>このエラーを回避するには以下どちらかで対応します。</p>
+
+<ol>
+<li>typeというフィールド名を使うのをやめて別の名前を使う。</li>
+<li>もしくは、STIで使うフィールド名を変えてしまう。</li>
+</ol>
+
+
+<p>2のケースでは以下のようにします。</p>
+
+<figure class='code'><figcaption><span>app/models/campany.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Company</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">inheritance_column</span> <span class="o">=</span> <span class="s1">&#39;sti_type&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ケースバイケースですが、ある案件ではtypeフィールドをどうしても使いたかったので2の方法を取りました。type名以外の選択が可能であれば1のケースが良いとおもいます。</p>
 </div>
 
 
@@ -126,15 +157,21 @@
   
 
 
-<time datetime="2011-08-15T00:00:00+09:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+<time datetime="2013-07-29T16:26:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/07/29/type-column-of-activerecord/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/07/29/type-column-of-activerecord/" >Tweet</a>
   
   
   
@@ -145,10 +182,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/14/shang-ye/" title="Previous Post: 上野">&laquo; 上野</a>
+        <a class="basic-alignment left" href="/blog/2013/07/26/bundle-frozen-and-bundle-without/" title="Previous Post: BUNDLE_FROZENとかBUNDLE_WITHOUT">&laquo; BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/08/16/what-is-cissp/" title="Next Post: What is CISSP">What is CISSP &raquo;</a>
       
     </p>
   </footer>
