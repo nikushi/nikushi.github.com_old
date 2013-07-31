@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-31T14:15:52+09:00</updated>
+  <updated>2013-07-31T15:53:59+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[KVMのrawフォーマットのイメージファイルをマウントする]]></title>
+    <link href="http://orihubon.com/blog/2013/07/31/mount-kvm-os-image/"/>
+    <updated>2013-07-31T15:49:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/31/mount-kvm-os-image</id>
+    <content type="html"><![CDATA[<p>rawフォーマット限定。</p>
+
+<p>マウント</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># losetup /dev/loop0 /data/vm/myserver.img
+</span><span class='line'># kpartx -av /dev/loop0 
+</span><span class='line'># ls -alF /dev/mapper
+</span><span class='line'># mount /dev/mapper/loop0p1 /mnt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>アンマウント</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># umount /mnt
+</span><span class='line'># kpartx -dv /dev/loop0
+</span><span class='line'># losetup -d /dev/loop0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考: <a href="http://d.hatena.ne.jp/okinaka/20091210/1260445130">KVMのイメージをマウントする その2</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール]]></title>
@@ -42,7 +75,7 @@
 </span><span class='line'>--os-type linux \
 </span><span class='line'>--os-variant=rhel6 \
 </span><span class='line'>--network bridge=br0 \
-</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=en \ 
+</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=us \ 
 </span><span class='line'>--cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso</span></code></pre></td></tr></table></div></figure>
 
 
@@ -1592,33 +1625,6 @@ APIを参照するのみでは<code>rake generate</code>するたびに問い合
 
 
 <p>次はサイドバーにInstagramの画像を表示したくなりました。OctopressはWordpressに比べて圧倒的にプラグインの数が少ないのが難点ですがこうやって作れるは魅力的です。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[seqコマンド]]></title>
-    <link href="http://orihubon.com/blog/2012/03/18/seq-command-in-sh/"/>
-    <updated>2012-03-18T12:55:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/03/18/seq-command-in-sh</id>
-    <content type="html"><![CDATA[<p>seqというコマンドというのを知らなかったのでメモ。</p>
-
-<pre><code>$ for i in seq 1 10; do expr $i \* 2; done
-2
-4
-6
-8
-10
-12
-14
-16
-18
-20
-</code></pre>
-
-<p>Rubyだとこうやるのかな。</p>
-
-<pre><code>(1..10).each { |i| puts i * 2 }
-</code></pre>
 ]]></content>
   </entry>
   

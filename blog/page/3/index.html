@@ -9,7 +9,17 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。 rake &hellip;">
+  <meta name="description" content="seqというコマンドというのを知らなかったのでメモ。 $ for i in seq 1 10; do expr $i \* 2; done
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20 Rubyだとこうやるのかな。 (1..10).each { |i| puts i * 2 } ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +86,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/seq-command-in-sh/">Seqコマンド</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T12:55:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>seqというコマンドというのを知らなかったのでメモ。</p>
+
+<pre><code>$ for i in seq 1 10; do expr $i \* 2; done
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+</code></pre>
+
+<p>Rubyだとこうやるのかな。</p>
+
+<pre><code>(1..10).each { |i| puts i * 2 }
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -517,50 +581,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">Curlでサーバ証明書の検証で失敗したとき</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
-
-<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
-rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
-
-じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
-
-根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
-<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -591,6 +611,10 @@ rvmをインストールしたいので、公式ページに従い上のとお�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
       </li>
     
@@ -604,10 +628,6 @@ rvmをインストールしたいので、公式ページに従い上のとお�
     
       <li class="post">
         <a href="/blog/2013/07/09/0-to-255-color-picker/">便利なカラーピッカー 0 to 255</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/font-awesome-rails/">Font AwesomeをRailsで使ってみた</a>
       </li>
     
   </ul>

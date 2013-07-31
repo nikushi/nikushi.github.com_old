@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-31T14:15:52+09:00</updated>
+  <updated>2013-07-31T15:53:59+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[KVMのrawフォーマットのイメージファイルをマウントする]]></title>
+    <link href="http://orihubon.com/blog/2013/07/31/mount-kvm-os-image/"/>
+    <updated>2013-07-31T15:49:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/07/31/mount-kvm-os-image</id>
+    <content type="html"><![CDATA[<p>rawフォーマット限定。</p>
+
+<p>マウント
+```</p>
+
+<h1>losetup /dev/loop0 /data/vm/myserver.img</h1>
+
+<h1>kpartx -av /dev/loop0</h1>
+
+<h1>ls -alF /dev/mapper</h1>
+
+<h1>mount /dev/mapper/loop0p1 /mnt</h1>
+
+<p>```</p>
+
+<p>アンマウント
+```</p>
+
+<h1>umount /mnt</h1>
+
+<h1>kpartx -dv /dev/loop0</h1>
+
+<h1>losetup -d /dev/loop0</h1>
+
+<p>```</p>
+
+<p>参考: <a href="http://d.hatena.ne.jp/okinaka/20091210/1260445130">KVMのイメージをマウントする その2</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール]]></title>
@@ -31,7 +66,7 @@ virt-install -n server01 \
 --os-type linux \
 --os-variant=rhel6 \
 --network bridge=br0 \
---graphics vnc,password=abc123,port=5910,keymap=en \
+--graphics vnc,password=abc123,port=5910,keymap=us \
 --cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso
 </code></p>
 

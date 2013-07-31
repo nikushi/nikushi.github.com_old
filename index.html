@@ -9,23 +9,13 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="やっつけ感ある手順であるがこんな感じ。 1
+  <meta name="description" content="rawフォーマット限定。 マウント 1
 2
 3
 4
-5
-6
-7
-8
-9
-10
-11
-12
-cd /data/vm
-qemu-img create -f qcow2 server01.img 10G
-virt-install -n server01 \
--r 1024 \
---disk path &hellip;">
+# losetup /dev/loop0 /data/vm/myserver.img
+# kpartx -av /dev/loop0 # ls -alF /dev/mapper
+# mount /dev/mapper/loop0p1 /mnt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,6 +88,66 @@ virt-install -n server01 \
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-31T15:49:00+09:00" pubdate data-updated="true">Jul 31<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>rawフォーマット限定。</p>
+
+<p>マウント</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># losetup /dev/loop0 /data/vm/myserver.img
+</span><span class='line'># kpartx -av /dev/loop0 
+</span><span class='line'># ls -alF /dev/mapper
+</span><span class='line'># mount /dev/mapper/loop0p1 /mnt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>アンマウント</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># umount /mnt
+</span><span class='line'># kpartx -dv /dev/loop0
+</span><span class='line'># losetup -d /dev/loop0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考: <a href="http://d.hatena.ne.jp/okinaka/20091210/1260445130">KVMのイメージをマウントする その2</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a></h1>
     
     
@@ -145,7 +195,7 @@ virt-install -n server01 \
 </span><span class='line'>--os-type linux \
 </span><span class='line'>--os-variant=rhel6 \
 </span><span class='line'>--network bridge=br0 \
-</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=en \ 
+</span><span class='line'>--graphics vnc,password=abc123,port=5910,keymap=us \ 
 </span><span class='line'>--cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso</span></code></pre></td></tr></table></div></figure>
 
 
@@ -602,51 +652,6 @@ lastaction     # 最後に実行するコマンド
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T09:30:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>ステージや本番での環境構築まわりについて調べてみた。</p>
-
-<p>調べたかったことはこのスライドにまとまっていた。<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1</a></p>
-
-<p>以下、自分用にメモします。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/02/25/perl-dev_env_and_deploy/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -675,6 +680,10 @@ lastaction     # 最後に実行するコマンド
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
       </li>
     
@@ -688,10 +697,6 @@ lastaction     # 最後に実行するコマンド
     
       <li class="post">
         <a href="/blog/2013/07/09/0-to-255-color-picker/">便利なカラーピッカー 0 to 255</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/font-awesome-rails/">Font AwesomeをRailsで使ってみた</a>
       </li>
     
   </ul>

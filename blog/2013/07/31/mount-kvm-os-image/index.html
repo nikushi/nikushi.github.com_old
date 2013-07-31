@@ -5,12 +5,17 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>渡航許可書 ESTA - ni-blog</title>
+  <title>KVMのrawフォーマットのイメージファイルをマウントする - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="あなたの渡航認証は許可され、ビザ免除プログラムに基づき米国に渡航することができます。この回答は、米国への入国を保証するものではありません。最終決定は入国地で 米国税関国境警備局審査官が行ないます。
-passしました。これ面倒くさいね。ESTA申請時の質問にYESって答えるメリットかるんかね。 &hellip;">
+  <meta name="description" content="rawフォーマット限定。 マウント 1
+2
+3
+4
+# losetup /dev/loop0 /data/vm/myserver.img
+# kpartx -av /dev/loop0 # ls -alF /dev/mapper
+# mount /dev/mapper/loop0p1 /mnt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +24,7 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/09/03/du-hang-xu-ke-shu-esta/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/07/31/mount-kvm-os-image/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +85,7 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
   
   <header>
     
-      <h1 class="entry-title">渡航許可書 ESTA</h1>
+      <h1 class="entry-title">KVMのrawフォーマットのイメージファイルをマウントする</h1>
     
     
       <p class="meta">
@@ -96,21 +101,38 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
   
 
 
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+<time datetime="2013-07-31T15:49:00+09:00" pubdate data-updated="true">Jul 31<span>st</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><blockquote>あなたの渡航認証は許可され、ビザ免除プログラムに基づき米国に渡航することができます。この回答は、米国への入国を保証するものではありません。最終決定は入国地で
+<div class="entry-content"><p>rawフォーマット限定。</p>
 
-米国税関国境警備局審査官が行ないます。</blockquote>
-passしました。これ面倒くさいね。ESTA申請時の質問にYESって答えるメリットかるんかね。YESって答えたらアウトでしょ。オバマ大統領どうしてこの制度決めたんだろ。
+<p>マウント</p>
 
-&nbsp;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># losetup /dev/loop0 /data/vm/myserver.img
+</span><span class='line'># kpartx -av /dev/loop0 
+</span><span class='line'># ls -alF /dev/mapper
+</span><span class='line'># mount /dev/mapper/loop0p1 /mnt</span></code></pre></td></tr></table></div></figure>
 
-数年前にミャンマーに行ったことがあるので、入国に止められないかと少々不安。
+
+<p>アンマウント</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># umount /mnt
+</span><span class='line'># kpartx -dv /dev/loop0
+</span><span class='line'># losetup -d /dev/loop0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考: <a href="http://d.hatena.ne.jp/okinaka/20091210/1260445130">KVMのイメージをマウントする その2</a></p>
 </div>
 
 
@@ -133,15 +155,21 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
   
 
 
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+<time datetime="2013-07-31T15:49:00+09:00" pubdate data-updated="true">Jul 31<span>st</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/09/03/du-hang-xu-ke-shu-esta/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/09/03/du-hang-xu-ke-shu-esta/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/07/31/mount-kvm-os-image/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/07/31/mount-kvm-os-image/" >Tweet</a>
   
   
   
@@ -152,10 +180,8 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/09/03/basics-of-perl-web-portals/" title="Previous Post: Basics of Perl web portals">&laquo; Basics of Perl web portals</a>
+        <a class="basic-alignment left" href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/" title="Previous Post: virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール">&laquo; virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/09/07/tokyo-cabinet/" title="Next Post: Tokyo Cabinet">Tokyo Cabinet &raquo;</a>
       
     </p>
   </footer>
