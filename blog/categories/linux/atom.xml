@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-29T23:03:18+09:00</updated>
+  <updated>2013-07-31T14:15:52+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -34,6 +34,44 @@ virt-install -n server01 \
 --graphics vnc,password=abc123,port=5910,keymap=en \
 --cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso
 </code></p>
+
+<p>さらに、virsh consoleでコンソールを取れるようにする。</p>
+
+<p>```</p>
+
+<h1>vi /et/grub.conf</h1>
+
+<h1>splashimage=(hd0,0)/boot/grub/splash.xpm.gz  # この行は不要</h1>
+
+<p>serial &mdash;unit=0 &mdash;speed=115200 # 追加
+terminal &mdash;timeout=5 serial console # 追加
+```</p>
+
+<p>```</p>
+
+<h1>echo ttyS0 >> /etc/securetty</h1>
+
+<p>```</p>
+
+<p>CentOS6の場合upstart経由で起動時にttyS0を自動起動してあげる必要がある。CentOS6.4最小インストール直後であればttyS0は自動起動してくれていた。以下のとおり確認しただけ。</p>
+
+<p>起動しているか確認</p>
+
+<p>```</p>
+
+<h1>initctl list |grep serial</h1>
+
+<p>serial (ttyS0) start/running, process 5091
+```</p>
+
+<p>設定ファイル
+```</p>
+
+<h1>vi /etc/init/serial.conf</h1>
+
+<p>```</p>
+
+<p>参考: <a href="http://lab.unicast.ne.jp/2013/02/15/%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AB%E3%82%B7%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB%E3%81%A7%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88/">仮想マシンにシリアルコンソールで接続できるよ</a></p>
 ]]></content>
   </entry>
   

@@ -146,7 +146,43 @@ virt-install -n server01 \
 </span><span class='line'>--cdrom=/var/tmp/CentOS-6.4-x86_64-minimal.iso</span></code></pre></td></tr></table></div></figure>
 
 
+<p>さらに、virsh consoleでコンソールを取れるようにする。</p>
 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># vi /et/grub.conf
+</span><span class='line'>
+</span><span class='line'>#splashimage=(hd0,0)/boot/grub/splash.xpm.gz  # この行は不要
+</span><span class='line'>serial --unit=0 --speed=115200 # 追加
+</span><span class='line'>terminal --timeout=5 serial console # 追加</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># echo ttyS0 &gt;&gt; /etc/securetty</span></code></pre></td></tr></table></div></figure>
+
+
+<p>CentOS6の場合upstart経由で起動時にttyS0を自動起動してあげる必要がある。CentOS6.4最小インストール直後であればttyS0は自動起動してくれていた。以下のとおり確認しただけ。</p>
+
+<p>起動しているか確認</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># initctl list |grep serial
+</span><span class='line'>serial (ttyS0) start/running, process 5091</span></code></pre></td></tr></table></div></figure>
+
+
+<p>設定ファイル</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># vi /etc/init/serial.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考: <a href="http://lab.unicast.ne.jp/2013/02/15/%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AB%E3%82%B7%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB%E3%81%A7%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88/">仮想マシンにシリアルコンソールで接続できるよ</a></p>
 </div>
 
 
