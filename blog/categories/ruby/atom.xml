@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-07-31T15:53:59+09:00</updated>
+  <updated>2013-08-06T09:18:08+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RubyでIPアドレスの正規表現を超簡単に書く]]></title>
+    <link href="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/"/>
+    <updated>2013-08-06T09:14:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/08/06/regex-for-ipv-address</id>
+    <content type="html"><![CDATA[<p>正規表現自前で書かずとも、<code>Resolv::IPv4::Regex</code>を使う。</p>
+
+<p><code>
+require 'resolv'
+Resolv::IPv4::Regex.class     
+=&gt; Regexp
+</code></p>
+
+<p>IPv6の場合は、<code>Resolv::IPv6::Regex</code>を使いましょう。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ActiveRecordのtypeフィールドについて]]></title>
@@ -243,60 +260,6 @@ lines = out.split(/\r?\n/m, -1)
 
 <p>この<code>split</code>の第2引数のようにRubyのコアクラスのAPIの知識に深ければ小さくコードが書ける実例だなとおもいました。
 このあたりは<a href="http://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E-Ruby-%E3%81%BE%E3%81%A4%E3%82%82%E3%81%A8-%E3%82%86%E3%81%8D%E3%81%B2%E3%82%8D/dp/4873113946">プログラミング言語 Ruby</a>の9章Rubyプラットフォームが充実してますね。難しいコードを書いたな&hellip;.というときは標準のAPIで対応できないか、考え直してみるとよさそうですね。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[TEDの英文を取得する]]></title>
-    <link href="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/"/>
-    <updated>2012-04-09T01:49:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted</id>
-    <content type="html"><![CDATA[<p>TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。</p>
-
-<!-- more -->
-
-
-<p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
-
-<p><div><script src='https://gist.github.com/2338391.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
-
-<p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
-
-<pre><code>$ ./teddump.rb
-A few years ago,
-
-I felt like I was stuck in a rut,
-
-so I decided to follow in the footsteps
-
-of the great American philosopher, Morgan Spurlock,
-
-and try something new for 30 days.
-
-The idea is actually pretty simple.
-
-Think about something you've always wanted to add to your life
-
-and try it for the next 30 days.
-
-It turns out, 
-
-30 days is just about the right amount of time
-</code></pre>
-
-<p>できました。</p>
-
-<p>ちなみに、idはページ中のHTMLのdata-idというパラメタから取得しないと分かりません。nokogiriとかでスクレイピングする方法があるようです。</p>
-
-<p>以下を参考にしました。</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a></li>
-<li><a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する &ndash; ギークを夢見るじょーぶん男子 </a></li>
-</ul>
-
 ]]></content>
   </entry>
   

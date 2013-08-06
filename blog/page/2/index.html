@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ステージや本番での環境構築まわりについて調べてみた。 調べたかったことはこのスライドにまとまっていた。モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1 以下、自分用にメモします。 ">
+  <meta name="description" content="logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-07T15:57:00+09:00" pubdate data-updated="true">Mar 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
+
+<div><script src='https://gist.github.com/5105939.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>一部説明</p>
+
+<pre><code>ifempty        # 空ファイルでもローテートする。
+               # 過去ログを`ls | wc -l`などするときに
+               # 日数と数を合わせたいので。
+dateext        # ローテートしたファイルに実行時の日付を
+               # 付ける。ただし、00:00以降にlogrotateを実行する
+               # 場合は、ログ内容と日付が乖離するので別途
+               # lastactionで日付を前日分に変えている。
+extension .log # ローテート後のファイル名の場所の末尾に.log 
+               # を持ってくる。 圧縮する場合は.log.gzになる。
+               # 本オプション指定ない場合はapp.log-yyyymmdd となり
+               # 微妙なので調整のため。
+lastaction     # 最後に実行するコマンド
+               # postrotateを使わないのはpostrotateはcompressする前
+               # に実行されるため。compressしてlastactionが実行される。
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -560,59 +618,6 @@ $ gist &lt; file.txt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">OctopressにInstagramの写真を挿入するTag Pluginを作ってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-20T20:39:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、プラグインを実装してみました。以下からダウンロードできます。</p>
-
-<ul>
-<li><a href="https://gist.github.com/2134897">instag.rb</a></li>
-</ul>
-
-
-<h3>概要</h3>
-
-<pre><code>{% instag http://instagr.am/p/IYYs5bo0jd/ }
-</code></pre>
-
-<p>記事中でタグが使えます。表示したいinstagramページのURLは知っておく必要があります。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/20/instagram-tag-plugin-for-octopress/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -643,6 +648,10 @@ $ gist &lt; file.txt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
       </li>
     
@@ -656,10 +665,6 @@ $ gist &lt; file.txt
     
       <li class="post">
         <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/0-to-255-color-picker/">便利なカラーピッカー 0 to 255</a>
       </li>
     
   </ul>

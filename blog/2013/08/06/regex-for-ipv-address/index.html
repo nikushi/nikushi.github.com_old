@@ -5,11 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>継続性 - ni-blog</title>
+  <title>RubyでIPアドレスの正規表現を超簡単に書く - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="とりあえず一ヶ月続いたら知り合いに公開する。 しばらくは人知れず。続くかわからんからね。
+  <meta name="description" content="正規表現自前で書かずとも、Resolv::IPv4::Regexを使う。 1
+2
+3
+require 'resolv'
+Resolv::IPv4::Regex.class =&gt; Regexp IPv6の場合は、Resolv::IPv6::Regexを使いましょう。
 ">
   
 
@@ -19,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/08/10/ji-sok-xing/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">継続性</h1>
+      <h1 class="entry-title">RubyでIPアドレスの正規表現を超簡単に書く</h1>
     
     
       <p class="meta">
@@ -96,16 +100,24 @@
   
 
 
-<time datetime="2011-08-10T00:00:00+09:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
+<time datetime="2013-08-06T09:14:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">とりあえず一ヶ月続いたら知り合いに公開する。
+<div class="entry-content"><p>正規表現自前で書かずとも、<code>Resolv::IPv4::Regex</code>を使う。</p>
 
-しばらくは人知れず。続くかわからんからね。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'resolv'
+</span><span class='line'>Resolv::IPv4::Regex.class     
+</span><span class='line'>=&gt; Regexp</span></code></pre></td></tr></table></div></figure>
+
+
+<p>IPv6の場合は、<code>Resolv::IPv6::Regex</code>を使いましょう。</p>
 </div>
 
 
@@ -128,15 +140,21 @@
   
 
 
-<time datetime="2011-08-10T00:00:00+09:00" pubdate data-updated="true">Aug 10<span>th</span>, 2011</time>
+<time datetime="2013-08-06T09:14:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/08/10/ji-sok-xing/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/08/10/ji-sok-xing/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/" >Tweet</a>
   
   
   
@@ -147,10 +165,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/10/dian-qi-dai/" title="Previous Post: 電気代">&laquo; 電気代</a>
+        <a class="basic-alignment left" href="/blog/2013/07/31/mount-kvm-os-image/" title="Previous Post: KVMのrawフォーマットのイメージファイルをマウントする">&laquo; KVMのrawフォーマットのイメージファイルをマウントする</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/08/11/811-3shi-falseoyatu/" title="Next Post: 8/11 3時のおやつ">8/11 3時のおやつ &raquo;</a>
       
     </p>
   </footer>
