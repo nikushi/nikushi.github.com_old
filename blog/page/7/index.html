@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="coding week の続き。 サブルーチンはviの画面内に収まるくらいの行数でまとめる、くらいを基準にするのがまとまり良いね。 なんとかCLIのインタフェース用コマンドの外枠の設計とコーディングまで出来上がった感じ。
-">
+  <meta name="description" content="仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。 mod_dav_svnが必要なのでyum installする。 $ sudo yum install mod_dav_svn.x86_64 svn関連のapache設定。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/23/subversion-on-apache-toriaezudong-kushe-ding/">Subversion on Apache とりあえず動く設定</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-23T00:00:00+09:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">仕事でsubversion使うかもしれないので、勉強かねてhttpでsvnしてみた。最低限の設定なので認証などはつけてない。
+
+mod_dav_svnが必要なのでyum installする。
+<pre lang="shell">
+ $ sudo yum install mod_dav_svn.x86_64
+</pre>
+
+svn関連のapache設定。CentOSの流儀に従って /etc/conf.d/svn.conf とした。
+<pre lang="apache">
+<IfModule !mod_dav_svn.c>
+    LoadModule dav_svn_module modules/mod_dav_svn.so
+</IfModule>
+<Location /svn>
+    DAV svn
+    SVNParentPath /var/svn
+    SVNListParentPath on
+</Location>
+</pre>
+
+リポジトリが1個だけならくSVNPathを使えばよい。
+SVNParentPathを使うと、配下のディレクトリにある複数のリポジトリを対象としてくれるので設定ファイルを毎度書き換えなくて良い利点がある。
+
+複数のリポジトリで構成すると/var/svn以下は以下のようになる。
+<pre>
+  /var/svn/
+    + repos1/
+       + trunk/
+       + branches/
+       + tags/
+    + repos2/
+       + (略)
+</pre>
+
+ここで一つ不便を感じる点として、ブラウザでhttp://xxx/svn/にアクセスするとSVNモジュールがエラーページを吐く。GETリクエストを解釈できないためであるが、URI的にはリポジトリのlistを出力してほしいところだ。
+そこで、SVNListParentPath on だ。これだけ。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -438,44 +507,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/14/bekontonian-shou/">ベーコンと年収</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">稼ぎいうんは、どれだけ他人の欲を満たせとるか、それが数字にそのまま現れとるんやで。
-
-「夢をかなえるゾウ」より
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -506,6 +537,10 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/08/06/sinatra-reloader/">Sinatra::Reloader</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
       </li>
     
@@ -519,10 +554,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
     
       <li class="post">
         <a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
       </li>
     
   </ul>

@@ -9,12 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="正規表現自前で書かずとも、Resolv::IPv4::Regexを使う。 1
-2
-3
-require 'resolv'
-Resolv::IPv4::Regex.class =&gt; Regexp IPv6の場合は、Resolv::IPv6::Regexを使いましょう。
-">
+  <meta name="description" content="Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。 Sinatra::Reloader を使うと。 実際にはsinatra-contribというgemをinstallするわけだけど、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +76,46 @@ Resolv::IPv4::Regex.class =&gt; Regexp IPv6の場合は、Resolv::IPv6::Regexを
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/06/sinatra-reloader/">Sinatra::Reloader</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-06T19:30:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。</p>
+
+<p><a href="http://www.sinatrarb.com/contrib/reloader.html">Sinatra::Reloader</a> を使うと。</p>
+
+<p>実際には<a href="https://github.com/sinatra/sinatra-contrib">sinatra-contrib</a>というgemをinstallするわけだけど、このgemには他にも機能があるので困ったときはこのgemを眺めるとよさそうですね。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -588,57 +623,6 @@ Base.inheritance_column).</p></blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/07/mysql-cheat-sheet/">MySQL チートシート</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T13:04:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。</p>
-
-<h3>起動</h3>
-
-<pre><code># mysqld_safe --user=_mysql &amp;
-</code></pre>
-
-<h3>停止</h3>
-
-<pre><code># mysqladmin -uroot shutdown
-</code></pre>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/04/07/mysql-cheat-sheet/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -667,6 +651,10 @@ Base.inheritance_column).</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/08/06/sinatra-reloader/">Sinatra::Reloader</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
       </li>
     
@@ -680,10 +668,6 @@ Base.inheritance_column).</p></blockquote>
     
       <li class="post">
         <a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a>
       </li>
     
   </ul>
