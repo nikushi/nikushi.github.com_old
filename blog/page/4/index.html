@@ -9,7 +9,10 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。 Capistranoの標準のstreamメソッドを使うと簡単に複数ホストでのtail -fを１つにまとめて眺めることができますが、 &hellip;">
+  <meta name="description" content="sub conf{ my %arg = ( lang =>; 'perl', rank =>; 1, @_ # ここが決め手! ); # ...
+}
+参考:perl - デフォルト値のperlらしい指定法 &nbsp;
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +79,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/13/perldehashfalsechu-qi-zhi-wosetutosuru/">PerlでHashの初期値をセットする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-13T00:00:00+09:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><pre lang="perl">sub conf{
+    my %arg = (
+        lang =>; 'perl',
+        rank =>; 1,
+        @_ # ここが決め手!           
+    );
+    # ...
+}</pre>
+参考:<a href="http://blog.livedoor.jp/dankogai/archives/51074877.html">perl - デフォルト値のperlらしい指定法</a>
+
+&nbsp;
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,42 +519,6 @@ App::Cmdが有名どころのようだ。
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-02T00:00:00+09:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -536,6 +549,10 @@ App::Cmdが有名どころのようだ。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/26/in-groups-of-activesupport-extention/">ActiveSupportのin_groups_ofメソッドでビューが捗る!</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/08/06/sinatra-reloader/">Sinatra::Reloader</a>
       </li>
     
@@ -549,10 +566,6 @@ App::Cmdが有名どころのようだ。
     
       <li class="post">
         <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/29/type-column-of-activerecord/">ActiveRecordのtypeフィールドについて</a>
       </li>
     
   </ul>

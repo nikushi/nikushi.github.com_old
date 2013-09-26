@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-08-06T20:07:41+09:00</updated>
+  <updated>2013-09-26T20:13:39+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,94 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveSupportのin_groups_ofメソッドでビューが捗る!]]></title>
+    <link href="http://orihubon.com/blog/2013/09/26/in-groups-of-activesupport-extention/"/>
+    <updated>2013-09-26T19:21:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/09/26/in-groups-of-activesupport-extention</id>
+    <content type="html"><![CDATA[<p>Railsに組み込まれているActiveSupportはRuby標準のクラスに便利な拡張メソッドを加えます。</p>
+
+<p>Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。</p>
+
+<p>例えば、以下の配列データ
+<code>ruby
+%w(1, 2, 3, 4, 5, 6, 7, 8)
+</code></p>
+
+<p>in_groups_ofメソッドをつけて呼び出すと引数指定の数の要素数の小配列をメンバにした配列を返してくれます。また第2引数で空部分に埋める要素指定もできます。デフォルトはnilです。falseを与えるとnilの代わりに要素数を切り詰めます。</p>
+
+<p>``` ruby
+irb> %w(1 2 3 4 5 6 7 8).in_groups_of(2)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;], [&ldquo;3&rdquo;, &ldquo;4&rdquo;], [&ldquo;5&rdquo;, &ldquo;6&rdquo;], [&ldquo;7&rdquo;, &ldquo;8&rdquo;]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups_of(5)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;, &ldquo;3&rdquo;, &ldquo;4&rdquo;, &ldquo;5&rdquo;], [&ldquo;6&rdquo;, &ldquo;7&rdquo;, &ldquo;8&rdquo;, nil, nil]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups_of(5, &lsquo;none&rsquo;)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;, &ldquo;3&rdquo;, &ldquo;4&rdquo;, &ldquo;5&rdquo;], [&ldquo;6&rdquo;, &ldquo;7&rdquo;, &ldquo;8&rdquo;, &ldquo;none&rdquo;, &ldquo;none&rdquo;]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups_of(5, false)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;, &ldquo;3&rdquo;, &ldquo;4&rdquo;, &ldquo;5&rdquo;], [&ldquo;6&rdquo;, &ldquo;7&rdquo;, &ldquo;8&rdquo;]]
+```</p>
+
+<p>使うシーンとしては、ビュー上で指定個数毎でグルーピングして表示したいときに便利です。</p>
+
+<p>``` html</p>
+
+<div id="group0">
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+</div>
+
+
+<div id="group1">
+  <ul>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+  </ul>
+</div>
+
+
+<div id="group2">
+  <ul>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+  </ul>
+</div>
+
+
+<p>```</p>
+
+<p>似たような名前でin_groupsというメソッドもあります。こちらは配列を指定グループ数に分割してくれるメソッドです。</p>
+
+<p>``` ruby
+irb> %w(1 2 3 4 5 6 7 8).in_groups(2)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;, &ldquo;3&rdquo;, &ldquo;4&rdquo;], [&ldquo;5&rdquo;, &ldquo;6&rdquo;, &ldquo;7&rdquo;, &ldquo;8&rdquo;]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups(3)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;, &ldquo;3&rdquo;], [&ldquo;4&rdquo;, &ldquo;5&rdquo;, &ldquo;6&rdquo;], [&ldquo;7&rdquo;, &ldquo;8&rdquo;, nil]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups(5)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;], [&ldquo;3&rdquo;, &ldquo;4&rdquo;], [&ldquo;5&rdquo;, &ldquo;6&rdquo;], [&ldquo;7&rdquo;, nil], [&ldquo;8&rdquo;, nil]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups(5, &ldquo;none&rdquo;)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;], [&ldquo;3&rdquo;, &ldquo;4&rdquo;], [&ldquo;5&rdquo;, &ldquo;6&rdquo;], [&ldquo;7&rdquo;, &ldquo;none&rdquo;], [&ldquo;8&rdquo;, &ldquo;none&rdquo;]]</p>
+
+<p>irb> %w(1 2 3 4 5 6 7 8).in_groups(5, false)
+=> [[&ldquo;1&rdquo;, &ldquo;2&rdquo;], [&ldquo;3&rdquo;, &ldquo;4&rdquo;], [&ldquo;5&rdquo;, &ldquo;6&rdquo;], [&ldquo;7&rdquo;], [&ldquo;8&rdquo;]]
+```</p>
+
+<p>普段Railsやってる人には当たり前かもしれない内容でした。いざ使いたかったときにメソッド名を忘れていたので、以上、自分メモでした!</p>
+
+<p>他にもActiveSupportの拡張は便利なものがあるので<a href="http://edgeguides.rubyonrails.org/active_support_core_extensions.html">Active Support Core Extensions</a>の一読おすすめです!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Font AwesomeをRailsで使ってみた]]></title>

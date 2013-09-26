@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-08-06T20:07:41+09:00</updated>
+  <updated>2013-09-26T20:13:39+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,135 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveSupportのin_groups_ofメソッドでビューが捗る!]]></title>
+    <link href="http://orihubon.com/blog/2013/09/26/in-groups-of-activesupport-extention/"/>
+    <updated>2013-09-26T19:21:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/09/26/in-groups-of-activesupport-extention</id>
+    <content type="html"><![CDATA[<p>Railsに組み込まれているActiveSupportはRuby標準のクラスに便利な拡張メソッドを加えます。</p>
+
+<p>Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。</p>
+
+<p>例えば、以下の配列データ</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sx">%w(1, 2, 3, 4, 5, 6, 7, 8)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in_groups_ofメソッドをつけて呼び出すと引数指定の数の要素数の小配列をメンバにした配列を返してくれます。また第2引数で空部分に埋める要素指定もできます。デフォルトはnilです。falseを与えるとnilの代わりに要素数を切り詰めます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使うシーンとしては、ビュー上で指定個数毎でグルーピングして表示したいときに便利です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group0&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>4<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>5<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>6<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group2&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>7<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>8<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>9<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>似たような名前でin_groupsというメソッドもあります。こちらは配列を指定グループ数に分割してくれるメソッドです。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="o">]]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>普段Railsやってる人には当たり前かもしれない内容でした。いざ使いたかったときにメソッド名を忘れていたので、以上、自分メモでした!</p>
+
+<p>他にもActiveSupportの拡張は便利なものがあるので<a href="http://edgeguides.rubyonrails.org/active_support_core_extensions.html">Active Support Core Extensions</a>の一読おすすめです!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sinatra::Reloader]]></title>
@@ -1460,27 +1589,6 @@ It turns out,
 <li><a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する &ndash; ギークを夢見るじょーぶん男子 </a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Gist on command line]]></title>
-    <link href="http://orihubon.com/blog/2012/04/09/gist-on-command-line/"/>
-    <updated>2012-04-09T01:23:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/04/09/gist-on-command-line</id>
-    <content type="html"><![CDATA[<p><code>gist</code>コマンドを使うとコマンドラインからGistに投稿できることを知りましたのでメモします。</p>
-
-<p>インストール</p>
-
-<pre><code>$ brew install gist
-
-$ gist &lt; file.txt
-</code></pre>
-
-<p>または</p>
-
-<pre><code>$ gist file.txt
-</code></pre>
 ]]></content>
   </entry>
   
