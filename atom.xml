@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-10-01T12:35:24+09:00</updated>
+  <updated>2013-10-01T13:02:29+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,7 +18,7 @@
     <link href="http://orihubon.com/blog/2013/10/01/yohoushi-screencasts/"/>
     <updated>2013-10-01T11:37:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/10/01/yohoushi-screencasts</id>
-    <content type="html"><![CDATA[<p><a href="https://twitter.com/sonots">@sonots</a>さんと<a href="http://yohoushi.github.io/yohoushi/">Yohoushi</a>というグラフツールを作っています。Yohoushiを使うと<a href="http://kazeburo.github.io/GrowthForecast/">GrowthForecast</a>に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。</p>
+    <content type="html"><![CDATA[<p><a href="http://yohoushi.github.io/yohoushi/">Yohoushi</a>というグラフツールを<a href="https://twitter.com/sonots">@sonots</a>さんと作っています。Yohoushiを使うと<a href="http://kazeburo.github.io/GrowthForecast/">GrowthForecast</a>に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。</p>
 
 <p>会社の同僚の方々からYohoushiがどんなツールかもっと分かりやすく解説してよというコメントをいただきまして、Yohoushiの概要〜インストール、簡単な使い方までをscreencastにしてみました。&#8221;GrowthForecast使ってるからそろそろYohoushiも&hellip;でもYohoushiむずいんでしょ?&ldquo; とおもわれている方にYohoushiの導入の簡単さを分かってもらえる内容になってるとおもいます。</p>
 
