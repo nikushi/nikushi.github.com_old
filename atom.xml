@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-09-26T20:13:39+09:00</updated>
+  <updated>2013-10-01T12:30:03+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Yohoushi screencasts!]]></title>
+    <link href="http://orihubon.com/blog/2013/10/01/yohoushi-screencasts/"/>
+    <updated>2013-10-01T11:37:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/10/01/yohoushi-screencasts</id>
+    <content type="html"><![CDATA[<p><a href="https://twitter.com/sonots">@sonots</a>さんと<a href="http://yohoushi.github.io/yohoushi/">Yohoushi</a>というグラフツールを作っています。Yohoushiを使うと<a href="http://kazeburo.github.io/GrowthForecast/">GrowthForecast</a>に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。</p>
+
+<p>会社の同僚の方々からYohoushiがどんなツールかもっと分かりやすく解説してよというコメントをいただきまして、Yohoushiの概要〜インストール、簡単な使い方までをscreencastにしてみました。&#8221;GrowthForecast使ってるからそろそろYohoushiも&hellip;でもYohoushiむずいんでしょ?&ldquo; とおもわれている方にYohoushiの導入の簡単さを分かってもらえる内容になってるとおもいます。</p>
+
+<p>各話3分程度です。エピソード1は概要なのでわかってる方は飛ばしてください。Yohoushiの雰囲気を知るだけならエピソード3、4だけでもおすすめです!</p>
+
+<h4>1 Yohoushiとはなにか?</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZjZjtzyx6Jc "></iframe></div>
+
+
+<h4>2 Yohoushiをインストールしてみよう</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/mqIR0RClP3o "></iframe></div>
+
+
+<h4>3 Yohoushiを使ってみよう</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/q_vMqjpFRUc "></iframe></div>
+
+
+<h4>4 Yohoushiを使ってグラフにタグをつけよう</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/EV51EmjC74o "></iframe></div>
+
+
+<h4>補足</h4>
+
+<p>インストールする際のrakeやbundleは<code>bin/</code>に同封のbinstubの<code>bin/bundle</code>, <code>bin/rake</code>を使ってください。<code>bin/</code>配下のコマンドで実行すると<code>RAILS_ENV=production</code>が自動的にセットされます。パスの通ったコマンドを使ってしまうと<code>RAILS_ENV=development</code>が自動的にセットされるので意図しない動作になります。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ActiveSupportのin_groups_ofメソッドでビューが捗る!]]></title>
@@ -1535,60 +1572,6 @@ dotfiles  git@github.com:niku4i/dotfiles.git
 <p>細かい使い方は<code>homesick help</code>を参照してください。</p>
 
 <p><code>homesick clone</code>では複数のリポジトリを登録できるので、Github Enterpriseを導入しているような会社であれば会社用のドットファイルリポジトリ、全PC共通のドットファイルはgithub.comに、といった使い方もできて便利だとおもいました。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[TEDの英文を取得する]]></title>
-    <link href="http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted/"/>
-    <updated>2012-04-09T01:49:00+09:00</updated>
-    <id>http://orihubon.com/blog/2012/04/09/fetch-subtitle-for-talks-in-ted</id>
-    <content type="html"><![CDATA[<p>TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。</p>
-
-<!-- more -->
-
-
-<p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
-
-<div><script src='https://gist.github.com/2338391.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
-
-<pre><code>$ ./teddump.rb
-A few years ago,
-
-I felt like I was stuck in a rut,
-
-so I decided to follow in the footsteps
-
-of the great American philosopher, Morgan Spurlock,
-
-and try something new for 30 days.
-
-The idea is actually pretty simple.
-
-Think about something you've always wanted to add to your life
-
-and try it for the next 30 days.
-
-It turns out, 
-
-30 days is just about the right amount of time
-</code></pre>
-
-<p>できました。</p>
-
-<p>ちなみに、idはページ中のHTMLのdata-idというパラメタから取得しないと分かりません。nokogiriとかでスクレイピングする方法があるようです。</p>
-
-<p>以下を参考にしました。</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/1955618/parsing-and-converting-ted-talks-json-subtitles">Parsing and Converting TED Talks JSON Subtitles</a></li>
-<li><a href="http://d.hatena.ne.jp/meganii/20120320/1332214416">TEDの英語原稿を取得する &ndash; ギークを夢見るじょーぶん男子 </a></li>
-</ul>
-
 ]]></content>
   </entry>
   

@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Railsに組み込まれているActiveSupportはRuby標準のクラスに便利な拡張メソッドを加えます。 Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。 例えば、以下の配列データ 1
-%w(1, 2 &hellip;">
+  <meta name="description" content="@sonotsさんとYohoushiというグラフツールを作っています。Yohoushiを使うとGrowthForecastに登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi Screencasts!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-01T11:37:00+09:00" pubdate data-updated="true">Oct 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://twitter.com/sonots">@sonots</a>さんと<a href="http://yohoushi.github.io/yohoushi/">Yohoushi</a>というグラフツールを作っています。Yohoushiを使うと<a href="http://kazeburo.github.io/GrowthForecast/">GrowthForecast</a>に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。</p>
+
+<p>会社の同僚の方々からYohoushiがどんなツールかもっと分かりやすく解説してよというコメントをいただきまして、Yohoushiの概要〜インストール、簡単な使い方までをscreencastにしてみました。&#8221;GrowthForecast使ってるからそろそろYohoushiも&hellip;でもYohoushiむずいんでしょ?&ldquo; とおもわれている方にYohoushiの導入の簡単さを分かってもらえる内容になってるとおもいます。</p>
+
+<p>各話3分程度です。エピソード1は概要なのでわかってる方は飛ばしてください。Yohoushiの雰囲気を知るだけならエピソード3、4だけでもおすすめです!</p>
+
+<h4>1 Yohoushiとはなにか?</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZjZjtzyx6Jc "></iframe></div>
+
+
+<h4>2 Yohoushiをインストールしてみよう</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/mqIR0RClP3o "></iframe></div>
+
+
+<h4>3 Yohoushiを使ってみよう</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/q_vMqjpFRUc "></iframe></div>
+
+
+<h4>4 Yohoushiを使ってグラフにタグをつけよう</h4>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/EV51EmjC74o "></iframe></div>
+
+
+<h4>補足</h4>
+
+<p>インストールする際のrakeやbundleは<code>bin/</code>に同封のbinstubの<code>bin/bundle</code>, <code>bin/rake</code>を使ってください。<code>bin/</code>配下のコマンドで実行すると<code>RAILS_ENV=production</code>が自動的にセットされます。パスの通ったコマンドを使ってしまうと<code>RAILS_ENV=development</code>が自動的にセットされるので意図しない動作になります。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -686,52 +749,6 @@ Base.inheritance_column).</p></blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/09/jsfiddle-js-test/">jsFiddleでjavascriptお手軽動作確認</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-09T00:16:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる <a href="http://jsfiddle.net/">jsFiddle</a> がお勧めです!</p>
-
-<p><a href="http://jsfiddle.net/niku4i/5pg4m/">jQuery-UIのaccordion pluginの動作確認をしてみた例</a></p>
-
-<p>使ってみた感想としては、css、html、javascriptのコードをフォームに入力して Run! ボタンを押すだけでとても簡単でした。</p>
-
-<p>また、jsFiddleはgithub.comのgistに近い感覚でJavaScriptやCSSを試すことが出来るので、作った画面をSkypeやIRCで他人と共有できる点が優れています。StackOverflowでjs系で検索すると結構な確率で見ますね。</p>
-
-<p>jQueryなどのライブラリの選択やバージョンの変更も左側のメニューからポチポチやるだけで切り替えれて簡単。</p>
-
-<p>また、Ajax系の動作確認も可能です。サーバサイドのエンドポイントが必要ですが、jsFiddleでは <code>/echo/json/</code>, <code>/echo/html/</code>といったリクエストをresponseとしてechoするダミーのエンドポイントが提供されています。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -760,6 +777,10 @@ Base.inheritance_column).</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/26/in-groups-of-activesupport-extention/">ActiveSupportのin_groups_ofメソッドでビューが捗る!</a>
       </li>
     
@@ -773,10 +794,6 @@ Base.inheritance_column).</p></blockquote>
     
       <li class="post">
         <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
       </li>
     
   </ul>

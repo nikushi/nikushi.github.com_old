@@ -9,7 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="時には、perlが標準で読むモジュールディレクトリにインストールしたくないときもある。 例えば、テストで使ってみるときや、システム全体に適用しなくとも一部のコマンドだけで使いたいモジュールを適用する場合などだ。システム全体に影響しないパスにインストールすれば、影響範囲を気にせずモジュールを使える &hellip;">
+  <meta name="description" content="manpathが取っていないmanファイルを読む方法。 $ nroff -man pdsh.1 | less よく忘れるのでメモ。 manpathコマンドを実行するとmanのパスが通っているディレクトリを知ることができる $ manpath
+/opt/local/man/ja:/opt/local &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/31/manhuairuwozhi-jie-du-mufang-fa/">Manファイルを直接読む方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-31T00:00:00+09:00" pubdate data-updated="true">Aug 31<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">manpathが取っていないmanファイルを読む方法。
+
+<pre lang="shell">
+$ nroff -man pdsh.1 | less
+</pre>
+
+よく忘れるのでメモ。
+
+manpathコマンドを実行するとmanのパスが通っているディレクトリを知ることができる
+<pre>
+$ manpath
+/opt/local/man/ja:/opt/local/man:/usr/share/man:/usr/local/share/man:/usr/X11/man
+</pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -494,43 +543,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/15/shi-jie-de-naxin-yong-wei-ji-falseniyusudezhu-jia-cao-zuo-zha-qi-gaji/">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-15T00:00:00+09:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote>この操作に成功すると、大量のスパムによって株価の人為的な高騰が促され、最終的には詐欺師が持ち株の売却を狙っている値に達します。その時点でスパム攻撃も終息するのが普通で、そうなると今度は株に対する関心が薄れ、評価額は元の安値まで下落します（これも市場で悪用されることがあります）。ポンプアンドダンプのスパム攻撃が成功すると、詐欺師はたった数日間でかなりの利益をあげることができます。</blockquote>
-引用元: <a href="http://www.symantec.com/connect/ja/blogs-217">世界的な信用危機のニュースで株価操作詐欺が急増 | Symantec Connect Community</a>.
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -561,6 +573,10 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/26/in-groups-of-activesupport-extention/">ActiveSupportのin_groups_ofメソッドでビューが捗る!</a>
       </li>
     
@@ -574,10 +590,6 @@ CISSP認定資格の取得が情報セキュリティ関連業務従事者の必
     
       <li class="post">
         <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a>
       </li>
     
   </ul>
