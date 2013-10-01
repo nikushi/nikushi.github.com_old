@@ -12,7 +12,7 @@ tags:
   - Ruby
 ---
 
-[@sonots](https://twitter.com/sonots)さんと[Yohoushi](http://yohoushi.github.io/yohoushi/)というグラフツールを作っています。Yohoushiを使うと[GrowthForecast](http://kazeburo.github.io/GrowthForecast/)に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。
+[Yohoushi](http://yohoushi.github.io/yohoushi/)というグラフツールを[@sonots](https://twitter.com/sonots)さんと作っています。Yohoushiを使うと[GrowthForecast](http://kazeburo.github.io/GrowthForecast/)に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。
 
 会社の同僚の方々からYohoushiがどんなツールかもっと分かりやすく解説してよというコメントをいただきまして、Yohoushiの概要〜インストール、簡単な使い方までをscreencastにしてみました。"GrowthForecast使ってるからそろそろYohoushiも...でもYohoushiむずいんでしょ?" とおもわれている方にYohoushiの導入の簡単さを分かってもらえる内容になってるとおもいます。
 
@@ -36,4 +36,6 @@ tags:
 
 #### 補足
 
-インストールする際のrakeやbundleは`bin/`に同封のbinstubの`bin/bundle`, `bin/rake`を使ってください。`bin/`配下のコマンドで実行すると`RAILS_ENV=production`が自動的にセットされます。パスの通ったコマンドを使ってしまうと`RAILS_ENV=development`が自動的にセットされるので意図しない動作になります。
+* インストールする際のrakeやbundleは`bin/`に同封のbinstubの`bin/bundle`, `bin/rake`を使ってください。`bin/`配下のコマンドで実行すると`RAILS_ENV=production`が自動的にセットされます。パスの通ったコマンドを使ってしまうと`RAILS_ENV=development`が自動的にセットされるので意図しない動作になるので注意してください。
+
+* GrowthForecastのグラフはscreencast用のダミーで@sonotsさん作の[growthforecast-client](https://github.com/sonots/growthforecast-client)を使ってランダム値を定期POSTしてます。
