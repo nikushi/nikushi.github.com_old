@@ -9,7 +9,9 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。 &nbsp; 最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、 &hellip;">
+  <meta name="description" content="たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。 例 $ perl -MTemplate -e '$Template::VERSION'
+2.14 モジュール内で定義された our $ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +78,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/">Perl Moduleのバージョンを確認する方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
+
+例
+<pre code="shell">
+$ perl -MTemplate -e '$Template::VERSION'
+2.14
+</pre>
+
+モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -542,44 +589,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/10/hawai/">ハワイ</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><a href="http://www.flickr.com/photos/aziat/6213602359/" title="Waikiki Beach by Nixie+, on Flickr"><img src="http://farm7.static.flickr.com/6161/6213602359_6d255cb8f3.jpg" width="500" height="333" alt="Waikiki Beach"></a>
-
-行って来ましたー。6泊8日。帰国してはや2週間。すっかり日本は秋ですね。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -610,6 +619,10 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/07/isucon3yu-xuan-falseji-lu/">ISUCON3予選の記録</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
       </li>
     
@@ -623,10 +636,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
     
       <li class="post">
         <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
       </li>
     
   </ul>

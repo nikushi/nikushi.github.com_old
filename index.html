@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Yohoushiというグラフツールを@sonotsさんと作っています。Yohoushiを使うとGrowthForecastに登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。 &hellip;">
+  <meta name="description" content="ISUCON3予選に参加しました。 チームは会社の同僚の@sonotsさん、@Spring_MTさん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。 長時間の作業になるので会社で作業しました。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,137 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/07/isucon3yu-xuan-falseji-lu/">ISUCON3予選の記録</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T10:38:00+09:00" pubdate data-updated="true">Oct 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://isucon.net/archives/29328289.html">ISUCON3</a>予選に参加しました。</p>
+
+<p>チームは会社の同僚の<a href="https://twitter.com/sonots">@sonots</a>さん、<a href="https://twitter.com/Spring_MT">@Spring_MT</a>さん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。</p>
+
+<p>長時間の作業になるので会社で作業しました。僕は朝から興奮してしまって1時間前に会場入りして素振りしてましたが。</p>
+
+<h4>お題アプリ</h4>
+
+<p>githubのgistの機能ライクなメモアプリでした。</p>
+
+<h4>最終的な構成</h4>
+
+<p>nginx + unicorn + MySQL + InnoDB memcached plugin</p>
+
+<h4>午前 &ndash; スタート</h4>
+
+<h5>10:00</h5>
+
+<p>まず、インスタンスによってCPUのモデルに差異があるかもしれないのでメンバ3人それぞれインスタンスを作成しCPUのモデルを確認しましたが結局偏りはありませんでした。</p>
+
+<h5>10:30</h5>
+
+<p>3人同じインスタンスにsshでログインしREADMEを読み始めました。</p>
+
+<p>僕はwebappをgithub.comにgit pushしたり、予め用意しておいたカーネルチューニング(とってもネットワーク周りを少しだけ)をしてました。</p>
+
+<p>@Spring_MTさん、@sonotsさんは、初期状態ではPerl製アプリがTCP80でリッスンしていてRubyでrackupできなかったので、supervisord.confを書き換えてrubyで立ち上がるようにしたりしてました。</p>
+
+<h5>11:00</h5>
+
+<p>my.cnf書き換えてslow query logを出すように修正。最初にベンチ走らせてスコアが800ほど。あまり大きなslow query無かった。</p>
+
+<h5>10:20</h5>
+
+<p>他の2名がリードしてくれてる状況なので、僕何からやろうかなという状態。とりあえずドキュメントもう一度ちゃんと読んでハマらないようにしよう!とおもい、あった.. <code>--workload</code>。他のチームでこれ忘れてる人結構ありましたね。</p>
+
+<p>また、<a href="http://miniprofiler.com/">rack-mini-profiler</a>を導入して遅いページを探しました。これ便利ですね。</p>
+
+<p>変更点</p>
+
+<ul>
+<li>nginx導入。public_htmlをnginxで返すよう変更</li>
+<li>memo POST時にgem_markdown呼び出してmarkdownからHTMLに変換。表示時に都度HTMLコンバートするのをやめた</li>
+<li>トップページ、<code>/recent/:number</code>のページで一覧を生成する部分にN+1問題があったの<code>memos</code>テーブルだけで完結するようにするため、<code>memos</code>テーブルに<code>username</code>フィールドを追加することにした。</li>
+<li>複合インデックスを入れてパフォーマンス改善</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>create index user_create_at_index on memos (user, created_at);
+</span><span class='line'>create index user_is_private_created_at_index on memos (user, is_private, created_at);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>クエリの改善系は僕も対応しました。1つ、2つ改善できてホッとしました。</p>
+
+<h5>13:30</h5>
+
+<p>コンビニ飯</p>
+
+<h4>午後 &ndash; 伸び悩み</h4>
+
+<p>クエリを改善し、nginx + unicornの構成にしスコアは上がりましたが、午後はこの後どうしようか悩む時間でした。</p>
+
+<p>前回isucon2ではVarnishを入れることで劇的にスコアアップできた事例がありましたので、Varnish対応を始めました by @sonotsさん。でもVarnish作戦は結局失敗でした。Varnishを入れるとベンチがコケました。recentページがキャッシュしにくい(olderとnewerのリンク)構成であったという点&hellip;と認識しています。あとセッションのバリデーションでベンチがコケたみたい。(このへんは僕やってないからもやっとしてる)</p>
+
+<p>より詳細なプロファイリングのためNewRelicも入れてプロファイリング(by Spring_MTさん)。トップページとrecentが70ms程度かかっている状況で以下のクエリがある以上この程度かかるのかな&hellip;.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT id, first_sentence, username, created_at FROM memos WHERE is_private=0 ORDER BY id DESC LIMIT 100 OFFSET #{page * 100}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>indexは効かせていたのでこのSELECTやめて別のアプローチをとればスコアアップ狙える、逆にいうとこれ改善しないと上位には入れないよね、というのがチームの午後の課題でしたが最後まで答えを出せずじまいで終わってしまいました。</p>
+
+<p>その他改善したところは以下です。</p>
+
+<ul>
+<li>markdown生成のためフォークやめて<a href="https://github.com/vmg/redcarpet">redcarpet</a>使った。でも+500くらい</li>
+<li>毎回memoのcontentを<code>.split(/\r?\n/)</code>せず、<code>memos.first_sentence</code>フィールドを作ってmemo POST時に入れるようにした</li>
+<li>メモ数をカウントする<code>SELECT count(*) FROM memos</code>をmemdにキャッシュした</li>
+<li>sonotsスペシャル => 詳細はsonots blogで</li>
+</ul>
+
+
+<p>最後はログ吐くのをやめてプロファイリングも切って<code>--workload=4</code>くらいにして測定して終了。</p>
+
+<h3>反省点とか所感</h3>
+
+<ul>
+<li>memcachedみたいなものには気づかなかった&hellip;</li>
+<li>8時間かっとなってコード釘付けになりがちですが、30分くらいはコーヒー飲みながらメンバでディスカッションしてもよかったかも</li>
+<li>githubにwebappを上げてpull req方式でコード改修しようとして、実機でコード変えて即ベンチ走らせたい場合もあってmasterがconflictしてしまった。どっちもどっちで難しい。他のチームどうやってるか気になる。</li>
+</ul>
+
+
+<p>ちなみに、自分は普段高負荷環境のWebサービスを運用,開発してる訳ではなくて、Railsで管理系アプリ書いたり監視系ツール作ったりしてる系。始まる前は自分どれだけ対応できるか不安でした。周りのエンジニアや参加者も凄い人たちばかりですし。でも終わってみると参加してよかったです。しんどかったけど。反省会のビールがうまかったです。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -693,66 +824,6 @@ Base.inheritance_column).</p></blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/09/font-awesome-rails/">Font AwesomeをRailsで使ってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-09T00:42:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></p>
-
-<p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
-
-<p>Railsで使うには <a href="https://github.com/bokmann/font-awesome-rails">font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
-
-<p>使い方1 &ndash; iタグ使う</p>
-
-<pre><code>&lt;i class="icon-thumbs-up"&gt;&lt;/i&gt; icon-thumbs-up
-</code></pre>
-
-<p>TwitterBootstrapであらかじめ用意されているアイコンの使い方と同じです。ただFont Awesomeの場合、画像ではなくフォントとして扱われるのでfont-colorで色を調整したり出来ます。</p>
-
-<p>使い方2 &ndash; CSSのcontentマークアップにユニコードを埋め込む</p>
-
-<pre><code>.thumbs-up:before {
-  font-size: 20px;
-  font-family: 'FontAwesome';
-  content: '\F164';
-}
-</code></pre>
-
-<p>contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば<a href="http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/">thumbs-up</a>であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!</p>
-
-<p>という感じで簡単ながらFont Awesomeの紹介でした。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -781,6 +852,10 @@ Base.inheritance_column).</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/07/isucon3yu-xuan-falseji-lu/">ISUCON3予選の記録</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
       </li>
     
@@ -794,10 +869,6 @@ Base.inheritance_column).</p></blockquote>
     
       <li class="post">
         <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
       </li>
     
   </ul>

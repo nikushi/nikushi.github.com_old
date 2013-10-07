@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる jsFiddle がお勧めです! jQuery-UIのaccordion pluginの動作確認をしてみた例 使ってみた感想としては、css、 &hellip;">
+  <meta name="description" content="Font Awesome Bootstrap向けのicon系Webフォントを提供するライブラリ。 Railsで使うには font-awesome-railsをGemfileに書いて適切にimportすればOKです。 使い方1 &ndash; iタグ使う &lt;i class="icon- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/09/font-awesome-rails/">Font AwesomeをRailsで使ってみた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-09T00:42:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></p>
+
+<p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
+
+<p>Railsで使うには <a href="https://github.com/bokmann/font-awesome-rails">font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
+
+<p>使い方1 &ndash; iタグ使う</p>
+
+<pre><code>&lt;i class="icon-thumbs-up"&gt;&lt;/i&gt; icon-thumbs-up
+</code></pre>
+
+<p>TwitterBootstrapであらかじめ用意されているアイコンの使い方と同じです。ただFont Awesomeの場合、画像ではなくフォントとして扱われるのでfont-colorで色を調整したり出来ます。</p>
+
+<p>使い方2 &ndash; CSSのcontentマークアップにユニコードを埋め込む</p>
+
+<pre><code>.thumbs-up:before {
+  font-size: 20px;
+  font-family: 'FontAwesome';
+  content: '\F164';
+}
+</code></pre>
+
+<p>contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば<a href="http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/">thumbs-up</a>であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!</p>
+
+<p>という感じで簡単ながらFont Awesomeの紹介でした。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -578,55 +638,6 @@ Person.first   # loadに時間がかかる!
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">Homesickとgithubでドットファイルを管理する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-06T23:42:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>お正月に時間があったのでPC環境のうちドットファイルのマスタファイルをgithub上で管理するようしました。また管理を楽にするため <a href="https://github.com/technicalpickles/homesick" title="homesick">homesick</a> を導入しました。</p>
-
-<p>動機としては、昨年転職してから会社PCがMacになり家と会社のMacで設定が微妙に異なることがあり煩わしいので揃えてしまおうとおもったためです。</p>
-
-<p>github上に置いたドットファイルをマスタとして扱い、各PCにリポジトリを<code>git clone</code>してシンボリックリンクを張れば済みます。</p>
-
-<p>しかしながら、<code>ln</code>コマンドで1ファイルづつリンク作るのもPC台数が複数あると面倒くさく怠慢により機能しなくなることが予想されます。 <a href="http://dotfiles.github.com/">Github dotfiles</a> にはdotfilesの管理にまつわる先人の知恵が紹介されていましたので、この中からカジュアルそうなツールで <a href="https://github.com/technicalpickles/homesick">homesick</a> を導入しました。他にも事例はあるので自分の好みにあう方法を探すのもよいでしょう。</p>
-
-<p>以下、詳細。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/06/improve-management-of-your-dot-files-by-homesick-and-github/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -657,6 +668,10 @@ Person.first   # loadに時間がかかる!
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/07/isucon3yu-xuan-falseji-lu/">ISUCON3予選の記録</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
       </li>
     
@@ -670,10 +685,6 @@ Person.first   # loadに時間がかかる!
     
       <li class="post">
         <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a>
       </li>
     
   </ul>
