@@ -5,13 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>logrotateの動作をテストする - ni-blog</title>
+  <title>スロークエリをMySQL再起動せずオンラインで調査する - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="
-$ logrotate -dv file.conf でdry-run。
-">
+  <meta name="description" content="1
+2
+3
+mysql&gt; set global slow_query_log = 1;
+mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
+mysql&gt; set global long_query_time &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +23,7 @@ $ logrotate -dv file.conf でdry-run。
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +84,7 @@ $ logrotate -dv file.conf でdry-run。
   
   <header>
     
-      <h1 class="entry-title">Logrotateの動作をテストする</h1>
+      <h1 class="entry-title">スロークエリをMySQL再起動せずオンラインで調査する</h1>
     
     
       <p class="meta">
@@ -97,17 +100,30 @@ $ logrotate -dv file.conf でdry-run。
   
 
 
-<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
+<time datetime="2013-11-05T10:11:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><pre lang="shell">
-$ logrotate -dv file.conf
-</pre>
-でdry-run。
+<div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mysql&gt; set global slow_query_log = 1;
+</span><span class='line'>mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
+</span><span class='line'>mysql&gt; set global long_query_time = 0; # 0秒にセットすると全queryをロギング</span></code></pre></td></tr></table></div></figure>
+
+
+<p>調査が終わったら<code>slow_query_log = 0</code>にするのを忘れないように。本番環境とかでやるとログがぶくぶく太るのでやらないほうが良いでしょう。</p>
+
+<p>ログの解析はmysqldumpslowコマンドで。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mysqldumpslow /tmp/slowquery.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>なお、コネクションプーリングしている場合は新規コネクションから有効になるようです。アプリを再起動しないと反映されないです。mysqlコマンドから設定した場合も<code>show variables like 'long_query_time';</code>やっても値が反映されていないように見えますが、再接続すると確認できました。</p>
 </div>
 
 
@@ -130,15 +146,21 @@ $ logrotate -dv file.conf
   
 
 
-<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
+<time datetime="2013-11-05T10:11:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mysql/'>MySQL</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/" >Tweet</a>
   
   
   
@@ -149,10 +171,8 @@ $ logrotate -dv file.conf
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/12/03/perl-colored-logging-by-log4perl/" title="Previous Post: [Perl] colored logging by log4perl">&laquo; [Perl] colored logging by log4perl</a>
+        <a class="basic-alignment left" href="/blog/2013/10/07/isucon3-yosen/" title="Previous Post: ISUCON3予選の記録">&laquo; ISUCON3予選の記録</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/" title="Next Post: [vim]ビジュアルモード選択範囲だけ置換">[vim]ビジュアルモード選択範囲だけ置換 &raquo;</a>
       
     </p>
   </footer>

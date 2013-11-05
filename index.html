@@ -9,7 +9,12 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ISUCON3予選に参加しました。 チームは会社の同僚の@sonotsさん、@Spring_MTさん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。 長時間の作業になるので会社で作業しました。 &hellip;">
+  <meta name="description" content="1
+2
+3
+mysql&gt; set global slow_query_log = 1;
+mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
+mysql&gt; set global long_query_time &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +81,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/05/dump-sloq-query-log-in-mysql/">スロークエリをMySQL再起動せずオンラインで調査する</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-05T10:11:00+09:00" pubdate data-updated="true">Nov 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mysql&gt; set global slow_query_log = 1;
+</span><span class='line'>mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
+</span><span class='line'>mysql&gt; set global long_query_time = 0; # 0秒にセットすると全queryをロギング</span></code></pre></td></tr></table></div></figure>
+
+
+<p>調査が終わったら<code>slow_query_log = 0</code>にするのを忘れないように。本番環境とかでやるとログがぶくぶく太るのでやらないほうが良いでしょう。</p>
+
+<p>ログの解析はmysqldumpslowコマンドで。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mysqldumpslow /tmp/slowquery.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>なお、コネクションプーリングしている場合は新規コネクションから有効になるようです。アプリを再起動しないと反映されないです。mysqlコマンドから設定した場合も<code>show variables like 'long_query_time';</code>やっても値が反映されていないように見えますが、再接続すると確認できました。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -782,44 +839,6 @@ Base.inheritance_column).</p></blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/09/0-to-255-color-picker/">便利なカラーピッカー 0 to 255</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-09T23:59:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>世の中カラーピッカーを提供するWebサイトはたくさんありますが、<a href="http://0to255.com/">0to255</a>がとても使いやすかったのでメモ。</p>
-
-<p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -848,6 +867,10 @@ Base.inheritance_column).</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/11/05/dump-sloq-query-log-in-mysql/">スロークエリをMySQL再起動せずオンラインで調査する</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/07/isucon3-yosen/">ISUCON3予選の記録</a>
       </li>
     
@@ -861,10 +884,6 @@ Base.inheritance_column).</p></blockquote>
     
       <li class="post">
         <a href="/blog/2013/08/06/sinatra-reloader/">Sinatra::Reloader</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/06/regex-for-ipv-address/">RubyでIPアドレスの正規表現を超簡単に書く</a>
       </li>
     
   </ul>

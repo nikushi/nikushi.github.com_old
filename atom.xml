@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-10-07T12:26:38+09:00</updated>
+  <updated>2013-11-05T10:18:32+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[スロークエリをMySQL再起動せずオンラインで調査する]]></title>
+    <link href="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/"/>
+    <updated>2013-11-05T10:11:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mysql&gt; set global slow_query_log = 1;
+</span><span class='line'>mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
+</span><span class='line'>mysql&gt; set global long_query_time = 0; # 0秒にセットすると全queryをロギング</span></code></pre></td></tr></table></div></figure>
+
+
+<p>調査が終わったら<code>slow_query_log = 0</code>にするのを忘れないように。本番環境とかでやるとログがぶくぶく太るのでやらないほうが良いでしょう。</p>
+
+<p>ログの解析はmysqldumpslowコマンドで。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mysqldumpslow /tmp/slowquery.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>なお、コネクションプーリングしている場合は新規コネクションから有効になるようです。アプリを再起動しないと反映されないです。mysqlコマンドから設定した場合も<code>show variables like 'long_query_time';</code>やっても値が反映されていないように見えますが、再接続すると確認できました。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ISUCON3予選の記録]]></title>
@@ -1512,110 +1537,6 @@ Person.first   # loadに時間がかかる!
 </code></pre>
 
 <p>relationにした場合、子供はloadされないので時間がかかりません。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Twitterにリプライしたらgemが出来たお話]]></title>
-    <link href="http://orihubon.com/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow/"/>
-    <updated>2013-01-12T01:03:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/01/12/capistrano-colorized-stream-gem-makes-log-monitoring-rainbow</id>
-    <content type="html"><![CDATA[<p>1年前に書いた<a href="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">Streaming Log With Capistrano</a>というポストが巡り巡って<a href="https://github.com/sonots/capistrano-colorized-stream">gem</a>で利用できるようになりました、というお話。</p>
-
-<blockquote class="twitter-tweet" data-in-reply-to="288609436531052544" lang="ja"><p>@<a href="https://twitter.com/sonots">sonots</a> だいぶ昔書いたのでいけてなコードですが、こんな感じでしょうか。<a href="http://t.co/nifOD1YA" title="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">orihubon.com/blog/2012/02/0…</a></p>&mdash; Nobuhiro Nikushiさん (@niku4i) <a href="https://twitter.com/niku4i/status/288612474276691968" data-datetime="2013-01-08T11:45:50+00:00">1月 8, 2013</a></blockquote>
-
-
-<script async src="http://orihubon.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p><a href="https://twitter.com/sonots/">@sonots</a>さんがCapistranoの話題のツイートしてて、昔似たことをやったので過去のポストを教えてあげたところgemになった!</p>
-
-<blockquote class="twitter-tweet" lang="ja"><p>@<a href="https://twitter.com/niku4i">niku4i</a> gemにしてみましたよ！ <a href="https://t.co/Q2tjd0kj" title="https://github.com/sonots/capistrano-colorized-stream">github.com/sonots/capistr…</a></p>&mdash; そのっつ (SEO Naotoshi)さん (@sonots) <a href="https://twitter.com/sonots/status/289690981152989184" data-datetime="2013-01-11T11:11:26+00:00">1月 11, 2013</a></blockquote>
-
-
-<script async src="http://orihubon.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p><a href="https://github.com/sonots/capistrano-colorized-stream">capistrano-colorized-stream</a></p>
-
-<p><a href="https://twitter.com/sonots/">@sonots</a>さん仕事早い。</p>
-
-<p>gemにしていただいたので僕はこれをネタにブログを書くことにしました。</p>
-
-<!-- more -->
-
-
-<h3>コードを読んでみた</h3>
-
-<h4>alias_method</h4>
-
-<figure class='code'><figcaption><span>lib/capistrano/colorized_stream.rb </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">alias_method</span> <span class="ss">:stream_without_color</span><span class="p">,</span> <span class="ss">:stream</span>
-</span><span class='line'><span class="n">alias_method</span> <span class="ss">:stream</span><span class="p">,</span> <span class="ss">:stream_with_color</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>alias_methodを使うと既存メソッドは残しつつ、alias_methodで上書くことができるんですね</li>
-<li>実は<code>alias</code>との違いがピンときていないのでまた別途</li>
-</ul>
-
-
-<p>試してみた。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">A</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">hello</span>
-</span><span class='line'>    <span class="s1">&#39;Hello!&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">A</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">aisatsu</span>
-</span><span class='line'>    <span class="s1">&#39;Konichiwa!&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>  <span class="n">alias_method</span> <span class="ss">:greet</span><span class="p">,</span> <span class="ss">:hello</span>
-</span><span class='line'>  <span class="n">alias_method</span> <span class="ss">:hello</span><span class="p">,</span> <span class="ss">:aisatsu</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">hello</span> <span class="c1"># =&gt; &quot;Konichiwa!&quot; </span>
-</span><span class='line'><span class="n">A</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">greet</span> <span class="c1"># =&gt; &quot;Hello!&quot; </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>A#hello</code>が日本語に変更しつつ、<code>A#greet</code>にてオリジナルの英語で挨拶することができました。</p>
-
-<h4>String#split</h4>
-
-<figure class='code'><figcaption><span>lib/capistrano/colorized_stream.rb </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\r?\n/m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>/\n/</code>ではなく<code>/\r?\n/</code>と各とCRLFとLFをサポートする</li>
-<li>splitの第2引数に負の値を与え、改行のみの行を空要素として配列を返す。すると改行がどの位置にあるか気にしなくてもよくなる(!)。</li>
-</ul>
-
-
-<p>この<code>split</code>の第2引数のようにRubyのコアクラスのAPIの知識に深ければ小さくコードが書ける実例だなとおもいました。
-このあたりは<a href="http://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E-Ruby-%E3%81%BE%E3%81%A4%E3%82%82%E3%81%A8-%E3%82%86%E3%81%8D%E3%81%B2%E3%82%8D/dp/4873113946">プログラミング言語 Ruby</a>の9章Rubyプラットフォームが充実してますね。難しいコードを書いたな&hellip;.というときは標準のAPIで対応できないか、考え直してみるとよさそうですね。</p>
 ]]></content>
   </entry>
   

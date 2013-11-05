@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MySQL | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-10-07T12:26:38+09:00</updated>
+  <updated>2013-11-05T10:18:32+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[スロークエリをMySQL再起動せずオンラインで調査する]]></title>
+    <link href="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/"/>
+    <updated>2013-11-05T10:11:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql</id>
+    <content type="html"><![CDATA[<p><code>
+mysql&gt; set global slow_query_log = 1;
+mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
+mysql&gt; set global long_query_time = 0; # 0秒にセットすると全queryをロギング
+</code>
+調査が終わったら<code>slow_query_log = 0</code>にするのを忘れないように。本番環境とかでやるとログがぶくぶく太るのでやらないほうが良いでしょう。</p>
+
+<p>ログの解析はmysqldumpslowコマンドで。
+<code>
+mysqldumpslow /tmp/slowquery.log
+</code></p>
+
+<p>なお、コネクションプーリングしている場合は新規コネクションから有効になるようです。アプリを再起動しないと反映されないです。mysqlコマンドから設定した場合も<code>show variables like 'long_query_time';</code>やっても値が反映されていないように見えますが、再接続すると確認できました。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MySQL チートシート]]></title>
