@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-18T22:39:44+09:00</updated>
+  <updated>2013-11-18T23:14:57+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<p>Railsに組み込まれているActiveSupportはRuby標準のクラスに便利な拡張メソッドを加えます。</p>
 
 <p>Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。</p>
+
+<!--more-->
+
 
 <p>例えば、以下の配列データ
 <code>ruby
@@ -109,6 +112,9 @@ irb> %w(1 2 3 4 5 6 7 8).in_groups(2)
     <content type="html"><![CDATA[<p><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></p>
 
 <p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
+
+<!--more-->
+
 
 <p>Railsで使うには <a href="https://github.com/bokmann/font-awesome-rails">font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
 

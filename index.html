@@ -170,96 +170,12 @@ mysql&gt; set global long_query_time &hellip;">
 
 <p>チームは会社の同僚の<a href="https://twitter.com/sonots">@sonots</a>さん、<a href="https://twitter.com/Spring_MT">@Spring_MT</a>さん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。</p>
 
-<p>長時間の作業になるので会社で作業しました。僕は朝から興奮してしまって1時間前に会場入りして素振りしてましたが。</p>
-
-<h4>お題アプリ</h4>
-
-<p>githubのgistの機能ライクなメモアプリでした。</p>
-
-<h4>最終的な構成</h4>
-
-<p>nginx + unicorn + MySQL + InnoDB memcached plugin</p>
-
-<h4>午前 &ndash; スタート</h4>
-
-<h5>10:00</h5>
-
-<p>まず、インスタンスによってCPUのモデルに差異があるかもしれないのでメンバ3人それぞれインスタンスを作成しCPUのモデルを確認しましたが結局偏りはありませんでした。</p>
-
-<h5>10:30</h5>
-
-<p>僕はwebappをgithub.comにgit pushしたり、予め用意しておいたカーネルチューニング(とってもネットワーク周りを少しだけ)をしてました。</p>
-
-<h5>11:00</h5>
-
-<p>my.cnf書き換えてslow query logを出すように修正。最初にベンチ走らせてスコアが800ほど。あまり大きなslow queryはありませんでした。</p>
-
-<h5>10:20</h5>
-
-<p>他の2名がリードしてくれてる状況なので、僕何からやろうかなという状態。とりあえずもう一度ドキュメント読んで注意点を確認しました。<code>--workload</code>これは重要なのでチームに周知しときました:) 他のチームでこれ忘れてる人結構ありましたね。</p>
-
-<p>また、<a href="http://miniprofiler.com/">rack-mini-profiler</a>を導入して遅いページを探しました。これ便利ですね。</p>
-
-<p>変更点</p>
-
-<ul>
-<li>nginx導入。public_htmlをnginxで返すよう変更</li>
-<li>memo POST時にgem_markdown呼び出してmarkdownからHTMLに変換。表示時に都度HTMLコンバートするのをやめた</li>
-<li>N+1問題。<code>memos</code>テーブルだけで完結するようにするため、<code>memos</code>テーブルに<code>username</code>フィールドを追加することにした。</li>
-<li>複合インデックスを入れてパフォーマンス改善</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>create index user_create_at_index on memos (user, created_at);
-</span><span class='line'>create index user_is_private_created_at_index on memos (user, is_private, created_at);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>クエリの改善系は僕も対応しました。1つ、2つ改善できてホッとしました。</p>
-
-<h5>13:30</h5>
-
-<p>コンビニ飯</p>
-
-<h4>午後 &ndash; 伸び悩み</h4>
-
-<p>クエリを改善し、nginx + unicornの構成にしスコアは上がりましたが、午後はこの後どうしようか悩む時間でした。</p>
-
-<p>前回isucon2ではVarnishを入れることで劇的にスコアアップできた事例がありましたので、Varnish対応を始めましたがVarnish作戦は結局失敗でした。recentページがキャッシュしにくい(olderとnewerのリンク)構成であったという点&hellip;と認識しています。あとセッションのバリデーションでベンチがコケたみたい。(このへんは僕やってないからもやっとしてる)</p>
-
-<p>より詳細なプロファイリングのためNewRelicも入れてプロファイリング(by Spring_MTさん)。トップページとrecentが70ms程度かかっている状況で以下のクエリがある以上この程度かかるのかな&hellip;.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT id, first_sentence, username, created_at FROM memos WHERE is_private=0 ORDER BY id DESC LIMIT 100 OFFSET #{page * 100}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>indexは効かせていたのでこのSELECTやめて別のアプローチをとればスコアアップ狙える、逆にいうとこれ改善しないと上位には入れないよね、というのがチームの午後の課題でしたが最後まで答えを出せずじまいで終わってしまいました。</p>
-
-<p>その他改善したところは以下です。</p>
-
-<ul>
-<li>markdown生成のためフォークやめて<a href="https://github.com/vmg/redcarpet">redcarpet</a>使った。でも+500くらい</li>
-<li>毎回memoのcontentを<code>.split(/\r?\n/)</code>せず、<code>memos.first_sentence</code>フィールドを作ってmemo POST時に入れるようにした</li>
-<li>メモ数をカウントする<code>SELECT count(*) FROM memos</code>をmemdにキャッシュした</li>
-<li>sonotsスペシャル => 詳細はsonots blogで</li>
-</ul>
-
-
-<p>最後はログ吐くのをやめてプロファイリングも切って<code>--workload=4</code>くらいにして測定して終了。</p>
-
-<h3>反省点とか所感</h3>
-
-<ul>
-<li>memcachedみたいなものには気づかなかった&hellip;</li>
-<li>8時間かっとなってコード釘付けになりがちですが、30分くらいはコーヒー飲みながらメンバでディスカッションしてもよかったかも</li>
-<li>githubにwebappを上げてpull req方式でコード改修しようとして、実機でコード変えて即ベンチ走らせたい場合もあってmasterがconflictしてしまった。どっちもどっちで難しい。他のチームどうやってるか気になる。</li>
-</ul>
-
-
-<p>ちなみに、自分は普段高負荷環境のWebサービスを運用,開発してる訳ではなくて、Railsで管理系アプリ書いたり監視系ツール作ったりしてる系。始まる前は自分どれだけ対応できるか不安でした。周りのエンジニアや参加者も凄い人たちばかりですし。でも終わってみると参加してよかったです。しんどかったけど。反省会のビールがうまかったです。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/10/07/isucon3-yosen/">続きを読む</a>
+    </footer>
   
 
 
@@ -270,7 +186,7 @@ mysql&gt; set global long_query_time &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi Screencasts!</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a></h1>
     
     
       <p class="meta">
@@ -301,35 +217,12 @@ mysql&gt; set global long_query_time &hellip;">
 
 <p>各話3分程度です。エピソード1は概要なのでわかってる方は飛ばしてください。Yohoushiの雰囲気を知るだけならエピソード3、4だけでもおすすめです!</p>
 
-<h4>1 Yohoushiとはなにか?</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZjZjtzyx6Jc "></iframe></div>
-
-
-<h4>2 Yohoushiをインストールしてみよう</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/mqIR0RClP3o "></iframe></div>
-
-
-<h4>3 Yohoushiを使ってみよう</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/q_vMqjpFRUc "></iframe></div>
-
-
-<h4>4 Yohoushiを使ってグラフにタグをつけよう</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/EV51EmjC74o "></iframe></div>
-
-
-<h4>補足</h4>
-
-<ul>
-<li><p>インストールする際のrakeやbundleは<code>bin/</code>に同封のbinstubの<code>bin/bundle</code>, <code>bin/rake</code>を使ってください。<code>bin/</code>配下のコマンドで実行すると<code>RAILS_ENV=production</code>が自動的にセットされます。パスの通ったコマンドを使ってしまうと<code>RAILS_ENV=development</code>が自動的にセットされるので意図しない動作になるので注意してください。</p></li>
-<li><p>GrowthForecastのグラフはscreencast用のダミーで@sonotsさん作の<a href="https://github.com/sonots/growthforecast-client">growthforecast-client</a>を使ってランダム値を定期POSTしてます。</p></li>
-</ul>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/10/01/yohoushi-screencasts/">続きを読む</a>
+    </footer>
   
 
 
@@ -369,125 +262,12 @@ mysql&gt; set global long_query_time &hellip;">
 
 <p>Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。</p>
 
-<p>例えば、以下の配列データ</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sx">%w(1, 2, 3, 4, 5, 6, 7, 8)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>in_groups_ofメソッドをつけて呼び出すと引数指定の数の要素数の小配列をメンバにした配列を返してくれます。また第2引数で空部分に埋める要素指定もできます。デフォルトはnilです。falseを与えるとnilの代わりに要素数を切り詰めます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>使うシーンとしては、ビュー上で指定個数毎でグルーピングして表示したいときに便利です。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group0&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group1&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>4<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>5<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>6<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group2&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>7<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>8<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>9<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>似たような名前でin_groupsというメソッドもあります。こちらは配列を指定グループ数に分割してくれるメソッドです。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>普段Railsやってる人には当たり前かもしれない内容でした。いざ使いたかったときにメソッド名を忘れていたので、以上、自分メモでした!</p>
-
-<p>他にもActiveSupportの拡張は便利なものがあるので<a href="http://edgeguides.rubyonrails.org/active_support_core_extensions.html">Active Support Core Extensions</a>の一読おすすめです!</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/09/26/in-groups-of-activesupport-extention/">続きを読む</a>
+    </footer>
   
 
 
@@ -821,7 +601,7 @@ Base.inheritance_column).</p></blockquote>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">BUNDLE_FROZENとかBUNDLE_WITHOUT</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/07/26/bundle-frozen-and-bundle-without/">bundle_frozenとかbundle_without</a></h1>
     
     
       <p class="meta">
@@ -870,15 +650,6 @@ Base.inheritance_column).</p></blockquote>
 <aside class="sidebar">
   
     <section>
-  <ul id="recent_posts">
-      <li class="post">
-      <a href="http://orihubon.com" alt="Home"><img src="/images/Home.png"></a>
-      <a href="http://orihubon.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
-      <a href="http://orihubon.com/atom.xml" alt="subscribe feed"><img src="/images/rss.png"></a>
-      </li>
-  </ul>
-</section>
-<section>
   <h1>About Me</h1>
   <p>渋谷で働くインフラエンジニアブログ。プログラミング、Linuxなどの技術系の話題を中心に書いています。</p>
 </section>
@@ -914,7 +685,7 @@ Base.inheritance_column).</p></blockquote>
 .hatena-bookmark-widget-title { display: none; }
 -->
 </style>
-<h1>はてブ人気記事</h1>
+<h1>Popular Posts</h1>
 <script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript">
   Hatena.BookmarkWidget.url   = "http://orihubon.com";
@@ -926,22 +697,10 @@ Base.inheritance_column).</p></blockquote>
   Hatena.BookmarkWidget.load();
 </script>
 </section>
-
-
 <section>
-  <h1>Latest Tweets</h1>
-  <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("niku4i", 4, false);
-    });
-  </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
-  
-    <a href="http://twitter.com/niku4i" class="twitter-follow-button" data-show-count="false">Follow @niku4i</a>
-  
+  <h1>Recent Tweets</h1>
+  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </section>
 
 

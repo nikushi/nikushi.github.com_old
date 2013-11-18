@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-18T22:39:44+09:00</updated>
+  <updated>2013-11-18T23:14:57+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -46,6 +46,9 @@
     <content type="html"><![CDATA[<p><a href="http://isucon.net/archives/29328289.html">ISUCON3</a>予選に参加しました。</p>
 
 <p>チームは会社の同僚の<a href="https://twitter.com/sonots">@sonots</a>さん、<a href="https://twitter.com/Spring_MT">@Spring_MT</a>さん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。</p>
+
+<!--more-->
+
 
 <p>長時間の作業になるので会社で作業しました。僕は朝から興奮してしまって1時間前に会場入りして素振りしてましたが。</p>
 
@@ -149,6 +152,9 @@
 
 <p>各話3分程度です。エピソード1は概要なのでわかってる方は飛ばしてください。Yohoushiの雰囲気を知るだけならエピソード3、4だけでもおすすめです!</p>
 
+<!--more-->
+
+
 <h4>1 Yohoushiとはなにか?</h4>
 
 <div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZjZjtzyx6Jc "></iframe></div>
@@ -187,6 +193,9 @@
     <content type="html"><![CDATA[<p>Railsに組み込まれているActiveSupportはRuby標準のクラスに便利な拡張メソッドを加えます。</p>
 
 <p>Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。</p>
+
+<!--more-->
+
 
 <p>例えば、以下の配列データ</p>
 
@@ -487,7 +496,7 @@ Base.inheritance_column).</p></blockquote>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[BUNDLE_FROZENとかBUNDLE_WITHOUT]]></title>
+    <title type="html"><![CDATA[bundle_frozenとかbundle_without]]></title>
     <link href="http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without/"/>
     <updated>2013-07-26T16:37:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without</id>
@@ -584,6 +593,9 @@ Base.inheritance_column).</p></blockquote>
 
 <p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
 
+<!--more-->
+
+
 <p>Railsで使うには <a href="https://github.com/bokmann/font-awesome-rails">font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
 
 <p>使い方1 &ndash; iタグ使う</p>
@@ -637,6 +649,9 @@ Base.inheritance_column).</p></blockquote>
 <p>会の趣旨は <a href="http://elixir-lang.org/">elixir-lang.org</a>のGETTING STARTEDをみんなで読んで勉強しましょう、といったところ。</p>
 
 <p>前回(第1回)はyokohama.rbの中でElixir紹介がてらGETTING STARTEDの1章から2.6.4までを読んだ、そうです。僕は参加してませんでしたので今回にあたって密かに一人独習したわけですが、@sonots さんが<a href="https://docs.google.com/presentation/d/1Tl-NTgGiW6V6QCCi2Hy0V81XZTjkAWEC22yTWE8ChP4/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.p">復習資料</a> を作成してくれていて今日の会はこの復習資料からスタート! 英文で読んだ後でまとまった日本語で再度インプットするとすーっと浸みいります。とても助かりました。</p>
+
+<!--more-->
+
 
 <p>今回はSection2.6.5 TryからSection3の最後まで。プロジェクタにホームページの英文を映して代表の人が読みながらサンプルコードをiexで実行、あれこれ言い合う感じで進められていました。</p>
 
