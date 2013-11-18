@@ -9,6 +9,10 @@ tags:
   - Octopress
 ---
 
+OctopressのソースコードをDropboxに変更した。
+
+<!--more-->
+
 ### octopressのソースファイルの管理
 [Deploying to Github Pages](http://octopress.org/docs/deploying/github/)の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。
 
@@ -19,8 +23,6 @@ tags:
 ```git push```してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。
 
 そこで```git push```する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。
-
-<!-- more -->
 
 ### リポジトリ作成
     mkdir -p ~/Dropbox/repos/ni-blog.git        

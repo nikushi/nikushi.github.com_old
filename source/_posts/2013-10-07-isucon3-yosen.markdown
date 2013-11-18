@@ -9,10 +9,10 @@ categories:
 
 [ISUCON3](http://isucon.net/archives/29328289.html)予選に参加しました。
 
+<!--more-->
 
 チームは会社の同僚の[@sonots](https://twitter.com/sonots)さん、[@Spring_MT](https://twitter.com/Spring_MT)さん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。
 
-<!--more-->
 
 長時間の作業になるので会社で作業しました。僕は朝から興奮してしまって1時間前に会場入りして素振りしてましたが。
 

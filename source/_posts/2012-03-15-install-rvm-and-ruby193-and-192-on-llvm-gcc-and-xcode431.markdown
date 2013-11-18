@@ -13,6 +13,8 @@ tags:
 
 XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。
 
+<!-- more -->
+
 Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。
 
 普通に考えて進めると、
@@ -27,9 +29,6 @@ The provided compiler '/usr/bin/gcc' is LLVM based, it is not yet fully supporte
 ```
 という出力で終了する。ネット上の情報を見ると[osx-gcc-installer](https://github.com/kennethreitz/osx-gcc-installer/downloads)をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って--with-gcc=clangをつけてインストールする方法があった。今回は--with-gcc=clangをつけてRubyをbuildした。詳細は後述。
 
-以下、詳細。
-
-<!-- more -->
 
 ### 環境
 - Mac OS X Version 10.7.3 Lion

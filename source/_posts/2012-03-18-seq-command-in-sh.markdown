@@ -8,6 +8,9 @@ categories:
 ---
 
 seqというコマンドというのを知らなかったのでメモ。
+
+<!--more-->
+
     $ for i in seq 1 10; do expr $i \* 2; done
     2
     4

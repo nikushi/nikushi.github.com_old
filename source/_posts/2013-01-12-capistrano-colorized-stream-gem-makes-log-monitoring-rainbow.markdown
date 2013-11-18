@@ -14,6 +14,7 @@ tags:
 
 1年前に書いた[Streaming Log With Capistrano](http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/)というポストが巡り巡って[gem](https://github.com/sonots/capistrano-colorized-stream)で利用できるようになりました、というお話。
 
+<!--more-->
 
 <blockquote class="twitter-tweet" data-in-reply-to="288609436531052544" lang="ja"><p>@<a href="https://twitter.com/sonots">sonots</a> だいぶ昔書いたのでいけてなコードですが、こんな感じでしょうか。<a href="http://t.co/nifOD1YA" title="http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/">orihubon.com/blog/2012/02/0…</a></p>&mdash; Nobuhiro Nikushiさん (@niku4i) <a href="https://twitter.com/niku4i/status/288612474276691968" data-datetime="2013-01-08T11:45:50+00:00">1月 8, 2013</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -29,9 +30,6 @@ tags:
 [@sonots](https://twitter.com/sonots/)さん仕事早い。
 
 gemにしていただいたので僕はこれをネタにブログを書くことにしました。
-
-<!-- more -->
-
 
 
 ### コードを読んでみた

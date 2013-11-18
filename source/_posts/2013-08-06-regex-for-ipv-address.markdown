@@ -9,6 +9,8 @@ categories:
 
 正規表現自前で書かずとも、`Resolv::IPv4::Regex`を使う。
 
+<!--more-->
+
 ```
 require 'resolv'
 Resolv::IPv4::Regex.class     

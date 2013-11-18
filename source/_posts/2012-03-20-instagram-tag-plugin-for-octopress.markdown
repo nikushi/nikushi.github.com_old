@@ -10,15 +10,17 @@ tags:
  - 'Ruby'
  - 'Instagram'
 ---
-Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、プラグインを実装してみました。以下からダウンロードできます。
+Octopressで書く記事の中に簡単にInstagramに載せた写真を挿入できたらいいなとおもい、プラグインを実装してみました。
 
+<!-- more -->
+
+以下からダウンロードできます。
 * [instag.rb](https://gist.github.com/2134897)
 
 ### 概要
     {{ "{% instag http://instagr.am/p/IYYs5bo0jd/ "%}}}
 記事中でタグが使えます。表示したいinstagramページのURLは知っておく必要があります。
 
-<!-- more -->
 
 ### インストール
 [instag.rb](https://gist.github.com/2134897)をダウンロードし```plugins/```ディレクトリに配置してください。

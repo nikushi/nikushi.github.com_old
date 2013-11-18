@@ -12,13 +12,16 @@ tags:
   - Ruby
 ---
 
+グラフツール [Yohoushi](http://yohoushi.github.io/yohoushi/)を紹介するスクリーンキャストを作ってみた。
+
+<!--more-->
+
 [Yohoushi](http://yohoushi.github.io/yohoushi/)というグラフツールを[@sonots](https://twitter.com/sonots)さんと作っています。Yohoushiを使うと[GrowthForecast](http://kazeburo.github.io/GrowthForecast/)に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。
 
 会社の同僚の方々からYohoushiがどんなツールかもっと分かりやすく解説してよというコメントをいただきまして、Yohoushiの概要〜インストール、簡単な使い方までをscreencastにしてみました。"GrowthForecast使ってるからそろそろYohoushiも...でもYohoushiむずいんでしょ?" とおもわれている方にYohoushiの導入の簡単さを分かってもらえる内容になってるとおもいます。
 
 各話3分程度です。エピソード1は概要なのでわかってる方は飛ばしてください。Yohoushiの雰囲気を知るだけならエピソード3、4だけでもおすすめです!
 
-<!--more-->
 
 #### 1 Yohoushiとはなにか?
 

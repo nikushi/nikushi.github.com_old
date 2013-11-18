@@ -6,6 +6,10 @@ comments: true
 categories: 
   - MySQL
 ---
+スロークエリをログに吐く方法。設定ファイル修正する必要はなかった。
+
+<!--more-->
+
 ```
 mysql> set global slow_query_log = 1;
 mysql> set global slow_query_log_file = '/tmp/slowquery.log';

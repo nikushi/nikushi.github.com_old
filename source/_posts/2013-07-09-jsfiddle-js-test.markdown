@@ -13,6 +13,8 @@ tags:
 
 Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる [jsFiddle](http://jsfiddle.net/) がお勧めです!
 
+<!--more-->
+
 [jQuery-UIのaccordion pluginの動作確認をしてみた例](http://jsfiddle.net/niku4i/5pg4m/)
 
 使ってみた感想としては、css、html、javascriptのコードをフォームに入力して Run! ボタンを押すだけでとても簡単でした。

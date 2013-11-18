@@ -7,6 +7,10 @@ categories:
   - 'Ruby'
 ---
 
+ActiveRecordのtypeフィールドについて。
+
+<!--more-->
+
 ActiveRecord::Baseを継承したモデルクラスで"type"という名前のフィールドを使おうとすると、
 
 ```

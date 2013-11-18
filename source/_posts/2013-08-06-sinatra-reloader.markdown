@@ -9,6 +9,8 @@ categories:
 
 Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。
 
+<!--more-->
+
 [Sinatra::Reloader](http://www.sinatrarb.com/contrib/reloader.html) を使うと。
 
 実際には[sinatra-contrib](https://github.com/sinatra/sinatra-contrib)というgemをinstallするわけだけど、このgemには他にも機能があるので困ったときはこのgemを眺めるとよさそうですね。

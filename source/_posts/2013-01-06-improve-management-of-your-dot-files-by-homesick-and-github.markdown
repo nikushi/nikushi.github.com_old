@@ -11,7 +11,9 @@ tags:
   - "github"
 ---
 
-お正月に時間があったのでPC環境のうちドットファイルのマスタファイルをgithub上で管理するようしました。また管理を楽にするため [homesick](https://github.com/technicalpickles/homesick 'homesick') を導入しました。
+正月に時間があったのでドットファイルを[homesick](https://github.com/technicalpickles/homesick 'homesick')を使ってgithubで管理するようにした。
+
+<!-- more -->
 
 動機としては、昨年転職してから会社PCがMacになり家と会社のMacで設定が微妙に異なることがあり煩わしいので揃えてしまおうとおもったためです。
 
@@ -19,9 +21,6 @@ github上に置いたドットファイルをマスタとして扱い、各PCに
 
 しかしながら、`ln`コマンドで1ファイルづつリンク作るのもPC台数が複数あると面倒くさく怠慢により機能しなくなることが予想されます。 [Github dotfiles](http://dotfiles.github.com/) にはdotfilesの管理にまつわる先人の知恵が紹介されていましたので、この中からカジュアルそうなツールで [homesick](https://github.com/technicalpickles/homesick) を導入しました。他にも事例はあるので自分の好みにあう方法を探すのもよいでしょう。
 
-以下、詳細。
-
-<!-- more -->
 
 ### dotfiles ###
 

@@ -9,12 +9,12 @@ tags:
   - Rails
   - Ruby
 ---
+ActiveSupportの`inc_groups_of`メソッドを使ってみたらビューが捗った。
 
-Railsに組み込まれているActiveSupportはRuby標準のクラスに便利な拡張メソッドを加えます。
+<!--more-->
 
 Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。
 
-<!--more-->
 
 例えば、以下の配列データ
 ``` ruby

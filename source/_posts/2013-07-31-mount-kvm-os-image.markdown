@@ -9,6 +9,8 @@ categories:
 
 rawフォーマット限定。
 
+<!--more-->
+
 マウント
 ```
 # losetup /dev/loop0 /data/vm/myserver.img

@@ -11,9 +11,9 @@ tags:
 ---
 [前回の記事](/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/)でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい```rake new_post['hoge']```したら```bundle install```しろと怒られたので実行してみたら途中で止まってしまいはまった。
 
-初めはXCodeまわりを疑ったが最終的にはoctopressのディレクトリのGemfileを修正して対応。以下その対応内容。
-
 <!-- more -->
+
+初めはXCodeまわりを疑ったが最終的にはoctopressのディレクトリのGemfileを修正して対応。
 
 ```
 $ cd path/to/octopress/
