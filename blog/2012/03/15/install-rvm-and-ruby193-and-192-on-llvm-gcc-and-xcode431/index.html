@@ -106,6 +106,9 @@
 
 <div class="entry-content"><p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
 
+<!-- more -->
+
+
 <p>Mac Book Air(2011 mid)購入直後はrbenvを使っていたが結局rvmに戻すことにしたのが始まり。rvmでRubyが動くようになるまでとても苦労したので記しておく。</p>
 
 <p>普通に考えて進めると、</p>
@@ -123,11 +126,6 @@
 
 
 <p>という出力で終了する。ネット上の情報を見ると<a href="https://github.com/kennethreitz/osx-gcc-installer/downloads">osx-gcc-installer</a>をインストールする例と、LLVMではないgccが入ってるXCode 4.1にダウングレードする方法と、4.2以降を使って&mdash;with-gcc=clangをつけてインストールする方法があった。今回は&mdash;with-gcc=clangをつけてRubyをbuildした。詳細は後述。</p>
-
-<p>以下、詳細。</p>
-
-<!-- more -->
-
 
 <h3>環境</h3>
 

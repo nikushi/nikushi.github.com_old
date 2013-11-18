@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="お正月に時間があったのでPC環境のうちドットファイルのマスタファイルをgithub上で管理するようしました。また管理を楽にするため homesick を導入しました。 動機としては、 &hellip;">
+  <meta name="description" content="正月に時間があったのでドットファイルをhomesickを使ってgithubで管理するようにした。 動機としては、昨年転職してから会社PCがMacになり家と会社のMacで設定が微妙に異なることがあり煩わしいので揃えてしまおうとおもったためです。 github上に置いたドットファイルをマスタとして扱い &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,18 +104,16 @@
   </header>
 
 
-<div class="entry-content"><p>お正月に時間があったのでPC環境のうちドットファイルのマスタファイルをgithub上で管理するようしました。また管理を楽にするため <a href="https://github.com/technicalpickles/homesick" title="homesick">homesick</a> を導入しました。</p>
+<div class="entry-content"><p>正月に時間があったのでドットファイルを<a href="https://github.com/technicalpickles/homesick" title="homesick">homesick</a>を使ってgithubで管理するようにした。</p>
+
+<!-- more -->
+
 
 <p>動機としては、昨年転職してから会社PCがMacになり家と会社のMacで設定が微妙に異なることがあり煩わしいので揃えてしまおうとおもったためです。</p>
 
 <p>github上に置いたドットファイルをマスタとして扱い、各PCにリポジトリを<code>git clone</code>してシンボリックリンクを張れば済みます。</p>
 
 <p>しかしながら、<code>ln</code>コマンドで1ファイルづつリンク作るのもPC台数が複数あると面倒くさく怠慢により機能しなくなることが予想されます。 <a href="http://dotfiles.github.com/">Github dotfiles</a> にはdotfilesの管理にまつわる先人の知恵が紹介されていましたので、この中からカジュアルそうなツールで <a href="https://github.com/technicalpickles/homesick">homesick</a> を導入しました。他にも事例はあるので自分の好みにあう方法を探すのもよいでしょう。</p>
-
-<p>以下、詳細。</p>
-
-<!-- more -->
-
 
 <h3>dotfiles</h3>
 

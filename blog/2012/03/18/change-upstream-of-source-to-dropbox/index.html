@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。 rake &hellip;">
+  <meta name="description" content="OctopressのソースコードをDropboxに変更した。 octopressのソースファイルの管理 Deploying to Github Pagesの手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,7 +104,12 @@
   </header>
 
 
-<div class="entry-content"><h3>octopressのソースファイルの管理</h3>
+<div class="entry-content"><p>OctopressのソースコードをDropboxに変更した。</p>
+
+<!--more-->
+
+
+<h3>octopressのソースファイルの管理</h3>
 
 <p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
 
@@ -118,9 +123,6 @@
 <p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
 <p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
-
-<!-- more -->
-
 
 <h3>リポジトリ作成</h3>
 

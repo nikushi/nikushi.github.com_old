@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:09:03+09:00</updated>
+  <updated>2013-11-19T00:38:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -20,12 +20,12 @@
     <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
     <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
 
+<!--more-->
+
+
 <p>調べたかったことはこのスライドにまとまっていた。<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1</a></p>
 
 <p>以下、自分用にメモします。</p>
-
-<!--more-->
-
 
 <h3>開発環境</h3>
 

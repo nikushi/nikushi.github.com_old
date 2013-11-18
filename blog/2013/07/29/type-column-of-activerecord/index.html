@@ -9,8 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、 1
-ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed &hellip;">
+  <meta name="description" content="ActiveRecordのtypeフィールドについて。 ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、 1
+ActiveRecord::SubclassNotFound: The single-table &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,7 +105,12 @@ ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed &h
   </header>
 
 
-<div class="entry-content"><p>ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、</p>
+<div class="entry-content"><p>ActiveRecordのtypeフィールドについて。</p>
+
+<!--more-->
+
+
+<p>ActiveRecord::Baseを継承したモデルクラスで&#8221;type&#8221;という名前のフィールドを使おうとすると、</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed to locate the subclass: 'abc123'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Graph.inheritance_column to use another column for that information.</span></code></pre></td></tr></table></div></figure>

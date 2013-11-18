@@ -9,9 +9,17 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="BSON Objectのサイズを求める方法。 class Person include Mongoid::Document field :name, type: String
-end Person.create name: 'a' person = Person.first
-puts Moped &hellip;">
+  <meta name="description" content="BSON Objectのサイズを求める方法。 1
+2
+3
+4
+5
+6
+7
+8
+9
+class Person include Mongoid::Document field :name, type: String
+end Person.create name: &#39;a&#39; person &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,39 +116,72 @@ puts Moped &hellip;">
 
 <div class="entry-content"><p>BSON Objectのサイズを求める方法。</p>
 
-<pre><code>class Person
-  include Mongoid::Document
-  field :name, type: String
-end
+<!--more-->
 
-Person.create name: 'a'
 
-person = Person.first
-puts Moped::BSON::Document.serialize(parson.as_document).size
-</code></pre>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Person</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'><span class="nb">puts</span> <span class="ss">Moped</span><span class="p">:</span><span class="ss">:BSON</span><span class="o">::</span><span class="no">Document</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">parson</span><span class="o">.</span><span class="n">as_document</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
 
 <p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
 
-<pre><code>class Person
-  include Mongoid::Document
-  field :name, type: String
-  embeds_many :children
-end
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+</span><span class='line'>  <span class="n">embeds_many</span> <span class="ss">:children</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Child</span>
+</span><span class='line'>  <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>  <span class="n">embeded_in</span> <span class="ss">:person</span>
+</span><span class='line'>  <span class="n">field</span> <span class="ss">:age</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Person</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'><span class="n">person</span><span class="o">.</span><span class="n">children</span> <span class="o">&lt;&lt;</span> <span class="err">たくさんデータ入れる</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Person</span><span class="o">.</span><span class="n">first</span>   <span class="c1"># loadに時間がかかる!</span>
+</span></code></pre></td></tr></table></div></figure>
 
-class Child
-  include Mongoid::Document
-  embeded_in :person
-  field :age
-end
-
-Person.create name: 'a'
-person = Person.first
-person.children &lt;&lt; たくさんデータ入れる
-
-Person.first   # loadに時間がかかる!
-</code></pre>
 
 <p>relationにした場合、子供はloadされないので時間がかかりません。</p>
 </div>

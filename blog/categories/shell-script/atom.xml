@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell script | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/shell-script/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:09:03+09:00</updated>
+  <updated>2013-11-19T00:38:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -19,6 +19,9 @@
     <updated>2012-03-18T12:55:00+09:00</updated>
     <id>http://orihubon.com/blog/2012/03/18/seq-command-in-sh</id>
     <content type="html"><![CDATA[<p>seqというコマンドというのを知らなかったのでメモ。</p>
+
+<!--more-->
+
 
 <pre><code>$ for i in seq 1 10; do expr $i \* 2; done
 2

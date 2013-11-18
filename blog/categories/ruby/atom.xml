@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:09:03+09:00</updated>
+  <updated>2013-11-19T00:38:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -20,6 +20,9 @@
     <id>http://orihubon.com/blog/2013/08/06/sinatra-reloader</id>
     <content type="html"><![CDATA[<p>Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。</p>
 
+<!--more-->
+
+
 <p><a href="http://www.sinatrarb.com/contrib/reloader.html">Sinatra::Reloader</a> を使うと。</p>
 
 <p>実際には<a href="https://github.com/sinatra/sinatra-contrib">sinatra-contrib</a>というgemをinstallするわけだけど、このgemには他にも機能があるので困ったときはこのgemを眺めるとよさそうですね。</p>
@@ -32,6 +35,9 @@
     <updated>2013-08-06T09:14:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/08/06/regex-for-ipv-address</id>
     <content type="html"><![CDATA[<p>正規表現自前で書かずとも、<code>Resolv::IPv4::Regex</code>を使う。</p>
+
+<!--more-->
+
 
 <p><code>
 require 'resolv'
@@ -48,7 +54,12 @@ Resolv::IPv4::Regex.class
     <link href="http://orihubon.com/blog/2013/07/29/type-column-of-activerecord/"/>
     <updated>2013-07-29T16:26:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/07/29/type-column-of-activerecord</id>
-    <content type="html"><![CDATA[<p>ActiveRecord::Baseを継承したモデルクラスで"type"という名前のフィールドを使おうとすると、</p>
+    <content type="html"><![CDATA[<p>ActiveRecordのtypeフィールドについて。</p>
+
+<!--more-->
+
+
+<p>ActiveRecord::Baseを継承したモデルクラスで"type"という名前のフィールドを使おうとすると、</p>
 
 <p><code>
 ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed to locate the subclass: 'abc123'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Graph.inheritance_column to use another column for that information.
@@ -157,39 +168,44 @@ $ bundle exec rpsec
     <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
     <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
 
-<pre><code>class Person
+<!--more-->
+
+
+<p>``` ruby
+class Person
   include Mongoid::Document
   field :name, type: String
-end
+end</p>
 
-Person.create name: 'a'
+<p>Person.create name: &lsquo;a&rsquo;</p>
 
-person = Person.first
+<p>person = Person.first
 puts Moped::BSON::Document.serialize(parson.as_document).size
-</code></pre>
+```</p>
 
 <p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
 
 <p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
 
-<pre><code>class Person
+<p>``` ruby
+class Person
   include Mongoid::Document
   field :name, type: String
   embeds_many :children
-end
+end</p>
 
-class Child
+<p>class Child
   include Mongoid::Document
   embeded_in :person
   field :age
-end
+end</p>
 
-Person.create name: 'a'
+<p>Person.create name: &lsquo;a&rsquo;
 person = Person.first
-person.children &lt;&lt; たくさんデータ入れる
+person.children &lt;&lt; たくさんデータ入れる</p>
 
-Person.first   # loadに時間がかかる!
-</code></pre>
+<p>Person.first   # loadに時間がかかる!
+```</p>
 
 <p>relationにした場合、子供はloadされないので時間がかかりません。</p>
 ]]></content>

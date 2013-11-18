@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="やっつけ感ある手順であるがこんな感じ。 1
+  <meta name="description" content="やっつけ感ある手順であるが。 1
 2
 3
 4
@@ -25,7 +25,7 @@ cd /data/vm
 qemu-img create -f qcow2 server01.img 10G
 virt-install -n server01 \
 -r 1024 \
---disk path &hellip;">
+--disk path=/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -120,7 +120,12 @@ virt-install -n server01 \
   </header>
 
 
-<div class="entry-content"><p>やっつけ感ある手順であるがこんな感じ。</p>
+<div class="entry-content"><p>やっつけ感ある手順であるが。</p>
+
+<!--more-->
+
+
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Server | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/server/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:09:03+09:00</updated>
+  <updated>2013-11-19T00:38:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -20,6 +20,9 @@
     <id>http://orihubon.com/blog/2013/02/18/install-smokeping</id>
     <content type="html"><![CDATA[<p>SmokePingをインストールしたメモ。</p>
 
+<!-- more -->
+
+
 <p>SmokePingの概要は以下のとおりです。</p>
 
 <ul>
@@ -28,11 +31,6 @@
 <li>閾値監視、通知</li>
 <li>ping以外にもHTTPやDNSなどを使うこともできる</li>
 </ul>
-
-
-<p>以下、インストールしたときのメモ。</p>
-
-<!-- more -->
 
 
 <h3>1. RRDTool</h3>

@@ -9,12 +9,11 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="1
+  <meta name="description" content="スロークエリをログに吐く方法。設定ファイル修正する必要はなかった。 1
 2
 3
 mysql&gt; set global slow_query_log = 1;
-mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
-mysql&gt; set global long_query_time &hellip;">
+mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log'; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,7 +108,14 @@ mysql&gt; set global long_query_time &hellip;">
   </header>
 
 
-<div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="entry-content"><p>スロークエリをログに吐く方法。設定ファイル修正する必要はなかった。</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>mysql&gt; set global slow_query_log = 1;

@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="世の中カラーピッカーを提供するWebサイトはたくさんありますが、0to255がとても使いやすかったのでメモ。 ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。
-">
+  <meta name="description" content="世の中カラーピッカーを提供するWebサイトはたくさんありますが、0to255がとても使いやすかったのでメモ。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -110,9 +109,12 @@
 
   <div class="entry-content"><p>世の中カラーピッカーを提供するWebサイトはたくさんありますが、<a href="http://0to255.com/">0to255</a>がとても使いやすかったのでメモ。</p>
 
-<p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/09/0-to-255-color-picker/">続きを読む</a>
+    </footer>
   
 
 
@@ -195,17 +197,12 @@
 
   <div class="entry-content"><p>Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる <a href="http://jsfiddle.net/">jsFiddle</a> がお勧めです!</p>
 
-<p><a href="http://jsfiddle.net/niku4i/5pg4m/">jQuery-UIのaccordion pluginの動作確認をしてみた例</a></p>
-
-<p>使ってみた感想としては、css、html、javascriptのコードをフォームに入力して Run! ボタンを押すだけでとても簡単でした。</p>
-
-<p>また、jsFiddleはgithub.comのgistに近い感覚でJavaScriptやCSSを試すことが出来るので、作った画面をSkypeやIRCで他人と共有できる点が優れています。StackOverflowでjs系で検索すると結構な確率で見ますね。</p>
-
-<p>jQueryなどのライブラリの選択やバージョンの変更も左側のメニューからポチポチやるだけで切り替えれて簡単。</p>
-
-<p>また、Ajax系の動作確認も可能です。サーバサイドのエンドポイントが必要ですが、jsFiddleでは <code>/echo/json/</code>, <code>/echo/html/</code>といったリクエストをresponseとしてechoするダミーのエンドポイントが提供されています。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/09/jsfiddle-js-test/">続きを読む</a>
+    </footer>
   
 
 
@@ -241,11 +238,7 @@
   </header>
 
 
-  <div class="entry-content"><p>2013/07/03(水) 開催された <a href="http://www.zusaar.com/event/822004">yokohama.ex #2</a> に参加してきました! 場所はDeNA@渋谷ヒカリエ。</p>
-
-<p>会の趣旨は <a href="http://elixir-lang.org/">elixir-lang.org</a>のGETTING STARTEDをみんなで読んで勉強しましょう、といったところ。</p>
-
-<p>前回(第1回)はyokohama.rbの中でElixir紹介がてらGETTING STARTEDの1章から2.6.4までを読んだ、そうです。僕は参加してませんでしたので今回にあたって密かに一人独習したわけですが、@sonots さんが<a href="https://docs.google.com/presentation/d/1Tl-NTgGiW6V6QCCi2Hy0V81XZTjkAWEC22yTWE8ChP4/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.p">復習資料</a> を作成してくれていて今日の会はこの復習資料からスタート! 英文で読んだ後でまとまった日本語で再度インプットするとすーっと浸みいります。とても助かりました。</p>
+  <div class="entry-content"><p>2013/07/03(水) 開催された <a href="http://www.zusaar.com/event/822004">yokohama.ex #2</a> に参加してきました!</p>
 
 </div>
   
@@ -288,17 +281,7 @@
   </header>
 
 
-  <div class="entry-content"><p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。間違っているところがあれば指摘いただきたい。</p>
-
-<h3>起動</h3>
-
-<pre><code># mysqld_safe --user=_mysql &amp;
-</code></pre>
-
-<h3>停止</h3>
-
-<pre><code># mysqladmin -uroot shutdown
-</code></pre>
+  <div class="entry-content"><p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。</p>
 
 </div>
   
@@ -341,31 +324,14 @@
   </header>
 
 
-  <div class="entry-content"><p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
+  <div class="entry-content"><p>ファイル名を前日の日付でローテートする方法をメモします。</p>
 
-<div><script src='https://gist.github.com/5105939.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>一部説明</p>
-
-<pre><code>ifempty        # 空ファイルでもローテートする。
-               # 過去ログを`ls | wc -l`などするときに
-               # 日数と数を合わせたいので。
-dateext        # ローテートしたファイルに実行時の日付を
-               # 付ける。ただし、00:00以降にlogrotateを実行する
-               # 場合は、ログ内容と日付が乖離するので別途
-               # lastactionで日付を前日分に変えている。
-extension .log # ローテート後のファイル名の場所の末尾に.log 
-               # を持ってくる。 圧縮する場合は.log.gzになる。
-               # 本オプション指定ない場合はapp.log-yyyymmdd となり
-               # 微妙なので調整のため。
-lastaction     # 最後に実行するコマンド
-               # postrotateを使わないのはpostrotateはcompressする前
-               # に実行されるため。compressしてlastactionが実行される。
-</code></pre>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/">続きを読む</a>
+    </footer>
   
 
 
@@ -402,10 +368,6 @@ lastaction     # 最後に実行するコマンド
 
 
   <div class="entry-content"><p>ステージや本番での環境構築まわりについて調べてみた。</p>
-
-<p>調べたかったことはこのスライドにまとまっていた。<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1</a></p>
-
-<p>以下、自分用にメモします。</p>
 
 </div>
   
@@ -519,18 +481,6 @@ color: 1
 
   <div class="entry-content"><p>SmokePingをインストールしたメモ。</p>
 
-<p>SmokePingの概要は以下のとおりです。</p>
-
-<ul>
-<li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
-<li>監視対象ホストのネットワークレイテンシ可視化</li>
-<li>閾値監視、通知</li>
-<li>ping以外にもHTTPやDNSなどを使うこともできる</li>
-</ul>
-
-
-<p>以下、インストールしたときのメモ。</p>
-
 </div>
   
   
@@ -574,43 +524,12 @@ color: 1
 
   <div class="entry-content"><p>BSON Objectのサイズを求める方法。</p>
 
-<pre><code>class Person
-  include Mongoid::Document
-  field :name, type: String
-end
-
-Person.create name: 'a'
-
-person = Person.first
-puts Moped::BSON::Document.serialize(parson.as_document).size
-</code></pre>
-
-<p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
-
-<p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
-
-<pre><code>class Person
-  include Mongoid::Document
-  field :name, type: String
-  embeds_many :children
-end
-
-class Child
-  include Mongoid::Document
-  embeded_in :person
-  field :age
-end
-
-Person.create name: 'a'
-person = Person.first
-person.children &lt;&lt; たくさんデータ入れる
-
-Person.first   # loadに時間がかかる!
-</code></pre>
-
-<p>relationにした場合、子供はloadされないので時間がかかりません。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/13/calculate-bson-objects-size/">続きを読む</a>
+    </footer>
   
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:09:03+09:00</updated>
+  <updated>2013-11-19T00:38:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,7 +18,12 @@
     <link href="http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox/"/>
     <updated>2012-03-18T05:32:00+09:00</updated>
     <id>http://orihubon.com/blog/2012/03/18/change-upstream-of-source-to-dropbox</id>
-    <content type="html"><![CDATA[<h3>octopressのソースファイルの管理</h3>
+    <content type="html"><![CDATA[<p>OctopressのソースコードをDropboxに変更した。</p>
+
+<!--more-->
+
+
+<h3>octopressのソースファイルの管理</h3>
 
 <p><a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>の手順でgithub pagesを使うと、localのworking copyにはsourceというブランチが生成されています。blogを書くときは以下のワークフローになるようです。</p>
 
@@ -32,9 +37,6 @@
 <p><code>git push</code>してupstreamにpushするとgithub上に全部公開されますが、個人的にはソースファイルは公開しなくてよいなと考えました。plugin作って見せたりするシーンでは便利ですが今のところgistを使えば十分なので。</p>
 
 <p>そこで<code>git push</code>する先のリポジトリをgithub.comからDropboxに作成したリモートリポジトリに変更してみます。</p>
-
-<!-- more -->
-
 
 <h3>リポジトリ作成</h3>
 

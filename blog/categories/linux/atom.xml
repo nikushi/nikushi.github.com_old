@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:09:03+09:00</updated>
+  <updated>2013-11-19T00:38:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -19,6 +19,9 @@
     <updated>2013-07-31T15:49:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/07/31/mount-kvm-os-image</id>
     <content type="html"><![CDATA[<p>rawフォーマット限定。</p>
+
+<!--more-->
+
 
 <p>マウント
 ```</p>
@@ -53,7 +56,10 @@
     <link href="http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/"/>
     <updated>2013-07-29T22:58:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install</id>
-    <content type="html"><![CDATA[<p>やっつけ感ある手順であるがこんな感じ。</p>
+    <content type="html"><![CDATA[<p>やっつけ感ある手順であるが。</p>
+
+<!--more-->
+
 
 <p><code>
 cd /data/vm
@@ -115,7 +121,12 @@ terminal &mdash;timeout=5 serial console # 追加
     <link href="http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/"/>
     <updated>2013-03-07T15:57:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name</id>
-    <content type="html"><![CDATA[<p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
+    <content type="html"><![CDATA[<p>ファイル名を前日の日付でローテートする方法をメモします。</p>
+
+<!--more-->
+
+
+<p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
 
 <p><div><script src='https://gist.github.com/5105939.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
