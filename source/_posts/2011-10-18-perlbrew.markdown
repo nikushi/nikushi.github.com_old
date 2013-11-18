@@ -1,0 +1,17 @@
+---
+layout: post
+title: perlbrew
+tags:
+- perl
+- perlbrew
+- programming
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+---
+rootにならずとも様々なperlバージョンをインストールして使える。
+
+インストール方法、使い方は[公式ドキュメント](http://www.perlbrew.pl/)を参考にする。
+
