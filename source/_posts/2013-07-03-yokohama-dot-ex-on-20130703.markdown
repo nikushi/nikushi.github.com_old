@@ -13,6 +13,8 @@ categories:
 
 前回(第1回)はyokohama.rbの中でElixir紹介がてらGETTING STARTEDの1章から2.6.4までを読んだ、そうです。僕は参加してませんでしたので今回にあたって密かに一人独習したわけですが、@sonots さんが[復習資料](https://docs.google.com/presentation/d/1Tl-NTgGiW6V6QCCi2Hy0V81XZTjkAWEC22yTWE8ChP4/pub?start=false&loop=false&delayms=3000#slide=id.p) を作成してくれていて今日の会はこの復習資料からスタート! 英文で読んだ後でまとまった日本語で再度インプットするとすーっと浸みいります。とても助かりました。
 
+<!--more-->
+
 今回はSection2.6.5 TryからSection3の最後まで。プロジェクタにホームページの英文を映して代表の人が読みながらサンプルコードをiexで実行、あれこれ言い合う感じで進められていました。
 
 Elixirにもの申すレベルではないのでElixirには言及しませんが、会の進め方については1つ1つ順番に読み進めるスタイルなのでElixir初心者であっても取っ付きやすかったとおもいます!!!

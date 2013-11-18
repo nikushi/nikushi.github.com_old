@@ -14,6 +14,8 @@ Railsに組み込まれているActiveSupportはRuby標準のクラスに便利�
 
 Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。
 
+<!--more-->
+
 例えば、以下の配列データ
 ``` ruby
 %w(1, 2, 3, 4, 5, 6, 7, 8)

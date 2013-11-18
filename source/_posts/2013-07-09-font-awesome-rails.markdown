@@ -15,6 +15,8 @@ tags:
 
 Bootstrap向けのicon系Webフォントを提供するライブラリ。
 
+<!--more-->
+
 Railsで使うには [font-awesome-rails](https://github.com/bokmann/font-awesome-rails)をGemfileに書いて適切にimportすればOKです。
 
 使い方1 - iタグ使う
