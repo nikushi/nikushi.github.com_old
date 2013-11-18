@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "BUNDLE_FROZENとかBUNDLE_WITHOUT"
+title: "bundle_frozenとかbundle_without"
 date: 2013-07-26 16:37
 comments: true
 categories: 
