@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-19T00:38:11+09:00</updated>
+  <updated>2013-11-20T12:20:07+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ]]></title>
+    <link href="http://orihubon.com/blog/2013/11/20/github-memo/"/>
+    <updated>2013-11-20T12:04:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/11/20/github-memo</id>
+    <content type="html"><![CDATA[<p><a href="http://wazanova.jp/items/675">GitHubの組織が成長する過程で変えたことと変えなかったこと</a>を読んで、良いこと書いててたのでブログに引用する。</p>
+
+<!--more-->
+
+
+<blockquote><p>情報は抱えないで、wiki / chat などを使ってとにかく共有する。社内の特定の人だけに情報が留まるとセクショナリズムにつながる。（追記: 短く意訳してますが、ビデオでは「このことは専門であるあの人に聞かなくてはいけないという意味のない権威主義がはびこるので組織が硬直する。」的な説明がされてます。）</p></blockquote>
+
+<p>特定の人に聞かないと分からない、権威的になっている状態はあるあるですね。そこで属人的になってるから脱却しようと上司が声高々に&#8221;明文化しよう!!!&ldquo;というだけじゃダメなんだろうな&hellip;とおもうわけです。この記事のこのポイントだけ切り出すと単純な話なのですが、Githubの透明性といった文化がある前提なので、他社で単純に明文化だけ取り入れてもうまく行かないかもしれませんね。</p>
+
+<blockquote><p>新入社員はGithubイシュー、チャットログ、pull requestとか読んで、自然と学ぶから邪魔しない。情報はアクセスできるようにするが、時間かけて教え込んだりしない。しかし、この放置する方式だけでは、Githubという組織に早く慣れ親しむのは無理があるので、最近は、最初の１週間はサンフランシスコのオフィスに呼んで、バディ（メンター）をアサインしている。バディの期間をもう少し長くすることも検討中。</p></blockquote>
+
+<p>最初の1週間、集中的にコミュニケーションとるのは良さげ。でも新卒だったらどうするかな。</p>
+
+<blockquote><p>153のチャットルームがある。実際のオフィスと違ってつくるのは安いし、全てのチャットルームに参加するわけでなく、個人単位で選択して参加することで適宜最適化できるので、一時的なものも含めて積極的にルームをつくるようにしている。チャットルームで名前が@でメンションされるとモバイル/デスクトップにpush notificationが飛んでくる。必要なときに連絡がくるが、答えられるときに反応すればよいという非同期スタイル。</p></blockquote>
+
+<p>チャットツール何使ってるんだろう。IRCではないことは確かだ&hellip;!</p>
+
+<blockquote><p>テクノロジーでなくてプロダクトが最先端のいいものであるべき。Ruby, C, git, MySQL, Memcachedというシンプルな構成に絞っている。最新のテクノロジーが会社を成功させるわけではない、どうワークフローをどのように信頼できるテクノロジーとツールでつくりあげていくかがもっと大事。システムを安定して運営できるということは素敵なこと。</p>
+
+<p>役割を増やしたチームを新設して組織を無駄に肥大化させるのでなく、ツールを活用して解決できることも多い。組織を無駄に肥大化させるような昔からの固定観念は疑ってかかるべき。会社は成長する過程では変わらなければいけない。しかし、バリューは変えてはいけない。</p></blockquote>
+
+<p>そうですね。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[スロークエリをMySQL再起動せずオンラインで調査する]]></title>
@@ -1548,84 +1578,6 @@ usermod -G smokeping apache
 
 <pre><code>smokeping --config=/path/to/config --debug
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[BSONオブジェクトのデータサイズを確認する方法(Ruby)]]></title>
-    <link href="http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/"/>
-    <updated>2013-02-13T15:06:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
-    <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
-
-<!--more-->
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Person</span>
-</span><span class='line'>  <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
-</span><span class='line'>  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Person</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
-</span><span class='line'><span class="nb">puts</span> <span class="ss">Moped</span><span class="p">:</span><span class="ss">:BSON</span><span class="o">::</span><span class="no">Document</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">parson</span><span class="o">.</span><span class="n">as_document</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
-
-<p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Person</span>
-</span><span class='line'>  <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
-</span><span class='line'>  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
-</span><span class='line'>  <span class="n">embeds_many</span> <span class="ss">:children</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Child</span>
-</span><span class='line'>  <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
-</span><span class='line'>  <span class="n">embeded_in</span> <span class="ss">:person</span>
-</span><span class='line'>  <span class="n">field</span> <span class="ss">:age</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Person</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span>
-</span><span class='line'><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
-</span><span class='line'><span class="n">person</span><span class="o">.</span><span class="n">children</span> <span class="o">&lt;&lt;</span> <span class="err">たくさんデータ入れる</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Person</span><span class="o">.</span><span class="n">first</span>   <span class="c1"># loadに時間がかかる!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>relationにした場合、子供はloadされないので時間がかかりません。</p>
 ]]></content>
   </entry>
   

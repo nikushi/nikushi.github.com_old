@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Perl コーディングスタイルガイドライン perlstyle - perldoc.perl.org.
-">
+  <meta name="description" content="Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/">[Perl] colored logging by log4perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
+
+&nbsp;
+
+warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
+<pre>log4perl.category = DEBUG, Screen
+log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
+
+たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -485,125 +530,6 @@ mojolicious is light weight one .
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/12/execute-external-command-in-perl/">外部コマンドを実行した時の戻り値判定(Perl)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/10/12/execute-external-command-in-perl/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。</p>
-
-<h3>system()</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="nb">system</span><span class="p">(</span> <span class="nv">$command</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">warn</span> <span class="s">&quot;fail&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;success&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>if ! system()</code> ではない。</p>
-
-<h3>back quote</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$buffer</span> <span class="o">=</span> <span class="sb">`$command`</span><span class="p">;</span>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="vg">$?</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span> <span class="c1"># if false</span>
-</span><span class='line'>    <span class="nb">warn</span> <span class="s">&quot;fail&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;success\n&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;buffer=$buffer&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>$?</code>に戻り値が入る。0以外はfalse</p>
-
-<h3>open()</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">open</span><span class="p">(</span><span class="n">OUTPUT</span><span class="p">,</span> <span class="err">’</span><span class="nb">sort</span> <span class="o">&gt;</span><span class="n">foo</span><span class="err">’</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;Can’t start sort: $!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nb">close</span> <span class="n">OUTPUT</span>   <span class="c1"># wait for sort to finish</span>
-</span><span class='line'>    <span class="ow">or</span> <span class="nb">warn</span> <span class="vg">$!</span> <span class="p">?</span> <span class="s">&quot;Error closing sort pipe: $!&quot;</span> <span class="c1"># 純粋にcloseが失敗した場合(外部コマンドのfailではなく)</span>
-</span><span class='line'>               <span class="p">:</span> <span class="s">&quot;Exit status $? from sort&quot;</span><span class="p">;</span>   <span class="c1"># 外部コマンドがnon-zeroでexitした場合</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>外部コマンドの実行が何らかの理由で失敗すると、close()は偽を返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。</p>
-
-<p>併せて<code>perldoc perlfunc</code>を参照するといい。</p>
-
-<p>では、<code>ping 1.2.3.4 -c 3</code>(pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteを使うとプログラムが終了する3秒間は出力を得られない。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">my</span> <span class="nv">$buffer</span> <span class="o">=</span> <span class="sb">`ping 202.232.0.1 -c 3`</span><span class="p">;</span>
-</span><span class='line'><span class="k">print</span> <span class="nv">$buffer</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>一方<code>open()</code>だと都度ストリームで出力してくれる。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">open</span> <span class="p">(</span> <span class="n">IN</span> <span class="p">,</span> <span class="s">&quot;ping 202.232.0.1 -c 3 |&quot;</span> <span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="vg">$!</span><span class="p">;</span>
-</span><span class='line'><span class="k">while</span><span class="p">(){</span>
-</span><span class='line'>    <span class="nb">chomp</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">print</span> <span class="nv">$_</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="nb">close</span> <span class="n">IN</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -625,6 +551,10 @@ mojolicious is light weight one .
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/11/20/github-memo/">GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/11/05/dump-sloq-query-log-in-mysql/">スロークエリをMySQL再起動せずオンラインで調査する</a>
       </li>
     
@@ -638,10 +568,6 @@ mojolicious is light weight one .
     
       <li class="post">
         <a href="/blog/2013/09/26/in-groups-of-activesupport-extention/">ActiveSupportのin_groups_ofメソッドでビューが捗る!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/06/sinatra-reloader/">Sinatra::Reloader</a>
       </li>
     
   </ul>
