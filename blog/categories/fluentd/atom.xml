@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-06T08:49:15+09:00</updated>
+  <updated>2013-12-06T08:55:18+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -23,7 +23,7 @@
 <!--more-->
 
 
-<p>正直なところFluentdは半年ほど触っていません! ネタが無いのでこれやります!、Fluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
+<p>今日はFluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
 
 <p>Fluentdはシングルプロセスで動作するため、マルチコアなサーバ環境下では全コアのCPUを消費できません。Fluentd1プロセスでも小〜中規模の環境であれば十分さばけますが、大規模環境ではCPUが足りなくなります。そこでCPUを効率的に使うため、一昔前までは起動スクリプトをコア数に応じて用意しマルチプロセス化するといった手法を用いていましたが手軽にはできませんでした。</p>
 
@@ -43,7 +43,7 @@ $ fluent-gem install fluent-plugin-multiprocess
 
 <p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
 
-<p>``` apache /etc/fluent/fluentd.conf linenos:false
+<p>``` apache /etc/fluent/fluentd.conf
 <source>
   type multiprocess</p>
 
@@ -88,7 +88,7 @@ sleep_before_shutdown 5s
 
 <p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
 
-<p>``` apache /etc/fluent/fluentd_child1.conf linenos:false</p>
+<p>``` apache /etc/fluent/fluentd_child1.conf</p>
 
 <h1>Receive events from TCP port</h1>
 
@@ -123,12 +123,12 @@ sleep_before_shutdown 5s
 
 <p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
 
-<p><code>bash 起動ログ抜粋 linenos:false
+<p><code>bash 起動ログ抜粋
 2013-12-05 08:45:30 +0000 [info]: launching child fluentd -c /etc/fluent/fluentd_child4.conf
 </code></p>
 
 <p>netstatコマンドを使って確認しました。確かに4ポートでListenしています。
-<code>sh linenos:false
+<code>sh
 $ sudo netstat -anpt | grep -e ruby -e Proto
 Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
 tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby          

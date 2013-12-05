@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ワイワイ! Fluentd Advent Calendar 2013 6日目担当の @niku4i です。 正直なところFluentdは半年ほど触っていません! ネタが無いのでこれやります!、Fluentdのマルチプロセス化について。最近公式ページに Multiprocess Input &hellip;">
+  <meta name="description" content="ワイワイ! Fluentd Advent Calendar 2013 6日目担当の @niku4i です。 今日はFluentdのマルチプロセス化について。最近公式ページに Multiprocess Input Plugin がドキュメント化されました。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,7 +109,7 @@
 <!--more-->
 
 
-<p>正直なところFluentdは半年ほど触っていません! ネタが無いのでこれやります!、Fluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
+<p>今日はFluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
 
 <p>Fluentdはシングルプロセスで動作するため、マルチコアなサーバ環境下では全コアのCPUを消費できません。Fluentd1プロセスでも小〜中規模の環境であれば十分さばけますが、大規模環境ではCPUが足りなくなります。そこでCPUを効率的に使うため、一昔前までは起動スクリプトをコア数に応じて用意しマルチプロセス化するといった手法を用いていましたが手軽にはできませんでした。</p>
 
@@ -130,7 +130,7 @@
 
 <p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
 
-<figure class='code'><figcaption><span>/etc/fluent/fluentd.conf linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>/etc/fluent/fluentd.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -191,7 +191,7 @@
 
 <p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
 
-<figure class='code'><figcaption><span>/etc/fluent/fluentd_child1.conf linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>/etc/fluent/fluentd_child1.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -233,14 +233,14 @@
 
 <p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
 
-<figure class='code'><figcaption><span>起動ログ抜粋 linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>起動ログ抜粋</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>2013-12-05 08:45:30 +0000 <span class="o">[</span>info<span class="o">]</span>: launching child fluentd -c /etc/fluent/fluentd_child4.conf
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>netstatコマンドを使って確認しました。確かに4ポートでListenしています。</p>
 
-<figure class='code'><figcaption><span>linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
