@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Fluentd | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/fluentd/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2013-12-06T08:46:37+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
+    <link href="http://orihubon.com/blog/2013/12/05/fluentd-multiprocess-input-plugin/"/>
+    <updated>2013-12-05T16:35:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/12/05/fluentd-multiprocess-input-plugin</id>
+    <content type="html"><![CDATA[<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
+
+<!--more-->
+
+
+<p>正直なところFluentdは半年ほど触っていません! ネタが無いのでこれやります!、Fluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
+
+<p>Fluentdはシングルプロセスで動作するため、マルチコアなサーバ環境下では全コアのCPUを消費できません。Fluentd1プロセスでも小〜中規模の環境であれば十分さばけますが、大規模環境ではCPUが足りなくなります。そこでCPUを効率的に使うため、一昔前までは起動スクリプトをコア数に応じて用意しマルチプロセス化するといった手法を用いていましたが手軽にはできませんでした。</p>
+
+<p>そこで最近登場したのが <a href="https://twitter.com/frsyuki">@frsyuki</a> さん作の <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> です。ネット上に試した記事がなかったので試してみました。</p>
+
+<p>Fluentdは0.10.41を使っています。gemコマンドでインストールしました。</p>
+
+<h3>インストール</h3>
+
+<p>Fluentdのコアプラグインではないので、fluent-gemコマンドを使ってインストールします。</p>
+
+<p><code>bash install plugin
+$ fluent-gem install fluent-plugin-multiprocess
+</code></p>
+
+<h3>コンフィグレーション</h3>
+
+<p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
+
+<p>``` apache /etc/fluent/fluentd.conf linenos:false
+<source>
+  type multiprocess</p>
+
+<p>  <process></p>
+
+<pre><code>cmdline -c /etc/fluent/fluentd_child1.conf
+sleep_before_start 1s
+sleep_before_shutdown 5s
+</code></pre>
+
+<p>  </process></p>
+
+<p>  <process></p>
+
+<pre><code>cmdline -c /etc/fluent/fluentd_child2.conf
+sleep_before_start 1s
+sleep_before_shutdown 5s
+</code></pre>
+
+<p>  </process></p>
+
+<p>  <process></p>
+
+<pre><code>cmdline -c /etc/fluent/fluentd_child3.conf
+sleep_before_start 1s
+sleep_before_shutdown 5s
+</code></pre>
+
+<p>  </process></p>
+
+<p>  <process></p>
+
+<pre><code>cmdline -c /etc/fluent/fluentd_child4.conf
+sleep_before_start 1s
+sleep_before_shutdown 5s
+</code></pre>
+
+<p>  </process></p>
+
+<p></source>
+```</p>
+
+<p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
+
+<p>``` apache /etc/fluent/fluentd_child1.conf linenos:false</p>
+
+<h1>Receive events from TCP port</h1>
+
+<p><source>
+  type forward
+  port 24221
+</source></p>
+
+<h1>Include common configurations</h1>
+
+<p>include conf.d/*.conf
+```</p>
+
+<p>fluentd_child[2-4].confのコンフィグ掲載は省略しますが <code>port</code> の番号のみ変更します。</p>
+
+<p>includeしたコンフィグで出力を定義しました。</p>
+
+<p>``` apache /etc/fluent/conf.d/match_all.conf</p>
+
+<h1>Output messages to STDOUT</h1>
+
+<p><match **>
+  type stdout
+</match>
+```</p>
+
+<h3>起動</h3>
+
+<p>今回はコマンドラインから起動します。</p>
+
+<p><code>$ fluentd -c fluent/fluentd.conf</code></p>
+
+<p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
+
+<p><code>bash 起動ログ抜粋 linenos:false
+2013-12-05 08:45:30 +0000 [info]: launching child fluentd -c /etc/fluent/fluentd_child4.conf
+</code></p>
+
+<p>netstatコマンドを使って確認しました。確かに4ポートでListenしています。
+<code>sh linenos:false
+$ sudo netstat -anpt | grep -e ruby -e Proto
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby          
+tcp        0      0 0.0.0.0:24222               0.0.0.0:*                   LISTEN      25143/ruby          
+tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LISTEN      25126/ruby          
+tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby
+</code></p>
+
+<h3>まとめ</h3>
+
+<p>Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。</p>
+
+<p>気になる安定性などに関して、<a href="https://groups.google.com/forum/#!topic/fluentd/syXPqRAE-4w">Fluentdのメーリングリスト上の議論</a> によると 10+ billion records / day 環境下に投入しているユーザ事例もあるようです!</p>
+
+<p>話はそれますが、Fluentdを使っている人やこれから使ってみようという人は <a href="http://docs.fluentd.org/ja/articles/mailing-list">Fluentdのメーリングリスト</a> にjoinすることをオススメします!(自分はもっぱら読むだけ専門ですが) メールは基本英語ですが流し読みするだけでも有益な情報を拾えたり、リリース状況をタイムリーに知ることができます。また、最近では海外のエンジニアの間でも知られるようになってきており、海外でのユースケースなど知れるかもしれません。個人的には英語の勉強にもなるので両得だとおもっています。コミュニティについては@tagomorisさんの<a href="http://tagomoris.hatenablog.com/entry/2013/12/03/150656">Fluentdとはどのようなソフトウェアなのか</a>の中で詳しく書かれていますね。</p>
+
+<p>簡単ではありましたが以上です。</p>
+
+<p>すごい知った風でしたがgemの使い方を紹介しただけでした。最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使ってアウトプットしていきたいですね。</p>
+
+<p>次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-11-20T12:20:07+09:00</updated>
+  <updated>2013-12-06T08:46:37+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,178 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
+    <link href="http://orihubon.com/blog/2013/12/05/fluentd-multiprocess-input-plugin/"/>
+    <updated>2013-12-05T16:35:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/12/05/fluentd-multiprocess-input-plugin</id>
+    <content type="html"><![CDATA[<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
+
+<!--more-->
+
+
+<p>正直なところFluentdは半年ほど触っていません! ネタが無いのでこれやります!、Fluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
+
+<p>Fluentdはシングルプロセスで動作するため、マルチコアなサーバ環境下では全コアのCPUを消費できません。Fluentd1プロセスでも小〜中規模の環境であれば十分さばけますが、大規模環境ではCPUが足りなくなります。そこでCPUを効率的に使うため、一昔前までは起動スクリプトをコア数に応じて用意しマルチプロセス化するといった手法を用いていましたが手軽にはできませんでした。</p>
+
+<p>そこで最近登場したのが <a href="https://twitter.com/frsyuki">@frsyuki</a> さん作の <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> です。ネット上に試した記事がなかったので試してみました。</p>
+
+<p>Fluentdは0.10.41を使っています。gemコマンドでインストールしました。</p>
+
+<h3>インストール</h3>
+
+<p>Fluentdのコアプラグインではないので、fluent-gemコマンドを使ってインストールします。</p>
+
+<figure class='code'><figcaption><span>install plugin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>fluent-gem install fluent-plugin-multiprocess
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>コンフィグレーション</h3>
+
+<p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
+
+<figure class='code'><figcaption><span>/etc/fluent/fluentd.conf linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> multiprocess
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
+</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child1.conf</span>
+</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
+</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
+</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
+</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child2.conf</span>
+</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
+</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
+</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
+</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child3.conf</span>
+</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
+</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
+</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
+</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child4.conf</span>
+</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
+</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
+</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
+
+<figure class='code'><figcaption><span>/etc/fluent/fluentd_child1.conf linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Receive events from TCP port</span>
+</span><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'>  <span class="nb">port</span> <span class="m">24221</span>
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Include common configurations</span>
+</span><span class='line'><span class="nb">include</span> conf.d/*.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>fluentd_child[2-4].confのコンフィグ掲載は省略しますが <code>port</code> の番号のみ変更します。</p>
+
+<p>includeしたコンフィグで出力を定義しました。</p>
+
+<figure class='code'><figcaption><span>/etc/fluent/conf.d/match_all.conf </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Output messages to STDOUT</span>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> stdout
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>起動</h3>
+
+<p>今回はコマンドラインから起動します。</p>
+
+<p><code>$ fluentd -c fluent/fluentd.conf</code></p>
+
+<p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
+
+<figure class='code'><figcaption><span>起動ログ抜粋 linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>2013-12-05 08:45:30 +0000 <span class="o">[</span>info<span class="o">]</span>: launching child fluentd -c /etc/fluent/fluentd_child4.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>netstatコマンドを使って確認しました。確かに4ポートでListenしています。</p>
+
+<figure class='code'><figcaption><span>linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo netstat -anpt | grep -e ruby -e Proto
+</span><span class='line'>Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
+</span><span class='line'>tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby
+</span><span class='line'>tcp        0      0 0.0.0.0:24222               0.0.0.0:*                   LISTEN      25143/ruby
+</span><span class='line'>tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LISTEN      25126/ruby
+</span><span class='line'>tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>まとめ</h3>
+
+<p>Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。</p>
+
+<p>気になる安定性などに関して、<a href="https://groups.google.com/forum/#!topic/fluentd/syXPqRAE-4w">Fluentdのメーリングリスト上の議論</a> によると 10+ billion records / day 環境下に投入しているユーザ事例もあるようです!</p>
+
+<p>話はそれますが、Fluentdを使っている人やこれから使ってみようという人は <a href="http://docs.fluentd.org/ja/articles/mailing-list">Fluentdのメーリングリスト</a> にjoinすることをオススメします!(自分はもっぱら読むだけ専門ですが) メールは基本英語ですが流し読みするだけでも有益な情報を拾えたり、リリース状況をタイムリーに知ることができます。また、最近では海外のエンジニアの間でも知られるようになってきており、海外でのユースケースなど知れるかもしれません。個人的には英語の勉強にもなるので両得だとおもっています。コミュニティについては@tagomorisさんの<a href="http://tagomoris.hatenablog.com/entry/2013/12/03/150656">Fluentdとはどのようなソフトウェアなのか</a>の中で詳しく書かれていますね。</p>
+
+<p>簡単ではありましたが以上です。</p>
+
+<p>すごい知った風でしたがgemの使い方を紹介しただけでした。最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使ってアウトプットしていきたいですね。</p>
+
+<p>次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ]]></title>
@@ -1462,122 +1634,6 @@ color: 1
 </code></pre>
 
 <p>Happy Hacking!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SmokePingをインストールしてみた]]></title>
-    <link href="http://orihubon.com/blog/2013/02/18/install-smokeping/"/>
-    <updated>2013-02-18T16:41:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/02/18/install-smokeping</id>
-    <content type="html"><![CDATA[<p>SmokePingをインストールしたメモ。</p>
-
-<!-- more -->
-
-
-<p>SmokePingの概要は以下のとおりです。</p>
-
-<ul>
-<li>smokepingデーモンが対象に対して定期的にpingポーリング</li>
-<li>監視対象ホストのネットワークレイテンシ可視化</li>
-<li>閾値監視、通知</li>
-<li>ping以外にもHTTPやDNSなどを使うこともできる</li>
-</ul>
-
-
-<h3>1. RRDTool</h3>
-
-<pre><code>yum install rrdtool rrdtool-devel rrdtoo-perl   
-</code></pre>
-
-<h3>2. fping</h3>
-
-<p>sourceからインストールしました。fpingをroot権限で実行させるためsetuidしました。</p>
-
-<pre><code>mkdir ~/src/ ; cd ~/src/
-wget http://oss.oetiker.ch/smokeping/pub/fping-2.4b2_to4-ipv6.tar.gz
-tar zxvf fping-2.4b2_to4-ipv6.tar.gz
-cd fping-2.4b2_to4-ipv6
-./configure --prefix=/usr/local/smokeping
-make
-su -
-make install
-chmod u+s /usr/local/sbin/fping
-</code></pre>
-
-<h3>3. Perl Modules</h3>
-
-<p>公式に書いてあるCPANモジュールをcpanでインストールします。optionalなモジュールは必要ないので入れてません。</p>
-
-<pre><code># perl -MCPAIN -e shell
-cpan&gt; install FCGI CGI CGI::Fast Config::Grammar LWP
-</code></pre>
-
-<h3>4. SmokePingのインストール</h3>
-
-<p>こちらもソースからインストールします。</p>
-
-<pre><code>cd ~/src
-wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.8.tar.gz
-tar zxvf smokeping-2.6.8.tar.gz
-cd smokeping-2.6.8
-./configure --prefix=/usr/local/smokeping
-/usr/bin/gmake install
-mkdir -p /usr/local/smokeping/cache
-mkdir -p /usr/local/smokeping/data
-mkdir -p /usr/local/smokeping/var
-mkdir /usr/local/smokeping/var/log
-chown -R smokeping:smokeping /usr/local/smokeping
-chmod -R g+rw /usr/local/smokeping/cache
-chmod 600 /usr/local/smokeping/etc/smokeping_secrets.dist
-</code></pre>
-
-<p>smokepingユーザを作ります。</p>
-
-<pre><code>useradd smokeping
-usermod -G smokeping apache
-</code></pre>
-
-<h3>5. SmokePingのコンフィグ</h3>
-
-<p><code>etc/config.dist</code>を<code>etc/smokeping.conf</code>にリネームしてサンプルを参考に設定する。</p>
-
-<h3>6. 起動</h3>
-
-<p>pingを定期実行するsmokepingデーモンを上げます。</p>
-
-<p>ためしに起動する</p>
-
-<pre><code>su - smokeping -m -c /usr/local/smokeping/bin/smokeping --config=/usr/local/smokeping/etc/smokeping.conf --debug
-</code></pre>
-
-<p>問題なければinitスクリプトから起動する。initスクリプトは適当に作ったのを<a href="https://gist.github.com/niku4i/4975644">gist</a>に上げました。</p>
-
-<h3>7. apacheの設定</h3>
-
-<p>以下を<code>/etc/httpd/conf.d/smokeping.conf</code>に。</p>
-
-<div><script src='https://gist.github.com/4976007.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>cgi用に以下を作った</p>
-
-<div><script src='https://gist.github.com/4976014.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<h3>その他</h3>
-
-<p>コンフィグの構文チェック</p>
-
-<pre><code>smokeping --check --config=/path/to/config
-</code></pre>
-
-<p>デバッグモード実行</p>
-
-<pre><code>smokeping --config=/path/to/config --debug
-</code></pre>
 ]]></content>
   </entry>
   
