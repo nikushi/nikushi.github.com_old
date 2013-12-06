@@ -88,7 +88,7 @@ IF-MIB::ifDescr.1 = STRING: lo
 IF-MIB::ifDescr.2 = STRING: eth0
 IF-MIB::ifDescr.3 = STRING: eth1
 IF-MIB::ifDescr.4 = STRING: eth1.100   # 以前は 4 は veth0 だった!!!!!
-IF-MIB::ifDescr.5 = STRING: eth1.200   # 以前は 4 は veth1 だった!!!!!
+IF-MIB::ifDescr.5 = STRING: eth1.200   # 以前は 5 は veth1 だった!!!!!
 ```
 
 Ciscoなどではindex値を固定化するオプションが有効という情報もありますので、ベンダによるみたい。
