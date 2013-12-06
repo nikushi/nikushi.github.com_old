@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-06T08:55:18+09:00</updated>
+  <updated>2013-12-06T09:04:15+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -37,6 +37,12 @@
 
 <p><code>bash install plugin
 $ fluent-gem install fluent-plugin-multiprocess
+</code></p>
+
+<p>なお、td-agent版の場合はコマンドのパスが通っていないので以下のとおりインストールしてください。</p>
+
+<p><code>bash install plugin (td-agent user)
+$ /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-multiprocess
 </code></p>
 
 <h3>コンフィグレーション</h3>

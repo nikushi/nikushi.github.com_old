@@ -126,6 +126,13 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>なお、td-agent版の場合はコマンドのパスが通っていないので以下のとおりインストールしてください。</p>
+
+<figure class='code'><figcaption><span>install plugin (td-agent user)</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>/usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-multiprocess
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>コンフィグレーション</h3>
 
 <p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
