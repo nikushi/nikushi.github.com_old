@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-06T16:37:53+09:00</updated>
+  <updated>2013-12-06T16:51:01+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -166,7 +166,7 @@
 </span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">2</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth0</span>
 </span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">3</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span>
 </span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">4</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">100</span>   <span class="c1"># 以前は 4 は veth0 だった!!!!!</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">5</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">200</span>   <span class="c1"># 以前は 4 は veth1 だった!!!!!</span>
+</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">5</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">200</span>   <span class="c1"># 以前は 5 は veth1 だった!!!!!</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
