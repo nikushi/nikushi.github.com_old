@@ -26,6 +26,11 @@ Fluentdのコアプラグインではないので、fluent-gemコマンドを使
 $ fluent-gem install fluent-plugin-multiprocess
 ```
 
+なお、td-agent版の場合はコマンドのパスが通っていないので以下のとおりインストールしてください。
+
+``` bash install plugin (td-agent user)
+$ /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-multiprocess
+```
 
 ### コンフィグレーション
 
