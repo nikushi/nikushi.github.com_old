@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ActiveRecordのtypeフィールドについて。 ">
+  <meta name="description" content="rawフォーマット限定。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-31T15:49:00+09:00" pubdate data-updated="true">Jul 31<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/31/mount-kvm-os-image/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>rawフォーマット限定。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/31/mount-kvm-os-image/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T22:58:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>やっつけ感ある手順であるが。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -423,118 +509,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/perl-dev_env_and_deploy/">Perl環境構築作りのチート</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T09:30:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/25/perl-dev_env_and_deploy/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>ステージや本番での環境構築まわりについて調べてみた。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/02/25/perl-dev_env_and_deploy/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-23T13:34:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/23/proclet/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
-RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>
-
-<p>インストール</p>
-
-<pre><code>$ cpanm Proclet
-</code></pre>
-
-<p>簡単ですね!</p>
-
-<p>Procfileを書く。</p>
-
-<pre><code>$ vim Procfile
-web: carton exec -Ilib -- plackup -r app.psgi
-</code></pre>
-
-<p>ほかにworkerなど立ち上げるプロセスがあれば行区切りで書けばOK。</p>
-
-<p>起動させてみる</p>
-
-<pre><code>$ proclet start --color
-13:33:16 web.1      | Watching ./lib app.psgi for file updates.
-13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
-</code></pre>
-
-<p>&mdash;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
-
-<pre><code>$ cat .foreman
-color: 1
-</code></pre>
-
-<p>Happy Hacking!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -556,7 +530,15 @@ color: 1
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/">SNMPのindexキャッシュによる取得時間短縮の検証</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/12/06/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/05/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
       </li>
     
       <li class="post">
@@ -565,14 +547,6 @@ color: 1
     
       <li class="post">
         <a href="/blog/2013/11/05/dump-sloq-query-log-in-mysql/">スロークエリをMySQL再起動せずオンラインで調査する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/07/isucon3-yosen/">ISUCON3予選の記録</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
       </li>
     
   </ul>

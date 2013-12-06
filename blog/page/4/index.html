@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回の記事でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもいrake new_post['hoge']したらbundle installしろと怒られたので実行してみたら途中で止まってしまいはまった。 ">
+  <meta name="description" content="seqというコマンドというのを知らなかったのでメモ。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/seq-command-in-sh/">seqコマンド</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T12:55:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/18/seq-command-in-sh/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>seqというコマンドというのを知らなかったのでメモ。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/18/seq-command-in-sh/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T05:32:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>OctopressのソースコードをDropboxに変更した。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -457,95 +543,6 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">curlでサーバ証明書の検証で失敗したとき</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
-
-<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
-rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
-
-じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
-
-根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
-<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[vim]ビジュアルモード選択範囲だけ置換</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
-	<li>:にてコマンド指定するモードに入る</li>
-	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
-</ol>
-vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -567,7 +564,15 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/">SNMPのindexキャッシュによる取得時間短縮の検証</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/12/06/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/05/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
       </li>
     
       <li class="post">
@@ -576,14 +581,6 @@ vimでコード書いてるときなど、この範囲だけざっくりコメ�
     
       <li class="post">
         <a href="/blog/2013/11/05/dump-sloq-query-log-in-mysql/">スロークエリをMySQL再起動せずオンラインで調査する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/07/isucon3-yosen/">ISUCON3予選の記録</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
       </li>
     
   </ul>

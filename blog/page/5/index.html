@@ -9,9 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="
-$ logrotate -dv file.conf でdry-run。
-">
+  <meta name="description" content="rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。 user$ bash -s stable rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。 じゃあということでcurlに- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +76,95 @@ $ logrotate -dv file.conf でdry-run。
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/">curlでサーバ証明書の検証で失敗したとき</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-20T00:00:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">rvmをローカルマシンにインストールしたら証明書云々と言われてエラーになる。
+
+<pre lang="shell">user$ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )</pre>
+rvmをインストールしたいので、公式ページに従い上のとおりcurlを使いインストールしようとするが、証明書エラーになり失敗した。
+
+じゃあということでcurlに-kオプションを追加して実行してみたけど、どうもcurlでダウンロードした先でもさらにcurlしているようでやはり証明書のverifyに失敗する。
+
+根本解決じゃない気もするが.. ~/.curlrcにinsecureを書いて対応する。
+<pre lang="shell">$ echo insecure &gt;&gt; ~/.curlrc</pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[vim]ビジュアルモード選択範囲だけ置換</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
+	<li>:にてコマンド指定するモードに入る</li>
+	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
+</ol>
+vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -447,88 +534,6 @@ Framewark
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/18/perlbrew/">perlbrew</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/10/18/perlbrew/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>rootにならずとも様々なperlバージョンをインストールして使える。</p>
-
-<p>インストール方法、使い方は<a href="http://www.perlbrew.pl/">公式ドキュメント</a>を参考にする。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/18/appfatpacker/">App::FatPacker</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/10/18/appfatpacker/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。
-
-&nbsp;
-
-<a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -550,7 +555,15 @@ Framewark
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/">SNMPのindexキャッシュによる取得時間短縮の検証</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/12/06/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/05/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
       </li>
     
       <li class="post">
@@ -559,14 +572,6 @@ Framewark
     
       <li class="post">
         <a href="/blog/2013/11/05/dump-sloq-query-log-in-mysql/">スロークエリをMySQL再起動せずオンラインで調査する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/07/isucon3-yosen/">ISUCON3予選の記録</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/01/yohoushi-screencasts/">Yohoushi screencasts!</a>
       </li>
     
   </ul>
