@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-06T16:51:01+09:00</updated>
+  <updated>2013-12-06T17:41:36+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -365,176 +365,6 @@
 <p>すごい知った風でしたがgemの使い方を紹介しただけでした。最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使ってアウトプットしていきたいですね。</p>
 
 <p>次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
-    <link href="http://orihubon.com/blog/2013/12/05/fluentd-multiprocess-input-plugin/"/>
-    <updated>2013-12-05T16:35:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/12/05/fluentd-multiprocess-input-plugin</id>
-    <content type="html"><![CDATA[<p>ワイワイ! Fluentd Advent Calendar 2013 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
-
-<!--more-->
-
-
-<p>正直なところFluentdは半年ほど触っていません! ネタが無いのでこれやります!、Fluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> こちらがドキュメント化されました。</p>
-
-<p>Fluentdはシングルプロセスで動作するため、マルチコアなサーバ環境下では全コアのCPUを消費できません。そこでCPUを効率的に使うため、一昔前までは起動スクリプトをコア数に応じて用意しマルチプロセス化するといった手法を用いていましたが手軽にはできませんでした。</p>
-
-<p>そこで最近登場したのが <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> です。試した記事がネット上になかったので試してみました。</p>
-
-<p>Fluentdは0.10.41を使っています。gemコマンドでインストールしました。</p>
-
-<h3>インストール</h3>
-
-<p>Fluentdのコアプラグインではないので、fluent-gemコマンドを使ってインストールします。</p>
-
-<figure class='code'><figcaption><span>install plugin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>fluent-gem install fluent-plugin-multiprocess
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>コンフィグレーション</h3>
-
-<p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。pathはテスト用なので適当です。適宜読み替えください。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
-
-<figure class='code'><figcaption><span>/etc/fluent/fluentd.conf linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> multiprocess
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child1.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child2.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child3.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child4.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
-
-<figure class='code'><figcaption><span>/etc/fluent/fluentd_child1.conf linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Receive events from TCP port</span>
-</span><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> forward
-</span><span class='line'>  <span class="nb">port</span> <span class="m">24221</span>
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Include common configuration</span>
-</span><span class='line'><span class="nb">include</span> conf.d/*.conf
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>fluentd_child[2-4].confのコンフィグ掲載は省略しますが <code>port</code> の番号のみ変更します。</p>
-
-<p>includeしたコンフィグで出力を定義しました。</p>
-
-<figure class='code'><figcaption><span>/etc/fluent/conf.d/match_all.conf </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Output messages to STDOUT</span>
-</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> stdout
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>起動</h3>
-
-<p>今回はコマンドラインから起動します。</p>
-
-<p><code>$ fluentd -c fluent/fluentd.conf</code></p>
-
-<p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
-
-<figure class='code'><figcaption><span>起動ログ抜粋 linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>2013-12-05 08:45:30 +0000 <span class="o">[</span>info<span class="o">]</span>: launching child fluentd -c /etc/fluent/fluentd_child4.conf
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>netstatコマンドを使って確認してみます。確かに4ポートでListenしています。</p>
-
-<figure class='code'><figcaption><span>linenos:false</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo netstat -anpt | grep -e ruby -e Proto
-</span><span class='line'>Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
-</span><span class='line'>tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24222               0.0.0.0:*                   LISTEN      25143/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LISTEN      25126/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>まとめ</h3>
-
-<p>Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。</p>
-
-<p>気になる安定性などに関して私は本番利用したことがないので分かりませんが、<a href="https://groups.google.com/forum/#!topic/fluentd/syXPqRAE-4w">Fluentdのメーリングリスト上の議論</a> によると 10+ billion records / day 環境下に投入しているユーザ事例もあるようです!</p>
-
-<p>話はそれますが、Fluentdを使っている人やこれから使ってみようという人は <a href="http://docs.fluentd.org/ja/articles/mailing-list">Fluentdのメーリングリスト</a> にjoinすることをオススメします!(自分はもっぱら読むだけ専門ですが) メールは基本英語ですが流し読みするだけでも有益な情報を拾えたり、リリース状況をタイムリーに知ることができます。また、最近は海外のエンジニアでも知られるようになってきており、海外でのユースケースなど知れるかもしれません。個人的には英語の勉強にもなるので両得だとおもっています。</p>
-
-<p>最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使っていきたいなとおもいます。</p>
-
-<p>簡単ではありましたが以上です。次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
 ]]></content>
   </entry>
   
@@ -1885,6 +1715,68 @@ lastaction     # 最後に実行するコマンド
                # postrotateを使わないのはpostrotateはcompressする前
                # に実行されるため。compressしてlastactionが実行される。
 </code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Perl環境構築作りのチート]]></title>
+    <link href="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/"/>
+    <updated>2013-02-25T09:30:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
+    <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
+
+<!--more-->
+
+
+<p>調べたかったことはこのスライドにまとまっていた。<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1</a></p>
+
+<p>以下、自分用にメモします。</p>
+
+<h3>開発環境</h3>
+
+<pre><code>$ curl -kL http://install.perlbrew.pl | bash
+$ echo 'source ~/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bash_profile
+$ source ~/.bash_profile
+$ perlbrew install perl-5.17.9
+$ perlbrew switch perl-5.17.9
+$ perlbrew install-cpanm
+$ cpanm carton
+$ cpanm proclet # 必要であれば
+</code></pre>
+
+<h3>デプロイ先</h3>
+
+<pre><code>$ sudo useradd -m myapp &amp;&amp; sudo su - myapp
+# perl環境構築(略)
+myapp$ git clone url myapp
+myapp$ cd myapp
+myapp$ carton install
+myapp$ carton exec -- prove
+</code></pre>
+
+<h3>daemontoolsスクリプト</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
+</span><span class='line'>export HOME=/home/myapp
+</span><span class='line'>export PLACK_ENV=production
+</span><span class='line'>cd $HOME/myappexec
+</span><span class='line'>exec setuidgid myapp ./script/start.sh</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>source $HOME/perl5/perlbrew/etc/bashrc
+</span><span class='line'>carton exec -- myapp</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   
