@@ -131,7 +131,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>例外が発生。子プロセスからconnectionを利用しようとしたので怒られる。</p>
+<p>例外が発生。子プロセスからコネクションを利用しようとしたので怒られる。</p>
 
 <pre><code>=&gt; ..snip.. redis/client.rb:285:in `ensure_connected': Tried to use a connection from a child process without reconnecting. You need to reconnect to Redis after forking. (Redis::InheritedError)
 </code></pre>
@@ -159,9 +159,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>上のコードだとTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
+<p>上のコードではTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
 
-<p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じsocket使ってはいけないので片方はcloseする、であってますかね。以上です!</p>
+<p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じソケットを使ってはいけないので片方はクローズする、であってますかね。以上です!</p>
 </div>
 
 
