@@ -9,12 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回のRedisクライアントでforkするときは子プロセスでrecoonectするの続き。じゃあfluent-logger-rubyだとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。 このコードは一見動くけどよくない1
-2
-3
-4
-5
-6 &hellip;">
+  <meta name="description" content="前回のRedisクライアントでforkするときは子プロセスでrecoonectするの続き。じゃあfluent-logger-rubyだとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。 サンプルコード このコードは一見動くけどよくない1
+2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -114,7 +110,7 @@
 <!-- more -->
 
 
-
+<h3>サンプルコード</h3>
 
 <figure class='code'><figcaption><span>このコードは一見動くけどよくない</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -130,6 +126,8 @@
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<h3>質問してみた</h3>
 
 <p>社内のIRCでちらっと聞いてみたところ同僚から助言いただきました。</p>
 
@@ -163,7 +161,7 @@
 
 <p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment</a>に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
 
-<p>最後まとめ</p>
+<h3>まとめ</h3>
 
 <pre><code>19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
 19:08 nikushi: SPDY w

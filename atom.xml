@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-11T20:30:54+09:00</updated>
+  <updated>2013-12-11T20:32:29+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -23,7 +23,7 @@
 <!-- more -->
 
 
-
+<h3>サンプルコード</h3>
 
 <figure class='code'><figcaption><span>このコードは一見動くけどよくない</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -39,6 +39,8 @@
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<h3>質問してみた</h3>
 
 <p>社内のIRCでちらっと聞いてみたところ同僚から助言いただきました。</p>
 
@@ -72,7 +74,7 @@
 
 <p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment</a>に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
 
-<p>最後まとめ</p>
+<h3>まとめ</h3>
 
 <pre><code>19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
 19:08 nikushi: SPDY w
