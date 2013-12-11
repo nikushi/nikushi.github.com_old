@@ -5,17 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hulu 日本でサービス開始 - ni-blog</title>
+  <title>Redisクライアントでforkするときは子プロセスでrecoonectする - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="登録してみました。LOST途中で見るの止めてたから、みるんだ。まさに時間をLOSTだね。 とりあえず字幕が変。縦書きでチャーリーが
-チ
-ャ
-ー
-リ
-ー
-とかなってて。まだローカライゼーションが甘いな。LOSTシーズン4のEp２は字幕が会話と大きくズレててまともに見れなかった。英語鍛えろってことかね &hellip;">
+  <meta name="description" content="Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyのredis-rbで実験しました。結論としてはfork後に子プロセス側でソケットをクローズして再確立すれば良いです。 以下のケースは動かない。 bad &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/09/02/hulu-ri-ben-desabisukai-shi/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -85,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">hulu 日本でサービス開始</h1>
+      <h1 class="entry-title">Redisクライアントでforkするときは子プロセスでrecoonectする</h1>
     
     
       <p class="meta">
@@ -101,7 +95,7 @@
   
 
 
-<time datetime="2011-09-02T00:00:00+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time>
+<time datetime="2013-12-11T16:24:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -110,19 +104,63 @@
   </header>
 
 
-<div class="entry-content">登録してみました。LOST途中で見るの止めてたから、みるんだ。まさに時間をLOSTだね。
+<div class="entry-content"><p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でソケットをクローズして再確立すれば良いです。</p>
 
-とりあえず字幕が変。縦書きでチャーリーが
-チ
-ャ
-ー
-リ
-ー
-とかなってて。まだローカライゼーションが甘いな。LOSTシーズン4のEp２は字幕が会話と大きくズレててまともに見れなかった。英語鍛えろってことかね。
+<!-- more -->
 
-今後改善されるかな。
 
-１ヶ月無料で楽しんでみましょ。
+<p>以下のケースは動かない。</p>
+
+<figure class='code'><figcaption><span>bad case</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>       <span class="c1"># 親プロセスがRedisサーバとコネクション確立</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>     <span class="c1"># 子プロセスがgetしようとすると...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例外が発生。子プロセスからconnectionを利用しようとしたので怒られる。</p>
+
+<pre><code>=&gt; ..snip.. redis/client.rb:285:in `ensure_connected': Tried to use a connection from a child process without reconnecting. You need to reconnect to Redis after forking. (Redis::InheritedError)
+</code></pre>
+
+<p>fork後にreconnectするように言われるのでそのとおりします。以下はOKです。</p>
+
+<figure class='code'><figcaption><span>works!</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">reconnect</span>
+</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上のコードだとTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
+
+<p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じsocket使ってはいけないので片方はcloseする、であってますかね。以上です!</p>
 </div>
 
 
@@ -145,8 +183,14 @@
   
 
 
-<time datetime="2011-09-02T00:00:00+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time>
+<time datetime="2013-12-11T16:24:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/redis/'>Redis</a>
+  
+</span>
 
 
     </p>
@@ -154,7 +198,7 @@
       <div class="sharing">
   <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/09/02/hulu-ri-ben-desabisukai-shi/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/09/02/hulu-ri-ben-desabisukai-shi/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/" >Tweet</a>
   
   
   
@@ -166,14 +210,18 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/31/sekiyuriteienziniaringu-2/" title="Previous Post: セキュリティエンジニアリング">&laquo; セキュリティエンジニアリング</a>
+        <a class="basic-alignment left" href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/" title="Previous Post: SNMPのindexキャッシュによる取得時間短縮の検証">&laquo; SNMPのindexキャッシュによる取得時間短縮の検証</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/09/02/perlhale-sii/" title="Next Post: Perlは楽しい">Perlは楽しい &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -257,7 +305,10 @@
       var disqus_shortname = 'orihubon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/';
+        var disqus_url = 'http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

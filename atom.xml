@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-06T17:41:36+09:00</updated>
+  <updated>2013-12-11T17:02:57+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Redisクライアントでforkするときは子プロセスでrecoonectする]]></title>
+    <link href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/"/>
+    <updated>2013-12-11T16:24:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby</id>
+    <content type="html"><![CDATA[<p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でソケットをクローズして再確立すれば良いです。</p>
+
+<!-- more -->
+
+
+<p>以下のケースは動かない。</p>
+
+<figure class='code'><figcaption><span>bad case</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>       <span class="c1"># 親プロセスがRedisサーバとコネクション確立</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>     <span class="c1"># 子プロセスがgetしようとすると...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例外が発生。子プロセスからconnectionを利用しようとしたので怒られる。</p>
+
+<pre><code>=&gt; ..snip.. redis/client.rb:285:in `ensure_connected': Tried to use a connection from a child process without reconnecting. You need to reconnect to Redis after forking. (Redis::InheritedError)
+</code></pre>
+
+<p>fork後にreconnectするように言われるのでそのとおりします。以下はOKです。</p>
+
+<figure class='code'><figcaption><span>works!</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">reconnect</span>
+</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上のコードだとTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
+
+<p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じsocket使ってはいけないので片方はcloseする、であってますかね。以上です!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SNMPのindexキャッシュによる取得時間短縮の検証]]></title>
@@ -1715,68 +1780,6 @@ lastaction     # 最後に実行するコマンド
                # postrotateを使わないのはpostrotateはcompressする前
                # に実行されるため。compressしてlastactionが実行される。
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Perl環境構築作りのチート]]></title>
-    <link href="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/"/>
-    <updated>2013-02-25T09:30:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
-    <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
-
-<!--more-->
-
-
-<p>調べたかったことはこのスライドにまとまっていた。<a href="http://www.slideshare.net/ImaiHayato/niigatapm-1">モダンかもしれないPerlウェブアプリケーション開発入門 &ndash; Nigata.pm teck talk#1</a></p>
-
-<p>以下、自分用にメモします。</p>
-
-<h3>開発環境</h3>
-
-<pre><code>$ curl -kL http://install.perlbrew.pl | bash
-$ echo 'source ~/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bash_profile
-$ source ~/.bash_profile
-$ perlbrew install perl-5.17.9
-$ perlbrew switch perl-5.17.9
-$ perlbrew install-cpanm
-$ cpanm carton
-$ cpanm proclet # 必要であれば
-</code></pre>
-
-<h3>デプロイ先</h3>
-
-<pre><code>$ sudo useradd -m myapp &amp;&amp; sudo su - myapp
-# perl環境構築(略)
-myapp$ git clone url myapp
-myapp$ cd myapp
-myapp$ carton install
-myapp$ carton exec -- prove
-</code></pre>
-
-<h3>daemontoolsスクリプト</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
-</span><span class='line'>export HOME=/home/myapp
-</span><span class='line'>export PLACK_ENV=production
-</span><span class='line'>cd $HOME/myappexec
-</span><span class='line'>exec setuidgid myapp ./script/start.sh</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>source $HOME/perl5/perlbrew/etc/bashrc
-</span><span class='line'>carton exec -- myapp</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   
