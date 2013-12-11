@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-11T20:20:11+09:00</updated>
+  <updated>2013-12-11T20:30:54+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,12 +18,12 @@
     <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
     <updated>2013-12-11T19:53:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
-    <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。じゃあ<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。結論的には、こういうコードは書かない方が良いってこと。</p>
+    <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。じゃあ<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。</p>
 
 <!-- more -->
 
 
-<p><code>` こういうコードは一見動くけどよくない
+<p><code>ruby このコードは一見動くけどよくない
 require 'fluent-logger'
 log = Fluent::Logger::FluentLogger.new(nil, :host=&gt;'localhost', :port=&gt;24224)
 log.post("myapp.access", {"agent"=&gt;"foo"})     # socket(A) が確立される
@@ -34,8 +34,7 @@ end
 
 <p>社内のIRCでちらっと聞いてみたところ同僚から助言いただきました。</p>
 
-<p><code>
-18:36 nikushi: forkしてTCPソケットを親、子で使いまわすの
+<pre><code>18:36 nikushi: forkしてTCPソケットを親、子で使いまわすの
 18:38 sonots: 同じソケットを、並列で利用したら、混ざってることになるけど
 18:39 nikushi: ふむふむ
 ..snip..
@@ -49,27 +48,33 @@ end
 18:50 hirose31: 親子で共用するの辞めたほうがいいんじゃないのかなｗ
 18:57 hirose31: 一般的にやるべきじゃないと思いますよ
 19:06 hirose31: APUEに書いてないかな。。
-19:11 hirose31: If both parent and child write to the same descriptor, without any form of synchronization, such as having the parent wait for the child, their output will be intermixed (assuming it’s a descriptor that was open before the fork). Although this is possible—we saw it in Figure 8.2—it’s not the normal mode of operation.
-</code></p>
+19:11 hirose31: If both parent and child write to the same descriptor, 
+      without any form of synchronization, such as having the parent 
+      wait for the child, their output will be intermixed 
+      (assuming it’s a descriptor that was open before the fork). 
+      Although this is possible—we saw it in Figure 8.2—it’s 
+      not the normal mode of operation.
+19:11 hirose31: だそうな
+19:11 hirose31: p232
+</code></pre>
 
-<p>1つのディスクリプタに複数プロセスが書き込むので、データがまざる可能性があるようです。またクライアントの実装によっては再接続処理で変になったり、意図しない挙動になりそうです。</p>
+<p>APUEによると、可能ではあるが出力が混ざる、通常のオペレーションではない。という記述がありました。@hirose31++</p>
 
-<p>APUEによると、可能ではあるが出力が混ざる、通常のオペレーションではない。ということでした!!!</p>
+<p>またクライアントの実装によっては再接続処理で変になったり、意図しない挙動になりそうですね。</p>
 
-<p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの(『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment)[<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">http://d.hatena.ne.jp/hirose31/20130731/1375248744</a>]に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
+<p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment</a>に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
 
-<p><code>
-19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
+<p>最後まとめ</p>
+
+<pre><code>19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
 19:08 nikushi: SPDY w
 19:13 sonots: まさにSPDY
 19:12 hirose31: まさにSPDY
 19:13 sonots: ふむふむ、それを想定したプロトコル設計にしないといけないわけか
 19:13 nikushi: きょうの結論!
-</code></p>
+</code></pre>
 
-<p>@hirose31先生++ @sonots++</p>
-
-<p>以上!</p>
+<p>@hirose31先生, @sonots ありがとうございました。以上!</p>
 ]]></content>
   </entry>
   
@@ -188,7 +193,9 @@ terminal &mdash;timeout=5 serial console # 追加
 
 <p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
 
-<p>{% gist 5105939 %}</p>
+<p><div><script src='https://gist.github.com/5105939.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 <p>一部説明</p>
 

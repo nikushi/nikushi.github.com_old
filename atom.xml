@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-11T17:06:00+09:00</updated>
+  <updated>2013-12-11T20:30:54+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[親プロセスと子プロセスでTCPソケットを共有したらどうなるか]]></title>
+    <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
+    <updated>2013-12-11T19:53:00+09:00</updated>
+    <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
+    <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。じゃあ<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span>このコードは一見動くけどよくない</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;fluent-logger&#39;</span>
+</span><span class='line'><span class="n">log</span> <span class="o">=</span> <span class="ss">Fluent</span><span class="p">:</span><span class="ss">:Logger</span><span class="o">::</span><span class="no">FluentLogger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="ss">:host</span><span class="o">=&gt;</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="ss">:port</span><span class="o">=&gt;</span><span class="mi">24224</span><span class="p">)</span>
+</span><span class='line'><span class="n">log</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;myapp.access&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;agent&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;foo&quot;</span><span class="p">})</span>     <span class="c1"># socket(A) が確立される</span>
+</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>                                        <span class="c1"># socket(A)は子プロセスにもコピーされる</span>
+</span><span class='line'>  <span class="n">log</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;myapp.access&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;agent&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;foo&quot;</span><span class="p">})</span>   <span class="c1"># socket(A)に書き込む</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>社内のIRCでちらっと聞いてみたところ同僚から助言いただきました。</p>
+
+<pre><code>18:36 nikushi: forkしてTCPソケットを親、子で使いまわすの
+18:38 sonots: 同じソケットを、並列で利用したら、混ざってることになるけど
+18:39 nikushi: ふむふむ
+..snip..
+18:41 nikushi: ぼくがおもったのは、TCPのデータペイロードの中(つまりmsgpackのところ)
+18:41 nikushi: が壊れるのかなーとおもったけど。
+..snip..
+18:47 sonots: RST 受け取ったとき、どのプロセスが close するの？
+18:48 sonots: ruby 的には Errno::ECONNRESET
+18:49 sonots: proc1 が close しようとする前に、proc2 がデータ送っちゃったりするでしょ？
+18:49 sonots: ということを言いたい
+18:50 hirose31: 親子で共用するの辞めたほうがいいんじゃないのかなｗ
+18:57 hirose31: 一般的にやるべきじゃないと思いますよ
+19:06 hirose31: APUEに書いてないかな。。
+19:11 hirose31: If both parent and child write to the same descriptor, 
+      without any form of synchronization, such as having the parent 
+      wait for the child, their output will be intermixed 
+      (assuming it’s a descriptor that was open before the fork). 
+      Although this is possible—we saw it in Figure 8.2—it’s 
+      not the normal mode of operation.
+19:11 hirose31: だそうな
+19:11 hirose31: p232
+</code></pre>
+
+<p>APUEによると、可能ではあるが出力が混ざる、通常のオペレーションではない。という記述がありました。@hirose31++</p>
+
+<p>またクライアントの実装によっては再接続処理で変になったり、意図しない挙動になりそうですね。</p>
+
+<p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment</a>に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
+
+<p>最後まとめ</p>
+
+<pre><code>19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
+19:08 nikushi: SPDY w
+19:13 sonots: まさにSPDY
+19:12 hirose31: まさにSPDY
+19:13 sonots: ふむふむ、それを想定したプロトコル設計にしないといけないわけか
+19:13 nikushi: きょうの結論!
+</code></pre>
+
+<p>@hirose31先生, @sonots ありがとうございました。以上!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Redisクライアントでforkするときは子プロセスでrecoonectする]]></title>
@@ -1743,42 +1816,6 @@ a       1       NULL
 <h3>データベース作成時のクエリを確認</h3>
 
 <pre><code>&gt; SHOW CREATE DATABASE test;
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[前日日付のファイル名でローテートし圧縮するlogrotateの設定例]]></title>
-    <link href="http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/"/>
-    <updated>2013-03-07T15:57:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name</id>
-    <content type="html"><![CDATA[<p>ファイル名を前日の日付でローテートする方法をメモします。</p>
-
-<!--more-->
-
-
-<p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
-
-<div><script src='https://gist.github.com/5105939.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-
-
-<p>一部説明</p>
-
-<pre><code>ifempty        # 空ファイルでもローテートする。
-               # 過去ログを`ls | wc -l`などするときに
-               # 日数と数を合わせたいので。
-dateext        # ローテートしたファイルに実行時の日付を
-               # 付ける。ただし、00:00以降にlogrotateを実行する
-               # 場合は、ログ内容と日付が乖離するので別途
-               # lastactionで日付を前日分に変えている。
-extension .log # ローテート後のファイル名の場所の末尾に.log 
-               # を持ってくる。 圧縮する場合は.log.gzになる。
-               # 本オプション指定ない場合はapp.log-yyyymmdd となり
-               # 微妙なので調整のため。
-lastaction     # 最後に実行するコマンド
-               # postrotateを使わないのはpostrotateはcompressする前
-               # に実行されるため。compressしてlastactionが実行される。
 </code></pre>
 ]]></content>
   </entry>

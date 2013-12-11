@@ -5,12 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Redisクライアントでforkするときは子プロセスでrecoonectする - ni-blog</title>
+  <title>親プロセスと子プロセスでTCPソケットを共有したらどうなるか - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyのredis-rbで実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。 以下のケースは動かない。 bad case1
-2 &hellip;">
+  <meta name="description" content="前回のRedisクライアントでforkするときは子プロセスでrecoonectするの続き。じゃあfluent-logger-rubyだとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。 このコードは一見動くけどよくない1
+2
+3
+4
+5
+6 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">
+  <link rel="canonical" href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">Redisクライアントでforkするときは子プロセスでrecoonectする</h1>
+      <h1 class="entry-title">親プロセスと子プロセスでTCPソケットを共有したらどうなるか</h1>
     
     
       <p class="meta">
@@ -96,7 +100,7 @@
   
 
 
-<time datetime="2013-12-11T16:24:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
+<time datetime="2013-12-11T19:53:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,63 +109,71 @@
   </header>
 
 
-<div class="entry-content"><p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。</p>
+<div class="entry-content"><p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。じゃあ<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。</p>
 
 <!-- more -->
 
 
-<p>以下のケースは動かない。</p>
 
-<figure class='code'><figcaption><span>bad case</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+
+<figure class='code'><figcaption><span>このコードは一見動くけどよくない</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>       <span class="c1"># 親プロセスがRedisサーバとコネクション確立</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>     <span class="c1"># 子プロセスがgetしようとすると...</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;fluent-logger&#39;</span>
+</span><span class='line'><span class="n">log</span> <span class="o">=</span> <span class="ss">Fluent</span><span class="p">:</span><span class="ss">:Logger</span><span class="o">::</span><span class="no">FluentLogger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="ss">:host</span><span class="o">=&gt;</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="ss">:port</span><span class="o">=&gt;</span><span class="mi">24224</span><span class="p">)</span>
+</span><span class='line'><span class="n">log</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;myapp.access&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;agent&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;foo&quot;</span><span class="p">})</span>     <span class="c1"># socket(A) が確立される</span>
+</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>                                        <span class="c1"># socket(A)は子プロセスにもコピーされる</span>
+</span><span class='line'>  <span class="n">log</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;myapp.access&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;agent&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;foo&quot;</span><span class="p">})</span>   <span class="c1"># socket(A)に書き込む</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>例外が発生。子プロセスからコネクションを利用しようとしたので怒られる。</p>
+<p>社内のIRCでちらっと聞いてみたところ同僚から助言いただきました。</p>
 
-<pre><code>=&gt; ..snip.. redis/client.rb:285:in `ensure_connected': Tried to use a connection from a child process without reconnecting. You need to reconnect to Redis after forking. (Redis::InheritedError)
+<pre><code>18:36 nikushi: forkしてTCPソケットを親、子で使いまわすの
+18:38 sonots: 同じソケットを、並列で利用したら、混ざってることになるけど
+18:39 nikushi: ふむふむ
+..snip..
+18:41 nikushi: ぼくがおもったのは、TCPのデータペイロードの中(つまりmsgpackのところ)
+18:41 nikushi: が壊れるのかなーとおもったけど。
+..snip..
+18:47 sonots: RST 受け取ったとき、どのプロセスが close するの？
+18:48 sonots: ruby 的には Errno::ECONNRESET
+18:49 sonots: proc1 が close しようとする前に、proc2 がデータ送っちゃったりするでしょ？
+18:49 sonots: ということを言いたい
+18:50 hirose31: 親子で共用するの辞めたほうがいいんじゃないのかなｗ
+18:57 hirose31: 一般的にやるべきじゃないと思いますよ
+19:06 hirose31: APUEに書いてないかな。。
+19:11 hirose31: If both parent and child write to the same descriptor, 
+      without any form of synchronization, such as having the parent 
+      wait for the child, their output will be intermixed 
+      (assuming it’s a descriptor that was open before the fork). 
+      Although this is possible—we saw it in Figure 8.2—it’s 
+      not the normal mode of operation.
+19:11 hirose31: だそうな
+19:11 hirose31: p232
 </code></pre>
 
-<p>fork後にreconnectするように言われるのでそのとおりします。以下はOKです。</p>
+<p>APUEによると、可能ではあるが出力が混ざる、通常のオペレーションではない。という記述がありました。@hirose31++</p>
 
-<figure class='code'><figcaption><span>works!</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">reconnect</span>
-</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>またクライアントの実装によっては再接続処理で変になったり、意図しない挙動になりそうですね。</p>
 
+<p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment</a>に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
 
-<p>上のコードではTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
+<p>最後まとめ</p>
 
-<p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じソケットを使ってはいけないので片方はクローズする、であってますかね。以上です!</p>
+<pre><code>19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
+19:08 nikushi: SPDY w
+19:13 sonots: まさにSPDY
+19:12 hirose31: まさにSPDY
+19:13 sonots: ふむふむ、それを想定したプロトコル設計にしないといけないわけか
+19:13 nikushi: きょうの結論!
+</code></pre>
+
+<p>@hirose31先生, @sonots ありがとうございました。以上!</p>
 </div>
 
 
@@ -184,12 +196,12 @@
   
 
 
-<time datetime="2013-12-11T16:24:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
+<time datetime="2013-12-11T19:53:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/redis/'>Redis</a>
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
   
 </span>
 
@@ -199,7 +211,7 @@
       <div class="sharing">
   <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/" >Tweet</a>
   
   
   
@@ -211,10 +223,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/" title="Previous Post: SNMPのindexキャッシュによる取得時間短縮の検証">&laquo; SNMPのindexキャッシュによる取得時間短縮の検証</a>
+        <a class="basic-alignment left" href="/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/" title="Previous Post: Redisクライアントでforkするときは子プロセスでrecoonectする">&laquo; Redisクライアントでforkするときは子プロセスでrecoonectする</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/" title="Next Post: 親プロセスと子プロセスでTCPソケットを共有したらどうなるか">親プロセスと子プロセスでTCPソケットを共有したらどうなるか &raquo;</a>
       
     </p>
   </footer>
@@ -309,8 +319,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/';
-        var disqus_url = 'http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/';
+        var disqus_identifier = 'http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/';
+        var disqus_url = 'http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/';
         var disqus_script = 'embed.js';
       
     (function () {
