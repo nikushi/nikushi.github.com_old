@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-11T20:33:24+09:00</updated>
+  <updated>2013-12-11T20:35:47+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,7 +18,7 @@
     <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
     <updated>2013-12-11T19:53:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
-    <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。</p>
+    <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。</p>
 
 <!-- more -->
 

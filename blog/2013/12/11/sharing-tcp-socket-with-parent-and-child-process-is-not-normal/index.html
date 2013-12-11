@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回のRedisクライアントでforkするときは子プロセスでrecoonectするの続き。ではfluent-logger-rubyだとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。 サンプルコード このコードは一見動くけどよくない1
-2 &hellip;">
+  <meta name="description" content="前回のRedisクライアントでforkするときは子プロセスでrecoonectするの続き。ではfluent-logger-rubyだとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。 サンプルコード &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,7 +104,7 @@
   </header>
 
 
-<div class="entry-content"><p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。結論的には、以下のコードは書かない方が良いってこと。</p>
+<div class="entry-content"><p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。</p>
 
 <!-- more -->
 
