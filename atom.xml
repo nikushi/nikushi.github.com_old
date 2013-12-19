@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-19T13:22:50+09:00</updated>
+  <updated>2013-12-19T13:26:01+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -492,7 +492,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>追記: 別のアプローチ</h3>
+<h3>追記: -i オプションによる動的リッスンポート切替</h3>
 
 <p><em>2013/12/19 追記</em></p>
 
