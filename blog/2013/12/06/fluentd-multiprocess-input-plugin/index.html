@@ -262,6 +262,51 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>追記: 別のアプローチ</h3>
+
+<p><em>2013/12/19 追記</em></p>
+
+<p>あまり知られていないですがfluentdには<code>-i</code>という起動オプションがあり起動オプションの中でコンフィグを記述することができます。以下のようにすれば起動時にinput forwardでリッスンするポートを動的に(起動するプロセス毎に)変えることができます。ポート番号などプロセス固有の設定<code>-i</code>で渡すことで同じ設定ファイルで異なる挙動ということも実現できますね。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>&lt;<span class="nb">source</span>&gt;
+</span><span class='line'>  <span class="nb">type </span>multiprocess
+</span><span class='line'>  &lt;process&gt;
+</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20000\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
+</span><span class='line'>    sleep_before_start 1s
+</span><span class='line'>    sleep_before_shutdown 1s
+</span><span class='line'>  &lt;/process&gt;
+</span><span class='line'>  &lt;process&gt;
+</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20001\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
+</span><span class='line'>    sleep_before_start 1s
+</span><span class='line'>    sleep_before_shutdown 1s
+</span><span class='line'>  &lt;/process&gt;
+</span><span class='line'>  &lt;process&gt;
+</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20002\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
+</span><span class='line'>    sleep_before_start 1s
+</span><span class='line'>    sleep_before_shutdown 1s
+</span><span class='line'>  &lt;/process&gt;
+</span><span class='line'>&lt;<span class="nb">source</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>まとめ</h3>
 
 <p>Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。</p>
@@ -269,6 +314,8 @@
 <p>気になる安定性などに関して、<a href="https://groups.google.com/forum/#!topic/fluentd/syXPqRAE-4w">Fluentdのメーリングリスト上の議論</a> によると 10+ billion records / day 環境下に投入しているユーザ事例もあるようです!</p>
 
 <p>話はそれますが、Fluentdを使っている人やこれから使ってみようという人は <a href="http://docs.fluentd.org/ja/articles/mailing-list">Fluentdのメーリングリスト</a> にjoinすることをオススメします!(自分はもっぱら読むだけ専門ですが) メールは基本英語ですが流し読みするだけでも有益な情報を拾えたり、リリース状況をタイムリーに知ることができます。また、最近では海外のエンジニアの間でも知られるようになってきており、海外でのユースケースなど知れるかもしれません。個人的には英語の勉強にもなるので両得だとおもっています。コミュニティについては@tagomorisさんの<a href="http://tagomoris.hatenablog.com/entry/2013/12/03/150656">Fluentdとはどのようなソフトウェアなのか</a>の中で詳しく書かれていますね。</p>
+
+<p>またfluentdの<code>-i</code>オプションを紹介しました。</p>
 
 <p>簡単ではありましたが以上です。</p>
 
