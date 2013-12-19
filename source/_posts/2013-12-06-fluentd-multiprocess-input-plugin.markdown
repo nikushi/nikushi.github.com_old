@@ -113,6 +113,33 @@ tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LIST
 tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby 
 ```
 
+### 追記: -i オプションによる動的リッスンポート切替
+
+*2013/12/19 追記*
+
+あまり知られていないですがFluentdには`-i`という起動オプションがあり`-i`に続いてコンフィグを記述することができます。以下のようにすればinput forwardでリッスンするポートをプロセス毎に変えることができます。ポート番号などプロセス固有の設定は`-i`で渡すことで同じ設定ファイルで異なる挙動ということも実現できますね。
+
+```
+<source>
+  type multiprocess
+  <process>
+    cmdline -i "<source>\ntype forward\nport 20000\n</source>" -c /etc/fluentd/fluentd.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 1s
+  </process>
+  <process>
+    cmdline -i "<source>\ntype forward\nport 20001\n</source>" -c /etc/fluentd/fluentd.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 1s
+  </process>
+  <process>
+    cmdline -i "<source>\ntype forward\nport 20002\n</source>" -c /etc/fluentd/fluentd.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 1s
+  </process>
+<source>
+```
+
 ### まとめ
 
 Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。
@@ -120,6 +147,8 @@ Multiprocess Input Pluginにより簡単にマルチプロセス化すること�
 気になる安定性などに関して、[Fluentdのメーリングリスト上の議論](https://groups.google.com/forum/#!topic/fluentd/syXPqRAE-4w) によると 10+ billion records / day 環境下に投入しているユーザ事例もあるようです!
 
 話はそれますが、Fluentdを使っている人やこれから使ってみようという人は [Fluentdのメーリングリスト](http://docs.fluentd.org/ja/articles/mailing-list) にjoinすることをオススメします!(自分はもっぱら読むだけ専門ですが) メールは基本英語ですが流し読みするだけでも有益な情報を拾えたり、リリース状況をタイムリーに知ることができます。また、最近では海外のエンジニアの間でも知られるようになってきており、海外でのユースケースなど知れるかもしれません。個人的には英語の勉強にもなるので両得だとおもっています。コミュニティについては@tagomorisさんの[Fluentdとはどのようなソフトウェアなのか](http://tagomoris.hatenablog.com/entry/2013/12/03/150656)の中で詳しく書かれていますね。
+
+またFluentdの`-i`オプションを紹介しました。
 
 簡単ではありましたが以上です。
 
