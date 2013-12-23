@@ -9,8 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Ruby プログラマのための Perl ウェブアプリケーション開発入門 (Perl web development guide for Rubyist ) View more presentations from Kensuke Kaneko
-Environment Perlbrew &nbsp &hellip;">
+  <meta name="description" content="行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,44 @@ Environment Perlbrew &nbsp &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/yapcasia-tokyo/">YAPC::Asia Tokyo</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/10/18/yapcasia-tokyo/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -550,73 +588,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/">WebSvnでリポジトリをtar.gzやzip化してダウンロードする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
-<pre lang="php">
-// For delivered tarballs, if option enabled...
-$config->setTarPath('/bin/');
-
-// For delivered GZIP'd files and tarballs, if option enabled...
-$config->setGZipPath('/usr/bin/');
-
-// download folder/file zipped ...
-$config->setZipPath('/usr/bin/');
-
-// You need tar and gzip installed on your system. Set the paths above if necessary
-//
-// Uncomment the line below to offer a tarball download option across all your
-// reposi
-$config->allowDownload();
-
-// Change the line below to set the download level across all your repositories.
-// 環境に合わせて調整
-$config->setMinDownloadLevel(1);
-</pre>
-
-
-$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
-<pre>
- /               0
-   project1/     1
-     - sub/      2
-   project2/     1
-</pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -638,6 +609,10 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/23/fluent-plugin-derive-has-been-released/">fluent-plugin-deriveで単位時間あたりの増分値を計算する</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/">親プロセスと子プロセスでTCPソケットを共有したらどうなるか</a>
       </li>
     
@@ -651,10 +626,6 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
     
       <li class="post">
         <a href="/blog/2013/12/06/fluentd-multiprocess-input-plugin/">Fluentdのマルチプロセス化が簡単になったので試してみた!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/20/github-memo/">GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ</a>
       </li>
     
   </ul>
