@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-23T15:45:03+09:00</updated>
+  <updated>2013-12-23T15:50:20+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -69,6 +69,8 @@
 <p>ではなぜFluentd側で計算しているのかというと、1つはカウンタ値よりもbpsの方が扱いやすかったかで、Fluentdで閾値設定したり解析したりと二次用途に使いやすくなります。</p>
 
 <p>もう1つはFluentdで生のカウンタ値を流してRRDへ格納する場合、取得して格納するまでに若干時差が発生するので、カウンタ値のようなderiveな値だとRRDへの値格納が少し遅れたり早かったりすると差分値が実際より大きくなったり小さくなったり揺れてしまいました。そのためderiveプラグインを作ってカウンタ値を取得した瞬間に計算するようにしました。</p>
+
+<p>なお注意点としては、Fluentdではメッセージの到着順が保証されている訳ではないので、秒単位でメッセージがinされるようなタグに対しては正しく計算でき無い場合があるのでそのようなケースでは使えません。分毎に1メッセージがinされるとかそういうったタグ向けです。</p>
 
 <p>作る前に既存プラグインを探してみましたが、前回値との差分を計算してくれるプラグインがなかったので自作に至りました。</p>
 
