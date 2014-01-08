@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2013-12-23T15:50:20+09:00</updated>
+  <updated>2014-01-08T22:12:40+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,242 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Chefでtd-agentをインストールしたメモ + knife solo cook実行がコケてはまった点]]></title>
+    <link href="http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error/"/>
+    <updated>2014-01-08T21:37:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error</id>
+    <content type="html"><![CDATA[<p>td-agentを<a href="https://github.com/treasure-data/chef-td-agent/">treasure-data/chef-td-agent</a>のChefレシピを使ってVagrantの仮想マシンに適用してみた。そのメモと<code>knife solo cook</code>が途中でコケてしまったのでそのメモも。</p>
+
+<!-- more -->
+
+
+<h3>準備</h3>
+
+<p>chefとknife-soloをインストール</p>
+
+<pre><code>$ gem install chef
+$ gem install knife-solo
+</code></pre>
+
+<h3>Chefレポジトリ作成</h3>
+
+<pre><code>$ knife solo init chef-test-repo
+$ cd chef-test-repo/
+</code></pre>
+
+<h3>chef-td-agentをBerkshelfでインストール</h3>
+
+<p>Berkshelf = gemでいうところのbundler(とrubygems)みたいなもの。</p>
+
+<p>berkshelfコマンドのインストール。bundler経由でインストールした。</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>source &#39;https://rubygems.org&#39;
+</span><span class='line'>gem &#39;berkshelf&#39;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>インストール</p>
+
+<pre><code>$ bundle install
+</code></pre>
+
+<p>Berksfileにインストールするクックブックを定義</p>
+
+<pre><code>site :opscode
+cookbook 'td-agent', git: 'https://github.com/treasure-data/chef-td-agent.git'
+</code></pre>
+
+<p>berks installでクックブックをインストール。<code>--path</code>で<code>cookbooks</code>以下に。</p>
+
+<pre><code>$ bundle exec berks --path cookbooks
+</code></pre>
+
+<h3>knifeコマンドで対象マシンの定義を作る</h3>
+
+<p>knifeコマンドで対象マシンへchef soloをインストールしつつ、定義ファイル(json)を作る。</p>
+
+<pre><code>$ knife solo prepare chef-test.local
+  =&gt; chef-test.local に chef solo がインストールされる
+  =&gt; nodes/chef-test.local.json が作られる
+</code></pre>
+
+<p>nodes/chef-test.local.jsonのrun_listにtd-agentを加える</p>
+
+<figure class='code'><figcaption><span>nodes/chef-test.local.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>{&quot;run_list&quot;:[&quot;td-agent&quot;]}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>レシピ適用!!!</h3>
+
+<p>以下を実行することで、td-agent実行ユーザ、グループの作成、td-agentのインストール、設定ファイル配置、起動登録、起動といったことをやってくれます。</p>
+
+<pre><code>$ knife solo coook chef-test.local
+</code></pre>
+
+<p>&hellip;とここで楽勝終わる予定だったのですが、途中でエラーが出て止まってしまいました。</p>
+
+<h3>package td-agent が途中で止まる</h3>
+
+<figure class='code'><figcaption><span>nodes/chef-test.local.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>knife solo cook cheftest.local
+</span><span class='line'>Running Chef on cheftest.local...
+</span><span class='line'>Checking Chef version...
+</span><span class='line'>Installing Berkshelf cookbooks to &#39;cookbooks&#39;...
+</span><span class='line'>Installing td-agent (0.0.1) from git: &#39;https://github.com/treasure-data/chef-td-agent.git&#39; with branch: &#39;master&#39; at ref: &#39;d29d3f78bc2ffe991c63d56cbf8521eda6fdeb35&#39;
+</span><span class='line'>
+</span><span class='line'>(..snip..)
+</span><span class='line'>
+</span><span class='line'>Recipe: td-agent::default
+</span><span class='line'>  * template[/etc/td-agent/td-agent.conf] action create (up to date)
+</span><span class='line'>  * package[td-agent] action upgrade
+</span><span class='line'>
+</span><span class='line'>================================================================================
+</span><span class='line'>Error executing action `upgrade` on resource &#39;package[td-agent]&#39;
+</span><span class='line'>================================================================================
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Chef::Exceptions::Exec
+</span><span class='line'>----------------------
+</span><span class='line'> returned 1, expected 0
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Resource Declaration:
+</span><span class='line'>---------------------
+</span><span class='line'># In /home/vagrant/chef-solo/cookbooks-2/td-agent/recipes/default.rb
+</span><span class='line'>
+</span><span class='line'> 60: package &quot;td-agent&quot; do
+</span><span class='line'> 61:   options value_for_platform(
+</span><span class='line'> 62:     [&quot;ubuntu&quot;, &quot;debian&quot;] =&gt; {&quot;default&quot; =&gt; &quot;-f --force-yes&quot;},
+</span><span class='line'> 63:     &quot;default&quot; =&gt; nil
+</span><span class='line'> 64:   )
+</span><span class='line'> 65:   action :upgrade
+</span><span class='line'> 66: end
+</span><span class='line'> 67:
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Compiled Resource:
+</span><span class='line'>------------------
+</span><span class='line'># Declared in /home/vagrant/chef-solo/cookbooks-2/td-agent/recipes/default.rb:60:in `from_file&#39;
+</span><span class='line'>
+</span><span class='line'>package(&quot;td-agent&quot;) do
+</span><span class='line'>  action [:upgrade]
+</span><span class='line'>  retries 0
+</span><span class='line'>  retry_delay 2
+</span><span class='line'>  package_name &quot;td-agent&quot;
+</span><span class='line'>  version &quot;1.1.18-0&quot;
+</span><span class='line'>  cookbook_name :&quot;td-agent&quot;
+</span><span class='line'>  recipe_name &quot;default&quot;
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>[2014-01-08T12:23:00+00:00] ERROR: Running exception handlers
+</span><span class='line'>[2014-01-08T12:23:00+00:00] ERROR: Exception handlers complete
+</span><span class='line'>[2014-01-08T12:23:00+00:00] FATAL: Stacktrace dumped to /var/chef/cache/chef-stacktrace.out
+</span><span class='line'>Chef Client failed. 4 resources updated
+</span><span class='line'>[2014-01-08T12:23:00+00:00] ERROR: package[td-agent] (td-agent::default line 60) had an error: Chef::Exceptions::Exec:  returned 1, expected 0
+</span><span class='line'>[2014-01-08T12:23:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+</span><span class='line'>ERROR: RuntimeError: chef-solo failed. See output above.gg
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>調べたところ、<code>yum install td-agent</code>がgpgcheckで失敗していた。</p>
+
+<pre><code>$ yum -d0 -e0 -y install td-agent-1.1.18-0
+Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
+</code></pre>
+
+<p>お、バグかな?とおもったらKnown Issueでした。<a href="https://github.com/treasure-data/td-agent/issues/43">Apply signature to rpm /deb</a>。rpmがアップデートされるまで待つしかないようです。</p>
+
+<p>でもひとまずインストール完了させたかったので、自分はchef-td-agentをforkして<code>recipes/default.rb</code>を以下のようにして<code>gpgcheck false</code>にした。新しいrpmがリリースされたらforkバージョン消す予定。</p>
+
+<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">when</span> <span class="s2">&quot;centos&quot;</span><span class="p">,</span> <span class="s2">&quot;redhat&quot;</span>
+</span><span class='line'>  <span class="n">yum_repository</span> <span class="s2">&quot;treasure-data&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">url</span> <span class="s2">&quot;http://packages.treasure-data.com/redhat/$basearch&quot;</span>
+</span><span class='line'>      <span class="c1"># Skip gpgcheck until https://github.com/treasure-data/td-agent/issues/43 is fixed</span>
+</span><span class='line'>      <span class="n">gpgcheck</span> <span class="kp">false</span>
+</span><span class='line'>      <span class="n">action</span> <span class="ss">:add</span>
+</span><span class='line'>   <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[fluent-plugin-deriveで単位時間あたりの差分値を計算する]]></title>
@@ -1309,32 +1545,6 @@ Base.inheritance_column).</p></blockquote>
 <p>jQueryなどのライブラリの選択やバージョンの変更も左側のメニューからポチポチやるだけで切り替えれて簡単。</p>
 
 <p>また、Ajax系の動作確認も可能です。サーバサイドのエンドポイントが必要ですが、jsFiddleでは <code>/echo/json/</code>, <code>/echo/html/</code>といったリクエストをresponseとしてechoするダミーのエンドポイントが提供されています。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[yokohama.ex #2 に参加してきたよ]]></title>
-    <link href="http://orihubon.com/blog/2013/07/03/yokohama-dot-ex-on-20130703/"/>
-    <updated>2013-07-03T23:02:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/03/yokohama-dot-ex-on-20130703</id>
-    <content type="html"><![CDATA[<p>2013/07/03(水) 開催された <a href="http://www.zusaar.com/event/822004">yokohama.ex #2</a> に参加してきました!</p>
-
-<!--more-->
-
-
-<p>場所はDeNA@渋谷ヒカリエ。</p>
-
-<p>会の趣旨は <a href="http://elixir-lang.org/">elixir-lang.org</a>のGETTING STARTEDをみんなで読んで勉強しましょう、といったところ。</p>
-
-<p>前回(第1回)はyokohama.rbの中でElixir紹介がてらGETTING STARTEDの1章から2.6.4までを読んだ、そうです。僕は参加してませんでしたので今回にあたって密かに一人独習したわけですが、@sonots さんが<a href="https://docs.google.com/presentation/d/1Tl-NTgGiW6V6QCCi2Hy0V81XZTjkAWEC22yTWE8ChP4/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.p">復習資料</a> を作成してくれていて今日の会はこの復習資料からスタート! 英文で読んだ後でまとまった日本語で再度インプットするとすーっと浸みいります。とても助かりました。</p>
-
-<p>今回はSection2.6.5 TryからSection3の最後まで。プロジェクタにホームページの英文を映して代表の人が読みながらサンプルコードをiexで実行、あれこれ言い合う感じで進められていました。</p>
-
-<p>Elixirにもの申すレベルではないのでElixirには言及しませんが、会の進め方については1つ1つ順番に読み進めるスタイルなのでElixir初心者であっても取っ付きやすかったとおもいます!!!</p>
-
-<p>普段Ruby、Perlなどを使ってるので関数型言語の考え方は頭の体操になりました! 英語の速読にも良い会でした:)</p>
-
-<p>次回#3も予定されています。まだ追いつけるとおもますので興味がありましたら次回参加してみたらいかがでしょうか。</p>
 ]]></content>
   </entry>
   

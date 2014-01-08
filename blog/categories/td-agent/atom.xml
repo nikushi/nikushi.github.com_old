@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: td-agent | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/td-agent/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2014-01-08T22:12:40+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Chefでtd-agentをインストールしたメモ + knife solo cook実行がコケてはまった点]]></title>
+    <link href="http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error/"/>
+    <updated>2014-01-08T21:37:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error</id>
+    <content type="html"><![CDATA[<p>td-agentを<a href="https://github.com/treasure-data/chef-td-agent/">treasure-data/chef-td-agent</a>のChefレシピを使ってVagrantの仮想マシンに適用してみた。そのメモと<code>knife solo cook</code>が途中でコケてしまったのでそのメモも。</p>
+
+<!-- more -->
+
+
+<h3>準備</h3>
+
+<p>chefとknife-soloをインストール</p>
+
+<pre><code>$ gem install chef
+$ gem install knife-solo
+</code></pre>
+
+<h3>Chefレポジトリ作成</h3>
+
+<pre><code>$ knife solo init chef-test-repo
+$ cd chef-test-repo/
+</code></pre>
+
+<h3>chef-td-agentをBerkshelfでインストール</h3>
+
+<p>Berkshelf = gemでいうところのbundler(とrubygems)みたいなもの。</p>
+
+<p>berkshelfコマンドのインストール。bundler経由でインストールした。</p>
+
+<p><code>text Gemfile
+source 'https://rubygems.org'
+gem 'berkshelf'
+</code></p>
+
+<p>インストール</p>
+
+<pre><code>$ bundle install
+</code></pre>
+
+<p>Berksfileにインストールするクックブックを定義</p>
+
+<pre><code>site :opscode
+cookbook 'td-agent', git: 'https://github.com/treasure-data/chef-td-agent.git'
+</code></pre>
+
+<p>berks installでクックブックをインストール。<code>--path</code>で<code>cookbooks</code>以下に。</p>
+
+<pre><code>$ bundle exec berks --path cookbooks
+</code></pre>
+
+<h3>knifeコマンドで対象マシンの定義を作る</h3>
+
+<p>knifeコマンドで対象マシンへchef soloをインストールしつつ、定義ファイル(json)を作る。</p>
+
+<pre><code>$ knife solo prepare chef-test.local
+  =&gt; chef-test.local に chef solo がインストールされる
+  =&gt; nodes/chef-test.local.json が作られる
+</code></pre>
+
+<p>nodes/chef-test.local.jsonのrun_listにtd-agentを加える</p>
+
+<p><code>text nodes/chef-test.local.json
+{"run_list":["td-agent"]}
+</code></p>
+
+<h3>レシピ適用!!!</h3>
+
+<p>以下を実行することで、td-agent実行ユーザ、グループの作成、td-agentのインストール、設定ファイル配置、起動登録、起動といったことをやってくれます。</p>
+
+<pre><code>$ knife solo coook chef-test.local
+</code></pre>
+
+<p>&hellip;とここで楽勝終わる予定だったのですが、途中でエラーが出て止まってしまいました。</p>
+
+<h3>package td-agent が途中で止まる</h3>
+
+<p>```
+knife solo cook cheftest.local
+Running Chef on cheftest.local&hellip;
+Checking Chef version&hellip;
+Installing Berkshelf cookbooks to &lsquo;cookbooks&rsquo;&hellip;
+Installing td-agent (0.0.1) from git: &lsquo;<a href="https://github.com/treasure-data/chef-td-agent.git">https://github.com/treasure-data/chef-td-agent.git</a>&rsquo; with branch: &lsquo;master&rsquo; at ref: &lsquo;d29d3f78bc2ffe991c63d56cbf8521eda6fdeb35&rsquo;</p>
+
+<p>(..snip..)</p>
+
+<p>Recipe: td-agent::default
+  * template[/etc/td-agent/td-agent.conf] action create (up to date)
+  * package[td-agent] action upgrade</p>
+
+<p>================================================================================</p>
+
+<h1>Error executing action <code>upgrade</code> on resource &lsquo;package[td-agent]&rsquo;</h1>
+
+<h2>Chef::Exceptions::Exec</h2>
+
+<p> returned 1, expected 0</p>
+
+<h2>Resource Declaration:</h2>
+
+<h1>In /home/vagrant/chef-solo/cookbooks-2/td-agent/recipes/default.rb</h1>
+
+<p> 60: package &ldquo;td-agent&rdquo; do
+ 61:   options value_for_platform(
+ 62:     [&ldquo;ubuntu&rdquo;, &ldquo;debian&rdquo;] => {&ldquo;default&rdquo; => &ldquo;-f &mdash;force-yes&rdquo;},
+ 63:     &ldquo;default&rdquo; => nil
+ 64:   )
+ 65:   action :upgrade
+ 66: end
+ 67:</p>
+
+<h2>Compiled Resource:</h2>
+
+<h1>Declared in /home/vagrant/chef-solo/cookbooks-2/td-agent/recipes/default.rb:60:in `from_file'</h1>
+
+<p>package(&ldquo;td-agent&rdquo;) do
+  action [:upgrade]
+  retries 0
+  retry_delay 2
+  package_name &ldquo;td-agent&rdquo;
+  version &ldquo;1.1.18-0&rdquo;
+  cookbook_name :&ldquo;td-agent&rdquo;
+  recipe_name &ldquo;default&rdquo;
+end</p>
+
+<p>[2014-01-08T12:23:00+00:00] ERROR: Running exception handlers
+[2014-01-08T12:23:00+00:00] ERROR: Exception handlers complete
+[2014-01-08T12:23:00+00:00] FATAL: Stacktrace dumped to /var/chef/cache/chef-stacktrace.out
+Chef Client failed. 4 resources updated
+[2014-01-08T12:23:00+00:00] ERROR: package[td-agent] (td-agent::default line 60) had an error: Chef::Exceptions::Exec:  returned 1, expected 0
+[2014-01-08T12:23:00+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+ERROR: RuntimeError: chef-solo failed. See output above.gg
+```</p>
+
+<p>調べたところ、<code>yum install td-agent</code>がgpgcheckで失敗していた。</p>
+
+<pre><code>$ yum -d0 -e0 -y install td-agent-1.1.18-0
+Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
+</code></pre>
+
+<p>お、バグかな?とおもったらKnown Issueでした。<a href="https://github.com/treasure-data/td-agent/issues/43">Apply signature to rpm /deb</a>。rpmがアップデートされるまで待つしかないようです。</p>
+
+<p>でもひとまずインストール完了させたかったので、自分はchef-td-agentをforkして<code>recipes/default.rb</code>を以下のようにして<code>gpgcheck false</code>にした。新しいrpmがリリースされたらforkバージョン消す予定。</p>
+
+<p>``` ruby recipes/default.rb
+when &ldquo;centos&rdquo;, &ldquo;redhat&rdquo;
+  yum_repository &ldquo;treasure-data&rdquo; do</p>
+
+<pre><code>url "http://packages.treasure-data.com/redhat/$basearch"
+  # Skip gpgcheck until https://github.com/treasure-data/td-agent/issues/43 is fixed
+  gpgcheck false
+  action :add
+</code></pre>
+
+<p>   end
+end
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
