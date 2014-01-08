@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Chefでtd-agentをインストールしたメモ + knife solo cook実行がコケてはまった点"
+title: "Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ"
 date: 2014-01-08 21:37
 comments: true
 categories: 
@@ -8,7 +8,7 @@ categories:
   - chef
 ---
 
-td-agentを[treasure-data/chef-td-agent](https://github.com/treasure-data/chef-td-agent/)のChefレシピを使ってVagrantの仮想マシンに適用してみた。そのメモと`knife solo cook`が途中でコケてしまったのでそのメモも。
+td-agentを[treasure-data/chef-td-agent](https://github.com/treasure-data/chef-td-agent/)のChefレシピを使ってVagrantの仮想マシンに適用したメモです。
 
 <!-- more -->
 
