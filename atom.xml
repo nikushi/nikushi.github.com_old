@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-01-08T22:16:01+09:00</updated>
+  <updated>2014-01-15T20:07:08+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -222,30 +222,7 @@ cookbook 'td-agent', git: 'https://github.com/treasure-data/chef-td-agent.git'
 Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 </code></pre>
 
-<p>お、バグかな?とおもったらKnown Issueでした。<a href="https://github.com/treasure-data/td-agent/issues/43">Apply signature to rpm /deb</a>。rpmがアップデートされるまで待つしかないようです。</p>
-
-<p>でもひとまずインストール完了させたかったので、自分はchef-td-agentをforkして<code>recipes/default.rb</code>を以下のようにして<code>gpgcheck false</code>にした。新しいrpmがリリースされたらforkバージョン消す予定。</p>
-
-<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">when</span> <span class="s2">&quot;centos&quot;</span><span class="p">,</span> <span class="s2">&quot;redhat&quot;</span>
-</span><span class='line'>  <span class="n">yum_repository</span> <span class="s2">&quot;treasure-data&quot;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">url</span> <span class="s2">&quot;http://packages.treasure-data.com/redhat/$basearch&quot;</span>
-</span><span class='line'>      <span class="c1"># Skip gpgcheck until https://github.com/treasure-data/td-agent/issues/43 is fixed</span>
-</span><span class='line'>      <span class="n">gpgcheck</span> <span class="kp">false</span>
-</span><span class='line'>      <span class="n">action</span> <span class="ss">:add</span>
-</span><span class='line'>   <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<p>お、バグかな?とおもったらKnown Issueでした。<a href="https://github.com/treasure-data/td-agent/issues/43">Apply signature to rpm /deb</a>。<strong>(2013/01/15 追記) rpmが更新されて問題は解消しました</strong></p>
 ]]></content>
   </entry>
   

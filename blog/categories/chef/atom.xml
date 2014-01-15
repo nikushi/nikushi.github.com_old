@@ -4,7 +4,7 @@
   <title><![CDATA[Category: chef | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/chef/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-01-08T22:16:01+09:00</updated>
+  <updated>2014-01-15T20:07:08+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -153,23 +153,7 @@ ERROR: RuntimeError: chef-solo failed. See output above.gg
 Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 </code></pre>
 
-<p>お、バグかな?とおもったらKnown Issueでした。<a href="https://github.com/treasure-data/td-agent/issues/43">Apply signature to rpm /deb</a>。rpmがアップデートされるまで待つしかないようです。</p>
-
-<p>でもひとまずインストール完了させたかったので、自分はchef-td-agentをforkして<code>recipes/default.rb</code>を以下のようにして<code>gpgcheck false</code>にした。新しいrpmがリリースされたらforkバージョン消す予定。</p>
-
-<p>``` ruby recipes/default.rb
-when &ldquo;centos&rdquo;, &ldquo;redhat&rdquo;
-  yum_repository &ldquo;treasure-data&rdquo; do</p>
-
-<pre><code>url "http://packages.treasure-data.com/redhat/$basearch"
-  # Skip gpgcheck until https://github.com/treasure-data/td-agent/issues/43 is fixed
-  gpgcheck false
-  action :add
-</code></pre>
-
-<p>   end
-end
-```</p>
+<p>お、バグかな?とおもったらKnown Issueでした。<a href="https://github.com/treasure-data/td-agent/issues/43">Apply signature to rpm /deb</a>。<strong>(2013/01/15 追記) rpmが更新されて問題は解消しました</strong></p>
 ]]></content>
   </entry>
   
