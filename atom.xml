@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-01-15T20:07:08+09:00</updated>
+  <updated>2014-01-15T20:41:00+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
+    <link href="http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook/"/>
+    <updated>2014-01-15T20:35:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/yohoushi/chef-yohoushi">chef-yohoushi</a> を作りました。YohoushiをChefでインストールするクックブック。</p>
+
+<p>中身見ていただけるとわかりますが、ユーザ作成、データベースマイグレーション、Yohoushiリポジトリをgit cloneしてというところまでやってくれます。サービスの起動はレシピに書いてない。今日はここまで&hellip;!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ]]></title>
@@ -1500,28 +1511,6 @@ Base.inheritance_column).</p></blockquote>
 <p>contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば<a href="http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/">thumbs-up</a>であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!</p>
 
 <p>という感じで簡単ながらFont Awesomeの紹介でした。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[jsFiddleでjavascriptお手軽動作確認]]></title>
-    <link href="http://orihubon.com/blog/2013/07/09/jsfiddle-js-test/"/>
-    <updated>2013-07-09T00:16:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/09/jsfiddle-js-test</id>
-    <content type="html"><![CDATA[<p>Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる <a href="http://jsfiddle.net/">jsFiddle</a> がお勧めです!</p>
-
-<!--more-->
-
-
-<p><a href="http://jsfiddle.net/niku4i/5pg4m/">jQuery-UIのaccordion pluginの動作確認をしてみた例</a></p>
-
-<p>使ってみた感想としては、css、html、javascriptのコードをフォームに入力して Run! ボタンを押すだけでとても簡単でした。</p>
-
-<p>また、jsFiddleはgithub.comのgistに近い感覚でJavaScriptやCSSを試すことが出来るので、作った画面をSkypeやIRCで他人と共有できる点が優れています。StackOverflowでjs系で検索すると結構な確率で見ますね。</p>
-
-<p>jQueryなどのライブラリの選択やバージョンの変更も左側のメニューからポチポチやるだけで切り替えれて簡単。</p>
-
-<p>また、Ajax系の動作確認も可能です。サーバサイドのエンドポイントが必要ですが、jsFiddleでは <code>/echo/json/</code>, <code>/echo/html/</code>といったリクエストをresponseとしてechoするダミーのエンドポイントが提供されています。</p>
 ]]></content>
   </entry>
   

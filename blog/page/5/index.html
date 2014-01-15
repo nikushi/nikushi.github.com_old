@@ -9,10 +9,16 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="sub conf{ my %arg = ( lang =>; 'perl', rank =>; 1, @_ # ここが決め手! ); # ...
-}
-参考:perl - デフォルト値のperlらしい指定法 &nbsp;
-">
+  <meta name="description" content="A first post always says Hello, World1
+2
+3
+4
+5
+6
+7
+class Hello def self.world &quot;Hello, World!&quot; end
+end puts Hello.world return1
+=&gt; &quot; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +85,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/14/hello/">Hello, World</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T11:08:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/02/14/hello/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>A first post always says</h2>
+
+<figure class='code'><figcaption><span>Hello, World</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hello</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">world</span>
+</span><span class='line'>    <span class="s2">&quot;Hello, World!&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="no">Hello</span><span class="o">.</span><span class="n">world</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>return</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -476,69 +544,6 @@ $ perl -MTemplate -e '$Template::VERSION'
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/">CLIツールのためのフレームワーク</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
-
-&nbsp;
-
-最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
-結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。
-
-&nbsp;
-
-書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。
-
-<strong>追記</strong>
-
-選べる。
-<ul>
-	<li>App::Cmd</li>
-	<li>App::CLI</li>
-	<li>CLI::Dispatch</li>
-</ul>
-App::Cmdが有名どころのようだ。
-
-&nbsp;
-<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
-<div id="__ss_134444" style="width: 425px;">
-<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -560,6 +565,10 @@ App::Cmdが有名どころのようだ。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/01/15/yohoushi-chef-cookbook/">Yohoushi Chef Cookbook作った</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/08/install-td-agent-by-chef-and-install-error/">Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ</a>
       </li>
     
@@ -573,10 +582,6 @@ App::Cmdが有名どころのようだ。
     
       <li class="post">
         <a href="/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/">SNMPのindexキャッシュによる取得時間短縮の検証</a>
       </li>
     
   </ul>
