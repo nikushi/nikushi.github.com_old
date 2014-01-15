@@ -141,18 +141,7 @@ ERROR: RuntimeError: chef-solo failed. See output above.gg
     $ yum -d0 -e0 -y install td-agent-1.1.18-0
     Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 
-お、バグかな?とおもったらKnown Issueでした。[Apply signature to rpm /deb](https://github.com/treasure-data/td-agent/issues/43)。rpmがアップデートされるまで待つしかないようです。
+お、バグかな?とおもったらKnown Issueでした。[Apply signature to rpm /deb](https://github.com/treasure-data/td-agent/issues/43)。**(2013/01/15 追記) rpmが更新されて問題は解消しました**
 
-でもひとまずインストール完了させたかったので、自分はchef-td-agentをforkして`recipes/default.rb`を以下のようにして`gpgcheck false`にした。新しいrpmがリリースされたらforkバージョン消す予定。
 
-``` ruby recipes/default.rb
-when "centos", "redhat"
-  yum_repository "treasure-data" do
-    url "http://packages.treasure-data.com/redhat/$basearch"
-      # Skip gpgcheck until https://github.com/treasure-data/td-agent/issues/43 is fixed
-      gpgcheck false
-      action :add
-   end
-end
-```
 
