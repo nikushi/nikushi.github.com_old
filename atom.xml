@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-01-15T20:41:00+09:00</updated>
+  <updated>2014-01-15T20:43:46+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,9 +18,16 @@
     <link href="http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook/"/>
     <updated>2014-01-15T20:35:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/yohoushi/chef-yohoushi">chef-yohoushi</a> を作りました。YohoushiをChefでインストールするクックブック。</p>
+    <content type="html"><![CDATA[<p><a href="https://github.com/yohoushi/chef-yohoushi">chef-yohoushi</a> を作りました。</p>
 
-<p>中身見ていただけるとわかりますが、ユーザ作成、データベースマイグレーション、Yohoushiリポジトリをgit cloneしてというところまでやってくれます。サービスの起動はレシピに書いてない。今日はここまで&hellip;!</p>
+<!-- more -->
+
+
+<p>YohoushiをChefでインストールするクックブック。</p>
+
+<p>ユーザ作成、データベースマイグレーション、Yohoushiリポジトリをgit cloneしてというところまでやってくれます。RubyのbuildとかMySQLサーバのインストールとかはクックブックの範囲外にしてて別クックブックと組み合わせて使ってください。</p>
+
+<p>またサービスの再起動とかchkconfig的なところはレシピに書いてない。その辺やろうとすると諸々yack shavingになるので今時点ではインストールだけ。</p>
 ]]></content>
   </entry>
   
