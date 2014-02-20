@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-01-15T20:45:22+09:00</updated>
+  <updated>2014-02-21T00:24:12+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[proxyの実装を修正した話]]></title>
+    <link href="http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/"/>
+    <updated>2014-02-20T22:36:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem</id>
+    <content type="html"><![CDATA[<p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、このバグ修正に関するメモを後学のため残しておきます。</p>
+
+<!--more-->
+
+
+<p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないリバースプロキシ(例えばnginx1.0.x系など)を使うと、再現します。厳密にはリバースプロキシ配下でなくとも再現するのですが、ここではリバースプロキシ前提で説明します。</p>
+
+<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すようになったのですが、一方でYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアント(リバースプロキシ)に対してもchunkedデータをレスポンスしてしていました。こんな感じに。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ブラウザ ----&gt; リバプロ -------------------------&gt; Yohoushi -------------------------&gt; GrowthForecast
+</span><span class='line'>                        GET /graph/a/b/c HTTP/1.0           GET /graph/a/b/c HTTP/1.1
+</span><span class='line'>                     
+</span><span class='line'>        &lt;xxxxxxxxxxxx  &lt;--------------------------         &lt;-------------------------
+</span><span class='line'>                        Transfer-Encoding: chunked          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これはよくなくて&lt;xxxの部分が壊れてしまってます。<a href="https://www.ietf.org/rfc/rfc2616.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。</p>
+
+<p>そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropしまたchunkedではないデータの形でリバースプロキシへ戻すようにしました。いざ説明するとシンプルな話なんですよね。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ブラウザ ----&gt; nginx -------------------------&gt; Yohoushi -------------------------&gt; GrowthForecast
+</span><span class='line'>                    GET /graph/a/b/c HTTP/1.0          GET /graph/a/b/c HTTP/1.1
+</span><span class='line'>                     
+</span><span class='line'>        &lt;----       &lt;--------------------------         &lt;-------------------------
+</span><span class='line'>                                                          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
+
+
+<p>実際のところはYohoushiのコードではなくこの振る舞いは中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareを修正することになります。興味がある方は<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">修正pull req</a>見てください。間違ってるよなどありましたらどうぞコメントいただければ幸いです!</p>
+
+<p>問題再現してtcpdumpで調べてrack-streaming-proxyがguiltyと分かるまでは簡単でした。でもproxy実装自分で修正するのかとおもうと最初重そうだったけど、rack-streaming-proxyはコード量少なくてシンプルなので案外敷居低かった。もしちゃんとしたプロキシ実装、例えばSquidとかnginxとかいじれと言われるとそうはいきませんけどね。</p>
+
+<p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
+<a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
+
+<p>最後に<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>の紹介しとこ。YohoushiはRailsアプリですがグラフ画像の部分だけGrowthForecastへ振り分ける処理をrack-streaming-proxyにやらせてます。<code>config/application.rb</code>にこんな感じのコードを書いて使います。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Yohoushi</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">use</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:StreamingProxy</span><span class="o">::</span><span class="no">Proxy</span> <span class="k">do</span> <span class="o">|</span><span class="n">request</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">next</span> <span class="k">unless</span> <span class="no">Settings</span><span class="o">.</span><span class="n">proxy</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">start_with?</span><span class="p">(</span><span class="s1">&#39;/graph/&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">path</span> <span class="o">=</span> <span class="ss">URI</span><span class="p">:</span><span class="ss">:unescape</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="c1"># request.path are passed after uri escaped by rack</span>
+</span><span class='line'>        <span class="vg">$mfclient</span><span class="o">.</span><span class="n">get_graph_uri</span><span class="p">(</span><span class="n">path</span><span class="o">[</span><span class="mi">7</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">elsif</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">start_with?</span><span class="p">(</span><span class="s1">&#39;/complex/&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">path</span> <span class="o">=</span> <span class="ss">URI</span><span class="p">:</span><span class="ss">:unescape</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>        <span class="vg">$mfclient</span><span class="o">.</span><span class="n">get_complex_uri</span><span class="p">(</span><span class="n">path</span><span class="o">[</span><span class="mi">9</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Rack::StreamingProxy::Proxy</code>のコードブロック内で返ったURLへプロキシすることができて、上のコードでは<code>/graph/</code>か<code>/complex/</code>のパスリクエストのときはRailsではなくGrowthForecastへプロキシしてREST APIを参照させてます。</p>
+
+<p>以上!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
@@ -1480,42 +1572,6 @@ Base.inheritance_column).</p></blockquote>
 
 
 <p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Font AwesomeをRailsで使ってみた]]></title>
-    <link href="http://orihubon.com/blog/2013/07/09/font-awesome-rails/"/>
-    <updated>2013-07-09T00:42:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/09/font-awesome-rails</id>
-    <content type="html"><![CDATA[<p><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></p>
-
-<p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
-
-<!--more-->
-
-
-<p>Railsで使うには <a href="https://github.com/bokmann/font-awesome-rails">font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
-
-<p>使い方1 &ndash; iタグ使う</p>
-
-<pre><code>&lt;i class="icon-thumbs-up"&gt;&lt;/i&gt; icon-thumbs-up
-</code></pre>
-
-<p>TwitterBootstrapであらかじめ用意されているアイコンの使い方と同じです。ただFont Awesomeの場合、画像ではなくフォントとして扱われるのでfont-colorで色を調整したり出来ます。</p>
-
-<p>使い方2 &ndash; CSSのcontentマークアップにユニコードを埋め込む</p>
-
-<pre><code>.thumbs-up:before {
-  font-size: 20px;
-  font-family: 'FontAwesome';
-  content: '\F164';
-}
-</code></pre>
-
-<p>contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば<a href="http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/">thumbs-up</a>であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!</p>
-
-<p>という感じで簡単ながらFont Awesomeの紹介でした。</p>
 ]]></content>
   </entry>
   

@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>proxyの実装を修正した話 - ni-blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="Yohoushi v0.72.2 をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、このバグ修正に関するメモを後学のため残しておきます。 新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-262568-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">ni-blog</a></h1>
+  
+    <h2>tech, web, work, and Tokyo.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:orihubon.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">proxyの実装を修正した話</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-20T22:36:00+09:00" pubdate data-updated="true">Feb 20<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、このバグ修正に関するメモを後学のため残しておきます。</p>
+
+<!--more-->
+
+
+<p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないリバースプロキシ(例えばnginx1.0.x系など)を使うと、再現します。厳密にはリバースプロキシ配下でなくとも再現するのですが、ここではリバースプロキシ前提で説明します。</p>
+
+<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すようになったのですが、一方でYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアント(リバースプロキシ)に対してもchunkedデータをレスポンスしてしていました。こんな感じに。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ブラウザ ----&gt; リバプロ -------------------------&gt; Yohoushi -------------------------&gt; GrowthForecast
+</span><span class='line'>                        GET /graph/a/b/c HTTP/1.0           GET /graph/a/b/c HTTP/1.1
+</span><span class='line'>                     
+</span><span class='line'>        &lt;xxxxxxxxxxxx  &lt;--------------------------         &lt;-------------------------
+</span><span class='line'>                        Transfer-Encoding: chunked          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これはよくなくて&lt;xxxの部分が壊れてしまってます。<a href="https://www.ietf.org/rfc/rfc2616.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。</p>
+
+<p>そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropしまたchunkedではないデータの形でリバースプロキシへ戻すようにしました。いざ説明するとシンプルな話なんですよね。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ブラウザ ----&gt; nginx -------------------------&gt; Yohoushi -------------------------&gt; GrowthForecast
+</span><span class='line'>                    GET /graph/a/b/c HTTP/1.0          GET /graph/a/b/c HTTP/1.1
+</span><span class='line'>                     
+</span><span class='line'>        &lt;----       &lt;--------------------------         &lt;-------------------------
+</span><span class='line'>                                                          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
+
+
+<p>実際のところはYohoushiのコードではなくこの振る舞いは中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareを修正することになります。興味がある方は<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">修正pull req</a>見てください。間違ってるよなどありましたらどうぞコメントいただければ幸いです!</p>
+
+<p>問題再現してtcpdumpで調べてrack-streaming-proxyがguiltyと分かるまでは簡単でした。でもproxy実装自分で修正するのかとおもうと最初重そうだったけど、rack-streaming-proxyはコード量少なくてシンプルなので案外敷居低かった。もしちゃんとしたプロキシ実装、例えばSquidとかnginxとかいじれと言われるとそうはいきませんけどね。</p>
+
+<p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
+<a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
+
+<p>最後に<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>の紹介しとこ。YohoushiはRailsアプリですがグラフ画像の部分だけGrowthForecastへ振り分ける処理をrack-streaming-proxyにやらせてます。<code>config/application.rb</code>にこんな感じのコードを書いて使います。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Yohoushi</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">use</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:StreamingProxy</span><span class="o">::</span><span class="no">Proxy</span> <span class="k">do</span> <span class="o">|</span><span class="n">request</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">next</span> <span class="k">unless</span> <span class="no">Settings</span><span class="o">.</span><span class="n">proxy</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">start_with?</span><span class="p">(</span><span class="s1">&#39;/graph/&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">path</span> <span class="o">=</span> <span class="ss">URI</span><span class="p">:</span><span class="ss">:unescape</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="c1"># request.path are passed after uri escaped by rack</span>
+</span><span class='line'>        <span class="vg">$mfclient</span><span class="o">.</span><span class="n">get_graph_uri</span><span class="p">(</span><span class="n">path</span><span class="o">[</span><span class="mi">7</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">elsif</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">start_with?</span><span class="p">(</span><span class="s1">&#39;/complex/&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">path</span> <span class="o">=</span> <span class="ss">URI</span><span class="p">:</span><span class="ss">:unescape</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>        <span class="vg">$mfclient</span><span class="o">.</span><span class="n">get_complex_uri</span><span class="p">(</span><span class="n">path</span><span class="o">[</span><span class="mi">9</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Rack::StreamingProxy::Proxy</code>のコードブロック内で返ったURLへプロキシすることができて、上のコードでは<code>/graph/</code>か<code>/complex/</code>のパスリクエストのときはRailsではなくGrowthForecastへプロキシしてREST APIを参照させてます。</p>
+
+<p>以上!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-20T22:36:00+09:00" pubdate data-updated="true">Feb 20<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/yohoushi/'>Yohoushi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/15/yohoushi-chef-cookbook/" title="Previous Post: Yohoushi Chef Cookbook作った">&laquo; Yohoushi Chef Cookbook作った</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/20/fix-yohoushi-chunked-problem/">proxyの実装を修正した話</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/15/yohoushi-chef-cookbook/">Yohoushi Chef Cookbook作った</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/08/install-td-agent-by-chef-and-install-error/">Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/23/fluent-plugin-derive-has-been-released/">fluent-plugin-deriveで単位時間あたりの差分値を計算する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/">親プロセスと子プロセスでTCPソケットを共有したらどうなるか</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<style type="text/css">
+<!--
+.hatena-bookmark-widget-title { display: none; }
+-->
+</style>
+<h1>Popular Posts</h1>
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+  Hatena.BookmarkWidget.url   = "http://orihubon.com";
+  Hatena.BookmarkWidget.title = "人気エントリー";
+  Hatena.BookmarkWidget.sort  = "hot";
+  Hatena.BookmarkWidget.width = 0;
+  Hatena.BookmarkWidget.num   = 5;
+  Hatena.BookmarkWidget.theme = "notheme";
+  Hatena.BookmarkWidget.load();
+</script>
+</section>
+<section>
+  <h1>Recent Tweets</h1>
+  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
+  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'orihubon';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/';
+        var disqus_url = 'http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Yohoushi | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/yohoushi/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-01-15T20:45:22+09:00</updated>
+  <updated>2014-02-21T00:24:12+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[proxyの実装を修正した話]]></title>
+    <link href="http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/"/>
+    <updated>2014-02-20T22:36:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem</id>
+    <content type="html"><![CDATA[<p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、このバグ修正に関するメモを後学のため残しておきます。</p>
+
+<!--more-->
+
+
+<p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないリバースプロキシ(例えばnginx1.0.x系など)を使うと、再現します。厳密にはリバースプロキシ配下でなくとも再現するのですが、ここではリバースプロキシ前提で説明します。</p>
+
+<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すようになったのですが、一方でYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアント(リバースプロキシ)に対してもchunkedデータをレスポンスしてしていました。こんな感じに。</p>
+
+<p>```
+ブラウザ &mdash;&mdash;> リバプロ &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;> Yohoushi &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;> GrowthForecast</p>
+
+<pre><code>                    GET /graph/a/b/c HTTP/1.0           GET /graph/a/b/c HTTP/1.1
+
+    &lt;xxxxxxxxxxxx  &lt;--------------------------         &lt;-------------------------
+                    Transfer-Encoding: chunked          Transfer-Encoding: chunked
+</code></pre>
+
+<p>```</p>
+
+<p>これはよくなくて&lt;xxxの部分が壊れてしまってます。<a href="https://www.ietf.org/rfc/rfc2616.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。</p>
+
+<p>そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropしまたchunkedではないデータの形でリバースプロキシへ戻すようにしました。いざ説明するとシンプルな話なんですよね。</p>
+
+<p>```
+ブラウザ &mdash;&mdash;> nginx &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;> Yohoushi &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;> GrowthForecast</p>
+
+<pre><code>                GET /graph/a/b/c HTTP/1.0          GET /graph/a/b/c HTTP/1.1
+
+    &lt;----       &lt;--------------------------         &lt;-------------------------
+                                                      Transfer-Encoding: chunked
+</code></pre>
+
+<p>```</p>
+
+<p>実際のところはYohoushiのコードではなくこの振る舞いは中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareを修正することになります。興味がある方は<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">修正pull req</a>見てください。間違ってるよなどありましたらどうぞコメントいただければ幸いです!</p>
+
+<p>問題再現してtcpdumpで調べてrack-streaming-proxyがguiltyと分かるまでは簡単でした。でもproxy実装自分で修正するのかとおもうと最初重そうだったけど、rack-streaming-proxyはコード量少なくてシンプルなので案外敷居低かった。もしちゃんとしたプロキシ実装、例えばSquidとかnginxとかいじれと言われるとそうはいきませんけどね。</p>
+
+<p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
+<a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
+
+<p>最後に<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>の紹介しとこ。YohoushiはRailsアプリですがグラフ画像の部分だけGrowthForecastへ振り分ける処理をrack-streaming-proxyにやらせてます。<code>config/application.rb</code>にこんな感じのコードを書いて使います。</p>
+
+<p>```ruby
+module Yohoushi
+  class Application &lt; Rails::Application</p>
+
+<pre><code>config.middleware.use Rack::StreamingProxy::Proxy do |request|
+  next unless Settings.proxy
+  if request.path.start_with?('/graph/')
+    path = URI::unescape(request.path) # request.path are passed after uri escaped by rack
+    $mfclient.get_graph_uri(path[7..-1], request.params)
+  elsif request.path.start_with?('/complex/')
+    path = URI::unescape(request.path)
+    $mfclient.get_complex_uri(path[9..-1], request.params)
+  end
+end
+</code></pre>
+
+<p>  end
+end
+<code>``
+</code>Rack::StreamingProxy::Proxy<code>のコードブロック内で返ったURLへプロキシすることができて、上のコードでは</code>/graph/<code>か</code>/complex/`のパスリクエストのときはRailsではなくGrowthForecastへプロキシしてREST APIを参照させてます。</p>
+
+<p>以上!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
