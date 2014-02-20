@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-02-21T00:24:12+09:00</updated>
+  <updated>2014-02-21T00:32:02+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -55,9 +55,9 @@
 </span><span class='line'>                                                          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
 
 
-<p>実際のところはYohoushiのコードではなくこの振る舞いは中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareを修正することになります。興味がある方は<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">修正pull req</a>見てください。間違ってるよなどありましたらどうぞコメントいただければ幸いです!</p>
+<p>実際のところはYohoushiのコードではなくこの振る舞いは中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareに修正<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>入れます。</p>
 
-<p>問題再現してtcpdumpで調べてrack-streaming-proxyがguiltyと分かるまでは簡単でした。でもproxy実装自分で修正するのかとおもうと最初重そうだったけど、rack-streaming-proxyはコード量少なくてシンプルなので案外敷居低かった。もしちゃんとしたプロキシ実装、例えばSquidとかnginxとかいじれと言われるとそうはいきませんけどね。</p>
+<p>ちなみに、問題再現してtcpdumpで調べてrack-streaming-proxyがguiltyと分かるまでは結構簡単でした。でもproxy実装自分で修正するのかとおもうと最初重そうだったけど、rack-streaming-proxyはコード量少なくてシンプルなので案外敷居低かった。勉強になりました。</p>
 
 <p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
 <a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
