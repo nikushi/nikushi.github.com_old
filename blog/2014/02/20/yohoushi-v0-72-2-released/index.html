@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Yohoushi v0.72.2 をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。古いバージョンを使われてる場合はアップデートをお勧めします! 新しめのGrowthForecastとv0.72.1以下のYohoushi、 &hellip;">
+  <meta name="description" content="Yohoushi v0.72.2 をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。古いバージョンを使われてる場合はアップデートをお勧めします! 不具合 新しめのGrowthForecastとv0.72.1以下のYohoushi、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,6 +109,8 @@
 <!--more-->
 
 
+<h3>不具合</h3>
+
 <p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないクライアントの組み合わせで再現します。例えばリバースプロキシ(例えばnginx1.0.x系など)を使った場合です。</p>
 
 <p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すため、一方のYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアントに対してもchunkedデータをレスポンスしてしていました。</p>
@@ -119,6 +121,8 @@
 
 <p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
 <a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
+
+<h3>rack-streaming-proxyの紹介</h3>
 
 <p>最後に<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>の紹介しとこ。YohoushiはRailsアプリですがグラフ画像の部分だけGrowthForecastへ振り分ける処理をrack-streaming-proxyにやらせてます。<code>config/application.rb</code>にこんな感じのコードを書いて使います。</p>
 
