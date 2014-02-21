@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Yohoushi v0.72.2 をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。 新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないクライアントの組み合わせで再現します &hellip;">
+  <meta name="description" content="Yohoushi v0.72.2 をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。古いバージョンを使われてる場合はアップデートをお勧めします! 新しめのGrowthForecastとv0.72.1以下のYohoushi、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,44 +104,18 @@
   </header>
 
 
-<div class="entry-content"><p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。</p>
+<div class="entry-content"><p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。古いバージョンを使われてる場合はアップデートをお勧めします!</p>
 
 <!--more-->
 
 
 <p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないクライアントの組み合わせで再現します。例えばリバースプロキシ(例えばnginx1.0.x系など)を使った場合です。</p>
 
-<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すため、一方のYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアントに対してもchunkedデータをレスポンスしてしていました。こんな感じに。</p>
+<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すため、一方のYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアントに対してもchunkedデータをレスポンスしてしていました。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ブラウザ ----&gt; リバプロ -------------------------&gt; Yohoushi -------------------------&gt; GrowthForecast
-</span><span class='line'>                        GET /graph/a/b/c HTTP/1.0           GET /graph/a/b/c HTTP/1.1
-</span><span class='line'>                     
-</span><span class='line'>        &lt;xxxxxxxxxxxx  &lt;--------------------------         &lt;-------------------------
-</span><span class='line'>                        Transfer-Encoding: chunked          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
+<p><a href="https://www.ietf.org/rfc/rfc2145.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。 そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropし、またchunkedではないデータの形でクライアントへ戻すようにしました。</p>
 
-
-<p>これはよくなくて&lt;xxxの部分でデータが壊れます。<a href="https://www.ietf.org/rfc/rfc2616.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。</p>
-
-<p>そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropし、またchunkedではないデータの形でクライアントへ戻すようにしました。まあ説明するとシンプルな話なんですよね。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ブラウザ ----&gt; nginx -------------------------&gt; Yohoushi -------------------------&gt; GrowthForecast
-</span><span class='line'>                    GET /graph/a/b/c HTTP/1.0          GET /graph/a/b/c HTTP/1.1
-</span><span class='line'>                     
-</span><span class='line'>        &lt;----       &lt;--------------------------         &lt;-------------------------
-</span><span class='line'>                                                          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
-
-
-<p>実際はYohoushiの中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareに修正<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>入れました。</p>
+<p>文字で説明するとシンプルな話なんですが。修正はYohoushiの中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareへの<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>で反映されてます。</p>
 
 <p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
 <a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
