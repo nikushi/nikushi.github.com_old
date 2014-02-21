@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-02-21T00:32:02+09:00</updated>
+  <updated>2014-02-21T09:39:48+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,18 +14,18 @@
 
   
   <entry>
-    <title type="html"><![CDATA[proxyの実装を修正した話]]></title>
-    <link href="http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem/"/>
+    <title type="html"><![CDATA[Yohoushi v0.72.2 リリースしました]]></title>
+    <link href="http://orihubon.com/blog/2014/02/20/yohoushi-v0-72-2-released/"/>
     <updated>2014-02-20T22:36:00+09:00</updated>
-    <id>http://orihubon.com/blog/2014/02/20/fix-yohoushi-chunked-problem</id>
-    <content type="html"><![CDATA[<p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、このバグ修正に関するメモを後学のため残しておきます。</p>
+    <id>http://orihubon.com/blog/2014/02/20/yohoushi-v0-72-2-released</id>
+    <content type="html"><![CDATA[<p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。</p>
 
 <!--more-->
 
 
-<p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないリバースプロキシ(例えばnginx1.0.x系など)を使うと、再現します。厳密にはリバースプロキシ配下でなくとも再現するのですが、ここではリバースプロキシ前提で説明します。</p>
+<p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないクライアントの組み合わせで再現します。例えばリバースプロキシ(例えばnginx1.0.x系など)を使った場合です。</p>
 
-<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すようになったのですが、一方でYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアント(リバースプロキシ)に対してもchunkedデータをレスポンスしてしていました。こんな感じに。</p>
+<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すため、一方のYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアントに対してもchunkedデータをレスポンスしてしていました。こんな感じに。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -39,9 +39,9 @@
 </span><span class='line'>                        Transfer-Encoding: chunked          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
 
 
-<p>これはよくなくて&lt;xxxの部分が壊れてしまってます。<a href="https://www.ietf.org/rfc/rfc2616.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。</p>
+<p>これはよくなくて&lt;xxxの部分でデータが壊れます。<a href="https://www.ietf.org/rfc/rfc2616.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。</p>
 
-<p>そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropしまたchunkedではないデータの形でリバースプロキシへ戻すようにしました。いざ説明するとシンプルな話なんですよね。</p>
+<p>そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropし、またchunkedではないデータの形でクライアントへ戻すようにしました。まあ説明するとシンプルな話なんですよね。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -55,9 +55,7 @@
 </span><span class='line'>                                                          Transfer-Encoding: chunked</span></code></pre></td></tr></table></div></figure>
 
 
-<p>実際のところはYohoushiのコードではなくこの振る舞いは中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareに修正<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>入れます。</p>
-
-<p>ちなみに、問題再現してtcpdumpで調べてrack-streaming-proxyがguiltyと分かるまでは結構簡単でした。でもproxy実装自分で修正するのかとおもうと最初重そうだったけど、rack-streaming-proxyはコード量少なくてシンプルなので案外敷居低かった。勉強になりました。</p>
+<p>実際はYohoushiの中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareに修正<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>入れました。</p>
 
 <p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
 <a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
