@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Yohoushi | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/yohoushi/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-02-21T09:46:41+09:00</updated>
+  <updated>2014-02-21T09:47:58+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -34,7 +34,7 @@
 <p>文字で説明するとシンプルな話なんですが。修正はYohoushiの中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareへの<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>で反映されてます。</p>
 
 <p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
-<a href="https://twitter.com/sonots">@sonots</a> 毎度コードレビューありがとうございます!</p>
+<a href="https://twitter.com/sonots">@sonots</a> コードレビューありがとうございます!</p>
 
 <h3>rack-streaming-proxyの紹介</h3>
 
