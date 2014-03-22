@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-02-21T09:47:58+09:00</updated>
+  <updated>2014-03-22T13:33:50+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,7 +18,7 @@
     <link href="http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released/"/>
     <updated>2013-12-23T14:57:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/niku4i/fluent-plugin-derive">fluent-plugin-derive</a> というFluentd outputプラグインをリリースしました。初gem &amp; 初Fluentd plugin作成。</p>
+    <content type="html"><![CDATA[<p><a href="https://github.com/niku4i/fluent-plugin-derive">fluent-plugin-derive</a> というFluentd outputプラグインをリリースしました。</p>
 
 <!--more-->
 

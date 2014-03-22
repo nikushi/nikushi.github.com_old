@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Yohoushi | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/yohoushi/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-02-21T09:47:58+09:00</updated>
+  <updated>2014-03-22T13:33:50+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,59 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Yohoushi v0.72.2 リリースしました]]></title>
-    <link href="http://orihubon.com/blog/2014/02/20/yohoushi-v0-72-2-released/"/>
-    <updated>2014-02-20T22:36:00+09:00</updated>
-    <id>http://orihubon.com/blog/2014/02/20/yohoushi-v0-72-2-released</id>
-    <content type="html"><![CDATA[<p>Yohoushi <a href="https://github.com/yohoushi/yohoushi/releases/tag/v0.72.2">v0.72.2</a> をリリースしました。以前のバージョンでは特定条件でグラフ画像が正しく表示されないバグがあり、この修正が含まれます。古いバージョンを使われてる場合はアップデートをお勧めします!</p>
-
-<!--more-->
-
-
-<h3>不具合</h3>
-
-<p>新しめのGrowthForecastとv0.72.1以下のYohoushi、およびHTTP/1.1に対応してないクライアントの組み合わせで再現します。例えばリバースプロキシ(例えばnginx1.0.x系など)を使った場合です。</p>
-
-<p>最近のGrowthForecastはHTTP/1.1の<code>Transfer-Encoding: chunked</code>を返すため、一方のYohoushiの画像をプロキシする際のchunkの処理がよろしくなくて、 HTTP/1.0なクライアントに対してもchunkedデータをレスポンスしてしていました。</p>
-
-<p><a href="https://www.ietf.org/rfc/rfc2145.txt">RFC2145</a>によるとHTTP/1.1を解釈しないクライアント(ここではリバプロ)に大してchunkedなデータを送り返すのはNGです。 そこで、クライアントがHTTP/1.0なら<code>Transfer-Encoding</code>をdropし、またchunkedではないデータの形でクライアントへ戻すようにしました。</p>
-
-<p>文字で説明するとシンプルな話なんですが。修正はYohoushiの中で使ってる<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>というrack middlewareへの<a href="https://github.com/yohoushi/rack-streaming-proxy/pull/2">pull request</a>で反映されてます。</p>
-
-<p><a href="https://twitter.com/m_doi">@m_doi</a> バグレポートありがとうございました!
-<a href="https://twitter.com/sonots">@sonots</a> コードレビューありがとうございます!</p>
-
-<h3>rack-streaming-proxyの紹介</h3>
-
-<p>最後に<a href="https://github.com/yohoushi/rack-streaming-proxy">rack-streaming-proxy</a>の紹介しとこ。YohoushiはRailsアプリですがグラフ画像の部分だけGrowthForecastへ振り分ける処理をrack-streaming-proxyにやらせてます。<code>config/application.rb</code>にこんな感じのコードを書いて使います。</p>
-
-<p>```ruby
-module Yohoushi
-  class Application &lt; Rails::Application</p>
-
-<pre><code>config.middleware.use Rack::StreamingProxy::Proxy do |request|
-  next unless Settings.proxy
-  if request.path.start_with?('/graph/')
-    path = URI::unescape(request.path) # request.path are passed after uri escaped by rack
-    $mfclient.get_graph_uri(path[7..-1], request.params)
-  elsif request.path.start_with?('/complex/')
-    path = URI::unescape(request.path)
-    $mfclient.get_complex_uri(path[9..-1], request.params)
-  end
-end
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<p><code>Rack::StreamingProxy::Proxy</code>のコードブロック内で返ったURLへプロキシすることができて、上のコードでは<code>/graph/</code>か<code>/complex/</code>のパスリクエストのときはRailsではなくGrowthForecastへプロキシしてREST APIを参照させてます。</p>
-
-<p>以上!</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>

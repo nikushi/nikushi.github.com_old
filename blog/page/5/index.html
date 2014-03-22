@@ -9,8 +9,16 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Wordpressからoctopressに移行した。 移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。 Wordpressは数年使っていて機能豊富でテーマも充実してるし管理画面も使いやすく、正直あまり不満はない。
-でもWordpress = PHPなんだよね。 &hellip;">
+  <meta name="description" content="A first post always says Hello, World1
+2
+3
+4
+5
+6
+7
+class Hello def self.world &quot;Hello, World!&quot; end
+end puts Hello.world return1
+=&gt; &quot; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,60 +85,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">Wordpressからoctopressに移行した</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T15:53:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/02/14/migration-from-wordpress-to-octopress/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Wordpressからoctopressに移行した。</p>
-
-<p>移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。</p>
-
-<p>Wordpressは数年使っていて機能豊富でテーマも充実してるし管理画面も使いやすく、正直あまり不満はない。
-でもWordpress = PHPなんだよね。PHP&hellip; 別にPHP嫌いなわけではない。今年はRubyを勉強すると決めているので、
-ならば周りのツールもみんなRubyにしよー! という流れ。</p>
-
-<p>さらにoctopressはgithubやherokuと連携してサーバいらずでgit pushすればブログ公開があっというまにできる仕組み。
-gitやPasSに触れれてこれは一石二鳥。</p>
-
-<p>以下詳細。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/02/14/migration-from-wordpress-to-octopress/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -543,6 +497,53 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/">Perl Moduleのバージョンを確認する方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-24T00:00:00+09:00" pubdate data-updated="true">Nov 24<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/11/24/perl-modulefalsebaziyonwoque-ren-surufang-fa/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">たまにしかしないので、忘れないようメモ。
+Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
+
+例
+<pre code="shell">
+$ perl -MTemplate -e '$Template::VERSION'
+2.14
+</pre>
+
+モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -564,10 +565,6 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/02/20/yohoushi-v0-72-2-released/">Yohoushi v0.72.2 リリースしました</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/01/15/yohoushi-chef-cookbook/">Yohoushi Chef Cookbook作った</a>
       </li>
     
@@ -581,6 +578,10 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
     
       <li class="post">
         <a href="/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/">親プロセスと子プロセスでTCPソケットを共有したらどうなるか</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>
       </li>
     
   </ul>
