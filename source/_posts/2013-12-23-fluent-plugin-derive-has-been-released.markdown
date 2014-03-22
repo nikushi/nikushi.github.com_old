@@ -7,7 +7,7 @@ categories:
   - Fluentd
 ---
 
-[fluent-plugin-derive](https://github.com/niku4i/fluent-plugin-derive) というFluentd outputプラグインをリリースしました。初gem & 初Fluentd plugin作成。
+[fluent-plugin-derive](https://github.com/niku4i/fluent-plugin-derive) というFluentd outputプラグインをリリースしました。
 
 <!--more-->
 
