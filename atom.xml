@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-03-22T13:33:50+09:00</updated>
+  <updated>2014-03-25T13:56:36+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,469 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[test-kitchen使ったメモ]]></title>
+    <link href="http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo/"/>
+    <updated>2014-03-25T11:46:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo</id>
+    <content type="html"><![CDATA[<p>最近はImmutable Infrastracture盛り上がりでChefやPuppetが語られる機会が少なくなって気がしますが、それはChef/Puppetが成熟してきた証拠? test-kitchenを使ってみたメモです。</p>
+
+<!--more-->
+
+
+<p><a href="http://kitchen.ci/docs/getting-started">GETTING STARTED GUIDE</a> を写経。詳細はリンク先の原文を参照してください。</p>
+
+<p>拙作の<a href="https://github.com/niku4i/rbenv-cookbook">rbenv-cookbook</a>をtest-kitchenをつかってVagrant上の仮想マシンでテストするところまで進めました。なお、Vagrantのバージョンは1.5.1を使いました。</p>
+
+<h3>インストール</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install test-kitchen
+</span><span class='line'>$ kitchen -v
+</span><span class='line'>Test Kitchen version 1.2.1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、あらかじめcookbookをgit cloneしておきます</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone git@github.com:niku4i/rbenv-cookbook.git
+</span><span class='line'>$ cd rbenv-cookbook</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>kitchen init</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen init --driver=kitchen-vagrant
+</span><span class='line'>      create  .kitchen.yml
+</span><span class='line'>      create  test/integration/default
+</span><span class='line'>      create  .gitignore
+</span><span class='line'>      append  .gitignore
+</span><span class='line'>      append  .gitignore
+</span><span class='line'>         run  gem install kitchen-vagrant from "."
+</span><span class='line'>Fetching: kitchen-vagrant-0.14.0.gem (100%)
+</span><span class='line'>Successfully installed kitchen-vagrant-0.14.0
+</span><span class='line'>Parsing documentation for kitchen-vagrant-0.14.0
+</span><span class='line'>Installing ri documentation for kitchen-vagrant-0.14.0
+</span><span class='line'>1 gem installed</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.kitchen.ymlが作られた。中身は以下のとおり。ubuntuはひとまず不要なのでplatformから削除。またinitで作成されたyamlに登録されているcentos-6.4ではkitchen createしたときにvagrant upできなくてエラーになってしまったので、boxイメージが悪いのかなと判断して6.5を使うように変更した。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>---
+</span><span class='line'>driver:
+</span><span class='line'>  name: vagrant
+</span><span class='line'>
+</span><span class='line'>provisioner:
+</span><span class='line'>  name: chef_solo
+</span><span class='line'>
+</span><span class='line'>platforms:
+</span><span class='line'>#  - name: ubuntu-12.04
+</span><span class='line'>#  - name: centos-6.4
+</span><span class='line'>  - name: centos-65
+</span><span class='line'>
+</span><span class='line'>suites:
+</span><span class='line'>  - name: default
+</span><span class='line'>    run_list:
+</span><span class='line'>      - recipe[rbenv-cookbook::default]
+</span><span class='line'>    attributes:</span></code></pre></td></tr></table></div></figure>
+
+
+<p>kitchen listコマンドで確認できた。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen list
+</span><span class='line'>Instance           Driver   Provisioner  Last Action
+</span><span class='line'>default-centos-64  Vagrant  ChefSolo     &lt;Not Created&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>kitchen create</h3>
+
+<p>kitchen createでインスタンスをアップ</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> $ kitchen create default-centos-65
+</span><span class='line'>-----&gt; Starting Kitchen (v1.2.1)
+</span><span class='line'>-----&gt; Creating &lt;default-centos-65&gt;...
+</span><span class='line'>       Bringing machine 'default' up with 'virtualbox' provider...
+</span><span class='line'>       ==&gt; default: Box 'opscode-centos-6.5' could not be found. Attempting to find and install...
+</span><span class='line'>           default: Box Provider: virtualbox
+</span><span class='line'>           default: Box Version: &gt;= 0
+</span><span class='line'>       ==&gt; default: Adding box 'opscode-centos-6.5' (v0) for provider: virtualbox
+</span><span class='line'>           default: Downloading: https://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
+</span><span class='line'>       ==&gt; default: Successfully added box 'opscode-centos-6.5' (v0) for 'virtualbox'!
+</span><span class='line'>       ==&gt; default: Importing base box 'opscode-centos-6.5'...
+</span><span class='line'>       ==&gt; default: Matching MAC address for NAT networking...
+</span><span class='line'>       ==&gt; default: Setting the name of the VM: default-centos-65_default_1395719095721_73691
+</span><span class='line'>       ==&gt; default: Fixed port collision for 22 =&gt; 2222. Now on port 2201.
+</span><span class='line'>       ==&gt; default: Clearing any previously set network interfaces...
+</span><span class='line'>       ==&gt; default: Preparing network interfaces based on configuration...
+</span><span class='line'>           default: Adapter 1: nat
+</span><span class='line'>       ==&gt; default: Forwarding ports...
+</span><span class='line'>           default: 22 =&gt; 2201 (adapter 1)
+</span><span class='line'>       ==&gt; default: Running 'pre-boot' VM customizations...
+</span><span class='line'>       ==&gt; default: Booting VM...
+</span><span class='line'>==&gt; default: Waiting for machine to boot. This may take a few minutes...           default: SSH address: 127.0.0.1:2201
+</span><span class='line'>           default: SSH username: vagrant
+</span><span class='line'>           default: SSH auth method: private key
+</span><span class='line'>           default: Error: Connection timeout. Retrying...
+</span><span class='line'>       ==&gt; default: Machine booted and ready!
+</span><span class='line'>       ==&gt; default: Checking for guest additions in VM...
+</span><span class='line'>           default: The guest additions on this VM do not match the installed version of
+</span><span class='line'>           default: VirtualBox! In most cases this is fine, but in rare cases it can
+</span><span class='line'>           default: prevent things such as shared folders from working properly. If you see
+</span><span class='line'>           default: shared folder errors, please make sure the guest additions within the
+</span><span class='line'>           default: virtual machine match the version of VirtualBox you have installed on
+</span><span class='line'>           default: your host and reload your VM.
+</span><span class='line'>           default:
+</span><span class='line'>           default: Guest Additions Version: 4.3.8
+</span><span class='line'>           default: VirtualBox Version: 4.2
+</span><span class='line'>       ==&gt; default: Setting hostname...
+</span><span class='line'>       Vagrant instance &lt;default-centos-65&gt; created.
+</span><span class='line'>       Finished creating &lt;default-centos-65&gt; (11m27.39s).
+</span><span class='line'>-----&gt; Kitchen is finished. (11m27.70s)</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>vagrantでインスタンスを起動する</li>
+<li>boxが登録されてなければネットワークから探してくる</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen list
+</span><span class='line'>Instance           Driver   Provisioner  Last Action
+</span><span class='line'>default-centos-65  Vagrant  ChefSolo     Created</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>kitchen converge</h3>
+
+<p>レシピをインスタンスに適用する</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen converge default-centos-65
+</span><span class='line'>-----&gt; Starting Kitchen (v1.2.1)
+</span><span class='line'>-----&gt; Converging &lt;default-centos-65&gt;...
+</span><span class='line'>       Preparing files for transfer
+</span><span class='line'>       Preparing current project directory as a cookbook
+</span><span class='line'>       Removing non-cookbook files before transfer
+</span><span class='line'>-----&gt; Installing Chef Omnibus (true)
+</span><span class='line'>       downloading https://www.getchef.com/chef/install.sh
+</span><span class='line'>         to file /tmp/install.sh
+</span><span class='line'>       trying wget...
+</span><span class='line'>       Downloading Chef  for el...
+</span><span class='line'>       downloading https://www.getchef.com/chef/metadata?v=&prerelease=false&p=el&pv=6&m=x86_64
+</span><span class='line'>         to file /tmp/install.sh.1851/metadata.txt
+</span><span class='line'>       trying wget...
+</span><span class='line'>       url      https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-11.10.4-1.el6.x86_64.rpm
+</span><span class='line'>       md5      3fe6dd8e19301b6c66032496a89097db
+</span><span class='line'>       sha256   edd5d2bcc174f67e5e5136fd7e5fffd9414c5f4949c68b28055b124185904d9f
+</span><span class='line'>       downloaded metadata file looks valid...
+</span><span class='line'>       downloading https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-11.10.4-1.el6.x86_64.rpm
+</span><span class='line'>         to file /tmp/install.sh.1851/chef-11.10.4-1.el6.x86_64.rpm
+</span><span class='line'>       trying wget...
+</span><span class='line'>       Comparing checksum with sha256sum...
+</span><span class='line'>       Installing Chef
+</span><span class='line'>       installing with rpm...
+</span><span class='line'>       warning: /tmp/install.sh.1851/chef-11.10.4-1.el6.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID 83ef826a: NOKEY
+</span><span class='line'>Preparing...                #####  ########################################### [100%]
+</span><span class='line'>   1:chef                          ########################################### [100%]
+</span><span class='line'>       Thank you for installing Chef!
+</span><span class='line'>       Transfering files to &lt;default-centos-65&gt;
+</span><span class='line'>       [2014-03-25T03:51:33+00:00] INFO: Forking chef instance to converge...
+</span><span class='line'>       Starting Chef Client, version 11.10.4
+</span><span class='line'>       [2014-03-25T03:51:33+00:00] INFO: *** Chef 11.10.4 ***
+</span><span class='line'>       [2014-03-25T03:51:33+00:00] INFO: Chef-client pid: 1948
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Setting the run_list to ["recipe[rbenv-cookbook::default]"] from JSON
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Run List is [recipe[rbenv-cookbook::default]]
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Run List expands to [rbenv-cookbook::default]
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Starting Chef Run for default-centos-65
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Running start handlers
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Start handlers complete.
+</span><span class='line'>       Compiling Cookbooks...
+</span><span class='line'>
+</span><span class='line'>       Running handlers:
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] ERROR: Running exception handlers
+</span><span class='line'>       Running handlers complete
+</span><span class='line'>
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] ERROR: Exception handlers complete
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out
+</span><span class='line'>       Chef Client failed. 0 resources updated in 0.458583313 seconds
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] ERROR: Cookbook yum-epel not found. If you're loading yum-epel from another cookbook, make sure you configure the dependency in your metadata
+</span><span class='line'>       [2014-03-25T03:51:34+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Converge failed on instance &lt;default-centos-65&gt;.
+</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Please see .kitchen/logs/default-centos-65.log for more details
+</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; ------Exception-------
+</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Class: Kitchen::ActionFailed
+</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Message: SSH exited (1) for command: [sudo -E chef-solo --config /tmp/kitchen/solo.rb --json-attributes /tmp/kitchen/dna.json  --log_level info]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>エラーでこけた&hellip; 。rbenv-cookbookはyum-epelに依存してるせい? metadata.rbは既に作ってるのでBerkshelfファイルを作成しmetadataを読み込むようにしたらエラーをパスできた!</p>
+
+<figure class='code'><figcaption><span>Berksfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>source &quot;https://api.berkshelf.com&quot;
+</span><span class='line'>
+</span><span class='line'>metadata
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再実行。gitが無いので止まった。これはレシピが悪い。</p>
+
+<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">snip</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">+</span> <span class="n">package</span> <span class="s2">&quot;git&quot;</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">snip</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再実行!無事終了!</p>
+
+<p>kitchen convergeでやること</p>
+
+<ul>
+<li>インスタンスにChefをインストール</li>
+<li>依存関係のレシピをインストール</li>
+<li>.kitchen.ymlのrun_listを実行</li>
+</ul>
+
+
+<h3>手動で確認する</h3>
+
+<p>ここまででレシピをエラー無くインスタンスに適用できることを確認した。手動でログインし確認する。</p>
+
+<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">kitchen</span> <span class="n">login</span> <span class="n">default</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mi">65</span>
+</span><span class='line'><span class="no">Last</span> <span class="ss">login</span><span class="p">:</span> <span class="no">Tue</span> <span class="no">Mar</span> <span class="mi">25</span> <span class="mo">03</span><span class="p">:</span><span class="mi">59</span><span class="p">:</span><span class="mi">38</span> <span class="mi">2014</span> <span class="n">from</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">2</span>
+</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@default</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mi">65</span> <span class="o">~]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ログインできた。rbenvインストールされている。</p>
+
+<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">rbenv</span>
+</span><span class='line'><span class="n">rbenv</span> <span class="mi">0</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">95</span><span class="o">-</span><span class="n">gf71e227</span>
+</span><span class='line'><span class="ss">Usage</span><span class="p">:</span> <span class="n">rbenv</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="o">[&lt;</span><span class="n">args</span><span class="o">&gt;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>テストを書く</h3>
+
+<p>ServerSpecを使いたいところではあるが、ここではチュートリアルに従ってBusserというテストフレームワークでテストを書く。</p>
+
+<p>テスト用のディレクトリを作成</p>
+
+<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mkdir</span> <span class="o">-</span><span class="nb">p</span> <span class="nb">test</span><span class="o">/</span><span class="n">integration</span><span class="o">/</span><span class="n">default</span><span class="o">/</span><span class="n">bats</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>今回は実行ファイルが存在するかどうかだけチェックした。</p>
+
+<figure class='code'><figcaption><span>test/integration/default/bats/rbenv_installed.bats    </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>#!/usr/bin/env bats
+</span><span class='line'>
+</span><span class='line'>@test &quot;executable rbenv command is found&quot; {
+</span><span class='line'>  run test -x /usr/local/rbenv/bin/rbenv
+</span><span class='line'>  [ &quot;$status&quot; -eq 0 ]
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>テストを流す</p>
+
+<figure class='code'><figcaption><span>test/integration/default/bats/rbenv_installed.bats    </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>$ kitchen veryfy default-centos-65
+</span><span class='line'>
+</span><span class='line'>-----&gt; Starting Kitchen (v1.2.1)
+</span><span class='line'>-----&gt; Verifying &lt;default-centos-65&gt;...
+</span><span class='line'>       Removing /tmp/busser/suites/bats
+</span><span class='line'>       Uploading /tmp/busser/suites/bats/rbenv_installed.bats (mode=0644)
+</span><span class='line'>-----&gt; Running bats test suite
+</span><span class='line'> ✓ executable rbenv command is found
+</span><span class='line'>
+</span><span class='line'>       1 test, 0 failures
+</span><span class='line'>       Finished verifying &lt;default-centos-65&gt; (0m1.30s).
+</span><span class='line'>-----&gt; Kitchen is finished. (0m2.12s)
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>kitchen test</h3>
+
+<p>いままでやってきたことを全工程流す。</p>
+
+<figure class='code'><figcaption><span>test/integration/default/bats/rbenv_installed.bats    </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>$ kitchen veryfy default-centos-65
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>既存のインスタンスがあれば廃棄する</li>
+<li>インスタンス作成</li>
+<li>Chefのインストール</li>
+<li>レシピのインストール</li>
+<li>テストの実行</li>
+<li>インスタンスの廃棄</li>
+</ul>
+
+
+<h3>感想</h3>
+
+<p>test kitchenよい。でも初回遅い。boxが最初ないと更に遅い。この辺はVagrantをDockerに変えるというアプローチがあるとおもうが気軽ではない感じかも。しばらく使ってみる!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
@@ -1480,42 +1943,6 @@ Base.inheritance_column).</p></blockquote>
 
 
 <p>ベースカラーを選択するとベースからの濃い色淡い色をチョイスして並べて表示してくれる。それだけ。なんですがシンプルで使いやすいです。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Font AwesomeをRailsで使ってみた]]></title>
-    <link href="http://orihubon.com/blog/2013/07/09/font-awesome-rails/"/>
-    <updated>2013-07-09T00:42:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/09/font-awesome-rails</id>
-    <content type="html"><![CDATA[<p><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></p>
-
-<p>Bootstrap向けのicon系Webフォントを提供するライブラリ。</p>
-
-<!--more-->
-
-
-<p>Railsで使うには <a href="https://github.com/bokmann/font-awesome-rails">font-awesome-rails</a>をGemfileに書いて適切にimportすればOKです。</p>
-
-<p>使い方1 &ndash; iタグ使う</p>
-
-<pre><code>&lt;i class="icon-thumbs-up"&gt;&lt;/i&gt; icon-thumbs-up
-</code></pre>
-
-<p>TwitterBootstrapであらかじめ用意されているアイコンの使い方と同じです。ただFont Awesomeの場合、画像ではなくフォントとして扱われるのでfont-colorで色を調整したり出来ます。</p>
-
-<p>使い方2 &ndash; CSSのcontentマークアップにユニコードを埋め込む</p>
-
-<pre><code>.thumbs-up:before {
-  font-size: 20px;
-  font-family: 'FontAwesome';
-  content: '\F164';
-}
-</code></pre>
-
-<p>contentの値にユニコードをセットします。ユニコードの値は各アイコンの説明ページに小さく書かれてあります。たとえば<a href="http://fortawesome.github.io/Font-Awesome/icon/thumbs-up/">thumbs-up</a>であればF164をcontentの値にすればOK。また、font-familyにFontAwesomeを指定します。contentで埋め込めるので:beforeなどの疑似要素と組み合わせることでスタイルシートからアイコンをHTMLに埋め込むことも可能です!</p>
-
-<p>という感じで簡単ながらFont Awesomeの紹介でした。</p>
 ]]></content>
   </entry>
   
