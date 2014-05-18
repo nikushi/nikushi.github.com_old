@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Chef | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/chef/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-03-26T22:54:53+09:00</updated>
+  <updated>2014-05-18T17:28:55+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,20 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[/etc/sysctl.confを管理するChef cookbook]]></title>
-    <link href="http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook/"/>
-    <updated>2014-03-26T22:49:00+09:00</updated>
-    <id>http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook</id>
-    <content type="html"><![CDATA[<p>Chefでsysctl.confを管理するやつ作ってみた。<a href="https://github.com/niku4i/sysctl-cookbook">niku4i/sysctl-cookbook</a></p>
-
-<!--more-->
-
-
-<p>なかのコードはonehealth-cookbooksさんの<a href="https://github.com/onehealth-cookbooks/sysctl">onehealth-cookbooks/sysctl</a>から必要最小限必要な部分だけかいつまみました。</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[test-kitchen使ったメモ]]></title>

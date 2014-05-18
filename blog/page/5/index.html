@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="前回の記事とおり、ブログの過去の記事をWordpressからOctopressに移行したが、ブログの記事に貼付けた画像ファイルは移行後にリンク切れ状態のままでした。過去記事の画像を表示するよう修正します。 ">
+  <meta name="description" content="XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">Installing rvm and Ruby1.9.3/1.9.2 on LLVM gcc and XCode4.3.1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T00:30:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -501,52 +544,6 @@ $ logrotate -dv file.conf
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/">[Perl] colored logging by log4perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-03T00:00:00+09:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/12/03/perl-colored-logging-by-log4perl/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、これを色づけする方法のメモ。
-
-&nbsp;
-
-warnだったら黄色、fatalだったら赤、infoは緑といった感じで色づけされると幸せ。
-<pre>log4perl.category = DEBUG, Screen
-log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
-
-たったこれだけです。loglevelに応じて標準出力を色付けしてくれます。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -568,7 +565,11 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/03/26/sysctl-chef-cookbook/">/etc/sysctl.confを管理するChef cookbook</a>
+        <a href="/blog/2014/05/17/zurich-paris/">Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/17/vienna-salzburg/">Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編</a>
       </li>
     
       <li class="post">
@@ -581,10 +582,6 @@ log4perl.appender.Screen = Log::Log4perl::Appender::ScreenColoredLevels</pre>
     
       <li class="post">
         <a href="/blog/2014/01/08/install-td-agent-by-chef-and-install-error/">Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/23/fluent-plugin-derive-has-been-released/">fluent-plugin-deriveで単位時間あたりの差分値を計算する</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-03-26T22:54:53+09:00</updated>
+  <updated>2014-05-18T17:28:55+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,16 +14,142 @@
 
   
   <entry>
-    <title type="html"><![CDATA[/etc/sysctl.confを管理するChef cookbook]]></title>
-    <link href="http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook/"/>
-    <updated>2014-03-26T22:49:00+09:00</updated>
-    <id>http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook</id>
-    <content type="html"><![CDATA[<p>Chefでsysctl.confを管理するやつ作ってみた。<a href="https://github.com/niku4i/sysctl-cookbook">niku4i/sysctl-cookbook</a></p>
+    <title type="html"><![CDATA[Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編]]></title>
+    <link href="http://orihubon.com/blog/2014/05/17/zurich-paris/"/>
+    <updated>2014-05-17T16:41:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/05/17/zurich-paris</id>
+    <content type="html"><![CDATA[<p>ウィーンからパリまで列車の旅の後半編。<a href="http://orihubon.com/2014/05/17/vienna-salzburg/">前半はこちら</a>。</p>
 
-<!--more-->
+<!-- more -->
 
 
-<p>なかのコードはonehealth-cookbooksさんの<a href="https://github.com/onehealth-cookbooks/sysctl">onehealth-cookbooks/sysctl</a>から必要最小限必要な部分だけかいつまみました。</p>
+<h4>チューリッヒ</h4>
+
+<ul>
+<li>物価高い</li>
+<li>チェックインでトラブった</li>
+<li>チーズフォンデュは濃厚</li>
+</ul>
+
+
+<p>物価が高かった。evian 500mlペットボトルが400円強、昼飯2人でパスタとコーラ飲んで5000円弱でした。ホテルもベースが高かったのでチューリッヒではGuest Houseにしました。泊まったGH <a href="http://www.expedia.co.jp/Zurich-Hotels-Guesthouse-Brauerstrasse.h4623034.Hotel-Information">Guesthouse Brauerstrasse</a>。期待していなかったのですが意外、アパートメントタイプでちゃんと専用個室で風呂もトイレも専用。部屋広くてソファもあったりしていい部屋でした。ただしチェックインは難易度高い。フロントは無くてキーボックスからキーを入手する必要があるので事前にキーコードがメールされてきます。僕はキーコードの存在を忘れてて鍵ゲットするまでちょっと手間取りました。</p>
+
+<p>スイスは1泊だけの滞在なのでスイスといえば&hellip;チーズフォンデュでしょってことで食べました。本場はチーズ風味が臭いです。味はおいしかったけど濃厚すぎて自分はダメでした。ちなみに本当は冬の食べ物らしいです。日本の鍋的感覚か。</p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5429.JPG">
+<img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5448.JPG"></p>
+
+<h4>パリ</h4>
+
+<ul>
+<li>お洒落な街、でも地下鉄とっても汚い</li>
+<li>エッフェル塔、凱旋門</li>
+<li>ショッピング</li>
+</ul>
+
+
+<p>パリは2泊だけの滞在で駆け足。観光はエッフェル塔、凱旋門、ノートルダム寺院の3カ所。親戚の子供の洋服土産を探したりで町歩きしながらセーヌ川を眺めるそんな感じでした。パリは多人種な街ですね。セーヌ川沿いのBrasserieでワイン飲みながらってのはなかなか良いものでした。</p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8903.JPG">
+<img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8936.JPG"></p>
+
+<h4>お金, 手配の方法など</h4>
+
+<p>誰かの参考になるかもしれないので書いてみる。ツアーは使ってなくてすべて個人手配です。</p>
+
+<p>2人で飛行機24万円、列車代が9万円、ホテルが10万くらい、その他食費等で合計55万くらい。飛行機は安かったけどユーロ高め(1ユーロ142円くらい)だったので結構財布寒い感じですね。結構食費は節約系でした。</p>
+
+<p>飛行機はエールフランスのサイトで直接調べたら安く行けることが分かって、さらに安くならないかなとトラベルコちゃんで調べたらHISが同じ便で1万円くらい安かったので申し込み。行きはシャルルドゴール空港経由パリ行き、帰りはパリから成田への直行便です。</p>
+
+<p>ホテルはExpediaで。選定方法はまず値段みて、あとGoogle Mapみながら交通の便が良い立地かどうかで選ぶ感じ。(このあたりネット系でコンシェルジュ的(楽々幹事さん的のり)なサービスあってやってくれるサービスとかないですかねえ。)</p>
+
+<p>列車<a href="http://www.raileurope.com/index.html">RAILEUROPE</a>で列車時刻調べてチケットを事前に購入しました。ユーロレイルパスは使ってません(個別購入の方が安かったので)</p>
+
+<h4>まとめ</h4>
+
+<p>ウィーン、ザルツブルク、チューリッヒ、パリと列車で巡ってきた。弾丸な日程だったけど充実した旅でした。列車に限らずLCCを組み合わせて個人旅行やってみてはいかがでしょうか。</p>
+
+<p>次は1都市滞在でゆっくりした旅がしたいかなあ。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編]]></title>
+    <link href="http://orihubon.com/blog/2014/05/17/vienna-salzburg/"/>
+    <updated>2014-05-17T16:41:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/05/17/vienna-salzburg</id>
+    <content type="html"><![CDATA[<p>5月の前半、ウィーンからパリまで列車の旅をしたので簡単にまとめてみます。</p>
+
+<!-- more -->
+
+
+<p>今回は嫁と二人旅、世間的にはいわゆる新婚旅行というやつです。旅行先の選定は、まず嫁希望でオーストリアのウィーンとザルツブルクが決まって、僕がパリ行ってみたかったのでパリが決まって、列車の旅にしようということが決まって、ウィーンからパリの間でちょうどチューリッヒがあったのでチューリッヒに寄りました。</p>
+
+<h4>ウィーン</h4>
+
+<ul>
+<li>音楽の都</li>
+<li>オペラ座ツアーオススメ</li>
+<li>観光スタートダッシュ</li>
+</ul>
+
+
+<p>僕が大学時代オーケストラやっていて嫁が現在チェロ習い中ということもあって <a href="http://www.musikverein.at/">楽友協会</a> (Wiener Musikverein)へクラシックコンサートききにいきました。黄金ホールが新年のウィーンフィルのニューイヤーコンサートで有名です。日本でクラシックコンサート聞く場合だと結構ジーパン、Tシャツってのもありではありなんですが、さすがヨーロッパ、みなさまお洒落紳士淑女なんですね。僕らは昼間観光した後にいったんホテル戻って綺麗な服に着替えて出かけました。普段クラシック聞かない人でも雰囲気満点で楽しめるとおもいます!</p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5300.JPG"></p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5306.JPG"></p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5319.JPG"></p>
+
+<p>ちなみにチケットは公式ページからクレジットカードで買えます。レシートをA4に印刷して当日会場のチケット預かりで提示すればチケット引き換えできます。</p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5303.JPG"></p>
+
+<p>また、昼間にやってるオペラ座ツアーは5ユーロでみれるので安くてお得でオススメです。オペラ座内部をガイドさんが40分くらいかけて案内してくれます。開始時刻は<a href="http://www.wiener-staatsoper.at/Content.Node/home/Startseite-Content.jp.php">公式ページ</a>を参照。予約無しで開始15分くらい前に行って5ユーロ支払えばOKです。</p>
+
+<p>その他、ハプスブルク家関連。ホーフブルク宮殿、シシィ博物館、美術史美術館、シェーンブルン宮殿、と弾丸で巡りました。2日で巡ったのですが時間足りなかった(笑) シェーンブルク宮殿は街から少し離れたところにあって宮殿の裏手に丘があってそウィーンの街の眺めオススメです。</p>
+
+<p>あとグルメ的にはウィーンにいったらウィーナーシュニッチェル、ザッハトルテは食べとけとのことでした。ザッハトルテってHotel Sacher Viennaというところのカフェのチョコケーキだからザッハトルテ(sacher torte)というのは今回知りました。</p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8694.JPG"></p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8705.JPG"></p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8704.JPG"></p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8617.JPG"></p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8688.JPG"></p>
+
+<h4>ザルツブルク</h4>
+
+<ul>
+<li>サウンドオブミュージック</li>
+<li>ザルツ = 塩、ブルク = 城。モーツァルトが生まれた街</li>
+<li>郊外にはRedBullの本社があるらしい</li>
+</ul>
+
+
+<p>ザルツブルクはけっこう田舎で、市より小さくて村より大きい感じの規模でした。市内観光と併せて郊外まで連れて行ってくれるツアーにjoinするのもオススメです。</p>
+
+<p>嫁が映画サウンドオブミュージックのファンでロケ地を巡る半日ツアーに参加しました。利用したのは現地のツアー会社PANORAMA Toursの<a href="http://www.panoramatours.com/de/salzburg/tour/tour-1a-original-sound-of-music-tour-R-27/">Original Sound of Music Tour</a>、Webサイトから予約できます。英語ガイドさんつきのバスツアーなんですがなかなか陽気なおばちゃんで英語分からないところもありましたが楽しめました。なお、英語ツアーに日本人が参加するのは珍しいらしく参加するともれなくガイドさんイジってくれます(汗) ちなみに、日本語ツアーもあります。</p>
+
+<p><img src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5361.JPG">
+<img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8790.JPG" title="test" >
+<img src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8815.JPG"></p>
+
+<h4>列車での移動</h4>
+
+<p>今回はオーストリア国鉄 OBB 運行のRajetというのと、フランス国鉄運行のTGVにのりました。TGVは結構狭い。Rajetは列車内Wifiついてて快適でした!</p>
+
+<p><img class="right" src="http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8762.JPG">
+<img class="right" src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5460.JPG">
+<img class="right" src="http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5398.JPG"></p>
+
+<h4>次回へ続く</h4>
+
+<p>オーストリア編はここで終わり。1ポストで収まらなかったので続きは<a href="http://orihubon.com/2014/05/17/zurich-paris/">次回へ</a>。</p>
 ]]></content>
   </entry>
   
@@ -1865,84 +1991,6 @@ Base.inheritance_column).</p></blockquote>
 
 
 <p>ケースバイケースですが、ある案件ではtypeフィールドをどうしても使いたかったので2の方法を取りました。type名以外の選択が可能であれば1のケースが良いとおもいます。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[bundle_frozenとかbundle_without]]></title>
-    <link href="http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without/"/>
-    <updated>2013-07-26T16:37:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without</id>
-    <content type="html"><![CDATA[<p>bundlerの<code>--deployment</code>や<code>--without</code>に関してはまったことのメモ。</p>
-
-<!--more-->
-
-
-<h3>bundle install &mdash;deployment</h3>
-
-<p><code>--deployment</code>をつけ実行すると<code>vendor/bundle</code>以下にgemがインストールされます。deploymentの名の通り本番環境でインストールする場合を想定したコマンドです。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle install --deployment</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>BUNDLE_FROZEN</h3>
-
-<p><code>--deployment</code>の名のとおり本番環境でインストールする場合を想定したコマンドですが、うっかり開発環境で実行してしまって少々はまってしまいました。</p>
-
-<p>開発環境でGemfileに新しくgemを追加したので、<code>bundle install</code>しようとします。すると</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle install
-</span><span class='line'>You are trying to install in deployment mode after changing
-</span><span class='line'>your Gemfile. Run `bundle install` elsewhere and add the
-</span><span class='line'>updated Gemfile.lock to version control.
-</span><span class='line'>
-</span><span class='line'>If this is a development machine, remove the Gemfile freeze
-</span><span class='line'>by running `bundle install --no-deployment`.
-</span><span class='line'>
-</span><span class='line'>You have added to the Gemfile:
-</span><span class='line'>* colorize</span></code></pre></td></tr></table></div></figure>
-
-
-<p>とエラーがでます。<code>bundle install --deployment</code>を1度でも実行すると<code>.bundle/config</code>が更新され<code>BUNDLE_FROZEN: 1</code>が付加されるようです。</p>
-
-<p>これを解除するには、<code>bundle install --no-deployment</code>を1度実行するか、<code>.bundle/config</code>を直接編集して<code>BUNDLE_FROZEN: 1</code>の行を削除してしまうかする必要があります。</p>
-
-<h3>BUNDLE_WITHOUT</h3>
-
-<p><code>--without</code>というオプションがあります。以下のように使います。本番環境ではdevelopmentやtestグループのgemは不要なのでwithoutでinstall対象から除外することができます。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  $ bundle install --deployment --without development test</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ただ、これも<code>--without</code>つきで実行すると<code>.bundle/config</code>に保存されてしまいます。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>---
-</span><span class='line'>BUNDLE_WITHOUT: development test</span></code></pre></td></tr></table></div></figure>
-
-
-<p>うっかり開発環境で実行してしまうと、その後、<code>bundle exec rspec</code>などやろうとすると以下のエラーが発生します。rspec-coreはGemに含まれませんと。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec rpsec
-</span><span class='line'>/Users/name/.rbenv/versions/2.0.0-p195/lib/ruby/gems/2.0.0/gems/bundler-1.3.5/lib/bundler/rubygems_integration.rb:214:in `block in replace_gem': rspec-core is not part of the bundle. Add it to Gemfile. (Gem::LoadError)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>この場合も、<code>.bundle/config</code>を編集してBUNDLE_WITHOUTの行を削除すれば良いです。</p>
 ]]></content>
   </entry>
   
