@@ -46,13 +46,17 @@ function sayHello() {
 結構実行遅い。APIのcallを少なくを心がける。ノウハウは [Best Practices](https://developers.google.com/apps-script/best_practices?hl=ja)を参照のこと。
 
 ```
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sh = ss.getSheetByName('シート1');
+
 //bad
-for (..) {
+for (n = 0; n < 2; n++) {
     sh.getRange(n,1).setValue('Value');
+    sh.getRange(n,2).setValue('Value');
 }
 
 //good
-sh.getRange(1,1,100,1).setValue([['Value', 'Value'], ['Value', 'Value']]);
+sh.getRange(1,1,2,2).setValues([['Value', 'Value'], ['Value', 'Value']]);
 ```
 
 #### 1回の実行 5分まで
