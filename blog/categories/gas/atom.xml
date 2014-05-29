@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: GAS | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2014-05-30T01:33:37+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Scriptをつかってみた]]></title>
+    <link href="http://orihubon.com/blog/2014/05/30/tried-google-apps-script/"/>
+    <updated>2014-05-30T00:39:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/05/30/tried-google-apps-script</id>
+    <content type="html"><![CDATA[<p>某案件でGoogle Spreadsheetを使う機会があって少しかじってみた。浅くメモ。</p>
+
+<!--more-->
+
+
+<h3>About Google Apps Script</h3>
+
+<p>Google Apps ScriptはGoogleプラットフォーム上で動くサーバサイドjavascript。spreadsheetに限らずGoogle Apps上のデータと連携してアイデア次第で何でもできる言語。例えばGmailでqueryをかけてbodyをパースしてspreadsheetにデータ貯めて、解析してPDF変換してGmailに送る、みたいなこともできる。</p>
+
+<p>Google Apps内に限らず、外部のAPIサーバからデータを取ってきたり、逆に外のサーバにデータを送ることもできる。ただし、Google Platformで実行されるのでファイアウォールを超えてイントラネットに接続するという要件はセキュリティ的に難しい制約はある。</p>
+
+<p>triggerを使うとイベント起因で関数を実行できる。ボタンクリックとかファイルを開いたときとか。</p>
+
+<p><em>triggerの例</em></p>
+
+<p>イベント起因で関数を実行できる。ドキュメントオープン時に関数を実行できるメニューボタンを追加する例。</p>
+
+<p>```
+function onOpen() { // automatically run this on open a spreadsheet.
+  var menuEntries = [ {name: &ldquo;say hello&rdquo;, functionName: &ldquo;sayHello&rdquo;} ];
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  ss.addMenu(&ldquo;my menu&rdquo;, menuEntries);
+}</p>
+
+<p>function sayHello() {</p>
+
+<pre><code>// say something
+</code></pre>
+
+<p>}
+```</p>
+
+<p>時限式のtriggerでcron的なことも可能でMac Bookを閉じた後もGoogleプラットフォーム上で実行される。triggerを使えば定期的にGmailをチェックして何かやるみたいなこともできる。</p>
+
+<p>書いたスクリプトをWebアプリとして公開する設定をするとURLのエンドポイントがもらえる。triggerには<code>doGet()</code>というのもあってURLをGETしたトリガで何かできたりする。例えばGETトリガでスクリプトへcallbackされるのでURLのqueryのkey, valueをspreadsheetにためるといったこともできる(簡易WebAPI!)</p>
+
+<h3>制約</h3>
+
+<h4>結構実行遅い</h4>
+
+<p>APIをcallを極力減らすように書く必要があってその辺のノウハウは <a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>に書いてある。</p>
+
+<p>```
+//bad
+for (..) {</p>
+
+<pre><code>sh.getRange(n,1).setValue('Value');
+</code></pre>
+
+<p>}</p>
+
+<p>//good
+sh.getRange(1,1,100,1).setValue([[&lsquo;Value&rsquo;, &lsquo;Value&rsquo;], [&lsquo;Value&rsquo;, &lsquo;Value&rsquo;]]);
+```</p>
+
+<h4>1回の実行 5分まで</h4>
+
+<p>実行が5分過ぎるとスクリプトは終了する。</p>
+
+<h3>リファレンス</h3>
+
+<p>自分はこの辺みてます。</p>
+
+<ul>
+<li><a href="https://developers.google.com/apps-script/?hl=ja">何はともあれ公式サイト</a></li>
+<li><a href="http://stackoverflow.com/questions/tagged/google-apps-script">stackoverflowのtagged/google-apps-script</a> あまり見てないけど</li>
+<li>本 僕はいま<a href="http://www.amazon.co.jp/gp/product/B00IM5UW1W/ref=oh_d__o00_details_o00__i00?ie=UTF8&amp;psc=1">Google Apps Script for Biginner</a>を読んでる</li>
+</ul>
+
+
+<p>日本語でヒットするサイトはExcelっぽい雰囲気が漂っててあまり見ていない(笑) もちろん参考にさせていただいているけど。</p>
+
+<h3>おもったところ</h3>
+
+<p>開発環境はブラウザ上のスクリプトエディタを使わざるおえないので、脳がブラウジング脳になるんだよなあ。</p>
+
+<p>他のOSSとかと組み合わせるとアイデア次第で面白いことできそう。<a href="http://qiita.com/kazunori279/items/6329df57635799405547">Fluentd Dashboard</a> のデモはすごかった!</p>
+
+<p>Viewを作らなくていいので楽! カジュアルに初めてカジュアルに終えるのが良いかと。それなりの規模になったらRailsとかで真面目に作ろう。</p>
+]]></content>
+  </entry>
+  
+</feed>

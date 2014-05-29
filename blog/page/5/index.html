@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="XCode 4.3.1 + rvm + Ruby1.9.3-p125の組み合わせでRubyをbuildする。 ">
+  <meta name="description" content="OctopressのソースコードをDropboxに変更した。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">OctopressのソースリポジトリをDropboxに変更</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T05:32:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>OctopressのソースコードをDropboxに変更した。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/18/change-upstream-of-source-to-dropbox/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/15/xcode-43-and-octopress/">XCode 4.3とoctopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T01:57:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/15/xcode-43-and-octopress/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="/blog/2012/03/15/install-rvm-and-ruby193-and-192-on-llvm-gcc-and-xcode431/">前回の記事</a>でXCode4.3.1環境でrvmを使ってRuby1.9.2をbuildしたので、その話をoctopressで書こうとおもい<code>rake new_post['hoge']</code>したら<code>bundle install</code>しろと怒られたので実行してみたら途中で止まってしまいはまった。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/15/xcode-43-and-octopress/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -460,90 +546,6 @@ rvmをインストールしたいので、公式ページに従い上のとお�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[vim]ビジュアルモード選択範囲だけ置換</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
-	<li>:にてコマンド指定するモードに入る</li>
-	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
-</ol>
-vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/">logrotateの動作をテストする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><pre lang="shell">
-$ logrotate -dv file.conf
-</pre>
-でdry-run。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -565,6 +567,10 @@ $ logrotate -dv file.conf
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/05/30/tried-google-apps-script/">Google Apps Scriptをつかってみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/05/17/zurich-paris/">Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</a>
       </li>
     
@@ -573,15 +579,11 @@ $ logrotate -dv file.conf
       </li>
     
       <li class="post">
+        <a href="/blog/2014/03/26/sysctl-chef-cookbook/">/etc/sysctl.confを管理するChef cookbook</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/25/test-kitchenshi-tutamemo/">test-kitchen使ったメモ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/15/yohoushi-chef-cookbook/">Yohoushi Chef Cookbook作った</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/08/install-td-agent-by-chef-and-install-error/">Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ</a>
       </li>
     
   </ul>

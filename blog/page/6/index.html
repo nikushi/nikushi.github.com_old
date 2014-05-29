@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Log::Log4perlモジュールはロギングのための高機能なAPIを提供してくれて便利。log4perlにはtrace, debug, info, warn, error, fatalというログレベルが標準で用意してくれるけど、普通にlog4perlの設定を書くと味気ない色なしの出力なので、 &hellip;">
+  <meta name="description" content="vにてビジュアルモード、jkhlを駆使して範囲指定 :にてコマンド指定するモードに入る すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする vimでコード書いてるときなど、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[vim]ビジュアルモード選択範囲だけ置換</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
+	<li>:にてコマンド指定するモードに入る</li>
+	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
+</ol>
+vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/">logrotateの動作をテストする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-06T00:00:00+09:00" pubdate data-updated="true">Jan 6<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/01/06/logrotatefalsedong-zuo-wotesutosuru/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><pre lang="shell">
+$ logrotate -dv file.conf
+</pre>
+でdry-run。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -444,92 +528,6 @@ Framewark
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/18/appfatpacker/">App::FatPacker</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/10/18/appfatpacker/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。
-
-&nbsp;
-
-<a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/15/memo-for-perl-framewarks/">memo for Perl Framewarks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-15T00:00:00+09:00" pubdate data-updated="true">Oct 15<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/10/15/memo-for-perl-framewarks/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">Catlyst is very heavy weight one .
-
-mojolicious is light weight one .
-
-&nbsp;
-
-重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -551,6 +549,10 @@ mojolicious is light weight one .
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/05/30/tried-google-apps-script/">Google Apps Scriptをつかってみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/05/17/zurich-paris/">Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</a>
       </li>
     
@@ -559,15 +561,11 @@ mojolicious is light weight one .
       </li>
     
       <li class="post">
+        <a href="/blog/2014/03/26/sysctl-chef-cookbook/">/etc/sysctl.confを管理するChef cookbook</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/25/test-kitchenshi-tutamemo/">test-kitchen使ったメモ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/15/yohoushi-chef-cookbook/">Yohoushi Chef Cookbook作った</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/08/install-td-agent-by-chef-and-install-error/">Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ</a>
       </li>
     
   </ul>

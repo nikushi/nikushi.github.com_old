@@ -9,13 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。 system() 1
-2
-3
-4
-5
-if ( system( $command ) ) { warn &quot;fail&quot;;
-} else { print &quot;success& &hellip;">
+  <meta name="description" content="perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。 &nbsp; App::FatPackerを使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +76,92 @@ if ( system( $command ) ) { warn &quot;fail&quot;;
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/appfatpacker/">App::FatPacker</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/10/18/appfatpacker/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。
+
+&nbsp;
+
+<a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/15/memo-for-perl-framewarks/">memo for Perl Framewarks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-15T00:00:00+09:00" pubdate data-updated="true">Oct 15<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/10/15/memo-for-perl-framewarks/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Catlyst is very heavy weight one .
+
+mojolicious is light weight one .
+
+&nbsp;
+
+重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -520,91 +600,6 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/03/du-hang-xu-ke-shu-esta/">渡航許可書 ESTA</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/03/du-hang-xu-ke-shu-esta/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote>あなたの渡航認証は許可され、ビザ免除プログラムに基づき米国に渡航することができます。この回答は、米国への入国を保証するものではありません。最終決定は入国地で
-
-米国税関国境警備局審査官が行ないます。</blockquote>
-passしました。これ面倒くさいね。ESTA申請時の質問にYESって答えるメリットかるんかね。YESって答えたらアウトでしょ。オバマ大統領どうしてこの制度決めたんだろ。
-
-&nbsp;
-
-数年前にミャンマーに行ったことがあるので、入国に止められないかと少々不安。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/03/basics-of-perl-web-portals/">Basics of Perl web portals</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/03/basics-of-perl-web-portals/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><a href="http://www.ibm.com/developerworks/aix/library/au-perlweb_revision/index.html?ca=drs-">Basics of Perl web portals</a>.
-<blockquote>Summary: Perl is a powerful scripting language that can be used to perform small operations from the command line or power a complete web portal. Understanding techniques for making safe and secure Perl CGI scripts is vital to developing a web portal that does not compromise the integrity of a server or the web site&#8217;s data. This article explains several techniques that will help developers create secure Perl CGI scripts and handle errors, before looking at a simpler method for building web applications like portals using the Plack system.</blockquote>
-carp()は最近覚えたので個人的にはホット。 モジュール内ではdie()は使ってはダメだとおもっていたがcarpを使うとしっくりくる、のかな。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -626,6 +621,10 @@ carp()は最近覚えたので個人的にはホット。 モジュール内で�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/05/30/tried-google-apps-script/">Google Apps Scriptをつかってみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/05/17/zurich-paris/">Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</a>
       </li>
     
@@ -634,15 +633,11 @@ carp()は最近覚えたので個人的にはホット。 モジュール内で�
       </li>
     
       <li class="post">
+        <a href="/blog/2014/03/26/sysctl-chef-cookbook/">/etc/sysctl.confを管理するChef cookbook</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/25/test-kitchenshi-tutamemo/">test-kitchen使ったメモ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/15/yohoushi-chef-cookbook/">Yohoushi Chef Cookbook作った</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/08/install-td-agent-by-chef-and-install-error/">Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ</a>
       </li>
     
   </ul>
