@@ -115,11 +115,11 @@
 
 <p>Google Apps内に限らず、外部のAPIサーバからデータを取ってきたり、逆に外のサーバにデータを送ることもできる。ただし、Google Platformで実行されるのでファイアウォールを超えてイントラネットに接続するという要件はセキュリティ的に難しい制約はある。</p>
 
-<p>triggerを使うとイベント起因で関数を実行できる。ボタンクリックとかファイルを開いたときとか。</p>
+<p>triggerを使うとイベント起因で関数を実行できる。ボタンクリックとかドキュメントを開いたときとか。</p>
 
-<p><em>triggerの例</em></p>
+<h4>triggerの例</h4>
 
-<p>イベント起因で関数を実行できる。ドキュメントオープン時に関数を実行できるメニューボタンを追加する例。</p>
+<p>ドキュメントオープン時にメニューボタンを追加する例。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -137,19 +137,19 @@
 </span><span class='line'>}
 </span><span class='line'>
 </span><span class='line'>function sayHello() {
-</span><span class='line'>    // say something
+</span><span class='line'>  Logger.log('Hello World!');
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<p>時限式のtriggerでcron的なことも可能でMac Bookを閉じた後もGoogleプラットフォーム上で実行される。triggerを使えば定期的にGmailをチェックして何かやるみたいなこともできる。</p>
+<p>時限式のtriggerでcron的なことも可能で、もちろんMac Bookを閉じた後もGoogleプラットフォーム上で実行される。triggerを使えば定期的にGmailをチェックして何かやるみたいなこともできる。</p>
 
 <p>書いたスクリプトをWebアプリとして公開する設定をするとURLのエンドポイントがもらえる。triggerには<code>doGet()</code>というのもあってURLをGETしたトリガで何かできたりする。例えばGETトリガでスクリプトへcallbackされるのでURLのqueryのkey, valueをspreadsheetにためるといったこともできる(簡易WebAPI!)</p>
 
 <h3>制約</h3>
 
-<h4>結構実行遅い</h4>
+<h4>実行遅い</h4>
 
-<p>APIをcallを極力減らすように書く必要があってその辺のノウハウは <a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>に書いてある。</p>
+<p>結構実行遅い。APIのcallを少なくを心がける。ノウハウは <a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を参照のこと。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -186,11 +186,13 @@
 
 <h3>おもったところ</h3>
 
-<p>開発環境はブラウザ上のスクリプトエディタを使わざるおえないので、脳がブラウジング脳になるんだよなあ。</p>
+<p>開発環境はブラウザ上のスクリプトエディタを使わざるおえないので、脳がブラウジング脳になるのが難点。viモードほしい。</p>
 
-<p>他のOSSとかと組み合わせるとアイデア次第で面白いことできそう。<a href="http://qiita.com/kazunori279/items/6329df57635799405547">Fluentd Dashboard</a> のデモはすごかった!</p>
+<p>他のOSSと組み合わせるとアイデア次第で面白いことできそう。<a href="http://qiita.com/kazunori279/items/6329df57635799405547">Fluentd Dashboard</a> のデモはすごかった!</p>
 
-<p>Viewを作らなくていいので楽! カジュアルに初めてカジュアルに終えるのが良いかと。それなりの規模になったらRailsとかで真面目に作ろう。</p>
+<p>Viewを作らなくていいので楽!</p>
+
+<p>カジュアルに初めてカジュアルに終えるのが良いかと。それなりの規模であればRailsとかで真面目に作ろう。</p>
 </div>
 
 
