@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-05-30T01:45:04+09:00</updated>
+  <updated>2014-05-30T01:49:48+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -72,13 +72,21 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//bad
-</span><span class='line'>for (..) {
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var ss = SpreadsheetApp.getActiveSpreadsheet();
+</span><span class='line'>var sh = ss.getSheetByName('シート1');
+</span><span class='line'>
+</span><span class='line'>//bad
+</span><span class='line'>for (n = 0; n &lt; 2; n++) {
 </span><span class='line'>    sh.getRange(n,1).setValue('Value');
+</span><span class='line'>    sh.getRange(n,2).setValue('Value');
 </span><span class='line'>}
 </span><span class='line'>
 </span><span class='line'>//good
-</span><span class='line'>sh.getRange(1,1,100,1).setValue([['Value', 'Value'], ['Value', 'Value']]);</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>sh.getRange(1,1,2,2).setValues([['Value', 'Value'], ['Value', 'Value']]);</span></code></pre></td></tr></table></div></figure>
 
 
 <h4>1回の実行 5分まで</h4>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-05-30T01:45:04+09:00</updated>
+  <updated>2014-05-30T01:49:48+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -58,16 +58,20 @@ function onOpen() { // automatically run this on open a spreadsheet.
 <p>結構実行遅い。APIのcallを少なくを心がける。ノウハウは <a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を参照のこと。</p>
 
 <p>```
-//bad
-for (..) {</p>
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sh = ss.getSheetByName(&lsquo;シート1&rsquo;);</p>
+
+<p>//bad
+for (n = 0; n &lt; 2; n++) {</p>
 
 <pre><code>sh.getRange(n,1).setValue('Value');
+sh.getRange(n,2).setValue('Value');
 </code></pre>
 
 <p>}</p>
 
 <p>//good
-sh.getRange(1,1,100,1).setValue([[&lsquo;Value&rsquo;, &lsquo;Value&rsquo;], [&lsquo;Value&rsquo;, &lsquo;Value&rsquo;]]);
+sh.getRange(1,1,2,2).setValues([[&lsquo;Value&rsquo;, &lsquo;Value&rsquo;], [&lsquo;Value&rsquo;, &lsquo;Value&rsquo;]]);
 ```</p>
 
 <h4>1回の実行 5分まで</h4>
