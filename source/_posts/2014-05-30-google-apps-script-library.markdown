@@ -21,11 +21,14 @@ spreadsheet -> スクリプトエディタ -> スクリプト作成 の順番で
 
 {%img /images/20140530-script-lib.png %}
 
-#### その他
+#### 最低限必要なこと
 
 * 利用ユーザへライブラリへのアクセス権限が必要
 * project keyの伝達が必要
 * ライブラリスクリプトは1個以上のバージョニングをつけて保存すること(インクルード側でバージョン指定ができる)
+
+#### その他
+
 * インクルードライブラリの識別子(クラス名みたいなもの)は任意の文字列を指定できる。たとえば`MyPicasaApi `とか。プロジェクト内では`MyPicasaApi.doSomething()`で呼べる。もし既存のクラス(たとえば`UiApp`)と被ると既存クラスがオーバライドされる。
 * privateなメソッドを作るには _ で終わる名前をつけるとautocompleteで出てこなくなる。 e.g. `myPrivateMethod_()`
 * autocompleteで表示されるドキュメントを与えたいなら、関数の上に[JSDoc style documentation](https://developers.google.com/closure/compiler/docs/js-for-compiler)でコメントを書く。
@@ -40,7 +43,5 @@ spreadsheet -> スクリプトエディタ -> スクリプト作成 の順番で
 */
 function power(base, exp) { ... }
 ```
-
-* デバッギングモードの選択。デバッギングモードをオンにすると、ライブラリでバージョニングされていない最新の修正を取り込んで動作各確認できる。
 
 GAS力がさらに上がりました!以上!
