@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-05-30T15:16:38+09:00</updated>
+  <updated>2014-05-30T19:04:23+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,55 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
+    <link href="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/"/>
+    <updated>2014-05-30T18:23:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script</id>
+    <content type="html"><![CDATA[<p>Google Developersサイトの<a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を要約してみた。</p>
+
+<!--more-->
+
+
+<h3>サービスのcallを最小限に</h3>
+
+<p>javascript内で閉じた処理の方がサービスをcallするよりも早い。サービスのcallとはspreadsheetのデータを読み出したり書き出したり、Docsを参照したり、SiteやTranslateやUrlFetchとか使ったり。</p>
+
+<h3>バッチオペレーション</h3>
+
+<p>spreadsheetのreadとwriteの回数を最小化する。readとwriteは重い処理。1オペレーションでデータを配列にreadし、1オペレーションで配列にwriteすること。forreachの中で毎回callするのは遅いので、配列に溜めて最後に1回で書きだす。たとえば<code>setBackgroundColor(value)</code>をたくさん呼ぶのではなく<code>setBackgroundColors(values);</code>1回にする。</p>
+
+<h3>Cache Class</h3>
+
+<p><a href="https://developers.google.com/apps-script/reference/cache/cache?hl=ja">Cache</a>というキャッシュクラスがあるので、頻繁に使うけど遅いデータはキャッシュしとく。key valueでキャッシュできる。</p>
+
+<p>例</p>
+
+<p>```
+function getRssFeed() {
+   var cache = CacheService.getPublicCache();
+   var cached = cache.get(&ldquo;rss-feed-contents&rdquo;);
+   if (cached != null) {</p>
+
+<pre><code> return cached;
+</code></pre>
+
+<p>   }
+   var result = UrlFetchApp.fetch(&ldquo;<a href="http://example.com/my-slow-rss-feed.xml">http://example.com/my-slow-rss-feed.xml</a>&rdquo;); // takes 20 seconds
+   var contents = result.getContentText();
+   cache.put(&ldquo;rss-feed-contents&rdquo;, contents, 1500); // cache for 25 minutes
+   return contents;
+}
+```</p>
+
+<h3>Using Client Handlers for More Responsive UIs</h3>
+
+<p>UI applicationを使う場合でイベントコールバック(たとえばボタンをクリックするとか)を使う場合、<a href="https://developers.google.com/apps-script/reference/ui/client-handler?hl=ja">ClientHandler</a>を使うと高速化できる。サーバサイドでイベントキャッチするのではなく、クライアントサイド(ブラウザ)でhandleすることができるので。使う機会がいまのところ無いので詳しくはない。</p>
+
+<p>以上!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptの共通関数をライブラリでまとめる]]></title>

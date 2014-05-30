@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-05-30T15:16:38+09:00</updated>
+  <updated>2014-05-30T19:04:23+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
+    <link href="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/"/>
+    <updated>2014-05-30T18:23:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script</id>
+    <content type="html"><![CDATA[<p>Google Developersサイトの<a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を要約してみた。</p>
+
+<!--more-->
+
+
+<h3>サービスのcallを最小限に</h3>
+
+<p>javascript内で閉じた処理の方がサービスをcallするよりも早い。サービスのcallとはspreadsheetのデータを読み出したり書き出したり、Docsを参照したり、SiteやTranslateやUrlFetchとか使ったり。</p>
+
+<h3>バッチオペレーション</h3>
+
+<p>spreadsheetのreadとwriteの回数を最小化する。readとwriteは重い処理。1オペレーションでデータを配列にreadし、1オペレーションで配列にwriteすること。forreachの中で毎回callするのは遅いので、配列に溜めて最後に1回で書きだす。たとえば<code>setBackgroundColor(value)</code>をたくさん呼ぶのではなく<code>setBackgroundColors(values);</code>1回にする。</p>
+
+<h3>Cache Class</h3>
+
+<p><a href="https://developers.google.com/apps-script/reference/cache/cache?hl=ja">Cache</a>というキャッシュクラスがあるので、頻繁に使うけど遅いデータはキャッシュしとく。key valueでキャッシュできる。</p>
+
+<p>例</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function getRssFeed() {
+</span><span class='line'>   var cache = CacheService.getPublicCache();
+</span><span class='line'>   var cached = cache.get("rss-feed-contents");
+</span><span class='line'>   if (cached != null) {
+</span><span class='line'>     return cached;
+</span><span class='line'>   }
+</span><span class='line'>   var result = UrlFetchApp.fetch("http://example.com/my-slow-rss-feed.xml"); // takes 20 seconds
+</span><span class='line'>   var contents = result.getContentText();
+</span><span class='line'>   cache.put("rss-feed-contents", contents, 1500); // cache for 25 minutes
+</span><span class='line'>   return contents;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Using Client Handlers for More Responsive UIs</h3>
+
+<p>UI applicationを使う場合でイベントコールバック(たとえばボタンをクリックするとか)を使う場合、<a href="https://developers.google.com/apps-script/reference/ui/client-handler?hl=ja">ClientHandler</a>を使うと高速化できる。サーバサイドでイベントキャッチするのではなく、クライアントサイド(ブラウザ)でhandleすることができるので。使う機会がいまのところ無いので詳しくはない。</p>
+
+<p>以上!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptの共通関数をライブラリでまとめる]]></title>
@@ -1985,30 +2041,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p><a href="http://www.sinatrarb.com/contrib/reloader.html">Sinatra::Reloader</a> を使うと。</p>
 
 <p>実際には<a href="https://github.com/sinatra/sinatra-contrib">sinatra-contrib</a>というgemをinstallするわけだけど、このgemには他にも機能があるので困ったときはこのgemを眺めるとよさそうですね。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RubyでIPアドレスの正規表現を超簡単に書く]]></title>
-    <link href="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/"/>
-    <updated>2013-08-06T09:14:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/08/06/regex-for-ipv-address</id>
-    <content type="html"><![CDATA[<p>正規表現自前で書かずとも、<code>Resolv::IPv4::Regex</code>を使う。</p>
-
-<!--more-->
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'resolv'
-</span><span class='line'>Resolv::IPv4::Regex.class     
-</span><span class='line'>=&gt; Regexp</span></code></pre></td></tr></table></div></figure>
-
-
-<p>IPv6の場合は、<code>Resolv::IPv6::Regex</code>を使いましょう。</p>
 ]]></content>
   </entry>
   

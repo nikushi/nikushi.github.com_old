@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>8/14 dinner - ni-blog</title>
+  <title>Google Apps Scriptを速くするためのベストプラクティス - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="盛岡冷麺をお土産にもらったので作ってみた。うまうま。
-">
+  <meta name="description" content="Google DevelopersサイトのBest Practicesを要約してみた。 サービスのcallを最小限に javascript内で閉じた処理の方がサービスをcallするよりも早い。サービスのcallとはspreadsheetのデータを読み出したり書き出したり、Docsを参照したり、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/08/14/814-dinner/">
+  <link rel="canonical" href="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">8/14 dinner</h1>
+      <h1 class="entry-title">Google Apps Scriptを速くするためのベストプラクティス</h1>
     
     
       <p class="meta">
@@ -96,7 +95,7 @@
   
 
 
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+<time datetime="2014-05-30T18:23:00+09:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,7 +104,54 @@
   </header>
 
 
-<div class="entry-content">盛岡冷麺をお土産にもらったので作ってみた。うまうま。<br /><br /><a href="/images/20110814-185711.jpg"><img src="/images/20110814-185711.jpg" alt="20110814-185711.jpg" class="alignnone size-full" /></a>
+<div class="entry-content"><p>Google Developersサイトの<a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を要約してみた。</p>
+
+<!--more-->
+
+
+<h3>サービスのcallを最小限に</h3>
+
+<p>javascript内で閉じた処理の方がサービスをcallするよりも早い。サービスのcallとはspreadsheetのデータを読み出したり書き出したり、Docsを参照したり、SiteやTranslateやUrlFetchとか使ったり。</p>
+
+<h3>バッチオペレーション</h3>
+
+<p>spreadsheetのreadとwriteの回数を最小化する。readとwriteは重い処理。1オペレーションでデータを配列にreadし、1オペレーションで配列にwriteすること。forreachの中で毎回callするのは遅いので、配列に溜めて最後に1回で書きだす。たとえば<code>setBackgroundColor(value)</code>をたくさん呼ぶのではなく<code>setBackgroundColors(values);</code>1回にする。</p>
+
+<h3>Cache Class</h3>
+
+<p><a href="https://developers.google.com/apps-script/reference/cache/cache?hl=ja">Cache</a>というキャッシュクラスがあるので、頻繁に使うけど遅いデータはキャッシュしとく。key valueでキャッシュできる。</p>
+
+<p>例</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function getRssFeed() {
+</span><span class='line'>   var cache = CacheService.getPublicCache();
+</span><span class='line'>   var cached = cache.get("rss-feed-contents");
+</span><span class='line'>   if (cached != null) {
+</span><span class='line'>     return cached;
+</span><span class='line'>   }
+</span><span class='line'>   var result = UrlFetchApp.fetch("http://example.com/my-slow-rss-feed.xml"); // takes 20 seconds
+</span><span class='line'>   var contents = result.getContentText();
+</span><span class='line'>   cache.put("rss-feed-contents", contents, 1500); // cache for 25 minutes
+</span><span class='line'>   return contents;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Using Client Handlers for More Responsive UIs</h3>
+
+<p>UI applicationを使う場合でイベントコールバック(たとえばボタンをクリックするとか)を使う場合、<a href="https://developers.google.com/apps-script/reference/ui/client-handler?hl=ja">ClientHandler</a>を使うと高速化できる。サーバサイドでイベントキャッチするのではなく、クライアントサイド(ブラウザ)でhandleすることができるので。使う機会がいまのところ無いので詳しくはない。</p>
+
+<p>以上!</p>
 </div>
 
 
@@ -128,8 +174,14 @@
   
 
 
-<time datetime="2011-08-14T00:00:00+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+<time datetime="2014-05-30T18:23:00+09:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gas/'>GAS</a>
+  
+</span>
 
 
     </p>
@@ -137,7 +189,7 @@
       <div class="sharing">
   <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/08/14/814-dinner/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/08/14/814-dinner/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/" >Tweet</a>
   
   
   
@@ -149,14 +201,18 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/12/fu-shu-hosutodetong-shi-nikomandowoshi-xing-suru/" title="Previous Post: 複数ホストで同時にコマンドを実行する">&laquo; 複数ホストで同時にコマンドを実行する</a>
+        <a class="basic-alignment left" href="/blog/2014/05/30/google-apps-script-library/" title="Previous Post: Google Apps Scriptの共通関数をライブラリでまとめる">&laquo; Google Apps Scriptの共通関数をライブラリでまとめる</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/08/14/bekontonian-shou/" title="Next Post: ベーコンと年収">ベーコンと年収 &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -240,7 +296,10 @@
       var disqus_shortname = 'orihubon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/';
+        var disqus_url = 'http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
