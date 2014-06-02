@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-05-30T19:04:23+09:00</updated>
+  <updated>2014-06-02T20:51:25+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[opensslコマンドでSNIな証明書をチェックする]]></title>
+    <link href="http://orihubon.com/blog/2014/06/02/openssl-sni/"/>
+    <updated>2014-06-02T20:46:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/02/openssl-sni</id>
+    <content type="html"><![CDATA[<p>あるサーバの証明書のCNをチェックしようとして、opensslコマンドで確認すると想定と違うCNが返ってくる何で! ということが起きて軽くはまってしまった。ブラウザで証明書確認すると問題ない。</p>
+
+<p>結論としてはサーバ証明書がSNIなやつであれば、<code>-servername</code>を付けるべし。だった。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ openssl s_client -connect test.example.com:443 -servername test.example.com 2&gt;&1 &lt; /dev/null </span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
@@ -2025,22 +2040,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p>普段Railsやってる人には当たり前かもしれない内容でした。いざ使いたかったときにメソッド名を忘れていたので、以上、自分メモでした!</p>
 
 <p>他にもActiveSupportの拡張は便利なものがあるので<a href="http://edgeguides.rubyonrails.org/active_support_core_extensions.html">Active Support Core Extensions</a>の一読おすすめです!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Sinatra::Reloader]]></title>
-    <link href="http://orihubon.com/blog/2013/08/06/sinatra-reloader/"/>
-    <updated>2013-08-06T19:30:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/08/06/sinatra-reloader</id>
-    <content type="html"><![CDATA[<p>Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。</p>
-
-<!--more-->
-
-
-<p><a href="http://www.sinatrarb.com/contrib/reloader.html">Sinatra::Reloader</a> を使うと。</p>
-
-<p>実際には<a href="https://github.com/sinatra/sinatra-contrib">sinatra-contrib</a>というgemをinstallするわけだけど、このgemには他にも機能があるので困ったときはこのgemを眺めるとよさそうですね。</p>
 ]]></content>
   </entry>
   

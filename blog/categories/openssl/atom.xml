@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: openssl | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/openssl/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2014-06-02T20:51:25+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[opensslコマンドでSNIな証明書をチェックする]]></title>
+    <link href="http://orihubon.com/blog/2014/06/02/openssl-sni/"/>
+    <updated>2014-06-02T20:46:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/02/openssl-sni</id>
+    <content type="html"><![CDATA[<p>あるサーバの証明書のCNをチェックしようとして、opensslコマンドで確認すると想定と違うCNが返ってくる何で! ということが起きて軽くはまってしまった。ブラウザで証明書確認すると問題ない。</p>
+
+<p>結論としてはサーバ証明書がSNIなやつであれば、<code>-servername</code>を付けるべし。だった。</p>
+
+<p><code>
+$ openssl s_client -connect test.example.com:443 -servername test.example.com 2&gt;&amp;1 &lt; /dev/null
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
