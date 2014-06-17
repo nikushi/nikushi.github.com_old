@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-17T18:45:14+09:00</updated>
+  <updated>2014-06-17T18:49:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -94,8 +94,8 @@
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// 住所録 名前から住所を取得</span>
 </span><span class='line'><span class="kd">function</span> <span class="nx">getAddressByFullName</span><span class="p">(</span><span class="nx">fullName</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">sh</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActive</span><span class="p">().</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="s1">&#39;addresses&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">keys</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">);</span>  <span class="c1">// ヘッダ行を取得</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastRow</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastColumn</span><span class="p">()).</span><span class="nx">getValues</span><span class="p">()</span> <span class="c1">// データ部分(2行目以降)取得</span>
+</span><span class='line'>  <span class="nx">keys</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">);</span>                                                       <span class="c1">// ヘッダ行を取得</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastRow</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastColumn</span><span class="p">()).</span><span class="nx">getValues</span><span class="p">();</span> <span class="c1">// データ部分(2行目以降)取得</span>
 </span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
 </span><span class='line'>    <span class="nx">row</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">rowToHash</span><span class="p">(</span><span class="nx">row</span><span class="p">,</span> <span class="nx">keys</span><span class="p">);</span>
@@ -106,6 +106,8 @@
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>さあこれで列が追加されても大丈夫。RDBMSだと普通なことGAS何でこんなに大変なの!とか考えたら負けです。</p>
 
 <p>早く卒業したいGASおじさん。つっこみありましたらお手柔らかによろしくお願いします!!</p>
 ]]></content>

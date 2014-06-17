@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-17T18:45:14+09:00</updated>
+  <updated>2014-06-17T18:49:11+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -61,8 +61,8 @@ function rowToHash(array, keys) {
 // 住所録 名前から住所を取得
 function getAddressByFullName(fullName) {
   var sh = SpreadsheetApp.getActive().getSheetByName(&lsquo;addresses&rsquo;);
-  keys = Utils.headerKeys(sh);  // ヘッダ行を取得
-  var values = sh.getRange(2, 1, sh.getLastRow()-1, sh.getLastColumn()).getValues() // データ部分(2行目以降)取得
+  keys = Utils.headerKeys(sh);                                                       // ヘッダ行を取得
+  var values = sh.getRange(2, 1, sh.getLastRow()-1, sh.getLastColumn()).getValues(); // データ部分(2行目以降)取得
   for (var i = 0; i &lt; values.length; i++) {</p>
 
 <pre><code>var row = values[i];
@@ -75,6 +75,8 @@ if (row['full_name'] == fullName) {
 <p>  }
 }
 ```</p>
+
+<p>さあこれで列が追加されても大丈夫。RDBMSだと普通なことGAS何でこんなに大変なの!とか考えたら負けです。</p>
 
 <p>早く卒業したいGASおじさん。つっこみありましたらお手柔らかによろしくお願いします!!</p>
 ]]></content>
