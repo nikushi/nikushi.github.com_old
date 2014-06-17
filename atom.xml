@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-02T21:15:08+09:00</updated>
+  <updated>2014-06-17T18:37:52+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,130 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>
+    <link href="http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/"/>
+    <updated>2014-06-17T18:12:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script</id>
+    <content type="html"><![CDATA[<p>Goolge Apps Scriptでspreadsheetの各列にアクセスするときに、列番号を指定してアクセスするコードを書いてると列追加するとスクリプトが壊れる。そこで1行目(ヘッダ行)をキーにアクセスするコードをライブラリにまとめてみた。普通なんだけどぐぐっても出てこなかったので。</p>
+
+<!-- more -->
+
+
+<p>以下をUtilsというプロジェクト名で保存。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm">* returns keys located at top of spreadsheet </span>
+</span><span class='line'><span class="cm">*</span>
+</span><span class='line'><span class="cm">* @param {sheet} sh Sheet class</span>
+</span><span class='line'><span class="cm">* @return {array} array of keys</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastColumn</span><span class="p">()).</span><span class="nx">getValues</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm">* Convert a row to key-value hash according to keys input parameter</span>
+</span><span class='line'><span class="cm">*</span>
+</span><span class='line'><span class="cm">* @param {array} array</span>
+</span><span class='line'><span class="cm">* @param {array} keys</span>
+</span><span class='line'><span class="cm">* @return {array} key-value mapped</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">rowToHash</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">keys</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>  <span class="nx">array</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">hash</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">value</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">hash</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm">* returns the range of data that belong to the specified key.</span>
+</span><span class='line'><span class="cm">* </span>
+</span><span class='line'><span class="cm">* @param {sheet} sh</span>
+</span><span class='line'><span class="cm">* @param {string} key in headers(e.g. in A1:1)</span>
+</span><span class='line'><span class="cm">* @return {range} range</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">getRangeBelongToKey</span><span class="p">(</span><span class="nx">sh</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">column_num</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">column_num</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastRow</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参照側のプロジェクトにて、ライブラリ機能を使ってincludeすると以下のようにキーで行配列を扱える。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// 住所録 名前から住所を取得</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">getAddressByFullName</span><span class="p">(</span><span class="nx">fullName</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">sh</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActive</span><span class="p">().</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="s1">&#39;addresses&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">keys</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">);</span>  <span class="c1">// ヘッダ行を取得</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">getRangeBelongToKey</span><span class="p">(</span><span class="nx">sh</span><span class="p">,</span> <span class="nx">keys</span><span class="p">).</span><span class="nx">getValues</span><span class="p">()</span> <span class="c1">// データ部分(2行目以降)取得</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>    <span class="nx">row</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">rowToHash</span><span class="p">(</span><span class="nx">row</span><span class="p">,</span> <span class="nx">keys</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">row</span><span class="p">[</span><span class="s1">&#39;full_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nx">fullName</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">row</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>早く卒業したいGASおじさん。つっこみありましたらお手柔らかによろしくお願いします!!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[opensslコマンドでSNIな証明書をチェックする]]></title>
@@ -1911,138 +2035,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <li><p>GrowthForecastのグラフはscreencast用のダミーで@sonotsさん作の<a href="https://github.com/sonots/growthforecast-client">growthforecast-client</a>を使ってランダム値を定期POSTしてます。</p></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ActiveSupportのin_groups_ofメソッドでビューが捗る!]]></title>
-    <link href="http://orihubon.com/blog/2013/09/26/in-groups-of-activesupport-extention/"/>
-    <updated>2013-09-26T19:21:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/09/26/in-groups-of-activesupport-extention</id>
-    <content type="html"><![CDATA[<p>ActiveSupportの<code>inc_groups_of</code>メソッドを使ってみたらビューが捗った。</p>
-
-<!--more-->
-
-
-<p>Arrayクラス拡張であるin_groups_ofメソッドとin_groupsメソッドを使うと簡単に配列をグルーピング化することができます。</p>
-
-<p>例えば、以下の配列データ</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sx">%w(1, 2, 3, 4, 5, 6, 7, 8)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>in_groups_ofメソッドをつけて呼び出すと引数指定の数の要素数の小配列をメンバにした配列を返してくれます。また第2引数で空部分に埋める要素指定もできます。デフォルトはnilです。falseを与えるとnilの代わりに要素数を切り詰めます。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups_of</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>使うシーンとしては、ビュー上で指定個数毎でグルーピングして表示したいときに便利です。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group0&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group1&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>4<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>5<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>6<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;group2&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>7<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>8<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;li&gt;</span>9<span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>似たような名前でin_groupsというメソッドもあります。こちらは配列を指定グループ数に分割してくれるメソッドです。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="kp">nil</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="o">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">irb</span><span class="o">&gt;</span> <span class="sx">%w(1 2 3 4 5 6 7 8)</span><span class="o">.</span><span class="n">in_groups</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="o">[[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;7&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;8&quot;</span><span class="o">]]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>普段Railsやってる人には当たり前かもしれない内容でした。いざ使いたかったときにメソッド名を忘れていたので、以上、自分メモでした!</p>
-
-<p>他にもActiveSupportの拡張は便利なものがあるので<a href="http://edgeguides.rubyonrails.org/active_support_core_extensions.html">Active Support Core Extensions</a>の一読おすすめです!</p>
 ]]></content>
   </entry>
   

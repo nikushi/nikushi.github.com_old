@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-02T21:15:08+09:00</updated>
+  <updated>2014-06-17T18:37:52+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>
+    <link href="http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/"/>
+    <updated>2014-06-17T18:12:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script</id>
+    <content type="html"><![CDATA[<p>Goolge Apps Scriptでspreadsheetの各列にアクセスするときに、列番号を指定してアクセスするコードを書いてると列追加するとスクリプトが壊れる。そこで1行目(ヘッダ行)をキーにアクセスするコードをライブラリにまとめてみた。普通なんだけどぐぐっても出てこなかったので。</p>
+
+<!-- more -->
+
+
+<p>以下をUtilsというプロジェクト名で保存。</p>
+
+<p>```javascript
+/<em>*
+* returns keys located at top of spreadsheet
+*
+* @param {sheet} sh Sheet class
+* @return {array} array of keys
+</em>/
+function headerKeys(sh) {
+  return sh.getRange(1,1,1, sh.getLastColumn()).getValues()[0];
+}</p>
+
+<p>/<em>*
+* Convert a row to key-value hash according to keys input parameter
+*
+* @param {array} array
+* @param {array} keys
+* @return {array} key-value mapped
+</em>/
+function rowToHash(array, keys) {
+  var hash = {}
+  array.forEach(function(value, i) {</p>
+
+<pre><code>hash[keys[i]] = value
+</code></pre>
+
+<p>  })
+  return hash
+}</p>
+
+<p>/<em>*
+* returns the range of data that belong to the specified key.
+*
+* @param {sheet} sh
+* @param {string} key in headers(e.g. in A1:1)
+* @return {range} range
+</em>/
+function getRangeBelongToKey(sh, key) {
+  var keys = headerKeys(sh);
+  var column_num = keys.indexOf(key)+1;
+  return sh.getRange(2, column_num, sh.getLastRow()-1, 1);
+}
+```</p>
+
+<p>参照側のプロジェクトにて、ライブラリ機能を使ってincludeすると以下のようにキーで行配列を扱える。</p>
+
+<p>```javascript
+// 住所録 名前から住所を取得
+function getAddressByFullName(fullName) {
+  var sh = SpreadsheetApp.getActive().getSheetByName(&lsquo;addresses&rsquo;);
+  keys = Utils.headerKeys(sh);  // ヘッダ行を取得
+  var values = Utils.getRangeBelongToKey(sh, keys).getValues() // データ部分(2行目以降)取得
+  for (var i = 0; i &lt; values.length; i++) {</p>
+
+<pre><code>var row = values[i];
+row = Utils.rowToHash(row, keys); 
+if (row['full_name'] == fullName) {
+  return row['address']
+}
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>早く卒業したいGASおじさん。つっこみありましたらお手柔らかによろしくお願いします!!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
