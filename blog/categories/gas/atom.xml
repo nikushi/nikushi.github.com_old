@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-17T18:37:52+09:00</updated>
+  <updated>2014-06-17T18:45:14+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -44,27 +44,14 @@ function headerKeys(sh) {
 * @return {array} key-value mapped
 </em>/
 function rowToHash(array, keys) {
-  var hash = {}
+  var hash = {};
   array.forEach(function(value, i) {</p>
 
-<pre><code>hash[keys[i]] = value
+<pre><code>hash[keys[i]] = value;
 </code></pre>
 
 <p>  })
-  return hash
-}</p>
-
-<p>/<em>*
-* returns the range of data that belong to the specified key.
-*
-* @param {sheet} sh
-* @param {string} key in headers(e.g. in A1:1)
-* @return {range} range
-</em>/
-function getRangeBelongToKey(sh, key) {
-  var keys = headerKeys(sh);
-  var column_num = keys.indexOf(key)+1;
-  return sh.getRange(2, column_num, sh.getLastRow()-1, 1);
+  return hash;
 }
 ```</p>
 
@@ -75,13 +62,13 @@ function getRangeBelongToKey(sh, key) {
 function getAddressByFullName(fullName) {
   var sh = SpreadsheetApp.getActive().getSheetByName(&lsquo;addresses&rsquo;);
   keys = Utils.headerKeys(sh);  // ヘッダ行を取得
-  var values = Utils.getRangeBelongToKey(sh, keys).getValues() // データ部分(2行目以降)取得
+  var values = sh.getRange(2, 1, sh.getLastRow()-1, sh.getLastColumn()).getValues() // データ部分(2行目以降)取得
   for (var i = 0; i &lt; values.length; i++) {</p>
 
 <pre><code>var row = values[i];
 row = Utils.rowToHash(row, keys); 
 if (row['full_name'] == fullName) {
-  return row['address']
+  return row['address'];
 }
 </code></pre>
 

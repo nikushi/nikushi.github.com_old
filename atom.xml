@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-17T18:37:52+09:00</updated>
+  <updated>2014-06-17T18:45:14+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -49,19 +49,6 @@
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/**</span>
 </span><span class='line'><span class="cm">* returns keys located at top of spreadsheet </span>
 </span><span class='line'><span class="cm">*</span>
@@ -80,24 +67,11 @@
 </span><span class='line'><span class="cm">* @return {array} key-value mapped</span>
 </span><span class='line'><span class="cm">*/</span>
 </span><span class='line'><span class="kd">function</span> <span class="nx">rowToHash</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">keys</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span> <span class="p">{};</span>
 </span><span class='line'>  <span class="nx">array</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">hash</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">value</span>
+</span><span class='line'>    <span class="nx">hash</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
 </span><span class='line'>  <span class="p">})</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">hash</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm">* returns the range of data that belong to the specified key.</span>
-</span><span class='line'><span class="cm">* </span>
-</span><span class='line'><span class="cm">* @param {sheet} sh</span>
-</span><span class='line'><span class="cm">* @param {string} key in headers(e.g. in A1:1)</span>
-</span><span class='line'><span class="cm">* @return {range} range</span>
-</span><span class='line'><span class="cm">*/</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">getRangeBelongToKey</span><span class="p">(</span><span class="nx">sh</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">);</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">column_num</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">column_num</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastRow</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">hash</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -121,12 +95,12 @@
 </span><span class='line'><span class="kd">function</span> <span class="nx">getAddressByFullName</span><span class="p">(</span><span class="nx">fullName</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">sh</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActive</span><span class="p">().</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="s1">&#39;addresses&#39;</span><span class="p">);</span>
 </span><span class='line'>  <span class="nx">keys</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">headerKeys</span><span class="p">(</span><span class="nx">sh</span><span class="p">);</span>  <span class="c1">// ヘッダ行を取得</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">getRangeBelongToKey</span><span class="p">(</span><span class="nx">sh</span><span class="p">,</span> <span class="nx">keys</span><span class="p">).</span><span class="nx">getValues</span><span class="p">()</span> <span class="c1">// データ部分(2行目以降)取得</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastRow</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastColumn</span><span class="p">()).</span><span class="nx">getValues</span><span class="p">()</span> <span class="c1">// データ部分(2行目以降)取得</span>
 </span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
 </span><span class='line'>    <span class="nx">row</span> <span class="o">=</span> <span class="nx">Utils</span><span class="p">.</span><span class="nx">rowToHash</span><span class="p">(</span><span class="nx">row</span><span class="p">,</span> <span class="nx">keys</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">row</span><span class="p">[</span><span class="s1">&#39;full_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nx">fullName</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">row</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">row</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">];</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
