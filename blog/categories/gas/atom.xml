@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-17T18:49:11+09:00</updated>
+  <updated>2014-06-18T20:21:42+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Script カスタムLoggerでログをspreadsheetに書き出す]]></title>
+    <link href="http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/"/>
+    <updated>2014-06-18T20:05:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script</id>
+    <content type="html"><![CDATA[<p>Google Apps Scriptの中でLoggerで吐くログをシートに書き出すカスタムLoggerを作ってみた。</p>
+
+<!--more-->
+
+
+<p>こういうシートができあがる。</p>
+
+<p><img src="/images/20140618-mylogger.png"></p>
+
+<p><code>Logger.log()</code>ではなくて恒久的に保存するためのロガーを作る。例えばTriggerで時限式実行するスクリプトのログを保存しておきたいとかの用途。</p>
+
+<p>いつものとおりライブラリ化する。<code>MyLogger</code>という名前で。</p>
+
+<p>```javascript
+function log_sheet_() {
+  var sheet_name = &lsquo;log&rsquo;;
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(sheet_name);
+  if (sh == null) {</p>
+
+<pre><code>var active_sh = ss.getActiveSheet(); // memorize current active sheet;
+sheet_num = ss.getSheets().length;
+sh = ss.insertSheet(sheet_name, sheet_num);
+sh.getRange('A1:C1').setValues([['timestamp', 'level', 'message']]).setBackground('#cfe2f3').setFontWeight('bold');
+sh.getRange('A2:C2').setValues([[new Date(), 'info', sheet_name + ' has been created.']]).clearFormat();
+
+// .insertSheet()を呼ぶと"log"シートがアクティブになるので、元々アクティブだったシートにフォーカスを戻す
+ss.setActiveSheet(active_sh);
+</code></pre>
+
+<p>  }
+  return sh;
+}</p>
+
+<p>function log<em>(level, message) {
+  var sh = log_sheet</em>();
+  var now = new Date();
+  var last_row = sh.getLastRow();
+  sh.insertRowAfter(last_row).getRange(last_row+1, 1, 1, 3).setValues([[now, level, message]]);
+  return sh;
+}</p>
+
+<p>function debg(message) {
+  log_(&lsquo;debug&rsquo;, message);
+}</p>
+
+<p>function info(message) {
+  log_(&lsquo;info&rsquo;, message);
+}</p>
+
+<p>function warn(message) {
+  log_(&lsquo;warn&rsquo;, message);
+}</p>
+
+<p>function error(message) {
+  log_(&lsquo;error&rsquo;, message);
+}</p>
+
+<p>function fatal(message) {
+  log_(&lsquo;fatal&rsquo;, message);
+}
+```</p>
+
+<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトーキーを登録して、こうやって呼び出す。</p>
+
+<p><code>javascript
+MyLogger.info('works!');
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>

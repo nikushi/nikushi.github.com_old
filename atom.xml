@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-17T18:49:11+09:00</updated>
+  <updated>2014-06-18T20:21:42+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,126 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Apps Script カスタムLoggerでログをspreadsheetに書き出す]]></title>
+    <link href="http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/"/>
+    <updated>2014-06-18T20:05:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script</id>
+    <content type="html"><![CDATA[<p>Google Apps Scriptの中でLoggerで吐くログをシートに書き出すカスタムLoggerを作ってみた。</p>
+
+<!--more-->
+
+
+<p>こういうシートができあがる。</p>
+
+<p><img src="http://orihubon.com/images/20140618-mylogger.png"></p>
+
+<p><code>Logger.log()</code>ではなくて恒久的に保存するためのロガーを作る。例えばTriggerで時限式実行するスクリプトのログを保存しておきたいとかの用途。</p>
+
+<p>いつものとおりライブラリ化する。<code>MyLogger</code>という名前で。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">log_sheet_</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">ss</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActiveSpreadsheet</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">sh</span> <span class="o">=</span> <span class="nx">ss</span><span class="p">.</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">sheet_name</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">sh</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">active_sh</span> <span class="o">=</span> <span class="nx">ss</span><span class="p">.</span><span class="nx">getActiveSheet</span><span class="p">();</span> <span class="c1">// memorize current active sheet;</span>
+</span><span class='line'>    <span class="nx">sheet_num</span> <span class="o">=</span> <span class="nx">ss</span><span class="p">.</span><span class="nx">getSheets</span><span class="p">().</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">sh</span> <span class="o">=</span> <span class="nx">ss</span><span class="p">.</span><span class="nx">insertSheet</span><span class="p">(</span><span class="nx">sheet_name</span><span class="p">,</span> <span class="nx">sheet_num</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="s1">&#39;A1:C1&#39;</span><span class="p">).</span><span class="nx">setValues</span><span class="p">([[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">]]).</span><span class="nx">setBackground</span><span class="p">(</span><span class="s1">&#39;#cfe2f3&#39;</span><span class="p">).</span><span class="nx">setFontWeight</span><span class="p">(</span><span class="s1">&#39;bold&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">sh</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="s1">&#39;A2:C2&#39;</span><span class="p">).</span><span class="nx">setValues</span><span class="p">([[</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="nx">sheet_name</span> <span class="o">+</span> <span class="s1">&#39; has been created.&#39;</span><span class="p">]]).</span><span class="nx">clearFormat</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// .insertSheet()を呼ぶと&quot;log&quot;シートがアクティブになるので、元々アクティブだったシートにフォーカスを戻す</span>
+</span><span class='line'>    <span class="nx">ss</span><span class="p">.</span><span class="nx">setActiveSheet</span><span class="p">(</span><span class="nx">active_sh</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">sh</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">log_</span><span class="p">(</span><span class="nx">level</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">sh</span> <span class="o">=</span> <span class="nx">log_sheet_</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">last_row</span> <span class="o">=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">getLastRow</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">sh</span><span class="p">.</span><span class="nx">insertRowAfter</span><span class="p">(</span><span class="nx">last_row</span><span class="p">).</span><span class="nx">getRange</span><span class="p">(</span><span class="nx">last_row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">).</span><span class="nx">setValues</span><span class="p">([[</span><span class="nx">now</span><span class="p">,</span> <span class="nx">level</span><span class="p">,</span> <span class="nx">message</span><span class="p">]]);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">sh</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">debg</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log_</span><span class="p">(</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">info</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log_</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">warn</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log_</span><span class="p">(</span><span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">error</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log_</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">fatal</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log_</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトーキーを登録して、こうやって呼び出す。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyLogger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;works!&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>
@@ -1965,52 +2085,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 
 
 <p>ちなみに、自分は普段高負荷環境のWebサービスを運用,開発してる訳ではなくて、Railsで管理系アプリ書いたり監視系ツール作ったりしてる系。始まる前は自分どれだけ対応できるか不安でした。周りのエンジニアや参加者も凄い人たちばかりですし。でも終わってみると参加してよかったです。しんどかったけど。反省会のビールがうまかったです。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Yohoushi screencasts!]]></title>
-    <link href="http://orihubon.com/blog/2013/10/01/yohoushi-screencasts/"/>
-    <updated>2013-10-01T11:37:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/10/01/yohoushi-screencasts</id>
-    <content type="html"><![CDATA[<p>グラフツール <a href="http://yohoushi.github.io/yohoushi/">Yohoushi</a>を紹介するスクリーンキャストを作ってみた。</p>
-
-<!--more-->
-
-
-<p><a href="http://yohoushi.github.io/yohoushi/">Yohoushi</a>というグラフツールを<a href="https://twitter.com/sonots">@sonots</a>さんと作っています。Yohoushiを使うと<a href="http://kazeburo.github.io/GrowthForecast/">GrowthForecast</a>に登録したグラフと連携し検索やタギング、グラフ画像の拡大縮小、期間カスタム指定などができます。</p>
-
-<p>会社の同僚の方々からYohoushiがどんなツールかもっと分かりやすく解説してよというコメントをいただきまして、Yohoushiの概要〜インストール、簡単な使い方までをscreencastにしてみました。&#8221;GrowthForecast使ってるからそろそろYohoushiも&hellip;でもYohoushiむずいんでしょ?&ldquo; とおもわれている方にYohoushiの導入の簡単さを分かってもらえる内容になってるとおもいます。</p>
-
-<p>各話3分程度です。エピソード1は概要なのでわかってる方は飛ばしてください。Yohoushiの雰囲気を知るだけならエピソード3、4だけでもおすすめです!</p>
-
-<h4>1 Yohoushiとはなにか?</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZjZjtzyx6Jc "></iframe></div>
-
-
-<h4>2 Yohoushiをインストールしてみよう</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/mqIR0RClP3o "></iframe></div>
-
-
-<h4>3 Yohoushiを使ってみよう</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/q_vMqjpFRUc "></iframe></div>
-
-
-<h4>4 Yohoushiを使ってグラフにタグをつけよう</h4>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/EV51EmjC74o "></iframe></div>
-
-
-<h4>補足</h4>
-
-<ul>
-<li><p>インストールする際のrakeやbundleは<code>bin/</code>に同封のbinstubの<code>bin/bundle</code>, <code>bin/rake</code>を使ってください。<code>bin/</code>配下のコマンドで実行すると<code>RAILS_ENV=production</code>が自動的にセットされます。パスの通ったコマンドを使ってしまうと<code>RAILS_ENV=development</code>が自動的にセットされるので意図しない動作になるので注意してください。</p></li>
-<li><p>GrowthForecastのグラフはscreencast用のダミーで@sonotsさん作の<a href="https://github.com/sonots/growthforecast-client">growthforecast-client</a>を使ってランダム値を定期POSTしてます。</p></li>
-</ul>
-
 ]]></content>
   </entry>
   
