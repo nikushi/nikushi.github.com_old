@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-18T20:23:45+09:00</updated>
+  <updated>2014-06-18T20:26:32+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -81,7 +81,7 @@ ss.setActiveSheet(active_sh);
 }
 ```</p>
 
-<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトキーを登録して、こうやって呼び出す。</p>
+<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトキーを登録して、こうやって呼び出す。初回呼び出し時に"log"という名前でシートを作成し以降は末尾の行にログが追加される。</p>
 
 <p><code>javascript
 MyLogger.info('works!');

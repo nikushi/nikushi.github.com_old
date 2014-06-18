@@ -208,7 +208,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトキーを登録して、こうやって呼び出す。</p>
+<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトキーを登録して、こうやって呼び出す。初回呼び出し時に&#8221;log&#8221;という名前でシートを作成し以降は末尾の行にログが追加される。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyLogger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;works!&#39;</span><span class="p">);</span>
