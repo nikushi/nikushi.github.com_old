@@ -186,7 +186,7 @@
 </span><span class='line'>  <span class="k">return</span> <span class="nx">sh</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">function</span> <span class="nx">debg</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">debug</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">log_</span><span class="p">(</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
@@ -208,7 +208,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトーキーを登録して、こうやって呼び出す。</p>
+<p>呼び出す側のプロジェクトでは、先ほど作った<code>MyLogger</code>のプロジェクトキーを登録して、こうやって呼び出す。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MyLogger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;works!&#39;</span><span class="p">);</span>
