@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-18T20:26:32+09:00</updated>
+  <updated>2014-06-29T22:16:00+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[週末雨だったのでSerfをさわってみた]]></title>
+    <link href="http://orihubon.com/blog/2014/06/29/serf/"/>
+    <updated>2014-06-29T21:10:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/29/serf</id>
+    <content type="html"><![CDATA[<p>最近まで<a href="http://www.serfdom.io/">Serf</a>の意味を波乗りくらいにおもってました。&#8217;農奴&#8217;らしいです。梅雨で週末雨だったのでSerfを触ってみました。</p>
+
+<!--more-->
+
+
+<p>Vagrantで仮想マシン2台建てて<a href="http://www.serfdom.io/intro/getting-started/install.html">Get Started</a>をもくもくやってみました。</p>
+
+<ul>
+<li><p><strong>Membership</strong>: ノード一覧を管理する。管理するといっても中央サーバはいなくて各ノードが自律分散的に他ノードと会話して全ノードを知っている状態になる。ノードのクラスタへの参加、離脱はeventという形でクラスタ内のノードに即時伝搬する。イベントハンドラの機能により各ノードは任意のスクリプトを実行できる。</p></li>
+<li><p><strong>Failure detection and recovery</strong>: nodeは他のノードの(コネクティビティ的意味の)failを検知でき、他のノードにも伝える。また自動で再接続を試みる。これもイベントとして伝搬されイベントハンドラによりスクリプト実行可能。</p></li>
+<li><p><strong>Custom event propagation</strong>: ノードの参加、離脱、接続失敗以外にもカスタムなイベントをクラスタ内に伝搬できる。例えば、deploy実行を伝搬させたり、設定を伝搬させたり。またQueryを使えばevent handler経由で各ノードの実行結果を受け取ることもできる。</p></li>
+</ul>
+
+
+<p>node間の通信のことをgossip protocolと言って、全ノードが他の全ノードと通信するわけではなくて数ノードと通信する。うわさ話ですね。数ノードと喋ってるといつのまにか(実際の所数秒で)全体に伝わる、そういうモデル。</p>
+
+<p>さわってみた感想としては、インストール楽。<code>serf</code>コマンドをダウンロードして置くだけ。Goの良いとろこ。また学習コストが低くてGet Started読んで試してみれば1, 2時間あればだいたい理解できるとおもいます。</p>
+
+<h4>ユースケース || 参考</h4>
+
+<ul>
+<li><a href="http://blog.kentarok.org/entry/2013/10/30/020120">Automatic /etc/hosts management with Serf</a> by <a href="https://twitter.com/kentaro">@kentaro</a> さん</li>
+<li><a href="http://blog.glidenote.com/blog/2013/10/30/serf-haproxy/">Serf+HAProxyで作るAutomatic Load Balancer</a> by <a href="https://twitter.com/glidenote">@glidenote</a> さん</li>
+<li><a href="http://blog.livedoor.jp/sonots/archives/35397486.html">正月休みだし Serf 触ってみた</a> by <a href="https://twitter.com/sonots">@sonots</a> さん</li>
+<li><a href="http://www.slideshare.net/zembutsu/is-the-order-an-automation-of-operation-and-monitoring?qid=493a7731-e373-426d-9cb9-d61821aced17&amp;v=qf1&amp;b=&amp;from_search=4">ご注文は監視自動化ですか?</a> by <a href="https://twitter.com/zembutsu">@zembatsu</a> さん</li>
+<li>memcached や redis ノードのクラスタを管理する</li>
+<li>deploy(git pullとか)してアプリケーションのrestart</li>
+<li>設定の伝搬</li>
+</ul>
+
+
+<h4>まとめ</h4>
+
+<p>やんごとなき事情により<code>/etc/hosts</code>を使っているシステムを知ってて内部DNSサーバなあと考えてたけどSerf + <code>/etc/hosts</code>の組み合わせいいですね!</p>
+
+<p>あと、個人的にはネットワーク機器みたいな箱物のサービスディスカバリに対する最適解が無いので、良いツールが出て来ないものかとおもっている次第なんだけど、ネットワーク機器がLinuxの箱で置き換わればいいのにとおもってます。</p>
+
+<p>簡単に自立分散システム作れて良い時代になったものですね。</p>
+
+<p>以上!!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Apps Script カスタムLoggerでログをspreadsheetに書き出す]]></title>
@@ -1982,109 +2030,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 
 
 <p>なお、コネクションプーリングしている場合は新規コネクションから有効になるようです。アプリを再起動しないと反映されないです。mysqlコマンドから設定した場合も<code>show variables like 'long_query_time';</code>やっても値が反映されていないように見えますが、再接続すると確認できました。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ISUCON3予選の記録]]></title>
-    <link href="http://orihubon.com/blog/2013/10/07/isucon3-yosen/"/>
-    <updated>2013-10-07T10:38:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/10/07/isucon3-yosen</id>
-    <content type="html"><![CDATA[<p><a href="http://isucon.net/archives/29328289.html">ISUCON3</a>予選に参加しました。</p>
-
-<!--more-->
-
-
-<p>チームは会社の同僚の<a href="https://twitter.com/sonots">@sonots</a>さん、<a href="https://twitter.com/Spring_MT">@Spring_MT</a>さん3名(チーム Miami)、予選は10/5(土), 10/6(日)に分かれていて僕たちは2日目に参加しました。</p>
-
-<p>長時間の作業になるので会社で作業しました。僕は朝から興奮してしまって1時間前に会場入りして素振りしてましたが。</p>
-
-<h4>お題アプリ</h4>
-
-<p>githubのgistの機能ライクなメモアプリでした。</p>
-
-<h4>最終的な構成</h4>
-
-<p>nginx + unicorn + MySQL + InnoDB memcached plugin</p>
-
-<h4>午前 &ndash; スタート</h4>
-
-<h5>10:00</h5>
-
-<p>まず、インスタンスによってCPUのモデルに差異があるかもしれないのでメンバ3人それぞれインスタンスを作成しCPUのモデルを確認しましたが結局偏りはありませんでした。</p>
-
-<h5>10:30</h5>
-
-<p>僕はwebappをgithub.comにgit pushしたり、予め用意しておいたカーネルチューニング(とってもネットワーク周りを少しだけ)をしてました。</p>
-
-<h5>11:00</h5>
-
-<p>my.cnf書き換えてslow query logを出すように修正。最初にベンチ走らせてスコアが800ほど。あまり大きなslow queryはありませんでした。</p>
-
-<h5>10:20</h5>
-
-<p>他の2名がリードしてくれてる状況なので、僕何からやろうかなという状態。とりあえずもう一度ドキュメント読んで注意点を確認しました。<code>--workload</code>これは重要なのでチームに周知しときました:) 他のチームでこれ忘れてる人結構ありましたね。</p>
-
-<p>また、<a href="http://miniprofiler.com/">rack-mini-profiler</a>を導入して遅いページを探しました。これ便利ですね。</p>
-
-<p>変更点</p>
-
-<ul>
-<li>nginx導入。public_htmlをnginxで返すよう変更</li>
-<li>memo POST時にgem_markdown呼び出してmarkdownからHTMLに変換。表示時に都度HTMLコンバートするのをやめた</li>
-<li>N+1問題。<code>memos</code>テーブルだけで完結するようにするため、<code>memos</code>テーブルに<code>username</code>フィールドを追加することにした。</li>
-<li>複合インデックスを入れてパフォーマンス改善</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>create index user_create_at_index on memos (user, created_at);
-</span><span class='line'>create index user_is_private_created_at_index on memos (user, is_private, created_at);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>クエリの改善系は僕も対応しました。1つ、2つ改善できてホッとしました。</p>
-
-<h5>13:30</h5>
-
-<p>コンビニ飯</p>
-
-<h4>午後 &ndash; 伸び悩み</h4>
-
-<p>クエリを改善し、nginx + unicornの構成にしスコアは上がりましたが、午後はこの後どうしようか悩む時間でした。</p>
-
-<p>前回isucon2ではVarnishを入れることで劇的にスコアアップできた事例がありましたので、Varnish対応を始めましたがVarnish作戦は結局失敗でした。recentページがキャッシュしにくい(olderとnewerのリンク)構成であったという点&hellip;と認識しています。あとセッションのバリデーションでベンチがコケたみたい。(このへんは僕やってないからもやっとしてる)</p>
-
-<p>より詳細なプロファイリングのためNewRelicも入れてプロファイリング(by Spring_MTさん)。トップページとrecentが70ms程度かかっている状況で以下のクエリがある以上この程度かかるのかな&hellip;.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT id, first_sentence, username, created_at FROM memos WHERE is_private=0 ORDER BY id DESC LIMIT 100 OFFSET #{page * 100}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>indexは効かせていたのでこのSELECTやめて別のアプローチをとればスコアアップ狙える、逆にいうとこれ改善しないと上位には入れないよね、というのがチームの午後の課題でしたが最後まで答えを出せずじまいで終わってしまいました。</p>
-
-<p>その他改善したところは以下です。</p>
-
-<ul>
-<li>markdown生成のためフォークやめて<a href="https://github.com/vmg/redcarpet">redcarpet</a>使った。でも+500くらい</li>
-<li>毎回memoのcontentを<code>.split(/\r?\n/)</code>せず、<code>memos.first_sentence</code>フィールドを作ってmemo POST時に入れるようにした</li>
-<li>メモ数をカウントする<code>SELECT count(*) FROM memos</code>をmemdにキャッシュした</li>
-<li>sonotsスペシャル => 詳細はsonots blogで</li>
-</ul>
-
-
-<p>最後はログ吐くのをやめてプロファイリングも切って<code>--workload=4</code>くらいにして測定して終了。</p>
-
-<h3>反省点とか所感</h3>
-
-<ul>
-<li>memcachedみたいなものには気づかなかった&hellip;</li>
-<li>8時間かっとなってコード釘付けになりがちですが、30分くらいはコーヒー飲みながらメンバでディスカッションしてもよかったかも</li>
-<li>githubにwebappを上げてpull req方式でコード改修しようとして、実機でコード変えて即ベンチ走らせたい場合もあってmasterがconflictしてしまった。どっちもどっちで難しい。他のチームどうやってるか気になる。</li>
-</ul>
-
-
-<p>ちなみに、自分は普段高負荷環境のWebサービスを運用,開発してる訳ではなくて、Railsで管理系アプリ書いたり監視系ツール作ったりしてる系。始まる前は自分どれだけ対応できるか不安でした。周りのエンジニアや参加者も凄い人たちばかりですし。でも終わってみると参加してよかったです。しんどかったけど。反省会のビールがうまかったです。</p>
 ]]></content>
   </entry>
   

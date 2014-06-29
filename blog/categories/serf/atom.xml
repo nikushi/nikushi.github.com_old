@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Serf | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/serf/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2014-06-29T22:16:00+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[週末雨だったのでSerfをさわってみた]]></title>
+    <link href="http://orihubon.com/blog/2014/06/29/serf/"/>
+    <updated>2014-06-29T21:10:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/06/29/serf</id>
+    <content type="html"><![CDATA[<p>最近まで<a href="http://www.serfdom.io/">Serf</a>の意味を波乗りくらいにおもってました。'農奴'らしいです。梅雨で週末雨だったのでSerfを触ってみました。</p>
+
+<!--more-->
+
+
+<p>Vagrantで仮想マシン2台建てて<a href="http://www.serfdom.io/intro/getting-started/install.html">Get Started</a>をもくもくやってみました。</p>
+
+<ul>
+<li><p><strong>Membership</strong>: ノード一覧を管理する。管理するといっても中央サーバはいなくて各ノードが自律分散的に他ノードと会話して全ノードを知っている状態になる。ノードのクラスタへの参加、離脱はeventという形でクラスタ内のノードに即時伝搬する。イベントハンドラの機能により各ノードは任意のスクリプトを実行できる。</p></li>
+<li><p><strong>Failure detection and recovery</strong>: nodeは他のノードの(コネクティビティ的意味の)failを検知でき、他のノードにも伝える。また自動で再接続を試みる。これもイベントとして伝搬されイベントハンドラによりスクリプト実行可能。</p></li>
+<li><p><strong>Custom event propagation</strong>: ノードの参加、離脱、接続失敗以外にもカスタムなイベントをクラスタ内に伝搬できる。例えば、deploy実行を伝搬させたり、設定を伝搬させたり。またQueryを使えばevent handler経由で各ノードの実行結果を受け取ることもできる。</p></li>
+</ul>
+
+
+<p>node間の通信のことをgossip protocolと言って、全ノードが他の全ノードと通信するわけではなくて数ノードと通信する。うわさ話ですね。数ノードと喋ってるといつのまにか(実際の所数秒で)全体に伝わる、そういうモデル。</p>
+
+<p>さわってみた感想としては、インストール楽。<code>serf</code>コマンドをダウンロードして置くだけ。Goの良いとろこ。また学習コストが低くてGet Started読んで試してみれば1, 2時間あればだいたい理解できるとおもいます。</p>
+
+<h4>ユースケース || 参考</h4>
+
+<ul>
+<li><a href="http://blog.kentarok.org/entry/2013/10/30/020120">Automatic /etc/hosts management with Serf</a> by <a href="https://twitter.com/kentaro">@kentaro</a> さん</li>
+<li><a href="http://blog.glidenote.com/blog/2013/10/30/serf-haproxy/">Serf+HAProxyで作るAutomatic Load Balancer</a> by <a href="https://twitter.com/glidenote">@glidenote</a> さん</li>
+<li><a href="http://blog.livedoor.jp/sonots/archives/35397486.html">正月休みだし Serf 触ってみた</a> by <a href="https://twitter.com/sonots">@sonots</a> さん</li>
+<li><a href="http://www.slideshare.net/zembutsu/is-the-order-an-automation-of-operation-and-monitoring?qid=493a7731-e373-426d-9cb9-d61821aced17&amp;v=qf1&amp;b=&amp;from_search=4">ご注文は監視自動化ですか?</a> by <a href="https://twitter.com/zembutsu">@zembatsu</a> さん</li>
+<li>memcached や redis ノードのクラスタを管理する</li>
+<li>deploy(git pullとか)してアプリケーションのrestart</li>
+<li>設定の伝搬</li>
+</ul>
+
+
+<h4>まとめ</h4>
+
+<p>やんごとなき事情により<code>/etc/hosts</code>を使っているシステムを知ってて内部DNSサーバなあと考えてたけどSerf + <code>/etc/hosts</code>の組み合わせいいですね!</p>
+
+<p>あと、個人的にはネットワーク機器みたいな箱物のサービスディスカバリに対する最適解が無いので、良いツールが出て来ないものかとおもっている次第なんだけど、ネットワーク機器がLinuxの箱で置き換わればいいのにとおもってます。</p>
+
+<p>簡単に自立分散システム作れて良い時代になったものですね。</p>
+
+<p>以上!!</p>
+]]></content>
+  </entry>
+  
+</feed>
