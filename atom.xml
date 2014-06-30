@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-29T22:16:00+09:00</updated>
+  <updated>2014-06-30T13:04:32+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -31,8 +31,6 @@
 <li><p><strong>Custom event propagation</strong>: ノードの参加、離脱、接続失敗以外にもカスタムなイベントをクラスタ内に伝搬できる。例えば、deploy実行を伝搬させたり、設定を伝搬させたり。またQueryを使えばevent handler経由で各ノードの実行結果を受け取ることもできる。</p></li>
 </ul>
 
-
-<p>node間の通信のことをgossip protocolと言って、全ノードが他の全ノードと通信するわけではなくて数ノードと通信する。うわさ話ですね。数ノードと喋ってるといつのまにか(実際の所数秒で)全体に伝わる、そういうモデル。</p>
 
 <p>さわってみた感想としては、インストール楽。<code>serf</code>コマンドをダウンロードして置くだけ。Goの良いとろこ。また学習コストが低くてGet Started読んで試してみれば1, 2時間あればだいたい理解できるとおもいます。</p>
 
