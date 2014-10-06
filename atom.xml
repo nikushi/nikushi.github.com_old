@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-10-05T19:44:17-07:00</updated>
+  <updated>2014-10-05T19:49:37-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -56,7 +56,7 @@
 
 <p>アプリがfixしないうちに外を闇雲にチューンしてもはまるだけなので、焦っても仕方ないからこの時間帯はコード眺めたりしつつお茶を濁しておりました。やることないと色々手を動かしたくなるのですが、ここはぐっと押さえて。</p>
 
-<p>アプリの改修が無事に終わって、MySQLのindexチューニングもいれて ここでスコアががくっと上がった。</p>
+<p>アプリの改修が無事に終わって、MySQLのindexチューニングもいれて ここでスコアががくっと上がった。 詳細は<a href="http://blog.livedoor.jp/sonots/archives/40449500.html">sonotsブログ</a>が充実している。</p>
 
 <p>アプリのオンメモリ戦略にてスコア上がった。さらにベンチ負荷上げて試したけどスコア頭打ち。CPU大して使ってないのにスコア上がらなくて。ネットワーク周りかなということで<code>netstat -an | grep TIME_WAIT | wc -l</code> ってやると50kくらいポート使ってたので、以下のチューニングしたらport足りなくなる問題は改善しました。</p>
 
@@ -74,8 +74,7 @@
 
 <p>nginx-アプリ間はtcpで通信させててunix socketに変えれば良かったのだけど、martiniでunix socketに変えるやり方が分からなくて、上のチューニングでtcpで回ったのでよしとした。</p>
 
-<p>結果としては最終的に40kあたりのレンジで他チームと横並びで、本戦出場は厳しそう&hellip;な感じですが、結果発表が楽しみです。
-タイムラインとか詳細は<a href="http://blog.livedoor.jp/sonots/archives/40449500.html">sonotsブログ</a>が充実している。</p>
+<p>結果としては最終的に40kあたりのレンジで他チームと横並びで、本戦出場は厳しそう&hellip;な感じですが、結果発表が楽しみです。</p>
 
 <h3>反省</h3>
 
