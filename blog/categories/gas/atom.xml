@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Script カスタムLoggerでログをspreadsheetに書き出す]]></title>
     <link href="http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/"/>
-    <updated>2014-06-18T20:05:00+09:00</updated>
+    <updated>2014-06-18T20:05:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script</id>
     <content type="html"><![CDATA[<p>Google Apps Scriptの中でLoggerで吐くログをシートに書き出すカスタムLoggerを作ってみた。</p>
 
@@ -92,7 +92,7 @@ MyLogger.info('works!');
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>
     <link href="http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/"/>
-    <updated>2014-06-17T18:12:00+09:00</updated>
+    <updated>2014-06-17T18:12:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script</id>
     <content type="html"><![CDATA[<p>Goolge Apps Scriptでspreadsheetの各列にアクセスするときに、列番号を指定してアクセスするコードを書いてると列追加するとスクリプトが壊れる。そこで1行目(ヘッダ行)をキーにアクセスするコードをライブラリにまとめてみた。普通なんだけどぐぐっても出てこなかったので。</p>
 
@@ -161,7 +161,7 @@ if (row['full_name'] == fullName) {
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/"/>
-    <updated>2014-05-30T18:23:00+09:00</updated>
+    <updated>2014-05-30T18:23:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script</id>
     <content type="html"><![CDATA[<p>Google Developersサイトの<a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を要約してみた。</p>
 
@@ -210,7 +210,7 @@ function getRssFeed() {
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptの共通関数をライブラリでまとめる]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/google-apps-script-library/"/>
-    <updated>2014-05-30T14:53:00+09:00</updated>
+    <updated>2014-05-30T14:53:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/google-apps-script-library</id>
     <content type="html"><![CDATA[<p><a href="/blog/2014/05/30/tried-google-apps-script/">前回</a>に引き続きGoogle Apps Script。共通関数をライブラリにする方法。</p>
 
@@ -263,7 +263,7 @@ function power(base, exp) { ... }
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptをつかってみた]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/tried-google-apps-script/"/>
-    <updated>2014-05-30T00:39:00+09:00</updated>
+    <updated>2014-05-30T00:39:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/tried-google-apps-script</id>
     <content type="html"><![CDATA[<p>某案件でGoogle Spreadsheetを使う機会があって少しかじってみた。浅くメモ。</p>
 

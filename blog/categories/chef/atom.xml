@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Chef | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/chef/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[/etc/sysctl.confを管理するChef cookbook]]></title>
     <link href="http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook/"/>
-    <updated>2014-03-26T22:49:00+09:00</updated>
+    <updated>2014-03-26T22:49:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook</id>
     <content type="html"><![CDATA[<p>Chefでsysctl.confを管理するやつ作ってみた。<a href="https://github.com/niku4i/sysctl-cookbook">niku4i/sysctl-cookbook</a></p>
 
@@ -30,7 +30,7 @@
   <entry>
     <title type="html"><![CDATA[test-kitchen使ったメモ]]></title>
     <link href="http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo/"/>
-    <updated>2014-03-25T11:46:00+09:00</updated>
+    <updated>2014-03-25T11:46:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo</id>
     <content type="html"><![CDATA[<p>最近はImmutable Infrastracture盛り上がりでChefやPuppetが語られる機会が少なくなって気がしますが、それはChef/Puppetが成熟してきた証拠? test-kitchenを使ってみたメモです。</p>
 

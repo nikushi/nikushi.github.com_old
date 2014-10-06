@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Sinatra::Reloader]]></title>
     <link href="http://orihubon.com/blog/2013/08/06/sinatra-reloader/"/>
-    <updated>2013-08-06T19:30:00+09:00</updated>
+    <updated>2013-08-06T19:30:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/08/06/sinatra-reloader</id>
     <content type="html"><![CDATA[<p>Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。</p>
 
@@ -32,7 +32,7 @@
   <entry>
     <title type="html"><![CDATA[RubyでIPアドレスの正規表現を超簡単に書く]]></title>
     <link href="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/"/>
-    <updated>2013-08-06T09:14:00+09:00</updated>
+    <updated>2013-08-06T09:14:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/08/06/regex-for-ipv-address</id>
     <content type="html"><![CDATA[<p>正規表現自前で書かずとも、<code>Resolv::IPv4::Regex</code>を使う。</p>
 
@@ -52,7 +52,7 @@ Resolv::IPv4::Regex.class
   <entry>
     <title type="html"><![CDATA[ActiveRecordのtypeフィールドについて]]></title>
     <link href="http://orihubon.com/blog/2013/07/29/type-column-of-activerecord/"/>
-    <updated>2013-07-29T16:26:00+09:00</updated>
+    <updated>2013-07-29T16:26:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/07/29/type-column-of-activerecord</id>
     <content type="html"><![CDATA[<p>ActiveRecordのtypeフィールドについて。</p>
 
@@ -94,7 +94,7 @@ end
   <entry>
     <title type="html"><![CDATA[bundle_frozenとかbundle_without]]></title>
     <link href="http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without/"/>
-    <updated>2013-07-26T16:37:00+09:00</updated>
+    <updated>2013-07-26T16:37:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without</id>
     <content type="html"><![CDATA[<p>bundlerの<code>--deployment</code>や<code>--without</code>に関してはまったことのメモ。</p>
 
@@ -164,7 +164,7 @@ $ bundle exec rpsec
   <entry>
     <title type="html"><![CDATA[BSONオブジェクトのデータサイズを確認する方法(Ruby)]]></title>
     <link href="http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/"/>
-    <updated>2013-02-13T15:06:00+09:00</updated>
+    <updated>2013-02-13T15:06:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
     <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
 

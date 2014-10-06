@@ -4,7 +4,7 @@
   <title><![CDATA[Category: td-agent | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/td-agent/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ]]></title>
     <link href="http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error/"/>
-    <updated>2014-01-08T21:37:00+09:00</updated>
+    <updated>2014-01-08T21:37:00-08:00</updated>
     <id>http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error</id>
     <content type="html"><![CDATA[<p>td-agentを<a href="https://github.com/treasure-data/chef-td-agent/">treasure-data/chef-td-agent</a>のChefレシピを使ってVagrantの仮想マシンに適用したメモです。</p>
 

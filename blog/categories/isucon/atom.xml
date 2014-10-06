@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ISUCON | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/isucon/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,9 +14,95 @@
 
   
   <entry>
+    <title type="html"><![CDATA[ISUCON 2014 予選の記録 GoMiami]]></title>
+    <link href="http://orihubon.com/blog/2014/10/05/isucon-qualifier/"/>
+    <updated>2014-10-05T19:30:00-07:00</updated>
+    <id>http://orihubon.com/blog/2014/10/05/isucon-qualifier</id>
+    <content type="html"><![CDATA[<p><a href="http://isucon.net/archives/39780986.html">ISUCON4 予選</a>に参加しました。</p>
+
+<!--more-->
+
+
+<p>去年に引き続き2年目、<a href="http://orihubon.com/blog/2013/10/07/isucon3-yosen/">前年</a>同様 @sonots, @Spring_MT と。チーム名はGoMiamiで。今回もマイアミがすこし関係します!!</p>
+
+<p>Go言語を選択すれば成長しないわけがない!!という意気込みのもとGoでいくことが決定。僕は少し前に<a href="http://go-tour-jp.appspot.com/">A Tour of Go</a> をひと通りやった程度。今回はインフラメインで2人はアプリコードメインに戦略立てるって感じで。</p>
+
+<h4>予選</h4>
+
+<h5>事前準備</h5>
+
+<p>社内で1回前回大会の復習会をやったのと、チームで休日にあつまって前回予選課題を使って予行練習。当日どういう役割でどう動くかみたいなことを練習しました。この予行練習のお陰て今回予選はかなり余裕でました!! @sonots is our brain!</p>
+
+<h5>AM</h5>
+
+<p>午前中はボトルネック探しと、ベンチ特性、方針決めを中心にやった。ので午前中はチューニング作業は無し。</p>
+
+<ul>
+<li>開始と同時にメンバ分のインスタンス立ち上げ、本番用インスタンス立ち上げ</li>
+<li>本番環境整備(github pull&amp;push環境)</li>
+<li>ベンチ1回走らせて、プロファイリング。具体的にはnginxのアクセスログ、slowqueryログ、からベンチの特性分析</li>
+<li>コード読んだり、画面見たり、ざっと。</li>
+<li>my.cnf, nginx.confを予め用意しておいた内容で置き換え</li>
+</ul>
+
+
+<p>MySQLのCPUが高いのはindexいれるとして、それ以外データベースであまりやることないことが分かって、事前に決めてた通りアプリにオンメモリで乗せる戦略にした。</p>
+
+<p>MySQLは5.5が動いてて、一応5.6に上げる方針にした(けどこれは最終的にはオンメモリ戦略とるのでこの時点で上げる必要性はなかったかなと)</p>
+
+<h5>PM</h5>
+
+<p>飯食べながらさくっとMySQL5.6に上げたところで、じつはアプリのオンメモリ戦略の実装待ちで実はやることが無かった(笑)</p>
+
+<p>アプリがfixしないうちに外を闇雲にチューンしてもはまるだけなので、焦っても仕方ないからこの時間帯はコード眺めたりしつつお茶を濁しておりました。やることないと色々手を動かしたくなるのですが、ここはぐっと押さえて。</p>
+
+<p>アプリの改修が無事に終わって、MySQLのindexチューニングもいれて ここでスコアががくっと上がった。</p>
+
+<p>アプリのオンメモリ戦略にてスコア上がった。さらにベンチ負荷上げて試したけどスコア頭打ち。CPU大して使ってないのにスコア上がらなくて。ネットワーク周りかなということで<code>netstat -an | grep TIME_WAIT | wc -l</code> ってやると50kくらいポート使ってたので、以下のチューニングしたらport足りなくなる問題は改善しました。</p>
+
+<p><code>
+net.ipv4.ip_local_port_range = 10000 64000
+net.ipv4.tcp_tw_recycle=1
+net.ipv4.tcp_fin_timeout = 5
+net.ipv4.tcp_max_syn_backlog = 1024
+net.core.somaxconn = 65535
+</code></p>
+
+<p>nginx-アプリ間はtcpで通信させててunix socketに変えれば良かったのだけど、martiniでunix socketに変えるやり方が分からなくて、上のチューニングでtcpで回ったのでよしとした。</p>
+
+<p>結果としては最終的に40kあたりのレンジで他チームと横並びで、本戦出場は厳しそう&hellip;な感じですが、結果発表が楽しみです。
+タイムラインとか詳細は<a href="http://blog.livedoor.jp/sonots/archives/40449500.html">sonotsブログ</a>が充実している。</p>
+
+<h4>反省</h4>
+
+<p><strong>Chef</strong></p>
+
+<p>予選はミドルウェアとか毎回同じなのでChefレシピ用意しといてインフラ担当が3人分開発環境まで揃えてあげればよかった。今回開発環境は各自お任せだったのでコード読み書きに専念させてあげればよかったなと。</p>
+
+<p><strong>Go</strong></p>
+
+<p>Go力足りてなくて速読できなかった(笑) Spring_MT氏はrubyでコードを把握した後Goをfixしたよと言っていた。なるほど。</p>
+
+<h4>所感</h4>
+
+<ul>
+<li>前回大会に比べ今回は余裕をもって想定した力は発揮できたことは進歩</li>
+<li>個人的に次週に海外出張控えてて準備等々でISUCON準備できてなかったんですが2人が引っ張ってくれて助かったという感じです。</li>
+</ul>
+
+
+<h5>10/5 UPDATE</h5>
+
+<p><strong>本戦出場決まりました!!!</strong>. 出張終えたら復習&amp;&amp;素振りやります。</p>
+
+<p>というわけでリアルにマイアミ出張いってきます。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[ISUCON3予選の記録]]></title>
     <link href="http://orihubon.com/blog/2013/10/07/isucon3-yosen/"/>
-    <updated>2013-10-07T10:38:00+09:00</updated>
+    <updated>2013-10-07T10:38:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/10/07/isucon3-yosen</id>
     <content type="html"><![CDATA[<p><a href="http://isucon.net/archives/29328289.html">ISUCON3</a>予選に参加しました。</p>
 

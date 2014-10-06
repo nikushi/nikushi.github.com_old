@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,9 +14,99 @@
 
   
   <entry>
+    <title type="html"><![CDATA[ISUCON 2014 予選の記録 GoMiami]]></title>
+    <link href="http://orihubon.com/blog/2014/10/05/isucon-qualifier/"/>
+    <updated>2014-10-05T19:30:00-07:00</updated>
+    <id>http://orihubon.com/blog/2014/10/05/isucon-qualifier</id>
+    <content type="html"><![CDATA[<p><a href="http://isucon.net/archives/39780986.html">ISUCON4 予選</a>に参加しました。</p>
+
+<!--more-->
+
+
+<p>去年に引き続き2年目、<a href="http://orihubon.com/blog/2013/10/07/isucon3-yosen/">前年</a>同様 @sonots, @Spring_MT と。チーム名はGoMiamiで。今回もマイアミがすこし関係します!!</p>
+
+<p>Go言語を選択すれば成長しないわけがない!!という意気込みのもとGoでいくことが決定。僕は少し前に<a href="http://go-tour-jp.appspot.com/">A Tour of Go</a> をひと通りやった程度。今回はインフラメインで2人はアプリコードメインに戦略立てるって感じで。</p>
+
+<h4>予選</h4>
+
+<h5>事前準備</h5>
+
+<p>社内で1回前回大会の復習会をやったのと、チームで休日にあつまって前回予選課題を使って予行練習。当日どういう役割でどう動くかみたいなことを練習しました。この予行練習のお陰て今回予選はかなり余裕でました!! @sonots is our brain!</p>
+
+<h5>AM</h5>
+
+<p>午前中はボトルネック探しと、ベンチ特性、方針決めを中心にやった。ので午前中はチューニング作業は無し。</p>
+
+<ul>
+<li>開始と同時にメンバ分のインスタンス立ち上げ、本番用インスタンス立ち上げ</li>
+<li>本番環境整備(github pull&amp;push環境)</li>
+<li>ベンチ1回走らせて、プロファイリング。具体的にはnginxのアクセスログ、slowqueryログ、からベンチの特性分析</li>
+<li>コード読んだり、画面見たり、ざっと。</li>
+<li>my.cnf, nginx.confを予め用意しておいた内容で置き換え</li>
+</ul>
+
+
+<p>MySQLのCPUが高いのはindexいれるとして、それ以外データベースであまりやることないことが分かって、事前に決めてた通りアプリにオンメモリで乗せる戦略にした。</p>
+
+<p>MySQLは5.5が動いてて、一応5.6に上げる方針にした(けどこれは最終的にはオンメモリ戦略とるのでこの時点で上げる必要性はなかったかなと)</p>
+
+<h5>PM</h5>
+
+<p>飯食べながらさくっとMySQL5.6に上げたところで、じつはアプリのオンメモリ戦略の実装待ちで実はやることが無かった(笑)</p>
+
+<p>アプリがfixしないうちに外を闇雲にチューンしてもはまるだけなので、焦っても仕方ないからこの時間帯はコード眺めたりしつつお茶を濁しておりました。やることないと色々手を動かしたくなるのですが、ここはぐっと押さえて。</p>
+
+<p>アプリの改修が無事に終わって、MySQLのindexチューニングもいれて ここでスコアががくっと上がった。</p>
+
+<p>アプリのオンメモリ戦略にてスコア上がった。さらにベンチ負荷上げて試したけどスコア頭打ち。CPU大して使ってないのにスコア上がらなくて。ネットワーク周りかなということで<code>netstat -an | grep TIME_WAIT | wc -l</code> ってやると50kくらいポート使ってたので、以下のチューニングしたらport足りなくなる問題は改善しました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>net.ipv4.ip_local_port_range = 10000 64000 
+</span><span class='line'>net.ipv4.tcp_tw_recycle=1
+</span><span class='line'>net.ipv4.tcp_fin_timeout = 5
+</span><span class='line'>net.ipv4.tcp_max_syn_backlog = 1024
+</span><span class='line'>net.core.somaxconn = 65535</span></code></pre></td></tr></table></div></figure>
+
+
+<p>nginx-アプリ間はtcpで通信させててunix socketに変えれば良かったのだけど、martiniでunix socketに変えるやり方が分からなくて、上のチューニングでtcpで回ったのでよしとした。</p>
+
+<p>結果としては最終的に40kあたりのレンジで他チームと横並びで、本戦出場は厳しそう&hellip;な感じですが、結果発表が楽しみです。
+タイムラインとか詳細は<a href="http://blog.livedoor.jp/sonots/archives/40449500.html">sonotsブログ</a>が充実している。</p>
+
+<h4>反省</h4>
+
+<p><strong>Chef</strong></p>
+
+<p>予選はミドルウェアとか毎回同じなのでChefレシピ用意しといてインフラ担当が3人分開発環境まで揃えてあげればよかった。今回開発環境は各自お任せだったのでコード読み書きに専念させてあげればよかったなと。</p>
+
+<p><strong>Go</strong></p>
+
+<p>Go力足りてなくて速読できなかった(笑) Spring_MT氏はrubyでコードを把握した後Goをfixしたよと言っていた。なるほど。</p>
+
+<h4>所感</h4>
+
+<ul>
+<li>前回大会に比べ今回は余裕をもって想定した力は発揮できたことは進歩</li>
+<li>個人的に次週に海外出張控えてて準備等々でISUCON準備できてなかったんですが2人が引っ張ってくれて助かったという感じです。</li>
+</ul>
+
+
+<h5>10/5 UPDATE</h5>
+
+<p><strong>本戦出場決まりました!!!</strong>. 出張終えたら復習&amp;&amp;素振りやります。</p>
+
+<p>というわけでリアルにマイアミ出張いってきます。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[週末雨だったのでSerfをさわってみた]]></title>
     <link href="http://orihubon.com/blog/2014/06/29/serf/"/>
-    <updated>2014-06-29T21:10:00+09:00</updated>
+    <updated>2014-06-29T21:10:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/06/29/serf</id>
     <content type="html"><![CDATA[<p>最近まで<a href="http://www.serfdom.io/">Serf</a>の意味を波乗りくらいにおもってました。&#8217;農奴&#8217;らしいです。梅雨で週末雨だったのでSerfを触ってみました。</p>
 
@@ -62,7 +152,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Script カスタムLoggerでログをspreadsheetに書き出す]]></title>
     <link href="http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/"/>
-    <updated>2014-06-18T20:05:00+09:00</updated>
+    <updated>2014-06-18T20:05:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script</id>
     <content type="html"><![CDATA[<p>Google Apps Scriptの中でLoggerで吐くログをシートに書き出すカスタムLoggerを作ってみた。</p>
 
@@ -182,7 +272,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>
     <link href="http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/"/>
-    <updated>2014-06-17T18:12:00+09:00</updated>
+    <updated>2014-06-17T18:12:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script</id>
     <content type="html"><![CDATA[<p>Goolge Apps Scriptでspreadsheetの各列にアクセスするときに、列番号を指定してアクセスするコードを書いてると列追加するとスクリプトが壊れる。そこで1行目(ヘッダ行)をキーにアクセスするコードをライブラリにまとめてみた。普通なんだけどぐぐっても出てこなかったので。</p>
 
@@ -282,7 +372,7 @@
   <entry>
     <title type="html"><![CDATA[opensslコマンドでSNIな証明書をチェックする]]></title>
     <link href="http://orihubon.com/blog/2014/06/02/openssl-sni/"/>
-    <updated>2014-06-02T20:46:00+09:00</updated>
+    <updated>2014-06-02T20:46:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/06/02/openssl-sni</id>
     <content type="html"><![CDATA[<p>あるサーバの証明書のCNをチェックしようとして、opensslコマンドで確認すると想定と違うCNが返ってくる何で! ということが起きて軽くはまってしまった。ブラウザで証明書確認すると問題ない。</p>
 
@@ -300,7 +390,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/"/>
-    <updated>2014-05-30T18:23:00+09:00</updated>
+    <updated>2014-05-30T18:23:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script</id>
     <content type="html"><![CDATA[<p>Google Developersサイトの<a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を要約してみた。</p>
 
@@ -356,7 +446,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptの共通関数をライブラリでまとめる]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/google-apps-script-library/"/>
-    <updated>2014-05-30T14:53:00+09:00</updated>
+    <updated>2014-05-30T14:53:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/google-apps-script-library</id>
     <content type="html"><![CDATA[<p><a href="http://orihubon.com/blog/2014/05/30/tried-google-apps-script/">前回</a>に引き続きGoogle Apps Script。共通関数をライブラリにする方法。</p>
 
@@ -416,7 +506,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptをつかってみた]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/tried-google-apps-script/"/>
-    <updated>2014-05-30T00:39:00+09:00</updated>
+    <updated>2014-05-30T00:39:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/tried-google-apps-script</id>
     <content type="html"><![CDATA[<p>某案件でGoogle Spreadsheetを使う機会があって少しかじってみた。浅くメモ。</p>
 
@@ -521,7 +611,7 @@
   <entry>
     <title type="html"><![CDATA[Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編]]></title>
     <link href="http://orihubon.com/blog/2014/05/17/zurich-paris/"/>
-    <updated>2014-05-17T16:41:00+09:00</updated>
+    <updated>2014-05-17T16:41:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/17/zurich-paris</id>
     <content type="html"><![CDATA[<p>ウィーンからパリまで列車の旅の後半編。<a href="http://orihubon.com/blog/2014/05/17/vienna-salzburg/">前半はこちら</a>。</p>
 
@@ -579,7 +669,7 @@
   <entry>
     <title type="html"><![CDATA[Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編]]></title>
     <link href="http://orihubon.com/blog/2014/05/17/vienna-salzburg/"/>
-    <updated>2014-05-17T16:41:00+09:00</updated>
+    <updated>2014-05-17T16:41:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/05/17/vienna-salzburg</id>
     <content type="html"><![CDATA[<p>5月の前半、ウィーンからパリまで列車の旅をしたので簡単にまとめてみます。</p>
 
@@ -659,7 +749,7 @@
   <entry>
     <title type="html"><![CDATA[/etc/sysctl.confを管理するChef cookbook]]></title>
     <link href="http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook/"/>
-    <updated>2014-03-26T22:49:00+09:00</updated>
+    <updated>2014-03-26T22:49:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook</id>
     <content type="html"><![CDATA[<p>Chefでsysctl.confを管理するやつ作ってみた。<a href="https://github.com/niku4i/sysctl-cookbook">niku4i/sysctl-cookbook</a></p>
 
@@ -673,7 +763,7 @@
   <entry>
     <title type="html"><![CDATA[test-kitchen使ったメモ]]></title>
     <link href="http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo/"/>
-    <updated>2014-03-25T11:46:00+09:00</updated>
+    <updated>2014-03-25T11:46:00-07:00</updated>
     <id>http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo</id>
     <content type="html"><![CDATA[<p>最近はImmutable Infrastracture盛り上がりでChefやPuppetが語られる機会が少なくなって気がしますが、それはChef/Puppetが成熟してきた証拠? test-kitchenを使ってみたメモです。</p>
 
@@ -1136,7 +1226,7 @@
   <entry>
     <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
     <link href="http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook/"/>
-    <updated>2014-01-15T20:35:00+09:00</updated>
+    <updated>2014-01-15T20:35:00-08:00</updated>
     <id>http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/yohoushi/chef-yohoushi">chef-yohoushi</a> を作った。YohoushiをChefでインストールするクックブック。</p>
 
@@ -1152,7 +1242,7 @@
   <entry>
     <title type="html"><![CDATA[Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ]]></title>
     <link href="http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error/"/>
-    <updated>2014-01-08T21:37:00+09:00</updated>
+    <updated>2014-01-08T21:37:00-08:00</updated>
     <id>http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error</id>
     <content type="html"><![CDATA[<p>td-agentを<a href="https://github.com/treasure-data/chef-td-agent/">treasure-data/chef-td-agent</a>のChefレシピを使ってVagrantの仮想マシンに適用したメモです。</p>
 
@@ -1365,7 +1455,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[fluent-plugin-deriveで単位時間あたりの差分値を計算する]]></title>
     <link href="http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released/"/>
-    <updated>2013-12-23T14:57:00+09:00</updated>
+    <updated>2013-12-23T14:57:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/niku4i/fluent-plugin-derive">fluent-plugin-derive</a> というFluentd outputプラグインをリリースしました。</p>
 
@@ -1430,7 +1520,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[親プロセスと子プロセスでTCPソケットを共有したらどうなるか]]></title>
     <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
-    <updated>2013-12-11T19:53:00+09:00</updated>
+    <updated>2013-12-11T19:53:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
     <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。</p>
 
@@ -1505,7 +1595,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[Redisクライアントでforkするときは子プロセスでrecoonectする]]></title>
     <link href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/"/>
-    <updated>2013-12-11T16:24:00+09:00</updated>
+    <updated>2013-12-11T16:24:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby</id>
     <content type="html"><![CDATA[<p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。</p>
 
@@ -1570,7 +1660,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[SNMPのindexキャッシュによる取得時間短縮の検証]]></title>
     <link href="http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/"/>
-    <updated>2013-12-06T14:47:00+09:00</updated>
+    <updated>2013-12-06T14:47:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast</id>
     <content type="html"><![CDATA[<p>ルータやサーバのインタフェースのbpsを測定する場合、SNMPのifDescr, ifHCInOctets, ifHCOutOctetsこの3つのMIBを取得すれば良いわけですが、ifDescrを毎回取得するの無駄だなとおもったので測定してみました。</p>
 
@@ -1746,7 +1836,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
     <link href="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/"/>
-    <updated>2013-12-06T08:35:00+09:00</updated>
+    <updated>2013-12-06T08:35:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin</id>
     <content type="html"><![CDATA[<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
 
@@ -1972,7 +2062,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ]]></title>
     <link href="http://orihubon.com/blog/2013/11/20/github-memo/"/>
-    <updated>2013-11-20T12:04:00+09:00</updated>
+    <updated>2013-11-20T12:04:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/11/20/github-memo</id>
     <content type="html"><![CDATA[<p><a href="http://wazanova.jp/items/675">GitHubの組織が成長する過程で変えたことと変えなかったこと</a>を読んで、良いこと書いててたのでブログに引用する。</p>
 
@@ -1996,38 +2086,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p>役割を増やしたチームを新設して組織を無駄に肥大化させるのでなく、ツールを活用して解決できることも多い。組織を無駄に肥大化させるような昔からの固定観念は疑ってかかるべき。会社は成長する過程では変わらなければいけない。しかし、バリューは変えてはいけない。</p></blockquote>
 
 <p>そうですね。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[スロークエリをMySQL再起動せずオンラインで調査する]]></title>
-    <link href="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/"/>
-    <updated>2013-11-05T10:11:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql</id>
-    <content type="html"><![CDATA[<p>スロークエリをログに吐く方法。設定ファイル修正する必要はなかった。</p>
-
-<!--more-->
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mysql&gt; set global slow_query_log = 1;
-</span><span class='line'>mysql&gt; set global slow_query_log_file = '/tmp/slowquery.log';
-</span><span class='line'>mysql&gt; set global long_query_time = 0; # 0秒にセットすると全queryをロギング</span></code></pre></td></tr></table></div></figure>
-
-
-<p>調査が終わったら<code>slow_query_log = 0</code>にするのを忘れないように。本番環境とかでやるとログがぶくぶく太るのでやらないほうが良いでしょう。</p>
-
-<p>ログの解析はmysqldumpslowコマンドで。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mysqldumpslow /tmp/slowquery.log</span></code></pre></td></tr></table></div></figure>
-
-
-<p>なお、コネクションプーリングしている場合は新規コネクションから有効になるようです。アプリを再起動しないと反映されないです。mysqlコマンドから設定した場合も<code>show variables like 'long_query_time';</code>やっても値が反映されていないように見えますが、再接続すると確認できました。</p>
 ]]></content>
   </entry>
   

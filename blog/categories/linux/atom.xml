@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[親プロセスと子プロセスでTCPソケットを共有したらどうなるか]]></title>
     <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
-    <updated>2013-12-11T19:53:00+09:00</updated>
+    <updated>2013-12-11T19:53:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
     <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。</p>
 
@@ -85,7 +85,7 @@ end
   <entry>
     <title type="html"><![CDATA[KVMのrawフォーマットのイメージファイルをマウントする]]></title>
     <link href="http://orihubon.com/blog/2013/07/31/mount-kvm-os-image/"/>
-    <updated>2013-07-31T15:49:00+09:00</updated>
+    <updated>2013-07-31T15:49:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/07/31/mount-kvm-os-image</id>
     <content type="html"><![CDATA[<p>rawフォーマット限定。</p>
 
@@ -123,7 +123,7 @@ end
   <entry>
     <title type="html"><![CDATA[virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール]]></title>
     <link href="http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/"/>
-    <updated>2013-07-29T22:58:00+09:00</updated>
+    <updated>2013-07-29T22:58:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install</id>
     <content type="html"><![CDATA[<p>やっつけ感ある手順であるが。</p>
 
@@ -188,7 +188,7 @@ terminal &mdash;timeout=5 serial console # 追加
   <entry>
     <title type="html"><![CDATA[前日日付のファイル名でローテートし圧縮するlogrotateの設定例]]></title>
     <link href="http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/"/>
-    <updated>2013-03-07T15:57:00+09:00</updated>
+    <updated>2013-03-07T15:57:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name</id>
     <content type="html"><![CDATA[<p>ファイル名を前日の日付でローテートする方法をメモします。</p>
 

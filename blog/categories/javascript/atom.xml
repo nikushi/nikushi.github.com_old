@@ -4,7 +4,7 @@
   <title><![CDATA[Category: JavaScript | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[jsFiddleでjavascriptお手軽動作確認]]></title>
     <link href="http://orihubon.com/blog/2013/07/09/jsfiddle-js-test/"/>
-    <updated>2013-07-09T00:16:00+09:00</updated>
+    <updated>2013-07-09T00:16:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/07/09/jsfiddle-js-test</id>
     <content type="html"><![CDATA[<p>Webアプリを作っていると、思いついたUIのアイデアを実装して使用感や見た目を確認したくなることがしばしばあるとおもいます。そんな時はさくっと試せる <a href="http://jsfiddle.net/">jsFiddle</a> がお勧めです!</p>
 

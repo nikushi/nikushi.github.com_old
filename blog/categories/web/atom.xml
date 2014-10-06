@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[便利なカラーピッカー 0 to 255]]></title>
     <link href="http://orihubon.com/blog/2013/07/09/0-to-255-color-picker/"/>
-    <updated>2013-07-09T23:59:00+09:00</updated>
+    <updated>2013-07-09T23:59:00-07:00</updated>
     <id>http://orihubon.com/blog/2013/07/09/0-to-255-color-picker</id>
     <content type="html"><![CDATA[<p>世の中カラーピッカーを提供するWebサイトはたくさんありますが、<a href="http://0to255.com/">0to255</a>がとても使いやすかったのでメモ。</p>
 

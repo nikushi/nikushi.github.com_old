@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SNMP | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/snmp/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-06-30T13:04:32+09:00</updated>
+  <updated>2014-10-05T19:43:05-07:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[SNMPのindexキャッシュによる取得時間短縮の検証]]></title>
     <link href="http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/"/>
-    <updated>2013-12-06T14:47:00+09:00</updated>
+    <updated>2013-12-06T14:47:00-08:00</updated>
     <id>http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast</id>
     <content type="html"><![CDATA[<p>ルータやサーバのインタフェースのbpsを測定する場合、SNMPのifDescr, ifHCInOctets, ifHCOutOctetsこの3つのMIBを取得すれば良いわけですが、ifDescrを毎回取得するの無駄だなとおもったので測定してみました。</p>
 
