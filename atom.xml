@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-06T10:52:49+09:00</updated>
+  <updated>2014-11-06T11:00:10+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,11 +18,16 @@
     <link href="http://orihubon.com/blog/2014/11/06/binfiles/"/>
     <updated>2014-11-06T10:43:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/11/06/binfiles</id>
-    <content type="html"><![CDATA[<p><code>~/bin/</code>以下置いていたオレオレスクリプトを<a href="https://github.com/niku4i/binfiles">github.com/niku4i/binfiles</a>で管理するようにした。オレオレスクリプトというのはシェルスクリプトやPerlやRubyで書いた自分用の小さなスクリプトのこと。githubで管理するのはバックアップの意味合いが強いが、誰かが見るかもしれない。</p>
+    <content type="html"><![CDATA[<p><code>~/bin/</code>にあったオレオレスクリプトを<a href="https://github.com/niku4i/binfiles">github.com/niku4i/binfiles</a>で管理するようにした。</p>
 
-<p><code>~/bin/</code>には<code>jq</code>とか<code>ghq</code>とかサードパティのバイナリ実行ファイルも同居していたので<code>~/bin/</code>のオレオレスクリプトは削除して、<code>~/src/github.com/niku4i/binfiles/bin</code> を<code>$PATH</code>に追加することにした。</p>
+<!--more-->
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+
+<p>オレオレスクリプトというのはシェルスクリプトやPerlで書いた自分用の小さなスクリプトだ。githubに置くのは主にバックアップ目的だ。なお、中身は大して充実していないことを最初に言い訳しておく。</p>
+
+<p>私の環境では<code>~/bin/</code>に<code>jq</code>とか<code>ghq</code>とかサードパティのバイナリ実行ファイルも同居している状態だったので、<code>~/bin/</code>のオレオレスクリプトは削除して<code>~/src/github.com/niku4i/binfiles/bin</code> を<code>$PATH</code>に追加することにした。</p>
+
+<figure class='code'><figcaption><span>~/.bash_profile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin&quot;</span> <span class="o">]</span>; <span class="k">then</span>
