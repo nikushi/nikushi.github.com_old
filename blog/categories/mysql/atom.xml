@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MySQL | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-10-05T19:54:03-07:00</updated>
+  <updated>2014-11-06T10:52:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[スロークエリをMySQL再起動せずオンラインで調査する]]></title>
     <link href="http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql/"/>
-    <updated>2013-11-05T10:11:00-08:00</updated>
+    <updated>2013-11-05T10:11:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/11/05/dump-sloq-query-log-in-mysql</id>
     <content type="html"><![CDATA[<p>スロークエリをログに吐く方法。設定ファイル修正する必要はなかった。</p>
 
@@ -42,7 +42,7 @@ mysqldumpslow /tmp/slowquery.log
   <entry>
     <title type="html"><![CDATA[MySQL チートシート]]></title>
     <link href="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/"/>
-    <updated>2013-04-07T13:04:00-07:00</updated>
+    <updated>2013-04-07T13:04:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet</id>
     <content type="html"><![CDATA[<p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。</p>
 

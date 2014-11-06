@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-10-05T19:54:03-07:00</updated>
+  <updated>2014-11-06T10:52:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Perl環境構築作りのチート]]></title>
     <link href="http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/"/>
-    <updated>2013-02-25T09:30:00-08:00</updated>
+    <updated>2013-02-25T09:30:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy</id>
     <content type="html"><![CDATA[<p>ステージや本番での環境構築まわりについて調べてみた。</p>
 
@@ -75,7 +75,7 @@ carton exec -- myapp
   <entry>
     <title type="html"><![CDATA[Procletを使ってみた]]></title>
     <link href="http://orihubon.com/blog/2013/02/23/proclet/"/>
-    <updated>2013-02-23T13:34:00-08:00</updated>
+    <updated>2013-02-23T13:34:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/02/23/proclet</id>
     <content type="html"><![CDATA[<p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
 RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>

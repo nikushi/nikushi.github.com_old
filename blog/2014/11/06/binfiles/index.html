@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>ブログを始めました。 - ni-blog</title>
+  <title>binfiles - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="日々の出来事をメモするブログ。主には短文、写真だけ、引用だけのブログになるとおもいます。
-">
+  <meta name="description" content="~/bin/以下置いていたオレオレスクリプトをgithub.com/niku4i/binfilesで管理するようにした。オレオレスクリプトというのはシェルスクリプトやPerlやRubyで書いた自分用の小さなスクリプトのこと。githubで管理するのはバックアップの意味合いが強いが、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/08/07/buroguwoshi-memasita./">
+  <link rel="canonical" href="http://orihubon.com/blog/2014/11/06/binfiles/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">ブログを始めました。</h1>
+      <h1 class="entry-title">binfiles</h1>
     
     
       <p class="meta">
@@ -96,7 +95,7 @@
   
 
 
-<time datetime="2011-08-07T00:00:00+09:00" pubdate data-updated="true">Aug 7<span>th</span>, 2011</time>
+<time datetime="2014-11-06T10:43:00+09:00" pubdate data-updated="true">Nov 6<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,7 +104,18 @@
   </header>
 
 
-<div class="entry-content">日々の出来事をメモするブログ。主には短文、写真だけ、引用だけのブログになるとおもいます。
+<div class="entry-content"><p><code>~/bin/</code>以下置いていたオレオレスクリプトを<a href="https://github.com/niku4i/binfiles">github.com/niku4i/binfiles</a>で管理するようにした。オレオレスクリプトというのはシェルスクリプトやPerlやRubyで書いた自分用の小さなスクリプトのこと。githubで管理するのはバックアップの意味合いが強いが、誰かが見るかもしれない。</p>
+
+<p><code>~/bin/</code>には<code>jq</code>とか<code>ghq</code>とかサードパティのバイナリ実行ファイルも同居していたので<code>~/bin/</code>のオレオレスクリプトは削除して、<code>~/src/github.com/niku4i/binfiles/bin</code> を<code>$PATH</code>に追加することにした。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin:$PATH&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -128,7 +138,7 @@
   
 
 
-<time datetime="2011-08-07T00:00:00+09:00" pubdate data-updated="true">Aug 7<span>th</span>, 2011</time>
+<time datetime="2014-11-06T10:43:00+09:00" pubdate data-updated="true">Nov 6<span>th</span>, 2014</time>
       
 
 
@@ -137,7 +147,7 @@
       <div class="sharing">
   <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/08/07/buroguwoshi-memasita./" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/08/07/buroguwoshi-memasita./" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2014/11/06/binfiles/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2014/11/06/binfiles/" >Tweet</a>
   
   
   
@@ -149,12 +159,18 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2014/10/05/isucon-qualify/" title="Previous Post: ISUCON 2014 予選の記録 GoMiami">&laquo; ISUCON 2014 予選の記録 GoMiami</a>
       
-        <a class="basic-alignment right" href="/blog/2011/08/09/88-breakfast/" title="Next Post: 8/8 breakfast">8/8 breakfast &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -238,7 +254,10 @@
       var disqus_shortname = 'orihubon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://orihubon.com/blog/2014/11/06/binfiles/';
+        var disqus_url = 'http://orihubon.com/blog/2014/11/06/binfiles/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-10-05T19:54:03-07:00</updated>
+  <updated>2014-11-06T10:52:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,9 +14,29 @@
 
   
   <entry>
+    <title type="html"><![CDATA[binfiles]]></title>
+    <link href="http://orihubon.com/blog/2014/11/06/binfiles/"/>
+    <updated>2014-11-06T10:43:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/11/06/binfiles</id>
+    <content type="html"><![CDATA[<p><code>~/bin/</code>以下置いていたオレオレスクリプトを<a href="https://github.com/niku4i/binfiles">github.com/niku4i/binfiles</a>で管理するようにした。オレオレスクリプトというのはシェルスクリプトやPerlやRubyで書いた自分用の小さなスクリプトのこと。githubで管理するのはバックアップの意味合いが強いが、誰かが見るかもしれない。</p>
+
+<p><code>~/bin/</code>には<code>jq</code>とか<code>ghq</code>とかサードパティのバイナリ実行ファイルも同居していたので<code>~/bin/</code>のオレオレスクリプトは削除して、<code>~/src/github.com/niku4i/binfiles/bin</code> を<code>$PATH</code>に追加することにした。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin:$PATH&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[ISUCON 2014 予選の記録 GoMiami]]></title>
     <link href="http://orihubon.com/blog/2014/10/05/isucon-qualify/"/>
-    <updated>2014-10-05T19:30:00-07:00</updated>
+    <updated>2014-10-05T19:30:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/10/05/isucon-qualify</id>
     <content type="html"><![CDATA[<p><a href="http://isucon.net/archives/39780986.html">ISUCON4 予選</a>に参加しました。</p>
 
@@ -105,7 +125,7 @@
   <entry>
     <title type="html"><![CDATA[週末雨だったのでSerfをさわってみた]]></title>
     <link href="http://orihubon.com/blog/2014/06/29/serf/"/>
-    <updated>2014-06-29T21:10:00-07:00</updated>
+    <updated>2014-06-29T21:10:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/06/29/serf</id>
     <content type="html"><![CDATA[<p>最近まで<a href="http://www.serfdom.io/">Serf</a>の意味を波乗りくらいにおもってました。&#8217;農奴&#8217;らしいです。梅雨で週末雨だったのでSerfを触ってみました。</p>
 
@@ -151,7 +171,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Script カスタムLoggerでログをspreadsheetに書き出す]]></title>
     <link href="http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/"/>
-    <updated>2014-06-18T20:05:00-07:00</updated>
+    <updated>2014-06-18T20:05:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script</id>
     <content type="html"><![CDATA[<p>Google Apps Scriptの中でLoggerで吐くログをシートに書き出すカスタムLoggerを作ってみた。</p>
 
@@ -271,7 +291,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptで行データを連想配列として扱う]]></title>
     <link href="http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/"/>
-    <updated>2014-06-17T18:12:00-07:00</updated>
+    <updated>2014-06-17T18:12:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script</id>
     <content type="html"><![CDATA[<p>Goolge Apps Scriptでspreadsheetの各列にアクセスするときに、列番号を指定してアクセスするコードを書いてると列追加するとスクリプトが壊れる。そこで1行目(ヘッダ行)をキーにアクセスするコードをライブラリにまとめてみた。普通なんだけどぐぐっても出てこなかったので。</p>
 
@@ -371,7 +391,7 @@
   <entry>
     <title type="html"><![CDATA[opensslコマンドでSNIな証明書をチェックする]]></title>
     <link href="http://orihubon.com/blog/2014/06/02/openssl-sni/"/>
-    <updated>2014-06-02T20:46:00-07:00</updated>
+    <updated>2014-06-02T20:46:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/06/02/openssl-sni</id>
     <content type="html"><![CDATA[<p>あるサーバの証明書のCNをチェックしようとして、opensslコマンドで確認すると想定と違うCNが返ってくる何で! ということが起きて軽くはまってしまった。ブラウザで証明書確認すると問題ない。</p>
 
@@ -389,7 +409,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptを速くするためのベストプラクティス]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script/"/>
-    <updated>2014-05-30T18:23:00-07:00</updated>
+    <updated>2014-05-30T18:23:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/best-practices-of-google-apps-script</id>
     <content type="html"><![CDATA[<p>Google Developersサイトの<a href="https://developers.google.com/apps-script/best_practices?hl=ja">Best Practices</a>を要約してみた。</p>
 
@@ -445,7 +465,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptの共通関数をライブラリでまとめる]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/google-apps-script-library/"/>
-    <updated>2014-05-30T14:53:00-07:00</updated>
+    <updated>2014-05-30T14:53:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/google-apps-script-library</id>
     <content type="html"><![CDATA[<p><a href="http://orihubon.com/blog/2014/05/30/tried-google-apps-script/">前回</a>に引き続きGoogle Apps Script。共通関数をライブラリにする方法。</p>
 
@@ -505,7 +525,7 @@
   <entry>
     <title type="html"><![CDATA[Google Apps Scriptをつかってみた]]></title>
     <link href="http://orihubon.com/blog/2014/05/30/tried-google-apps-script/"/>
-    <updated>2014-05-30T00:39:00-07:00</updated>
+    <updated>2014-05-30T00:39:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/05/30/tried-google-apps-script</id>
     <content type="html"><![CDATA[<p>某案件でGoogle Spreadsheetを使う機会があって少しかじってみた。浅くメモ。</p>
 
@@ -610,7 +630,7 @@
   <entry>
     <title type="html"><![CDATA[Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編]]></title>
     <link href="http://orihubon.com/blog/2014/05/17/zurich-paris/"/>
-    <updated>2014-05-17T16:41:00-07:00</updated>
+    <updated>2014-05-17T16:41:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/05/17/zurich-paris</id>
     <content type="html"><![CDATA[<p>ウィーンからパリまで列車の旅の後半編。<a href="http://orihubon.com/blog/2014/05/17/vienna-salzburg/">前半はこちら</a>。</p>
 
@@ -668,7 +688,7 @@
   <entry>
     <title type="html"><![CDATA[Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編]]></title>
     <link href="http://orihubon.com/blog/2014/05/17/vienna-salzburg/"/>
-    <updated>2014-05-17T16:41:00-07:00</updated>
+    <updated>2014-05-17T16:41:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/05/17/vienna-salzburg</id>
     <content type="html"><![CDATA[<p>5月の前半、ウィーンからパリまで列車の旅をしたので簡単にまとめてみます。</p>
 
@@ -748,7 +768,7 @@
   <entry>
     <title type="html"><![CDATA[/etc/sysctl.confを管理するChef cookbook]]></title>
     <link href="http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook/"/>
-    <updated>2014-03-26T22:49:00-07:00</updated>
+    <updated>2014-03-26T22:49:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook</id>
     <content type="html"><![CDATA[<p>Chefでsysctl.confを管理するやつ作ってみた。<a href="https://github.com/niku4i/sysctl-cookbook">niku4i/sysctl-cookbook</a></p>
 
@@ -762,7 +782,7 @@
   <entry>
     <title type="html"><![CDATA[test-kitchen使ったメモ]]></title>
     <link href="http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo/"/>
-    <updated>2014-03-25T11:46:00-07:00</updated>
+    <updated>2014-03-25T11:46:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo</id>
     <content type="html"><![CDATA[<p>最近はImmutable Infrastracture盛り上がりでChefやPuppetが語られる機会が少なくなって気がしますが、それはChef/Puppetが成熟してきた証拠? test-kitchenを使ってみたメモです。</p>
 
@@ -1225,7 +1245,7 @@
   <entry>
     <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
     <link href="http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook/"/>
-    <updated>2014-01-15T20:35:00-08:00</updated>
+    <updated>2014-01-15T20:35:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/yohoushi/chef-yohoushi">chef-yohoushi</a> を作った。YohoushiをChefでインストールするクックブック。</p>
 
@@ -1241,7 +1261,7 @@
   <entry>
     <title type="html"><![CDATA[Chefでtd-agentをインストールしたメモ + knife solo cook実行時エラーにはまったメモ]]></title>
     <link href="http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error/"/>
-    <updated>2014-01-08T21:37:00-08:00</updated>
+    <updated>2014-01-08T21:37:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/01/08/install-td-agent-by-chef-and-install-error</id>
     <content type="html"><![CDATA[<p>td-agentを<a href="https://github.com/treasure-data/chef-td-agent/">treasure-data/chef-td-agent</a>のChefレシピを使ってVagrantの仮想マシンに適用したメモです。</p>
 
@@ -1454,7 +1474,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[fluent-plugin-deriveで単位時間あたりの差分値を計算する]]></title>
     <link href="http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released/"/>
-    <updated>2013-12-23T14:57:00-08:00</updated>
+    <updated>2013-12-23T14:57:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/niku4i/fluent-plugin-derive">fluent-plugin-derive</a> というFluentd outputプラグインをリリースしました。</p>
 
@@ -1519,7 +1539,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[親プロセスと子プロセスでTCPソケットを共有したらどうなるか]]></title>
     <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
-    <updated>2013-12-11T19:53:00-08:00</updated>
+    <updated>2013-12-11T19:53:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
     <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。</p>
 
@@ -1594,7 +1614,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[Redisクライアントでforkするときは子プロセスでrecoonectする]]></title>
     <link href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/"/>
-    <updated>2013-12-11T16:24:00-08:00</updated>
+    <updated>2013-12-11T16:24:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby</id>
     <content type="html"><![CDATA[<p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。</p>
 
@@ -1659,7 +1679,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[SNMPのindexキャッシュによる取得時間短縮の検証]]></title>
     <link href="http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/"/>
-    <updated>2013-12-06T14:47:00-08:00</updated>
+    <updated>2013-12-06T14:47:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast</id>
     <content type="html"><![CDATA[<p>ルータやサーバのインタフェースのbpsを測定する場合、SNMPのifDescr, ifHCInOctets, ifHCOutOctetsこの3つのMIBを取得すれば良いわけですが、ifDescrを毎回取得するの無駄だなとおもったので測定してみました。</p>
 
@@ -1835,7 +1855,7 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
   <entry>
     <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
     <link href="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/"/>
-    <updated>2013-12-06T08:35:00-08:00</updated>
+    <updated>2013-12-06T08:35:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin</id>
     <content type="html"><![CDATA[<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
 
@@ -2055,36 +2075,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p>すごい知った風でしたがgemの使い方を紹介しただけでした。最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使ってアウトプットしていきたいですね。</p>
 
 <p>次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ]]></title>
-    <link href="http://orihubon.com/blog/2013/11/20/github-memo/"/>
-    <updated>2013-11-20T12:04:00-08:00</updated>
-    <id>http://orihubon.com/blog/2013/11/20/github-memo</id>
-    <content type="html"><![CDATA[<p><a href="http://wazanova.jp/items/675">GitHubの組織が成長する過程で変えたことと変えなかったこと</a>を読んで、良いこと書いててたのでブログに引用する。</p>
-
-<!--more-->
-
-
-<blockquote><p>情報は抱えないで、wiki / chat などを使ってとにかく共有する。社内の特定の人だけに情報が留まるとセクショナリズムにつながる。（追記: 短く意訳してますが、ビデオでは「このことは専門であるあの人に聞かなくてはいけないという意味のない権威主義がはびこるので組織が硬直する。」的な説明がされてます。）</p></blockquote>
-
-<p>特定の人に聞かないと分からない、権威的になっている状態はあるあるですね。そこで属人的になってるから脱却しようと上司が声高々に&#8221;明文化しよう!!!&ldquo;というだけじゃダメなんだろうな&hellip;とおもうわけです。この記事のこのポイントだけ切り出すと単純な話なのですが、Githubの透明性といった文化がある前提なので、他社で単純に明文化だけ取り入れてもうまく行かないかもしれませんね。</p>
-
-<blockquote><p>新入社員はGithubイシュー、チャットログ、pull requestとか読んで、自然と学ぶから邪魔しない。情報はアクセスできるようにするが、時間かけて教え込んだりしない。しかし、この放置する方式だけでは、Githubという組織に早く慣れ親しむのは無理があるので、最近は、最初の１週間はサンフランシスコのオフィスに呼んで、バディ（メンター）をアサインしている。バディの期間をもう少し長くすることも検討中。</p></blockquote>
-
-<p>最初の1週間、集中的にコミュニケーションとるのは良さげ。でも新卒だったらどうするかな。</p>
-
-<blockquote><p>153のチャットルームがある。実際のオフィスと違ってつくるのは安いし、全てのチャットルームに参加するわけでなく、個人単位で選択して参加することで適宜最適化できるので、一時的なものも含めて積極的にルームをつくるようにしている。チャットルームで名前が@でメンションされるとモバイル/デスクトップにpush notificationが飛んでくる。必要なときに連絡がくるが、答えられるときに反応すればよいという非同期スタイル。</p></blockquote>
-
-<p>チャットツール何使ってるんだろう。IRCではないことは確かだ&hellip;!</p>
-
-<blockquote><p>テクノロジーでなくてプロダクトが最先端のいいものであるべき。Ruby, C, git, MySQL, Memcachedというシンプルな構成に絞っている。最新のテクノロジーが会社を成功させるわけではない、どうワークフローをどのように信頼できるテクノロジーとツールでつくりあげていくかがもっと大事。システムを安定して運営できるということは素敵なこと。</p>
-
-<p>役割を増やしたチームを新設して組織を無駄に肥大化させるのでなく、ツールを活用して解決できることも多い。組織を無駄に肥大化させるような昔からの固定観念は疑ってかかるべき。会社は成長する過程では変わらなければいけない。しかし、バリューは変えてはいけない。</p></blockquote>
-
-<p>そうですね。</p>
 ]]></content>
   </entry>
   

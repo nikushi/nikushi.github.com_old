@@ -9,7 +9,13 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="を始めた。以前はジョギングをたまにしてたんだけど、ジョギング=有酸素運動より無酸素運動が良いらしい。 腹筋、腕立て、スクワットをそれぞれ3セット。間に1分間の休憩を入れるのがいいらしい。反動は使わずゆっくりとが基本ということでした。かなりキツく、翌日筋肉痛。 &hellip;">
+  <meta name="description" content="perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。 system() 1
+2
+3
+4
+5
+if ( system( $command ) ) { warn &quot;fail&quot;;
+} else { print &quot;success& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +88,125 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2011/10/12/execute-external-command-in-perl/">外部コマンドを実行した時の戻り値判定(Perl)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-12T00:00:00+09:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/10/12/execute-external-command-in-perl/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>perlで外部コマンドするときの話。外部コマンドの戻り値によりエラー処理させるコードの書き方。</p>
+
+<h3>system()</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="nb">system</span><span class="p">(</span> <span class="nv">$command</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">warn</span> <span class="s">&quot;fail&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;success&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>if ! system()</code> ではない。</p>
+
+<h3>back quote</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$buffer</span> <span class="o">=</span> <span class="sb">`$command`</span><span class="p">;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="vg">$?</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span> <span class="c1"># if false</span>
+</span><span class='line'>    <span class="nb">warn</span> <span class="s">&quot;fail&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;success\n&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;buffer=$buffer&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>$?</code>に戻り値が入る。0以外はfalse</p>
+
+<h3>open()</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">open</span><span class="p">(</span><span class="n">OUTPUT</span><span class="p">,</span> <span class="err">’</span><span class="nb">sort</span> <span class="o">&gt;</span><span class="n">foo</span><span class="err">’</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;Can’t start sort: $!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nb">close</span> <span class="n">OUTPUT</span>   <span class="c1"># wait for sort to finish</span>
+</span><span class='line'>    <span class="ow">or</span> <span class="nb">warn</span> <span class="vg">$!</span> <span class="p">?</span> <span class="s">&quot;Error closing sort pipe: $!&quot;</span> <span class="c1"># 純粋にcloseが失敗した場合(外部コマンドのfailではなく)</span>
+</span><span class='line'>               <span class="p">:</span> <span class="s">&quot;Exit status $? from sort&quot;</span><span class="p">;</span>   <span class="c1"># 外部コマンドがnon-zeroでexitした場合</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>外部コマンドの実行が何らかの理由で失敗すると、close()は偽を返す。close()するまで、外部コマンドがfailしたかはわからない。close()が実行され、外部コマンドがnon-zeroでexitすると$!に0にセットされる。</p>
+
+<p>併せて<code>perldoc perlfunc</code>を参照するといい。</p>
+
+<p>では、<code>ping 1.2.3.4 -c 3</code>(pingを3発1秒毎に打つ)をperlプログラムから外部プログラムで実行した結果を標準出力したいとき、back quoteを使うとプログラムが終了する3秒間は出力を得られない。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">my</span> <span class="nv">$buffer</span> <span class="o">=</span> <span class="sb">`ping 202.232.0.1 -c 3`</span><span class="p">;</span>
+</span><span class='line'><span class="k">print</span> <span class="nv">$buffer</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一方<code>open()</code>だと都度ストリームで出力してくれる。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">open</span> <span class="p">(</span> <span class="n">IN</span> <span class="p">,</span> <span class="s">&quot;ping 202.232.0.1 -c 3 |&quot;</span> <span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="vg">$!</span><span class="p">;</span>
+</span><span class='line'><span class="k">while</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nb">chomp</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nv">$_</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nb">close</span> <span class="n">IN</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2011/10/10/jin-tore/">筋トレ</a></h1>
     
     
@@ -98,7 +223,7 @@
   
 
 
-<time datetime="2011-10-10T00:00:00-07:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/10/10/jin-tore/#disqus_thread">Comments</a>
         
@@ -140,7 +265,7 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   
 
 
-<time datetime="2011-10-10T00:00:00-07:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+<time datetime="2011-10-10T00:00:00+09:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/10/10/hawai/#disqus_thread">Comments</a>
         
@@ -180,7 +305,7 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   
 
 
-<time datetime="2011-09-16T00:00:00-07:00" pubdate data-updated="true">Sep 16<span>th</span>, 2011</time>
+<time datetime="2011-09-16T00:00:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/09/16/getting-works-done/#disqus_thread">Comments</a>
         
@@ -222,7 +347,7 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   
 
 
-<time datetime="2011-09-15T00:00:00-07:00" pubdate data-updated="true">Sep 15<span>th</span>, 2011</time>
+<time datetime="2011-09-15T00:00:00+09:00" pubdate data-updated="true">Sep 15<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/09/15/pc-ji-neng-xing-aiuea-jins-yan-jing-%28meganemegane%29/#disqus_thread">Comments</a>
         
@@ -268,7 +393,7 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   
 
 
-<time datetime="2011-09-12T00:00:00-07:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/#disqus_thread">Comments</a>
         
@@ -335,7 +460,7 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   
 
 
-<time datetime="2011-09-11T00:00:00-07:00" pubdate data-updated="true">Sep 11<span>th</span>, 2011</time>
+<time datetime="2011-09-11T00:00:00+09:00" pubdate data-updated="true">Sep 11<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/09/11/web-app-with-perl-without-using-apache/#disqus_thread">Comments</a>
         
@@ -373,7 +498,7 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   
 
 
-<time datetime="2011-09-07T00:00:00-07:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+<time datetime="2011-09-07T00:00:00+09:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
         
          | <a href="/blog/2011/09/07/tokyo-cabinet/#disqus_thread">Comments</a>
         
@@ -416,7 +541,7 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   
 
 
-<time datetime="2011-09-03T00:00:00-07:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
         
          | <a href="/blog/2011/09/03/du-hang-xu-ke-shu-esta/#disqus_thread">Comments</a>
         
@@ -461,7 +586,7 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
   
 
 
-<time datetime="2011-09-03T00:00:00-07:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+<time datetime="2011-09-03T00:00:00+09:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
         
          | <a href="/blog/2011/09/03/basics-of-perl-web-portals/#disqus_thread">Comments</a>
         
@@ -473,54 +598,6 @@ passしました。これ面倒くさいね。ESTA申請時の質問にYESって
   <div class="entry-content"><a href="http://www.ibm.com/developerworks/aix/library/au-perlweb_revision/index.html?ca=drs-">Basics of Perl web portals</a>.
 <blockquote>Summary: Perl is a powerful scripting language that can be used to perform small operations from the command line or power a complete web portal. Understanding techniques for making safe and secure Perl CGI scripts is vital to developing a web portal that does not compromise the integrity of a server or the web site&#8217;s data. This article explains several techniques that will help developers create secure Perl CGI scripts and handle errors, before looking at a simpler method for building web applications like portals using the Plack system.</blockquote>
 carp()は最近覚えたので個人的にはホット。 モジュール内ではdie()は使ってはダメだとおもっていたがcarpを使うとしっくりくる、のかな。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/02/perlhale-sii/">Perlは楽しい</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-02T00:00:00-07:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/02/perlhale-sii/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">自然言語的(英語的)に書けるところは素敵だな。
-
-<pre lang="perl">
-my @words = qw( apple lemon orange );
-print $_ . 's' foreach @words;
-</pre>
-
-print a word with &#8216;s&#8217; for each word.
-とかね:) cool!!
-
-1つのプログラミング言語を理解するにはその言語を使う人の文化や特性を理解するとしっくりくる。
 </div>
   
   
@@ -549,6 +626,10 @@ print a word with &#8216;s&#8217; for each word.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/06/binfiles/">binfiles</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/05/isucon-qualify/">ISUCON 2014 予選の記録 GoMiami</a>
       </li>
     
@@ -562,10 +643,6 @@ print a word with &#8216;s&#8217; for each word.
     
       <li class="post">
         <a href="/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/">Google Apps Scriptで行データを連想配列として扱う</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/openssl-sni/">opensslコマンドでSNIな証明書をチェックする</a>
       </li>
     
   </ul>

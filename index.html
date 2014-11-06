@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ISUCON4 予選に参加しました。 ">
+  <meta name="description" content="~/bin/以下置いていたオレオレスクリプトをgithub.com/niku4i/binfilesで管理するようにした。オレオレスクリプトというのはシェルスクリプトやPerlやRubyで書いた自分用の小さなスクリプトのこと。githubで管理するのはバックアップの意味合いが強いが、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,55 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/11/06/binfiles/">binfiles</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-06T10:43:00+09:00" pubdate data-updated="true">Nov 6<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/11/06/binfiles/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><code>~/bin/</code>以下置いていたオレオレスクリプトを<a href="https://github.com/niku4i/binfiles">github.com/niku4i/binfiles</a>で管理するようにした。オレオレスクリプトというのはシェルスクリプトやPerlやRubyで書いた自分用の小さなスクリプトのこと。githubで管理するのはバックアップの意味合いが強いが、誰かが見るかもしれない。</p>
+
+<p><code>~/bin/</code>には<code>jq</code>とか<code>ghq</code>とかサードパティのバイナリ実行ファイルも同居していたので<code>~/bin/</code>のオレオレスクリプトは削除して、<code>~/src/github.com/niku4i/binfiles/bin</code> を<code>$PATH</code>に追加することにした。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;$HOME/src/github.com/niku4i/binfiles/bin:$PATH&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/10/05/isucon-qualify/">ISUCON 2014 予選の記録 GoMiami</a></h1>
     
     
@@ -98,7 +147,7 @@
   
 
 
-<time datetime="2014-10-05T19:30:00-07:00" pubdate data-updated="true">Oct 5<span>th</span>, 2014</time>
+<time datetime="2014-10-05T19:30:00+09:00" pubdate data-updated="true">Oct 5<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/10/05/isucon-qualify/#disqus_thread">Comments</a>
         
@@ -141,7 +190,7 @@
   
 
 
-<time datetime="2014-06-29T21:10:00-07:00" pubdate data-updated="true">Jun 29<span>th</span>, 2014</time>
+<time datetime="2014-06-29T21:10:00+09:00" pubdate data-updated="true">Jun 29<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/06/29/serf/#disqus_thread">Comments</a>
         
@@ -184,7 +233,7 @@
   
 
 
-<time datetime="2014-06-18T20:05:00-07:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
+<time datetime="2014-06-18T20:05:00+09:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/#disqus_thread">Comments</a>
         
@@ -227,7 +276,7 @@
   
 
 
-<time datetime="2014-06-17T18:12:00-07:00" pubdate data-updated="true">Jun 17<span>th</span>, 2014</time>
+<time datetime="2014-06-17T18:12:00+09:00" pubdate data-updated="true">Jun 17<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/#disqus_thread">Comments</a>
         
@@ -270,7 +319,7 @@
   
 
 
-<time datetime="2014-06-02T20:46:00-07:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2014</time>
+<time datetime="2014-06-02T20:46:00+09:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2014</time>
         
          | <a href="/blog/2014/06/02/openssl-sni/#disqus_thread">Comments</a>
         
@@ -313,7 +362,7 @@
   
 
 
-<time datetime="2014-05-30T18:23:00-07:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
+<time datetime="2014-05-30T18:23:00+09:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/05/30/best-practices-of-google-apps-script/#disqus_thread">Comments</a>
         
@@ -356,7 +405,7 @@
   
 
 
-<time datetime="2014-05-30T14:53:00-07:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
+<time datetime="2014-05-30T14:53:00+09:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/05/30/google-apps-script-library/#disqus_thread">Comments</a>
         
@@ -399,7 +448,7 @@
   
 
 
-<time datetime="2014-05-30T00:39:00-07:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
+<time datetime="2014-05-30T00:39:00+09:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/05/30/tried-google-apps-script/#disqus_thread">Comments</a>
         
@@ -442,7 +491,7 @@
   
 
 
-<time datetime="2014-05-17T16:41:00-07:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+<time datetime="2014-05-17T16:41:00+09:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
         
          | <a href="/blog/2014/05/17/zurich-paris/#disqus_thread">Comments</a>
         
@@ -458,49 +507,6 @@
   
     <footer>
       <a rel="full-article" href="/blog/2014/05/17/zurich-paris/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/17/vienna-salzburg/">Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-17T16:41:00-07:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/05/17/vienna-salzburg/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>5月の前半、ウィーンからパリまで列車の旅をしたので簡単にまとめてみます。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/17/vienna-salzburg/">続きを読む</a>
     </footer>
   
 
@@ -526,6 +532,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/06/binfiles/">binfiles</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/05/isucon-qualify/">ISUCON 2014 予選の記録 GoMiami</a>
       </li>
     
@@ -539,10 +549,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/17/convert-row-array-to-hash-in-google-apps-script/">Google Apps Scriptで行データを連想配列として扱う</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/openssl-sni/">opensslコマンドでSNIな証明書をチェックする</a>
       </li>
     
   </ul>

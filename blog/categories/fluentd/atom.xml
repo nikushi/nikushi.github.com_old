@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-10-05T19:54:03-07:00</updated>
+  <updated>2014-11-06T10:52:49+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[fluent-plugin-deriveで単位時間あたりの差分値を計算する]]></title>
     <link href="http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released/"/>
-    <updated>2013-12-23T14:57:00-08:00</updated>
+    <updated>2013-12-23T14:57:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/23/fluent-plugin-derive-has-been-released</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/niku4i/fluent-plugin-derive">fluent-plugin-derive</a> というFluentd outputプラグインをリリースしました。</p>
 
@@ -81,7 +81,7 @@
   <entry>
     <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
     <link href="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/"/>
-    <updated>2013-12-06T08:35:00-08:00</updated>
+    <updated>2013-12-06T08:35:00+09:00</updated>
     <id>http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin</id>
     <content type="html"><![CDATA[<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
 
