@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-09T20:42:25+09:00</updated>
+  <updated>2014-11-09T20:43:52+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -25,7 +25,7 @@
 
 <p>去年に引き続き2度目となる本戦出場です。メンバは前回同様@sonots, @Spring_MT, GoMiamiというチーム名で参加しました。予選はGoでしたが本戦は慣れてるRubyで戦いました。</p>
 
-<p>お題は動画広告システムのパフォーマンス・チューニング。最初は動画広告とかやったことないしな..とおもいましたが、実質的には数MのファイルのPOST(入稿)とそのファイルがGET(impression, conversion)されるサイト構成でした。</p>
+<p>お題は動画広告システムのパフォーマンス・チューニング。最初は動画広告とかやったことないしな..とおもいましたが、実質的には数MのファイルのPOST(入稿)とそのファイルのGET(impression, conversion)を中心としたサイト構成でした。</p>
 
 <p>結果は30チーム中17位&hellip;..! 8017点でした。チームの目標が失格にならないことだった点はクリアしたものの、上位に食い込む&hellip;という目標は達成できませんでした。 <a href="http://isucon.net/archives/41187491.html">本戦結果</a>のとおりほとんどのチームが7千から8千点台の中で僅差で並んでて、抜きん出ることは出来きず悔しい感じでした。</p>
 
