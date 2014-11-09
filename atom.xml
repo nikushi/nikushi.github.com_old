@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-06T11:05:08+09:00</updated>
+  <updated>2014-11-09T19:05:34+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,40 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ISUCON4本戦に出場しました!! 悔しい!!]]></title>
+    <link href="http://orihubon.com/blog/2014/11/09/isucon4-final/"/>
+    <updated>2014-11-09T17:58:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/11/09/isucon4-final</id>
+    <content type="html"><![CDATA[<p>週末、<a href="http://isucon.net/archives/cat_1024989.html">ISUCON4本戦</a>に参加しました。</p>
+
+<!--more-->
+
+
+<p>去年に引き続き2度目となる本戦出場です。メンバは前回同様@sonots, @Spring_MT, GoMiamiというチーム名で参加しました。予選はGoでしたが本戦は慣れてるRubyで戦いました。</p>
+
+<p>お題は動画広告システムのパフォーマンス・チューニング。最初は動画広告とかやったことないしな..とおもいましたが、実質的には数MのファイルのPOST(入稿)とそのファイルがGET(impression, conversion)されるサイト構成でした。</p>
+
+<p>結果は30チーム中17位&hellip;..! 8017点でした。チームの目標が失格にならないことだった点はクリアしたものの、上位に食い込む&hellip;という目標は達成できませんでした。 <a href="http://isucon.net/archives/41187491.html">本戦結果</a>のとおりほとんどのチームが7千から8千点台の中で僅差で並んでて、抜きん出ることは出来きず悔しい感じでした。</p>
+
+<p>今回の問題の本質はベンチが賢い点に気づけるかどうかで、<strong>レスポンスヘッダで適切にキャッシュコントロールさせればベンチサイドでキャッシュが効いて0バイトでレスポンス返すことが出来た</strong>、ということでした、、、、。本戦後の結果発表まで気づけてなくて本当に悔しかったです。ベンチ(!=ブラウザ)という先入観。</p>
+
+<p>事前準備しことはChefレシピを仕込んでおいたくらいです。sshの鍵、/etc/hostsにエイリアス書く、vimrc、各種秘伝のたれ設定(nginx.conf, redis.conf, my.cnf)、nginxアクセスログ等の集計スクリプト等を開始直後にがっとまくやつ。一応各ホスト間もsshとおしたけどこれは大して意味なかった。あとはtd-agentでメトリクスシステム(事前に用意)に飛ばした。chefのお陰で開始20分くらいで環境整えれました。</p>
+
+<p>@Spring_MTと@sonotsで方針ぎめやって、自分は設計に適宜つっこみ入れつつも基本的に2人にお任せしました。自分はnginxをメインに担当しつつ、その他もろもろ。</p>
+
+<p>後半、local benchでは20000以上出る一方でremote benchだと8000程度でこれは何で&hellip;という状況になってその後も策出せず時間切れという感じでした。<strong>なんでremote bench遅いの〜〜</strong> と悩む、というかremote benchでスコア出ないの他チームもqueueして遅くなってるんじゃない!?くらいしか考えが及びませんでした。実は仕様(レギュレーションには無かったものの)というところに気づいてどう帯域を使わないでレスポンス返せるか、という点に考えが及ばなかった。remote bench実行時にネットワーク帯域が頭打ってることは早くから気づいてので悔しい限りです!!!</p>
+
+<p><strong>次回に向けた反省。レギュレーションとコードを腰を据えてじっくり読む余裕。ベンチの挙動とアクセスログに向き合う余裕!!</strong></p>
+
+<p>なお超便利だったのは@mikedaさんの<a href="http://tech.naviplus.co.jp/2014/01/09/tmux%E3%81%A7%E8%A4%87%E6%95%B0%E3%82%B5%E3%83%BC%E3%83%90%E3%81%AE%E5%90%8C%E6%99%82%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/">tmuxで複数サーバの同時オペレーション</a>でした。chefなくてもかなり捗ったかも。</p>
+
+<p>悔しさ山盛りですが毎度楽しいイベントです。みんな同じコンテキストでお酒飲みながら盛り上がれる懇親会はいいものです!!</p>
+
+<p>最後にこのような素晴らしいコンテストを開催してくださいました主催のみなさま本当にお疲れ様でした!! &amp;&amp; ありがとうございました!!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[binfiles]]></title>
@@ -1856,232 +1890,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p>しかしSNMP、何十年前の技術をいつまで使うんだ!!と毎度おもってしまいます。snmpwalk時間かかるし&hellip;.。</p>
 
 <p>以上です!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentdのマルチプロセス化が簡単になったので試してみた!]]></title>
-    <link href="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/"/>
-    <updated>2013-12-06T08:35:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin</id>
-    <content type="html"><![CDATA[<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
-
-<!--more-->
-
-
-<p>今日はFluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
-
-<p>Fluentdはシングルプロセスで動作するため、マルチコアなサーバ環境下では全コアのCPUを消費できません。Fluentd1プロセスでも小〜中規模の環境であれば十分さばけますが、大規模環境ではCPUが足りなくなります。そこでCPUを効率的に使うため、一昔前までは起動スクリプトをコア数に応じて用意しマルチプロセス化するといった手法を用いていましたが手軽にはできませんでした。</p>
-
-<p>そこで最近登場したのが <a href="https://twitter.com/frsyuki">@frsyuki</a> さん作の <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> です。ネット上に試した記事がなかったので試してみました。</p>
-
-<p>Fluentdは0.10.41を使っています。gemコマンドでインストールしました。</p>
-
-<h3>インストール</h3>
-
-<p>Fluentdのコアプラグインではないので、fluent-gemコマンドを使ってインストールします。</p>
-
-<figure class='code'><figcaption><span>install plugin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>fluent-gem install fluent-plugin-multiprocess
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>なお、td-agent版の場合はコマンドのパスが通っていないので以下のとおりインストールしてください。</p>
-
-<figure class='code'><figcaption><span>install plugin (td-agent user)</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>/usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-multiprocess
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>コンフィグレーション</h3>
-
-<p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
-
-<figure class='code'><figcaption><span>/etc/fluent/fluentd.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> multiprocess
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child1.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child2.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child3.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child4.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
-
-<figure class='code'><figcaption><span>/etc/fluent/fluentd_child1.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Receive events from TCP port</span>
-</span><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> forward
-</span><span class='line'>  <span class="nb">port</span> <span class="m">24221</span>
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Include common configurations</span>
-</span><span class='line'><span class="nb">include</span> conf.d/*.conf
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>fluentd_child[2-4].confのコンフィグ掲載は省略しますが <code>port</code> の番号のみ変更します。</p>
-
-<p>includeしたコンフィグで出力を定義しました。</p>
-
-<figure class='code'><figcaption><span>/etc/fluent/conf.d/match_all.conf </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Output messages to STDOUT</span>
-</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> stdout
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>起動</h3>
-
-<p>今回はコマンドラインから起動します。</p>
-
-<p><code>$ fluentd -c fluent/fluentd.conf</code></p>
-
-<p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
-
-<figure class='code'><figcaption><span>起動ログ抜粋</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>2013-12-05 08:45:30 +0000 <span class="o">[</span>info<span class="o">]</span>: launching child fluentd -c /etc/fluent/fluentd_child4.conf
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>netstatコマンドを使って確認しました。確かに4ポートでListenしています。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo netstat -anpt | grep -e ruby -e Proto
-</span><span class='line'>Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
-</span><span class='line'>tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24222               0.0.0.0:*                   LISTEN      25143/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LISTEN      25126/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>追記: -i オプションによる動的リッスンポート切替</h3>
-
-<p><em>2013/12/19 追記</em></p>
-
-<p>あまり知られていないですがFluentdには<code>-i</code>という起動オプションがあり<code>-i</code>に続いてコンフィグを記述することができます。以下のようにすればinput forwardでリッスンするポートをプロセス毎に変えることができます。ポート番号などプロセス固有の設定は<code>-i</code>で渡すことで同じ設定ファイルで異なる挙動ということも実現できますね。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>&lt;<span class="nb">source</span>&gt;
-</span><span class='line'>  <span class="nb">type </span>multiprocess
-</span><span class='line'>  &lt;process&gt;
-</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20000\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
-</span><span class='line'>    sleep_before_start 1s
-</span><span class='line'>    sleep_before_shutdown 1s
-</span><span class='line'>  &lt;/process&gt;
-</span><span class='line'>  &lt;process&gt;
-</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20001\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
-</span><span class='line'>    sleep_before_start 1s
-</span><span class='line'>    sleep_before_shutdown 1s
-</span><span class='line'>  &lt;/process&gt;
-</span><span class='line'>  &lt;process&gt;
-</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20002\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
-</span><span class='line'>    sleep_before_start 1s
-</span><span class='line'>    sleep_before_shutdown 1s
-</span><span class='line'>  &lt;/process&gt;
-</span><span class='line'>&lt;<span class="nb">source</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>まとめ</h3>
-
-<p>Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。</p>
-
-<p>気になる安定性などに関して、<a href="https://groups.google.com/forum/#!topic/fluentd/syXPqRAE-4w">Fluentdのメーリングリスト上の議論</a> によると 10+ billion records / day 環境下に投入しているユーザ事例もあるようです!</p>
-
-<p>話はそれますが、Fluentdを使っている人やこれから使ってみようという人は <a href="http://docs.fluentd.org/ja/articles/mailing-list">Fluentdのメーリングリスト</a> にjoinすることをオススメします!(自分はもっぱら読むだけ専門ですが) メールは基本英語ですが流し読みするだけでも有益な情報を拾えたり、リリース状況をタイムリーに知ることができます。また、最近では海外のエンジニアの間でも知られるようになってきており、海外でのユースケースなど知れるかもしれません。個人的には英語の勉強にもなるので両得だとおもっています。コミュニティについては@tagomorisさんの<a href="http://tagomoris.hatenablog.com/entry/2013/12/03/150656">Fluentdとはどのようなソフトウェアなのか</a>の中で詳しく書かれていますね。</p>
-
-<p>またFluentdの<code>-i</code>オプションを紹介しました。</p>
-
-<p>簡単ではありましたが以上です。</p>
-
-<p>すごい知った風でしたがgemの使い方を紹介しただけでした。最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使ってアウトプットしていきたいですね。</p>
-
-<p>次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
 ]]></content>
   </entry>
   
