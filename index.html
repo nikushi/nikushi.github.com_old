@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="pushd と popd を使い始めた。 ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。 使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。 ~/. &hellip;">
+  <meta name="description" content="pushd と popd を使い始めた。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,38 +109,12 @@
 
   <div class="entry-content"><p>pushd と popd を使い始めた。</p>
 
-<p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
-
-<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
-
-<figure class='code'><figcaption><span>~/.bashrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>mycd <span class="o">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> <span class="nv">$1</span>
-</span><span class='line'>  <span class="k">else</span>
-</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> ~/
-</span><span class='line'>  <span class="k">fi</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="nb">alias cd</span><span class="o">=</span>mycd
-</span><span class='line'><span class="nb">alias </span><span class="nv">po</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
-</span><span class='line'><span class="nb">alias  </span><span class="nv">p</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>cd</code> で別ディレクトリに移動すると同時にカレントディレクトリが保存され <code>p</code> で元のディレクトリに戻る。<code>mycd</code> 経由なのは <code>pushd</code> 引数無しでも <code>~/</code> に帰れるようにするため。</p>
-
-<p>今のところいい感じ。しかしこういう小さい改善系はすぐ忘れてしまって残念な感じになるので、小さなネタでもブログに書いておこう。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/11/10/pushd-and-popd/">続きを読む</a>
+    </footer>
   
 
 

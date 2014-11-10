@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-10T22:51:44+09:00</updated>
+  <updated>2014-11-10T22:52:39+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-11-10T22:42:00+09:00</updated>
     <id>http://orihubon.com/blog/2014/11/10/pushd-and-popd</id>
     <content type="html"><![CDATA[<p>pushd と popd を使い始めた。</p>
+
+<!--more-->
+
 
 <p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
 
