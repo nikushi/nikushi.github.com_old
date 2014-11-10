@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-09T20:43:52+09:00</updated>
+  <updated>2014-11-10T22:51:44+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[pushd and popd]]></title>
+    <link href="http://orihubon.com/blog/2014/11/10/pushd-and-popd/"/>
+    <updated>2014-11-10T22:42:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/11/10/pushd-and-popd</id>
+    <content type="html"><![CDATA[<p>pushd と popd を使い始めた。</p>
+
+<p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
+
+<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
+
+<figure class='code'><figcaption><span>~/.bashrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>mycd <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> <span class="nv">$1</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> ~/
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="nb">alias cd</span><span class="o">=</span>mycd
+</span><span class='line'><span class="nb">alias </span><span class="nv">po</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
+</span><span class='line'><span class="nb">alias  </span><span class="nv">p</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>cd</code> で別ディレクトリに移動すると同時にカレントディレクトリが保存され <code>p</code> で元のディレクトリに戻る。<code>mycd</code> 経由なのは <code>pushd</code> 引数無しでも <code>~/</code> に帰れるようにするため。</p>
+
+<p>今のところいい感じ。しかしこういう小さい改善系はすぐ忘れてしまって残念な感じになるので、小さなネタでもブログに書いておこう。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ISUCON4本戦に出場しました!! 悔しい!!]]></title>
@@ -1714,182 +1754,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p>上のコードではTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
 
 <p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じソケットを使ってはいけないので片方はクローズする、であってますかね。以上です!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SNMPのindexキャッシュによる取得時間短縮の検証]]></title>
-    <link href="http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/"/>
-    <updated>2013-12-06T14:47:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast</id>
-    <content type="html"><![CDATA[<p>ルータやサーバのインタフェースのbpsを測定する場合、SNMPのifDescr, ifHCInOctets, ifHCOutOctetsこの3つのMIBを取得すれば良いわけですが、ifDescrを毎回取得するの無駄だなとおもったので測定してみました。</p>
-
-<!--more-->
-
-
-<p>ifDescr, ifHCInOctets, ifHCOutOctetsをsnmpwalkする場合と、ifDescr(ifIndex)をキャッシュしifHCInOctets, ifHCOutOctetsをsnmpgetする場合で比較します。</p>
-
-<h3>ベンチスクリプト</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;snmp&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;benchmark&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;creating cache&quot;</span>
-</span><span class='line'><span class="n">indexes</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'><span class="ss">SNMP</span><span class="p">:</span><span class="ss">:Manager</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="ss">host</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="ss">community</span><span class="p">:</span> <span class="s1">&#39;public&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">manager</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">manager</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="sx">%w(ifIndex)</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span> <span class="n">indexes</span> <span class="o">&lt;&lt;</span> <span class="n">row</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">value</span><span class="o">.</span><span class="n">to_i</span> <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;walk&quot;</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span> <span class="p">{</span>
-</span><span class='line'>    <span class="ss">SNMP</span><span class="p">:</span><span class="ss">:Manager</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="ss">host</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="ss">community</span><span class="p">:</span> <span class="s1">&#39;public&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">manager</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">manager</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="sx">%w(ifDescr ifHCInOctets ifHCOutOctets)</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span> <span class="kp">nil</span> <span class="p">}</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nb">sleep</span> <span class="mi">3</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;cache with get&quot;</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span> <span class="p">{</span>
-</span><span class='line'>    <span class="ss">SNMP</span><span class="p">:</span><span class="ss">:Manager</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="ss">host</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="ss">community</span><span class="p">:</span> <span class="s1">&#39;public&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">manager</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">indexes</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
-</span><span class='line'>        <span class="n">manager</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;ifHCInOctets.</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;ifHCOutOctets.</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>実際はlocalhostではなくNICをたくさん持った機器を指定。またベンチスクリプトでは簡略してifIndexだけキャッシュしてます。</p>
-
-<h3>結果</h3>
-
-<p>当然といえば当然ですがbind variablesの数がwalk=3個、get=2個なのでgetが早い。26%早くなりました。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>   <span class="n">user</span>     <span class="nb">system</span>      <span class="n">total</span>        <span class="n">real</span>
-</span><span class='line'><span class="n">walk</span>
-</span><span class='line'>   <span class="mi">0</span><span class="o">.</span><span class="mi">850000</span>   <span class="mi">0</span><span class="o">.</span><span class="mi">210000</span>   <span class="mi">1</span><span class="o">.</span><span class="mo">060000</span> <span class="p">(</span> <span class="mi">11</span><span class="o">.</span><span class="mi">343248</span><span class="p">)</span>
-</span><span class='line'><span class="n">index</span> <span class="n">cached</span> <span class="n">get</span>
-</span><span class='line'>   <span class="mi">0</span><span class="o">.</span><span class="mi">710000</span>   <span class="mi">0</span><span class="o">.</span><span class="mi">210000</span>   <span class="mi">0</span><span class="o">.</span><span class="mi">920000</span> <span class="p">(</span>  <span class="mi">8</span><span class="o">.</span><span class="mi">387955</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>デメリット</h3>
-
-<p>キャッシュのデメリットもあります。インデックス番号は主キーになりますが、主キーに対する実態が変わってしまう場合がありえます。Linuxでインタフェースを増やしたり減らしたり、リブートしたりしてみたところ、主キーに対する実態が変わることが分かりました。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">こういう状態で</span>
-</span><span class='line'><span class="err">$</span> <span class="n">snmpwalk</span> <span class="o">-</span><span class="n">c</span> <span class="kp">public</span> <span class="o">-</span><span class="n">v</span> <span class="mi">2</span><span class="n">c</span> <span class="ss">localhost</span><span class="p">:</span><span class="mi">10161</span> <span class="n">ifDesc</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">1</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">lo</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">2</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth0</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">3</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">4</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">veth0</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">5</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">veth1</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">6</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">100</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">veth0</span><span class="p">,</span><span class="n">veth0</span><span class="err">を消した</span>
-</span><span class='line'><span class="err">$</span> <span class="n">snmpwalk</span> <span class="o">-</span><span class="n">c</span> <span class="kp">public</span> <span class="o">-</span><span class="n">v</span> <span class="mi">2</span><span class="n">c</span> <span class="ss">localhost</span><span class="p">:</span><span class="mi">10161</span> <span class="n">ifDesc</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">1</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">lo</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">2</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth0</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">3</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">6</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">100</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">eth1</span><span class="o">.</span><span class="mi">200</span><span class="err">を追加した</span><span class="p">(</span><span class="mi">4</span><span class="err">ではなく</span><span class="mi">7</span><span class="err">が選ばれた</span><span class="p">)</span>
-</span><span class='line'><span class="err">$</span> <span class="n">snmpwalk</span> <span class="o">-</span><span class="n">c</span> <span class="kp">public</span> <span class="o">-</span><span class="n">v</span> <span class="mi">2</span><span class="n">c</span> <span class="ss">localhost</span><span class="p">:</span><span class="mi">10161</span> <span class="n">ifDesc</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">1</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">lo</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">2</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth0</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">3</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">6</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">100</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">7</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">200</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">リブートした後</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">1</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">lo</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">2</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth0</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">3</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">4</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">100</span>   <span class="c1"># 以前は 4 は veth0 だった!!!!!</span>
-</span><span class='line'><span class="no">IF</span><span class="o">-</span><span class="ss">MIB</span><span class="p">:</span><span class="ss">:ifDescr</span><span class="o">.</span><span class="mi">5</span> <span class="o">=</span> <span class="ss">STRING</span><span class="p">:</span> <span class="n">eth1</span><span class="o">.</span><span class="mi">200</span>   <span class="c1"># 以前は 5 は veth1 だった!!!!!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ciscoなどではindex値を固定化するオプションが有効という情報もありますので、ベンダによるみたい。</p>
-
-<p>ちなみに、Cactiではindexキャッシュを動的にリフレッシュする仕組みがあって<a href="http://www.cacti.net/downloads/docs/html/cli_poller_reindex_hosts.html">こちら</a>のドキュメントによると、</p>
-
-<ul>
-<li>アップタイム(sysUptime)が小さくなった(再起動)ら強制的にindexキャッシュを更新</li>
-<li>indexの総数が変わった場合(たとえばifIndexの中の個数が変わった場合)。インタフェースなどのケース。</li>
-<li>全フィールドを検証する(?) Macアドレスなどがこのケース。エントリに変化があればキャッシュ削除ってことですかね。</li>
-</ul>
-
-
-<p>インタフェースにに限ればCactiをまねてアップタイムとインデックスの個数を見て判定すれば上手くいきますね。</p>
-
-<p>しかしSNMP、何十年前の技術をいつまで使うんだ!!と毎度おもってしまいます。snmpwalk時間かかるし&hellip;.。</p>
-
-<p>以上です!!</p>
 ]]></content>
   </entry>
   

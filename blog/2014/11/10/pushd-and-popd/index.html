@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>WebSvnでリポジトリをtar.gzやzip化してダウンロードする - ni-blog</title>
+  <title>pushd and popd - ni-blog</title>
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。 // For delivered tarballs, if option enabled...
-$config->setTarPath('/bin/'); // For delivered &hellip;">
+  <meta name="description" content="pushd と popd を使い始めた。 ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。 使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。 ~/. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ $config->setTarPath('/bin/'); // For delivered &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://orihubon.com/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/">
+  <link rel="canonical" href="http://orihubon.com/blog/2014/11/10/pushd-and-popd/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@ $config->setTarPath('/bin/'); // For delivered &hellip;">
   
   <header>
     
-      <h1 class="entry-title">WebSvnでリポジトリをtar.gzやzip化してダウンロードする</h1>
+      <h1 class="entry-title">pushd and popd</h1>
     
     
       <p class="meta">
@@ -96,7 +95,7 @@ $config->setTarPath('/bin/'); // For delivered &hellip;">
   
 
 
-<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+<time datetime="2014-11-10T22:42:00+09:00" pubdate data-updated="true">Nov 10<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,36 +104,38 @@ $config->setTarPath('/bin/'); // For delivered &hellip;">
   </header>
 
 
-<div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
-<pre lang="php">
-// For delivered tarballs, if option enabled...
-$config->setTarPath('/bin/');
+<div class="entry-content"><p>pushd と popd を使い始めた。</p>
 
-// For delivered GZIP'd files and tarballs, if option enabled...
-$config->setGZipPath('/usr/bin/');
+<p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
 
-// download folder/file zipped ...
-$config->setZipPath('/usr/bin/');
+<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
 
-// You need tar and gzip installed on your system. Set the paths above if necessary
-//
-// Uncomment the line below to offer a tarball download option across all your
-// reposi
-$config->allowDownload();
+<figure class='code'><figcaption><span>~/.bashrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>mycd <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> <span class="nv">$1</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> ~/
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="nb">alias cd</span><span class="o">=</span>mycd
+</span><span class='line'><span class="nb">alias </span><span class="nv">po</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
+</span><span class='line'><span class="nb">alias  </span><span class="nv">p</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-// Change the line below to set the download level across all your repositories.
-// 環境に合わせて調整
-$config->setMinDownloadLevel(1);
-</pre>
 
+<p><code>cd</code> で別ディレクトリに移動すると同時にカレントディレクトリが保存され <code>p</code> で元のディレクトリに戻る。<code>mycd</code> 経由なのは <code>pushd</code> 引数無しでも <code>~/</code> に帰れるようにするため。</p>
 
-$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
-<pre>
- /               0
-   project1/     1
-     - sub/      2
-   project2/     1
-</pre>
+<p>今のところいい感じ。しかしこういう小さい改善系はすぐ忘れてしまって残念な感じになるので、小さなネタでもブログに書いておこう。</p>
 </div>
 
 
@@ -157,8 +158,14 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   
 
 
-<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
+<time datetime="2014-11-10T22:42:00+09:00" pubdate data-updated="true">Nov 10<span>th</span>, 2014</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
 
 
     </p>
@@ -166,7 +173,7 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
       <div class="sharing">
   <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2014/11/10/pushd-and-popd/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2014/11/10/pushd-and-popd/" >Tweet</a>
   
   
   
@@ -178,14 +185,18 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/09/11/web-app-with-perl-without-using-apache/" title="Previous Post: web app with perl without using apache">&laquo; web app with perl without using apache</a>
+        <a class="basic-alignment left" href="/blog/2014/11/09/isucon4-final/" title="Previous Post: ISUCON4本戦に出場しました!! 悔しい!!">&laquo; ISUCON4本戦に出場しました!! 悔しい!!</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/09/15/pc-ji-neng-xing-aiuea-jins-yan-jing-%28meganemegane%29/" title="Next Post: ディスプレイを見るときの負荷を軽減する眼鏡 by JINS">ディスプレイを見るときの負荷を軽減する眼鏡 by JINS &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -269,7 +280,10 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
       var disqus_shortname = 'orihubon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://orihubon.com/blog/2014/11/10/pushd-and-popd/';
+        var disqus_url = 'http://orihubon.com/blog/2014/11/10/pushd-and-popd/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

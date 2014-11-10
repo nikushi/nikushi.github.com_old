@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="週末、ISUCON4本戦に参加しました。 ">
+  <meta name="description" content="pushd と popd を使い始めた。 ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。 使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。 ~/. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-10T22:42:00+09:00" pubdate data-updated="true">Nov 10<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/11/10/pushd-and-popd/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>pushd と popd を使い始めた。</p>
+
+<p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
+
+<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
+
+<figure class='code'><figcaption><span>~/.bashrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>mycd <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> <span class="nv">$1</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'><span class="k">    </span><span class="nb">pushd</span> ~/
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="nb">alias cd</span><span class="o">=</span>mycd
+</span><span class='line'><span class="nb">alias </span><span class="nv">po</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
+</span><span class='line'><span class="nb">alias  </span><span class="nv">p</span><span class="o">=</span><span class="s1">&#39;popd&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>cd</code> で別ディレクトリに移動すると同時にカレントディレクトリが保存され <code>p</code> で元のディレクトリに戻る。<code>mycd</code> 経由なのは <code>pushd</code> 引数無しでも <code>~/</code> に帰れるようにするため。</p>
+
+<p>今のところいい感じ。しかしこういう小さい改善系はすぐ忘れてしまって残念な感じになるので、小さなネタでもブログに書いておこう。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -464,49 +533,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/30/tried-google-apps-script/">Google Apps Scriptをつかってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-30T00:39:00+09:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/05/30/tried-google-apps-script/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>某案件でGoogle Spreadsheetを使う機会があって少しかじってみた。浅くメモ。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/30/tried-google-apps-script/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -526,6 +552,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/09/isucon4-final/">ISUCON4本戦に出場しました!! 悔しい!!</a>
       </li>
     
@@ -539,10 +569,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/29/serf/">週末雨だったのでSerfをさわってみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/">Google Apps Script カスタムLoggerでログをspreadsheetに書き出す</a>
       </li>
     
   </ul>

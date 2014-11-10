@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ActiveRecordのtypeフィールドについて。 ">
+  <meta name="description" content="やっつけ感ある手順であるが。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">virt-installでvncサーバを立ち上げてCentOSをグラフィカルインストール</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T22:58:00+09:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>やっつけ感ある手順であるが。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/29/install-centos-in-graphical-mode-via-vnc-server-and-virt-install/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -466,75 +509,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/23/proclet/">Procletを使ってみた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-23T13:34:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/23/proclet/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近、仕事で小さなブロジェクトでレガシに作られたCGIのアプリケーションをちまちまとモダンにしています:)
-RubyでいうところのForeman、PerlのProcletを使ってみました!!</p>
-
-<p>インストール</p>
-
-<pre><code>$ cpanm Proclet
-</code></pre>
-
-<p>簡単ですね!</p>
-
-<p>Procfileを書く。</p>
-
-<pre><code>$ vim Procfile
-web: carton exec -Ilib -- plackup -r app.psgi
-</code></pre>
-
-<p>ほかにworkerなど立ち上げるプロセスがあれば行区切りで書けばOK。</p>
-
-<p>起動させてみる</p>
-
-<pre><code>$ proclet start --color
-13:33:16 web.1      | Watching ./lib app.psgi for file updates.
-13:33:16 web.1      | HTTP::Server::PSGI: Accepting connections at http://0:5000/
-</code></pre>
-
-<p>&mdash;colorオプションなどオプションは.foremanに定義することで省略可能。(.procletではないんだ!)</p>
-
-<pre><code>$ cat .foreman
-color: 1
-</code></pre>
-
-<p>Happy Hacking!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -556,6 +530,10 @@ color: 1
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/09/isucon4-final/">ISUCON4本戦に出場しました!! 悔しい!!</a>
       </li>
     
@@ -569,10 +547,6 @@ color: 1
     
       <li class="post">
         <a href="/blog/2014/06/29/serf/">週末雨だったのでSerfをさわってみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/">Google Apps Script カスタムLoggerでログをspreadsheetに書き出す</a>
       </li>
     
   </ul>

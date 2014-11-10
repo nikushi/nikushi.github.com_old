@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-09T20:43:52+09:00</updated>
+  <updated>2014-11-10T22:51:44+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[pushd and popd]]></title>
+    <link href="http://orihubon.com/blog/2014/11/10/pushd-and-popd/"/>
+    <updated>2014-11-10T22:42:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/11/10/pushd-and-popd</id>
+    <content type="html"><![CDATA[<p>pushd と popd を使い始めた。</p>
+
+<p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
+
+<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
+
+<p>```bash ~/.bashrc
+function mycd {
+  if [ -n &ldquo;$1&rdquo; ]; then</p>
+
+<pre><code>pushd $1
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>pushd ~/
+</code></pre>
+
+<p>  fi
+}
+alias cd=mycd
+alias po=&lsquo;popd&rsquo;
+alias  p=&lsquo;popd&rsquo;
+```</p>
+
+<p><code>cd</code> で別ディレクトリに移動すると同時にカレントディレクトリが保存され <code>p</code> で元のディレクトリに戻る。<code>mycd</code> 経由なのは <code>pushd</code> 引数無しでも <code>~/</code> に帰れるようにするため。</p>
+
+<p>今のところいい感じ。しかしこういう小さい改善系はすぐ忘れてしまって残念な感じになるので、小さなネタでもブログに書いておこう。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[親プロセスと子プロセスでTCPソケットを共有したらどうなるか]]></title>

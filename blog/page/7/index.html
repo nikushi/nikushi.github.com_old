@@ -9,9 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="
-$ logrotate -dv file.conf でdry-run。
-">
+  <meta name="description" content="vにてビジュアルモード、jkhlを駆使して範囲指定 :にてコマンド指定するモードに入る すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする vimでコード書いてるときなど、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +76,49 @@ $ logrotate -dv file.conf でdry-run。
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/">[vim]ビジュアルモード選択範囲だけ置換</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-10T00:00:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/01/10/vimbiziyuarumodoxuan-ze-fan-wei-dakezhi-huan/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+	<li>vにてビジュアルモード、jkhlを駆使して範囲指定</li>
+	<li>:にてコマンド指定するモードに入る</li>
+	<li>すると自動的に、:&#8217;&lt;,&#8217;&gt;まで入力されるので、:&#8217;&lt;,&#8217;&gt;:s/before/after/gする</li>
+</ol>
+vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#8217;&lt;,&#8217;&gt; :s/^/# /g こんな感じで。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -487,48 +528,6 @@ Framewark
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/10/18/appfatpacker/">App::FatPacker</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/10/18/appfatpacker/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">perlbrewの中身(perlスクリプト)を拝見すると、fatpackerでパッキングしたんだよという記述があって、なるほど1ファイルで完結してるようだ。
-
-&nbsp;
-
-<a href="http://search.cpan.org/~dgl/App-FatPacker-0.009006/lib/App/FatPacker.pm">App::FatPacker</a>を使うと依存関係を全部まとめて1個のスクリプトにパックしてくれるみたい。どういう時に使い勝手がよいんだろう。perlbrewを例にしてみると、インストールする側からするととても楽チンなのが利点、かな。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -550,6 +549,10 @@ Framewark
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/09/isucon4-final/">ISUCON4本戦に出場しました!! 悔しい!!</a>
       </li>
     
@@ -563,10 +566,6 @@ Framewark
     
       <li class="post">
         <a href="/blog/2014/06/29/serf/">週末雨だったのでSerfをさわってみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/18/log-to-sheet-by-custom-logger-google-apps-script/">Google Apps Script カスタムLoggerでログをspreadsheetに書き出す</a>
       </li>
     
   </ul>
