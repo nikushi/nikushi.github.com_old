@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-10T22:52:39+09:00</updated>
+  <updated>2014-11-11T11:30:03+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[git pushのトピックブランチ名を省略する方法]]></title>
+    <link href="http://orihubon.com/blog/2014/11/11/shortcut-to-push-origin-topicbranch/"/>
+    <updated>2014-11-11T11:22:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/11/11/shortcut-to-push-origin-topicbranch</id>
+    <content type="html"><![CDATA[<p>トピックブランチを完成させたあと <code>git push origin myfix</code> と毎度タイプしてたけどタイプがしんどいので省略する方法を調べた。</p>
+
+<!--more-->
+
+
+<p><a href="http://qiita.com/tkengo/items/5bae50fb7531d5a6bbcf">gitでカレントブランチをpushする</a> を参考に自分は以下のように <code>~/.gitconfig</code> を書いた。</p>
+
+<figure class='code'><figcaption><span>~/.gitconfig</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>[alias]
+</span><span class='line'>  cb             = rev-parse --abbrev-ref HEAD
+</span><span class='line'>  current-branch = rev-parse --abbrev-ref HEAD
+</span><span class='line'>  pcb            = !git push origin `git rev-parse --abbrev-ref HEAD`
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>自分は <code>git</code> を <code>g</code> にaliasしているので、<code>g pcb</code> で カレントブランチを origin に push できるようになった。また<code>git cb</code> or <code>git current-branch</code> はカレントブランチの名前を表示するショートカット。</p>
+
+<p>これでまた少しタイプ数を減らせた。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[pushd and popd]]></title>
@@ -1692,71 +1721,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 </code></pre>
 
 <p>@hirose31先生, @sonots ありがとうございました。以上!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Redisクライアントでforkするときは子プロセスでrecoonectする]]></title>
-    <link href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/"/>
-    <updated>2013-12-11T16:24:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby</id>
-    <content type="html"><![CDATA[<p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。</p>
-
-<!-- more -->
-
-
-<p>以下のケースは動かない。</p>
-
-<figure class='code'><figcaption><span>bad case</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>       <span class="c1"># 親プロセスがRedisサーバとコネクション確立</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>     <span class="c1"># 子プロセスがgetしようとすると...</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>例外が発生。子プロセスからコネクションを利用しようとしたので怒られる。</p>
-
-<pre><code>=&gt; ..snip.. redis/client.rb:285:in `ensure_connected': Tried to use a connection from a child process without reconnecting. You need to reconnect to Redis after forking. (Redis::InheritedError)
-</code></pre>
-
-<p>fork後にreconnectするように言われるのでそのとおりします。以下はOKです。</p>
-
-<figure class='code'><figcaption><span>works!</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">reconnect</span>
-</span><span class='line'>  <span class="n">redis</span><span class="o">.</span><span class="n">get</span> <span class="s1">&#39;a&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上のコードではTCPを使うのでtcpdumpでパケットを確認してみたところ、子は自分用のTCPコネクションを確立することを確認しました。</p>
-
-<p>昔々Cでforkしてsocket read/writeするプログラムを書いたのを思い出しました。forkした後に複数プロセスで同じソケットを使ってはいけないので片方はクローズする、であってますかね。以上です!</p>
 ]]></content>
   </entry>
   

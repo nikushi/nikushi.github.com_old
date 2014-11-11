@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="ルータやサーバのインタフェースのbpsを測定する場合、SNMPのifDescr, ifHCInOctets, ifHCOutOctetsこの3つのMIBを取得すれば良いわけですが、ifDescrを毎回取得するの無駄だなとおもったので測定してみました。 ">
+  <meta name="description" content="Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyのredis-rbで実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-11T16:24:00+09:00" pubdate data-updated="true">Dec 11<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Redisクライアントインスタンスを親プロセスで作った後、forkし子プロセス側でGETとSETしても大丈夫だっけ? とおもったのでRubyの<a href="https://github.com/redis/redis-rb">redis-rb</a>で実験しました。結論としてはfork後に子プロセス側でクローズして再確立すれば良いです。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -464,49 +507,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/31/mount-kvm-os-image/">KVMのrawフォーマットのイメージファイルをマウントする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-31T15:49:00+09:00" pubdate data-updated="true">Jul 31<span>st</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/31/mount-kvm-os-image/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>rawフォーマット限定。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/31/mount-kvm-os-image/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -528,6 +528,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/">git pushのトピックブランチ名を省略する方法</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a>
       </li>
     
@@ -541,10 +545,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/05/isucon-qualify/">ISUCON 2014 予選の記録 GoMiami</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/29/serf/">週末雨だったのでSerfをさわってみた</a>
       </li>
     
   </ul>

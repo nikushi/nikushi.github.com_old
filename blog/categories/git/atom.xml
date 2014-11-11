@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | ni-blog]]></title>
+  <link href="http://orihubon.com/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://orihubon.com/"/>
+  <updated>2014-11-11T11:30:03+09:00</updated>
+  <id>http://orihubon.com/</id>
+  <author>
+    <name><![CDATA[niku4i]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[git pushのトピックブランチ名を省略する方法]]></title>
+    <link href="http://orihubon.com/blog/2014/11/11/shortcut-to-push-origin-topicbranch/"/>
+    <updated>2014-11-11T11:22:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/11/11/shortcut-to-push-origin-topicbranch</id>
+    <content type="html"><![CDATA[<p>トピックブランチを完成させたあと <code>git push origin myfix</code> と毎度タイプしてたけどタイプがしんどいので省略する方法を調べた。</p>
+
+<!--more-->
+
+
+<p><a href="http://qiita.com/tkengo/items/5bae50fb7531d5a6bbcf">gitでカレントブランチをpushする</a> を参考に自分は以下のように <code>~/.gitconfig</code> を書いた。</p>
+
+<p><code>text ~/.gitconfig
+[alias]
+  cb             = rev-parse --abbrev-ref HEAD
+  current-branch = rev-parse --abbrev-ref HEAD
+  pcb            = !git push origin `git rev-parse --abbrev-ref HEAD`
+</code></p>
+
+<p>自分は <code>git</code> を <code>g</code> にaliasしているので、<code>g pcb</code> で カレントブランチを origin に push できるようになった。また<code>git cb</code> or <code>git current-branch</code> はカレントブランチの名前を表示するショートカット。</p>
+
+<p>これでまた少しタイプ数を減らせた。</p>
+]]></content>
+  </entry>
+  
+</feed>
