@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-11T11:31:49+09:00</updated>
+  <updated>2014-12-07T23:05:13+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -25,7 +25,7 @@
 
 <p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
 
-<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。Dan Kogai氏の<a href="http://blog.livedoor.jp/dankogai/archives/51527066.html">tips &ndash; 君はpushd|popdを知っているか?</a>を参考にさせていただいた。</p>
+<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
 
 <p>```bash ~/.bashrc
 function mycd {

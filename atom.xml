@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-11-11T11:31:49+09:00</updated>
+  <updated>2014-12-07T23:05:13+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sensu Nyumon]]></title>
+    <link href="http://orihubon.com/blog/2014/12/07/sensu-nyumon/"/>
+    <updated>2014-12-07T00:00:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/12/07/sensu-nyumon</id>
+    <content type="html"><![CDATA[<p><a href="http://www.amazon.co.jp/%E3%82%BB%E3%83%B3%E3%82%B9%E5%85%A5%E9%96%80-%E6%9D%BE%E6%B5%A6-%E5%BC%A5%E5%A4%AA%E9%83%8E/dp/4480816720">センス入門 松浦 弥太郎  (著)</a> という本を読んだ。</p>
+
+<!--more-->
+
+
+<h2>読んだきっかけ</h2>
+
+<p>奥さんが休日出勤で家にいなくて、僕も予定がなかった先週末、ふらっと<a href="http://www.nact.jp/">国立新美術館</a>へ出かけた。美術館のショップでこの本をみつけて購入した。最近、視野が狭まってるなーと感じることがあって、柔らかくなればいいな、というくらいの気持ちがあって手に取ったのだとおもう。これは後付けなのだけどきっと。</p>
+
+<h2>どんな本だったか</h2>
+
+<p>よいなとおもった目次をメモしておく</p>
+
+<ul>
+<li>心を開く事がセンスのよさへの最初の一歩</li>
+<li>すすめられたことは試してみる</li>
+<li>なんでも知っている人よりも、なんでも考える人になった方がいい</li>
+</ul>
+
+
+<p>心を開くことがセンスのよさへの最初に一歩とある。クールにするだけだと心に何も残らないかもしれない。感動した体験は忘れないし、心を開いて人と話すとその人の記憶にもあなたの印象がとどまる。</p>
+
+<p>すすめられたことは試してみる。これも心を開くこと近い。人がこれは良いよと言ってすすめてくれたものを素直に試してみるとよいとある。例えば、この本良いと言われたらとりあえず読んでみるとか、このレストラン美味しかったと言われたら行ってみるとか。時には自分には良くない合わなかったこともあるだろうが、経験したかしなかったかは大きな差になるし、経験が糧となってセンスになる、とのことらしい。自分は、インターネットのレビューとか口コミサイトの点数とか定量的な尺度の情報を信頼する傾向にあったのだけど、今度何かすすめられた素直な気持ちで試してみようとおもう。</p>
+
+<p>考えるということは案外大変。筆者は考えるトレーニングを毎日1時間x2回やっている。とくに朝の1時間は集中力があるのでおすすめとのことだった。</p>
+
+<h2>センスを磨く</h2>
+
+<p>本物を見る、聴くなど体験すべしと書いてある。例えば美術館とか重要文化財とか。また歴史上の偉人から学ぶことも良いらしい。他にはセンスがいいなこの人とおもった人がいたら、その人のやっていることを真似てみるといいとある。</p>
+
+<p>こういうことは、洋服や美術、音楽だけに限らず自分の周りの環境にも当てはめることが出来るなとおもった。エンジニアであれば優秀なエンジニアのコードを読むとか、ライブコーディングを見たり生で見たりするだけでも勉強になる。コードの写経とかも。</p>
+
+<h2>おわりに</h2>
+
+<p>センス入門を読んだ。</p>
+
+<p>本のレビューを書くのは結構大変だったが、読んだ本を記憶にとどめておくにはブログを書くのがいい。</p>
+
+<p>また、週末に美術館は頭の体操になってなかなか良いかもという体験をした。この時はチューリッヒ美術館展という企画をみて印象派からシェルレアリズムまで幅広い年代のコレクションが凝縮されたお得な展示で、普段そんなに美術館に行かない自分としてはとても満足度高い美術展だった。ただ、ひとは多すぎだったので東京で人気の美術館巡る時は平日だなという教訓も得た。今度はこの本でもおすすめされているとおり私設の美術館を巡ってみたい。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[git pushのトピックブランチ名を省略する方法]]></title>
@@ -54,7 +101,7 @@
 
 <p>ほんとうに今更感があるが。学生の時に知っていつの間にか使わなくなり、社会人数年目で再度使うようにして使わなくなってしまった歴史が個人的にある。</p>
 
-<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。Dan Kogai氏の<a href="http://blog.livedoor.jp/dankogai/archives/51527066.html">tips &ndash; 君はpushd|popdを知っているか?</a>を参考にさせていただいた。</p>
+<p>使わなくなってしまった理由はタイプ数だと考えているので、タイプ数を少なくすべく以下のようにした。</p>
 
 <figure class='code'><figcaption><span>~/.bashrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1646,81 +1693,6 @@ Package td-libyaml-0.1.4-1.x86_64.rpm is not signed
 <p>作る前に既存プラグインを探してみましたが、前回値との差分を計算してくれるプラグインがなかったので自作に至りました。</p>
 
 <p>以上!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[親プロセスと子プロセスでTCPソケットを共有したらどうなるか]]></title>
-    <link href="http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal/"/>
-    <updated>2013-12-11T19:53:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/12/11/sharing-tcp-socket-with-parent-and-child-process-is-not-normal</id>
-    <content type="html"><![CDATA[<p>前回の<a href="http://orihubon.com/blog/2013/12/11/reconnect-after-fork-redis-client-ruby/">Redisクライアントでforkするときは子プロセスでrecoonectする</a>の続き。では<a href="https://github.com/fluent/fluent-logger-ruby">fluent-logger-ruby</a>だとどうなるの? ってことで社内の同僚に質問してみました。色々なところでも書かれてますし混ざるんですよね。以下のコードは書かない方が良いってこと。</p>
-
-<!-- more -->
-
-
-<h3>サンプルコード</h3>
-
-<figure class='code'><figcaption><span>このコードは一見動くけどよくない</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;fluent-logger&#39;</span>
-</span><span class='line'><span class="n">log</span> <span class="o">=</span> <span class="ss">Fluent</span><span class="p">:</span><span class="ss">:Logger</span><span class="o">::</span><span class="no">FluentLogger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="ss">:host</span><span class="o">=&gt;</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="ss">:port</span><span class="o">=&gt;</span><span class="mi">24224</span><span class="p">)</span>
-</span><span class='line'><span class="n">log</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;myapp.access&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;agent&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;foo&quot;</span><span class="p">})</span>     <span class="c1"># socket(A) が確立される</span>
-</span><span class='line'><span class="nb">fork</span> <span class="k">do</span>                                        <span class="c1"># socket(A)は子プロセスにもコピーされる</span>
-</span><span class='line'>  <span class="n">log</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;myapp.access&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;agent&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;foo&quot;</span><span class="p">})</span>   <span class="c1"># socket(A)に書き込む</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>質問してみた</h3>
-
-<p>社内のIRCでちらっと聞いてみたところ同僚から助言いただきました。</p>
-
-<pre><code>18:36 nikushi: forkしてTCPソケットを親、子で使いまわすの
-18:38 sonots: 同じソケットを、並列で利用したら、混ざってることになるけど
-18:39 nikushi: ふむふむ
-..snip..
-18:41 nikushi: ぼくがおもったのは、TCPのデータペイロードの中(つまりmsgpackのところ)
-18:41 nikushi: が壊れるのかなーとおもったけど。
-..snip..
-18:47 sonots: RST 受け取ったとき、どのプロセスが close するの？
-18:48 sonots: ruby 的には Errno::ECONNRESET
-18:49 sonots: proc1 が close しようとする前に、proc2 がデータ送っちゃったりするでしょ？
-18:49 sonots: ということを言いたい
-18:50 hirose31: 親子で共用するの辞めたほうがいいんじゃないのかなｗ
-18:57 hirose31: 一般的にやるべきじゃないと思いますよ
-19:06 hirose31: APUEに書いてないかな。。
-19:11 hirose31: If both parent and child write to the same descriptor, 
-      without any form of synchronization, such as having the parent 
-      wait for the child, their output will be intermixed 
-      (assuming it’s a descriptor that was open before the fork). 
-      Although this is possible—we saw it in Figure 8.2—it’s 
-      not the normal mode of operation.
-19:11 hirose31: だそうな
-19:11 hirose31: p232
-</code></pre>
-
-<p>APUEによると、可能ではあるが出力が混ざる、通常のオペレーションではない。という記述がありました。@hirose31++</p>
-
-<p>またクライアントの実装によっては再接続処理で変になったり、意図しない挙動になりそうですね。</p>
-
-<p>APUEことAdvanced Programming in the UNIX Environment 3rd Editionについては、(ひ)メモの<a href="http://d.hatena.ne.jp/hirose31/20130731/1375248744">『詳細UNIXプログラミング』の原書『Advanced Programming in the UNIX Environment</a>に紹介がありますので興味がある人か買うといいですね。私もこの機会に買いました。</p>
-
-<h3>まとめ</h3>
-
-<pre><code>19:08 sonots: TCPコネクション１本で並列処理する方法があれば、知りたい感はあります。
-19:08 nikushi: SPDY w
-19:13 sonots: まさにSPDY
-19:12 hirose31: まさにSPDY
-19:13 sonots: ふむふむ、それを想定したプロトコル設計にしないといけないわけか
-19:13 nikushi: きょうの結論!
-</code></pre>
-
-<p>@hirose31先生, @sonots ありがとうございました。以上!</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,8 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。 URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。 Matt Cutts: Try something new for 30 days &hellip;">
+  <meta name="description" content="TEDのトークショーの内容をテキストデータで取得できるという話を聞きましたのでRubyで英文をprintするコードを書いてみました。 URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。 #!/usr/bin/env ruby #
+# Dump subtitle in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -112,7 +113,27 @@
 <p>URLを叩くとJSONで返してくれるのでparseしてputsするだけでした。</p>
 
 <div><script src='https://gist.github.com/2338391.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
+<noscript><pre><code>#!/usr/bin/env ruby
+
+#
+# Dump subtitle in text for TED
+#
+
+require &#39;json&#39;
+require &#39;open-uri&#39;
+
+base_url = &#39;http://www.ted.com/talks/subtitles&#39;
+id = 1183
+url = &quot;#{base_url}/id/#{id.to_s}/lang/eng&quot;
+
+data = JSON.parse(open(url).read)
+if data &amp;&amp; data.key?(&#39;captions&#39;)
+  data[&#39;captions&#39;].each do |sentence|
+    puts sentence[&#39;content&#39;]
+    puts 
+  end
+end 
+</code></pre></noscript></div>
 
 
 <p><a href="http://www.ted.com/talks/matt_cutts_try_something_new_for_30_days.html">Matt Cutts: Try something new for 30 days</a> という有名なTEDのトークをひとまずdumpしてみました。</p>
@@ -227,6 +248,10 @@ It turns out,
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/07/sensu-nyumon/">Sensu Nyumon</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/">git pushのトピックブランチ名を省略する方法</a>
       </li>
     
@@ -240,10 +265,6 @@ It turns out,
     
       <li class="post">
         <a href="/blog/2014/11/06/binfiles/">binfiles</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/05/isucon-qualify/">ISUCON 2014 予選の記録 GoMiami</a>
       </li>
     
   </ul>
