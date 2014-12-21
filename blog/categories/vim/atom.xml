@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vim | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-12-21T21:37:58+09:00</updated>
+  <updated>2014-12-21T21:39:02+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -25,7 +25,7 @@
 
 <p><a href="https://github.com/altercation/vim-colors-solarized">vim用のカラースキーマ</a>と、<a href="https://github.com/tomislav/osx-terminal.app-colors-solarized">Terminal.app用のsolarized profile</a>をインストールにして有効にしたら出来た。</p>
 
-<p>なお、Terminal.appのフォントは以前から使っている(Source Code Pro)[<a href="https://store1.adobe.com/cfusion/store/html/index.cfm?store=OLS-JP&amp;event=displayFontPackage&amp;code=1960">https://store1.adobe.com/cfusion/store/html/index.cfm?store=OLS-JP&amp;event=displayFontPackage&amp;code=1960</a>]を引き続き使うことにした。</p>
+<p>なお、Terminal.appのフォントは以前から使っている<a href="https://store1.adobe.com/cfusion/store/html/index.cfm?store=OLS-JP&amp;event=displayFontPackage&amp;code=1960">Source Code Pro</a>を引き続き使うことにした。</p>
 
 <h3>Before</h3>
 
