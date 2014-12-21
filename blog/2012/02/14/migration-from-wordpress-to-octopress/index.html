@@ -159,82 +159,7 @@ wordpressdotcom.rbを利用してそれなりにデータ変換ができたが�
 <p>そこでオリジナルのwordpressdoccom.rbを拝借しつつ、コードを少し修正。以下のコードを用いる。</p>
 
 <div><script src='https://gist.github.com/1824307.js'></script>
-<noscript><pre><code># coding: utf-8
-
-require &#39;rubygems&#39;
-require &#39;hpricot&#39;
-require &#39;fileutils&#39;
-require &#39;yaml&#39;
-require &#39;time&#39;
-# for multi byte string
-require &#39;stringed&#39;
-require &#39;nkf&#39;
-
-module Jekyll
-  # This importer takes a wordpress.xml file, which can be exported from your
-  # wordpress.com blog (/wp-admin/export.php).
-  module WordpressDotCom
-    def self.process(filename = &quot;wordpress.xml&quot;)
-      import_count = Hash.new(0)
-      doc = Hpricot::XML(File.read(filename))
-
-      (doc/:channel/:item).each do |item|
-        title = item.at(:title).inner_text.strip
-        ## convert url encoded multibyte string to original by --url-input
-        ## and to_url method converts multibyte string to a-z
-        permalink_title = NKF.nkf(&quot;-w --url-input&quot;, item.at(&#39;wp:post_name&#39;).inner_text).to_url
-        # Fallback to &quot;prettified&quot; title if post_name is empty (can happen)
-        if permalink_title == &quot;&quot;
-          permalink_title = title.downcase.split.join(&#39;-&#39;)
-        end
-
-        date = Time.parse(item.at(&#39;wp:post_date&#39;).inner_text)
-        status = item.at(&#39;wp:status&#39;).inner_text
-
-        if status == &quot;publish&quot; 
-          published = true
-        else
-          published = false
-        end
-
-        type = item.at(&#39;wp:post_type&#39;).inner_text
-        tags = (item/:category).map{|c| c.inner_text}.reject{|c| c == &#39;Uncategorized&#39;}.uniq
-
-        metas = Hash.new
-        item.search(&quot;wp:postmeta&quot;).each do |meta|
-          key = meta.at(&#39;wp:meta_key&#39;).inner_text
-          value = meta.at(&#39;wp:meta_value&#39;).inner_text
-          metas[key] = value;
-        end
-
-        name = &quot;#{date.strftime(&#39;%Y-%m-%d&#39;)}-#{permalink_title}.html&quot;
-        header = {
-          &#39;layout&#39; =&gt; type,
-          &#39;title&#39;  =&gt; title,
-          &#39;tags&#39;   =&gt; tags,
-          &#39;status&#39;   =&gt; status,
-          &#39;type&#39;   =&gt; type,
-          &#39;published&#39; =&gt; published,
-          &#39;meta&#39;   =&gt; metas
-        }
-
-        FileUtils.mkdir_p &quot;_#{type}s&quot;
-        File.open(&quot;_#{type}s/#{name}&quot;, &quot;w&quot;) do |f|
-          f.puts header.to_yaml
-          f.puts &#39;---&#39;
-          # convert CL+LF to LF
-          f.puts NKF.nkf(&quot;-Lu -w&quot;, item.at(&#39;content:encoded&#39;).inner_text)
-        end
-
-        import_count[type] += 1
-      end
-
-      import_count.each do |key, value|
-        puts &quot;Imported #{value} #{key}s&quot;
-      end
-    end
-  end
-end</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 
 
 <h3>修正ポイント</h3>
@@ -320,7 +245,7 @@ end</code></pre></noscript></div>
 </span><span class='line'><span class="n">multitask</span> <span class="ss">:push</span> <span class="k">do</span>
 </span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;## Deploying branch to Github Pages &quot;</span>
 </span><span class='line'>  <span class="p">(</span><span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2">/*&quot;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">rm_rf</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">}</span>
-</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:copydot</span><span class="o">].</span><span class="n">invoke</span><span class="p">(</span><span class="n">public_dir</span><span class="p">,</span> <span class="n">deploy_dir</span><span class="p">)</span>
+</span><span class='line'>  <span class="ss">Rake</span><span class="p">:</span><span class="ss">:Task</span><span class="o">[</span><span class="ss">:copydot</span><span class="o">].</span><span class="n">invoke</span><span class="p">(</span><span class="n">public_dir</span><span class="p">,</span> <span class="n">deploy_dir</span><span class="p">)</span>
 </span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## copying </span><span class="si">#{</span><span class="n">public_dir</span><span class="si">}</span><span class="s2"> to </span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span class='line'>  <span class="n">cp_r</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">public_dir</span><span class="si">}</span><span class="s2">/.&quot;</span><span class="p">,</span> <span class="n">deploy_dir</span>
 </span><span class='line'>  <span class="n">cd</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
@@ -415,7 +340,7 @@ end</code></pre></noscript></div>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/12/07/sensu-nyumon/">センス入門 を読んだ</a>
+        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
       </li>
     
       <li class="post">
