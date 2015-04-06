@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-06T14:58:07+09:00</updated>
+  <updated>2015-04-06T16:25:53+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -356,22 +356,6 @@
 <p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作った。</p>
 
 <p>ぜひ使ってみてください!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Embulkというバルクデータローダをさわってみた]]></title>
-    <link href="http://orihubon.com/blog/2015/01/27/embulk/"/>
-    <updated>2015-01-27T19:54:00+09:00</updated>
-    <id>http://orihubon.com/blog/2015/01/27/embulk</id>
-    <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/312015">データ転送ミドルウェア勉強会</a>で紹介された<a href="https://github.com/embulk/embulk">Embulk</a>を使ってみた。</p>
-
-<!--more-->
-
-
-<p><a href="https://github.com/embulk/embulk">Embulk</a>のREADMEのQuick Startをやってみた。</p>
-
-<p>まず、exampleサブコマンドでとりあえず試してみたい人向けのひな形を作ってくれる。</p>
 ]]></content>
   </entry>
   
@@ -1785,6 +1769,22 @@
 <h3>感想</h3>
 
 <p>test kitchenよい。でも初回遅い。boxが最初ないと更に遅い。この辺はVagrantをDockerに変えるというアプローチがあるとおもうが気軽ではない感じかも。しばらく使ってみる!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Yohoushi Chef Cookbook作った]]></title>
+    <link href="http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook/"/>
+    <updated>2014-01-15T20:35:00+09:00</updated>
+    <id>http://orihubon.com/blog/2014/01/15/yohoushi-chef-cookbook</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/yohoushi/chef-yohoushi">chef-yohoushi</a> を作った。YohoushiをChefでインストールするクックブック。</p>
+
+<!--more-->
+
+
+<p>ユーザ作成、データベースマイグレーション、Yohoushiリポジトリをgit cloneしてというところまでやってくれます。RubyのbuildとかMySQLサーバのインストールとかはクックブックの範囲外にしてて別クックブックと組み合わせて使ってください。</p>
+
+<p>またサービスの再起動とかchkconfig的なところはレシピに書いてない。その辺やろうとすると諸々yack shavingになるので今時点ではインストールだけ。</p>
 ]]></content>
   </entry>
   
