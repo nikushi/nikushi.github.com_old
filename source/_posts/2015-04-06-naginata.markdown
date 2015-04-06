@@ -205,15 +205,29 @@ FLAGSという列に見慣れぬ文字列が入ってますが
 
 ### その他
 
-[naginata/tree/master/integration-test](https://github.com/niku4i/naginata/tree/master/integration-test)にVagrantファイルとサンプルの設定ファイルがあり動作を試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。
+[naginata/tree/master/integration-test](https://github.com/niku4i/naginata/tree/master/integration-test)にVagrantファイルとサンプルの設定ファイルを置いてるのでVagrantがインストールされたMacがあれば動作をお手軽に試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。
 
 ```
-$ cd integration-test
+$ gem install naginata
+$ git clone https://github.com/niku4i/naginata.git
+$ cd naginata/integration-test
 $ vagrant up 
+```
+
+つづいて/etc/hostsに以下2行を追記する
+
+```
+127.0.0.1       nagios0
+127.0.0.1       nagios1
+```
+
+これで動作確認できるとおもいます!
+
+```
 $ naginata services -a
 ```
 
-http://localhost:8880 , http://localhost:8881 で仮想マシン側のnagios画面を確認できます。
+また http://localhost:8880 , http://localhost:8881 で仮想マシン側のnagios画面見れます。
 
 ### ToDo
 
