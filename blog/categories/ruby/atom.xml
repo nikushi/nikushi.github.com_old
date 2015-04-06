@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Ruby | ni-blog]]></title>
+  <title><![CDATA[Category: ruby | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2014-12-21T21:49:36+09:00</updated>
+  <updated>2015-04-06T14:58:07+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -14,200 +14,247 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Sinatra::Reloader]]></title>
-    <link href="http://orihubon.com/blog/2013/08/06/sinatra-reloader/"/>
-    <updated>2013-08-06T19:30:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/08/06/sinatra-reloader</id>
-    <content type="html"><![CDATA[<p>Sinatraを久々に使っている。はて、development環境での自動リロードどうやるのだったか。</p>
+    <title type="html"><![CDATA[Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました]]></title>
+    <link href="http://orihubon.com/blog/2015/04/06/naginata/"/>
+    <updated>2015-04-06T12:22:00+09:00</updated>
+    <id>http://orihubon.com/blog/2015/04/06/naginata</id>
+    <content type="html"><![CDATA[<p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作りました。</p>
 
 <!--more-->
 
 
-<p><a href="http://www.sinatrarb.com/contrib/reloader.html">Sinatra::Reloader</a> を使うと。</p>
+<p>Nagiosの画面から一度に沢山のサービスに対して通知をOFFにしたり、監視開始したりするオペレーションは結構面倒です。</p>
 
-<p>実際には<a href="https://github.com/sinatra/sinatra-contrib">sinatra-contrib</a>というgemをinstallするわけだけど、このgemには他にも機能があるので困ったときはこのgemを眺めるとよさそうですね。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RubyでIPアドレスの正規表現を超簡単に書く]]></title>
-    <link href="http://orihubon.com/blog/2013/08/06/regex-for-ipv-address/"/>
-    <updated>2013-08-06T09:14:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/08/06/regex-for-ipv-address</id>
-    <content type="html"><![CDATA[<p>正規表現自前で書かずとも、<code>Resolv::IPv4::Regex</code>を使う。</p>
-
-<!--more-->
-
+<p>Nagiosには<a href="http://old.nagios.org/developerinfo/externalcommands/commandlist.php">External Commands</a>という仕組みがあり、nagiosのweb画面上で行える操作をCLI上でも行える仕組みが備わっています。例えば以下のコマンドをNagiosホスト上で実行すると通知OFFすることができます。</p>
 
 <p><code>
-require 'resolv'
-Resolv::IPv4::Regex.class     
-=&gt; Regexp
+echo "[1428291034] DISABLE_SVC_NOTIFICATIONS;host1;service1" &gt; /var/spool/nagios/cmd/nagios.cmd
 </code></p>
 
-<p>IPv6の場合は、<code>Resolv::IPv6::Regex</code>を使いましょう。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ActiveRecordのtypeフィールドについて]]></title>
-    <link href="http://orihubon.com/blog/2013/07/29/type-column-of-activerecord/"/>
-    <updated>2013-07-29T16:26:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/29/type-column-of-activerecord</id>
-    <content type="html"><![CDATA[<p>ActiveRecordのtypeフィールドについて。</p>
+<p>CGIの画面にアクセスしなくてよくこの仕組みはとても便利ですがNagiosサーバにログインする手間があります。またもし複数のNagiosサーバを管理している場合、Nagiosサーバそれぞれでオペレーションするのは面倒です。</p>
 
-<!--more-->
+<p>そこで1つのマシンから複数Nagiosサーバに対してSSH越しに上のコマンドを実行するCLIツールを作ればいいんじゃないか、ということで作ったのが<a href="http://github.com/niku4i/naginata">Naginata</a>です。複数監視対象を複数nagiosサーバ横断的に通知OFFにしたりすることが1コマンドで出来るツールになってます。</p>
 
+<h3>使い方</h3>
 
-<p>ActiveRecord::Baseを継承したモデルクラスで"type"という名前のフィールドを使おうとすると、</p>
+<h4>インストール</h4>
+
+<p>SSH接続元となるホストにnaginataをインストールします。</p>
 
 <p><code>
-ActiveRecord::SubclassNotFound: The single-table inheritance mechanism failed to locate the subclass: 'abc123'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Graph.inheritance_column to use another column for that information.
+$ gem install naginata
 </code></p>
 
-<p>という例外に遭遇します。ActiveRecordでは"type"フィールドはSTIという機能により予約されています。 <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">ActiveRecordのSTIの説明</a>にtypeフィールドは継承関係にあるクラス名を保存するフィールドであることが書かれています。</p>
+<p><code>naginata</code>コマンドがインストールされるので、以下のように設定ファイルを作ります。</p>
 
-<blockquote><p>Active Record allows inheritance by storing the name of the class in a column
-that by default is named “type” (can be changed by overwriting
-Base.inheritance_column).</p></blockquote>
-
-<p>このエラーを回避するには以下どちらかで対応します。</p>
-
-<ol>
-<li>typeというフィールド名を使うのをやめて別の名前を使う。</li>
-<li>もしくは、STIで使うフィールド名を変えてしまう。</li>
-</ol>
-
-
-<p>2のケースでは以下のようにします。</p>
-
-<p><code>ruby app/models/campany.rb
-class Company &lt; ActiveRecord::Base; end
-  self.inheritance_column = 'sti_type'
-end
+<p><code>
+$ naginata init
 </code></p>
 
-<p>ケースバイケースですが、ある案件ではtypeフィールドをどうしても使いたかったので2の方法を取りました。type名以外の選択が可能であれば1のケースが良いとおもいます。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[bundle_frozenとかbundle_without]]></title>
-    <link href="http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without/"/>
-    <updated>2013-07-26T16:37:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/07/26/bundle-frozen-and-bundle-without</id>
-    <content type="html"><![CDATA[<p>bundlerの<code>--deployment</code>や<code>--without</code>に関してはまったことのメモ。</p>
+<p>カレントディレクトリにNaginatafileというのが出来ます。管理対象のnagiosサーバを書いてください。</p>
 
-<!--more-->
-
-
-<h3>bundle install &mdash;deployment</h3>
-
-<p><code>--deployment</code>をつけ実行すると<code>vendor/bundle</code>以下にgemがインストールされます。deploymentの名の通り本番環境でインストールする場合を想定したコマンドです。</p>
+<p>以下設定例です</p>
 
 <p>```</p>
 
-<pre><code>$ bundle install --deployment
-</code></pre>
+<h1>管理対象のnagiosサーバを書く</h1>
 
-<p>```</p>
+<h1>ログイン先のユーザ名が異なる場合はfoo@のようにユーザ名も指定する</h1>
 
-<h3>BUNDLE_FROZEN</h3>
+<p>nagios_server &lsquo;<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#x66;&#x6f;&#111;&#64;&#x6e;&#x61;&#103;&#105;&#111;&#115;&#49;&#x2e;&#x65;&#120;&#x61;&#109;&#x70;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#102;&#111;&#111;&#64;&#110;&#x61;&#x67;&#x69;&#x6f;&#115;&#x31;&#x2e;&#101;&#120;&#x61;&#109;&#x70;&#x6c;&#x65;&#46;&#99;&#x6f;&#109;</a>&rsquo;
+nagios_server &lsquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#98;&#97;&#114;&#64;&#110;&#x61;&#x67;&#x69;&#111;&#115;&#50;&#x2e;&#x65;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x2e;&#x63;&#111;&#109;">&#x62;&#97;&#114;&#x40;&#x6e;&#x61;&#x67;&#x69;&#x6f;&#115;&#x32;&#x2e;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#x2e;&#x63;&#111;&#x6d;</a>&rsquo;
+nagios_server &lsquo;<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#98;&#x61;&#x7a;&#x40;&#x6e;&#97;&#103;&#105;&#x6f;&#115;&#51;&#x2e;&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#98;&#97;&#x7a;&#64;&#x6e;&#x61;&#103;&#105;&#111;&#115;&#51;&#x2e;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#101;&#x2e;&#x63;&#x6f;&#109;</a>&rsquo;</p>
 
-<p><code>--deployment</code>の名のとおり本番環境でインストールする場合を想定したコマンドですが、うっかり開発環境で実行してしまって少々はまってしまいました。</p>
+<h1>Global nagios server options</h1>
 
-<p>開発環境でGemfileに新しくgemを追加したので、<code>bundle install</code>しようとします。すると</p>
+<h1>nagios_serverのファイルパスを指定する</h1>
 
-<p><code>``
-$ bundle install
-You are trying to install in deployment mode after changing
-your Gemfile. Run</code>bundle install` elsewhere and add the
-updated Gemfile.lock to version control.</p>
+<h1>またrun_command_as: には nagios.cmd に書き込む時の</h1>
 
-<p>If this is a development machine, remove the Gemfile freeze
-by running <code>bundle install --no-deployment</code>.</p>
+<h1>ユーザ名を指定する</h1>
 
-<p>You have added to the Gemfile:
-* colorize
+<p>set :nagios_server_options, {
+  command_file: &lsquo;/usr/local/nagios/var/rw/nagios.cmd&rsquo;,
+  status_file: &lsquo;/usr/local/nagios/var/status.cmd&rsquo;,
+  run_command_as: &lsquo;nagios&rsquo;,
+}</p>
+
+<h1>Global SSH options</h1>
+
+<h1>SSHの秘密鍵を指定する</h1>
+
+<p>set :ssh_options, {
+  keys: %w(/home/nikushi/.ssh/id_rsa),
+}</p>
+
+<h1>nagiosサーバでsudoするのでpty trueにしておく</h1>
+
+<p>set :pty, true
 ```</p>
 
-<p>とエラーがでます。<code>bundle install --deployment</code>を1度でも実行すると<code>.bundle/config</code>が更新され<code>BUNDLE_FROZEN: 1</code>が付加されるようです。</p>
+<p>セットアップは以上です。nagiosサーバ側にはrubyやnaginataをインストールする必要はありません。</p>
 
-<p>これを解除するには、<code>bundle install --no-deployment</code>を1度実行するか、<code>.bundle/config</code>を直接編集して<code>BUNDLE_FROZEN: 1</code>の行を削除してしまうかする必要があります。</p>
+<h4>通知を止める,有効にする</h4>
 
-<h3>BUNDLE_WITHOUT</h3>
+<p>例として全nagiosサーバ上の全ホストのPINGとSSHの監視の通知を止めてみます。動作を確かめるため<code>-v (--verbose)</code>オプションを付けて実行してます。</p>
 
-<p><code>--without</code>というオプションがあります。以下のように使います。本番環境ではdevelopmentやtestグループのgemは不要なのでwithoutでinstall対象から除外することができます。</p>
-
-<p><code>
-  $ bundle install --deployment --without development test
+<p><code>ruby
+$ naginata notification --all-hosts  --disable  --services PING,SSH -v
+..snip..
+Following notifications will be disabled
+localhost
+  - PING
+  - SSH
+redis01.tokyo.local
+  - PING
+  - SSH
+web01.tokyo.local
+  - PING
+  - SSH
+localhost
+  - PING
+  - SSH
+redis01.osaka.local
+  - PING
+  - SSH
+web01.osaka.local
+  - PING
+  - SSH
+Are you sure? [y|N] y
+INFO [71871262] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [48a76239] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [71871262] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [ef4827b7] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [48a76239] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [4ffe6eb6] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [ef4827b7] Finished in 0.021 seconds with exit status 0 (successful).
+INFO [7ee77545] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;PING" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [4ffe6eb6] Finished in 0.022 seconds with exit status 0 (successful).
+INFO [2ef43042] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;PING" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [2ef43042] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [13b54c30] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;SSH" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [7ee77545] Finished in 0.022 seconds with exit status 0 (successful).
+INFO [de883201] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;SSH" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [13b54c30] Finished in 0.018 seconds with exit status 0 (successful).
+INFO [13f9ce6c] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;PING" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [de883201] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [5458ec38] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;PING" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [13f9ce6c] Finished in 0.023 seconds with exit status 0 (successful).
+INFO [5458ec38] Finished in 0.021 seconds with exit status 0 (successful).
+INFO [be16e918] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;SSH" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [6247dc33] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;SSH" &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [be16e918] Finished in 0.020 seconds with exit status 0 (successful).
+INFO [6247dc33] Finished in 0.021 seconds with exit status 0 (successful).
+Done
 </code></p>
 
-<p>ただ、これも<code>--without</code>つきで実行すると<code>.bundle/config</code>に保存されてしまいます。</p>
+<p>なお、naginataは強力なフィルタ機能を持っています。上の例は全ホスト対象にしましたが引数にホスト名を指定すると対象ホストを限定できます。</p>
 
-<h2>```</h2>
-
-<p>BUNDLE_WITHOUT: development test
-```</p>
-
-<p>うっかり開発環境で実行してしまうと、その後、<code>bundle exec rspec</code>などやろうとすると以下のエラーが発生します。rspec-coreはGemに含まれませんと。</p>
+<p>また、ホスト名やサービス名は部分一致の挙動のため一部だけ指定することもできます。grepコマンドの引数のイメージです。また複数指定も出来ます。</p>
 
 <p><code>
-$ bundle exec rpsec
-/Users/name/.rbenv/versions/2.0.0-p195/lib/ruby/gems/2.0.0/gems/bundler-1.3.5/lib/bundler/rubygems_integration.rb:214:in `block in replace_gem': rspec-core is not part of the bundle. Add it to Gemfile. (Gem::LoadError)
+$ naginata notification osaka.local tokyo --enable --services Lo,PI
+Following notifications will be enabled
+redis01.tokyo.local
+  - Load
+  - PING
+web01.tokyo.local
+  - Load
+  - PING
+redis01.osaka.local
+  - Load
+  - PING
+web01.osaka.local
+  - Load
+  - PING
+Are you sure? [y|N] y
+Done
 </code></p>
 
-<p>この場合も、<code>.bundle/config</code>を編集してBUNDLE_WITHOUTの行を削除すれば良いです。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[BSONオブジェクトのデータサイズを確認する方法(Ruby)]]></title>
-    <link href="http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/"/>
-    <updated>2013-02-13T15:06:00+09:00</updated>
-    <id>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size</id>
-    <content type="html"><![CDATA[<p>BSON Objectのサイズを求める方法。</p>
+<p>正規表現もできる</p>
 
-<!--more-->
+<p><code>
+$ naginata notification ^web  --enable --services 'd$'
+Following notifications will be enabled
+web01.tokyo.local
+  - Load
+web01.osaka.local
+  - Load
+Are you sure? [y|N] y
+Done
+</code></p>
+
+<p>また、例は割愛しますが<code>--nagios</code>オプションで対象nagiosサーバを限定できます。</p>
+
+<h4>ステータス確認</h4>
+
+<p>元々External Command実行フレームワークにする作りをしていましたが、作っていく途中で監視ステータスや通知OFFされているかどうかを確認出来た方がいいなということになって作ってみました。</p>
+
+<p>以下の例ではサービス一覧を複数Nagiosサーバから取得して現在の状態を表示してます。便利、でしょうか?。こちらも上述のフィルタが使えます。</p>
+
+<p><code>
+$ naginata services -a
+NAGIOS   HOST                 SERVICE          STATUS   FLAGS  OUTPUT
+nagios0  localhost            HTTP             WARNING  AC,nt  HTTP WARNING: HTTP/1.1 403 Forbidden - 5152 bytes in 0.001 second response time
+nagios0  localhost            Current Load     OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
+nagios0  localhost            PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  redis01.tokyo.local  Load             CRITICAL AC,NT  Too high load average 15
+nagios0  redis01.tokyo.local  PING             OK       ac,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  redis01.tokyo.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+nagios0  web01.tokyo.local    Load             OK       AC,NT  OK - load average: 0.01, 0.00, 0.00
+nagios0  web01.tokyo.local    PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  web01.tokyo.local    SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+nagios1  redis01.osaka.local  Load             OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
+nagios1  redis01.osaka.local  PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios1  redis01.osaka.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+</code></p>
+
+<p>FLAGSという列に見慣れぬ文字列が入ってますが</p>
+
+<ul>
+<li>AC = Active Check enabled</li>
+<li>ac = active check disabled</li>
+<li>NT = NoTification disabled</li>
+<li>nt = notification disabled</li>
+</ul>
 
 
-<p>``` ruby
-class Person
-  include Mongoid::Document
-  field :name, type: String
-end</p>
+<p>という意味になってます。</p>
 
-<p>Person.create name: &lsquo;a&rsquo;</p>
+<h3>制約など</h3>
 
-<p>person = Person.first
-puts Moped::BSON::Document.serialize(parson.as_document).size
-```</p>
+<ul>
+<li>nagiosサーバにはSSHでパスフレーズ無しでログインできる前提です</li>
+<li>SSHログイン後nagios.cmdに書き込める権限があるユーザか、もしくはSSHログイン後にsudoできるユーザ必要があります</li>
+</ul>
 
-<p>MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。</p>
 
-<p>蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。</p>
+<h3>その他</h3>
 
-<p>``` ruby
-class Person
-  include Mongoid::Document
-  field :name, type: String
-  embeds_many :children
-end</p>
+<p><a href="https://github.com/niku4i/naginata/tree/master/integration-test">naginata/tree/master/integration-test</a>にVagrantファイルとサンプルの設定ファイルがあり動作を試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。</p>
 
-<p>class Child
-  include Mongoid::Document
-  embeded_in :person
-  field :age
-end</p>
+<p><code>
+$ cd integration-test
+$ vagrant up
+$ naginata services -a
+</code></p>
 
-<p>Person.create name: &lsquo;a&rsquo;
-person = Person.first
-person.children &lt;&lt; たくさんデータ入れる</p>
+<p><a href="http://localhost:8880">http://localhost:8880</a> , <a href="http://localhost:8881">http://localhost:8881</a> で仮想マシン側のnagios画面を確認できます。</p>
 
-<p>Person.first   # loadに時間がかかる!
-```</p>
+<h3>ToDo</h3>
 
-<p>relationにした場合、子供はloadされないので時間がかかりません。</p>
+<ul>
+<li>現状notificationのon/offのみ対応。その他のコマンドへの対応。</li>
+<li>ステータスに色を付ける</li>
+<li>高速化。現状サービス数、nagiosサーバ数が多くなるとそれなりに遅い。</li>
+</ul>
+
+
+<h3>まとめ</h3>
+
+<p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作った。</p>
+
+<p>ぜひ使ってみてください!!</p>
 ]]></content>
   </entry>
   

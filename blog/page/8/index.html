@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Ruby プログラマのための Perl ウェブアプリケーション開発入門 (Perl web development guide for Rubyist ) View more presentations from Kensuke Kaneko
-Environment Perlbrew &nbsp &hellip;">
+  <meta name="description" content="ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。 &nbsp; 最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,145 @@ Environment Perlbrew &nbsp &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/">CLIツールのためのフレームワーク</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
+
+&nbsp;
+
+最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
+結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。
+
+&nbsp;
+
+書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。
+
+<strong>追記</strong>
+
+選べる。
+<ul>
+	<li>App::Cmd</li>
+	<li>App::CLI</li>
+	<li>CLI::Dispatch</li>
+</ul>
+App::Cmdが有名どころのようだ。
+
+&nbsp;
+<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
+<div id="__ss_134444" style="width: 425px;">
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-02T00:00:00+09:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2011</time>
+        
+         | <a href="/blog/2011/11/02/rubywoshi-metaifang-xiang-kematome2011nian-qiu-ban-223-software/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><a href="http://www.223soft.net/54">Rubyを始めたい方向けまとめ2011年秋版 - 223 Software</a>.
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/18/yapcasia-tokyo/">YAPC::Asia Tokyo</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-18T00:00:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/10/18/yapcasia-tokyo/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">行きたかったけどチケット売り切れで行けなかったので、他人様のレポートを読んで雰囲気を味わおう。来年は絶対行ってみたい。
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -462,161 +600,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/16/getting-works-done/">getting works done</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-16T00:00:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/16/getting-works-done/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">I&#8217;m going to take all week off in Hawaii. 
-
-というわけで、来週のシルバーウィークは遅めの夏休みでハワイです。浮き足立ってるかと言われると、実は全然そんなことなくて、目の前の仕事をいかに終えるかで今月はたいへん。
-
-来週は一眼レフで気ままに写真とったり、ダイヤモンドヘッドをトレッキングして、ワイキキビーチで日光浴するぜ。浮き足立ってきた。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/15/pc-ji-neng-xing-aiuea-jins-yan-jing-%28meganemegane%29/">ディスプレイを見るときの負荷を軽減する眼鏡 by JINS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-15T00:00:00+09:00" pubdate data-updated="true">Sep 15<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/15/pc-ji-neng-xing-aiuea-jins-yan-jing-%28meganemegane%29/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">&nbsp;
-
-<a href="http://www.jins-jp.com/functional/pc.html"><img src='/images/img_pc_main.jpg' alt='' /></a>
-
-&nbsp;
-
-<a href="http://www.jins-jp.com/functional/pc.html">PC - 機能性アイウエア | JINS - 眼鏡（メガネ・めがね）</a>
-
-これは買って試す価値ありだな。最近、コードを書く時間が増えて余計に目がチラつくし欲しいところ。むしろこれまでこのジャンルが少なかったのが不思議なくらい。
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/">WebSvnでリポジトリをtar.gzやzip化してダウンロードする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-12T00:00:00+09:00" pubdate data-updated="true">Sep 12<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/12/websvnderipozitoriwotar-gzyaziphua-sitedaunrodosuru/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">インストール時には無効になっていたが、include/config.phpを修正することで有効にできる。
-<pre lang="php">
-// For delivered tarballs, if option enabled...
-$config->setTarPath('/bin/');
-
-// For delivered GZIP'd files and tarballs, if option enabled...
-$config->setGZipPath('/usr/bin/');
-
-// download folder/file zipped ...
-$config->setZipPath('/usr/bin/');
-
-// You need tar and gzip installed on your system. Set the paths above if necessary
-//
-// Uncomment the line below to offer a tarball download option across all your
-// reposi
-$config->allowDownload();
-
-// Change the line below to set the download level across all your repositories.
-// 環境に合わせて調整
-$config->setMinDownloadLevel(1);
-</pre>
-
-
-$config->setMinDownloadLevelに渡す数字はリポジトリの/を0として数える。
-<pre>
- /               0
-   project1/     1
-     - sub/      2
-   project2/     1
-</pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -638,23 +621,23 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/27/embulk/">Embulkというバルクデータローダをさわってみた</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
       </li>
     
       <li class="post">
+        <a href="/blog/2014/12/07/sensu-nyumon/">センス入門 を読んだ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/">git pushのトピックブランチ名を省略する方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/09/isucon4-final/">ISUCON4本戦に出場しました!! 悔しい!!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/06/binfiles/">binfiles</a>
       </li>
     
   </ul>
@@ -693,7 +676,7 @@ $config->setMinDownloadLevelに渡す数字はリポジトリの/を0として�
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - niku4i -
+  Copyright &copy; 2015 - niku4i -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
   - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
   <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
