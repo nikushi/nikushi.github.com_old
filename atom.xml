@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-06T16:25:53+09:00</updated>
+  <updated>2015-04-06T16:38:55+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -329,18 +329,36 @@
 
 <h3>その他</h3>
 
-<p><a href="https://github.com/niku4i/naginata/tree/master/integration-test">naginata/tree/master/integration-test</a>にVagrantファイルとサンプルの設定ファイルがあり動作を試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。</p>
+<p><a href="https://github.com/niku4i/naginata/tree/master/integration-test">naginata/tree/master/integration-test</a>にVagrantファイルとサンプルの設定ファイルを置いてるのでVagrantがインストールされたMacがあれば動作をお手軽に試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cd</span> <span class="n">integration</span><span class="o">-</span><span class="nb">test</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">naginata</span>
+</span><span class='line'><span class="err">$</span> <span class="n">git</span> <span class="nb">clone</span> <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">niku4i</span><span class="o">/</span><span class="n">naginata</span><span class="o">.</span><span class="n">git</span>
+</span><span class='line'><span class="err">$</span> <span class="n">cd</span> <span class="n">naginata</span><span class="o">/</span><span class="n">integration</span><span class="o">-</span><span class="nb">test</span>
 </span><span class='line'><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span>
-</span><span class='line'><span class="err">$</span> <span class="n">naginata</span> <span class="n">services</span> <span class="o">-</span><span class="n">a</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://localhost:8880">http://localhost:8880</a> , <a href="http://localhost:8881">http://localhost:8881</a> で仮想マシン側のnagios画面を確認できます。</p>
+<p>つづいて/etc/hostsに以下2行を追記する</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>       <span class="n">nagios0</span>
+</span><span class='line'><span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>       <span class="n">nagios1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これで動作確認できるとおもいます!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">naginata</span> <span class="n">services</span> <span class="o">-</span><span class="n">a</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また <a href="http://localhost:8880">http://localhost:8880</a> , <a href="http://localhost:8881">http://localhost:8881</a> で仮想マシン側のnagios画面見れます。</p>
 
 <h3>ToDo</h3>
 
