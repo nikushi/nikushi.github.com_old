@@ -9,8 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="Rubyを始めたい方向けまとめ2011年秋版 - 223 Software.
-">
+  <meta name="description" content="ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。 &nbsp; 最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/">CLIツールのためのフレームワーク</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-03T00:00:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/11/03/cliturufalsetamefalsehuremuwaku/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">ここ最近、1、2ヶ月は暇を見つけてはperlを書いて内製ツールを書いてます。
+
+&nbsp;
+
+最初は小さなスクリプトレベルだったのが、段々膨らんできて見通しが悪くなってきて、今度はモジュール化とかコマンドを分けてみたりしてます。それでもコード量が多い。なんでかなとおもうと、一つはusageとかオプションのvalidation部分だったりします。
+結構な行数書いたところでそうか&#8230;とおもいあたりました。WebアプリだとRailsやらCatalystといったフレームワークがあるんだから、CLIアプリにもフレームワークありますね。perlでもいくつかCLIアプリのためのフレームワークがあるみたい。↓のスライドはApp::Cmdについての解説。わかりやすい。
+
+&nbsp;
+
+書いちゃったコードどうするかな&#8230;. App::Cmdベースでもう一度焼き直すか。作っては壊し、作っては壊しの連続でなかなかプログラムが出来上がらない。
+
+<strong>追記</strong>
+
+選べる。
+<ul>
+	<li>App::Cmd</li>
+	<li>App::CLI</li>
+	<li>CLI::Dispatch</li>
+</ul>
+App::Cmdが有名どころのようだ。
+
+&nbsp;
+<div style="width: 425px;"><strong style="display: block; margin: 12px 0 4px;"><a title="Writing Modular Command-line Apps with App::Cmd" href="http://www.slideshare.net/rjbs/writing-modular-commandline-apps-with-appcmd" target="_blank">Writing Modular Command-line Apps with App::Cmd</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/134444" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="425" height="355"></iframe></div>
+<div id="__ss_134444" style="width: 425px;">
+<div style="padding: 5px 0 12px;">View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/rjbs" target="_blank">Ricardo Signes</a></div>
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -538,48 +600,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/16/getting-works-done/">getting works done</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-16T00:00:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/09/16/getting-works-done/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">I&#8217;m going to take all week off in Hawaii. 
-
-というわけで、来週のシルバーウィークは遅めの夏休みでハワイです。浮き足立ってるかと言われると、実は全然そんなことなくて、目の前の仕事をいかに終えるかで今月はたいへん。
-
-来週は一眼レフで気ままに写真とったり、ダイヤモンドヘッドをトレッキングして、ワイキキビーチで日光浴するぜ。浮き足立ってきた。
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -601,6 +621,10 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/17/anglarjs-1/">AnglarJSことはじめ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
       </li>
     
@@ -614,10 +638,6 @@ amazonで買ったプロテインが連休中に届いた:0 間違えて2個ぽ�
     
       <li class="post">
         <a href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/">git pushのトピックブランチ名を省略する方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a>
       </li>
     
   </ul>
