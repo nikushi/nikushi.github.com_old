@@ -29,7 +29,7 @@ Webの情報、podcastから得た今日の成果
 * フルスタックゆえか学習コストは高い
 * 例えばサーバサイドをRailsで作る場合、2パターンのアプローチが取れる
   * RailsでAngularJSのコードを含んだhtmlレンダリングして、クライアントサイドでAngularJSを使う
-  * もしくはRailsはXHRのAPIとして、ビジネスロジックとビューのレンダリングはAngularJSに任せる
+  * もしくはRailsはXHRのAPIとして、ビジネスロジックとビューのレンダリング、フォームバリデーションなどはAngularJSに任せる
   * アプリ化を見据えている人は後者のアプローチをとっているみたい
   * (個人的にはRailsの恩恵を受けたいのでサーバサイドで一定のロジックを作りたい)
   * Rails + AngularJSの例はここを見るとよさそう[kwiatkowski/todo-rails4-angularjs](https://github.com/mkwiatkowski/todo-rails4-angularjs)
