@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AngularJS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/angularjs/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-17T13:10:09+09:00</updated>
+  <updated>2015-04-17T13:13:28+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -18,14 +18,14 @@
     <link href="http://orihubon.com/blog/2015/04/17/angularjs-1/"/>
     <updated>2015-04-17T12:27:00+09:00</updated>
     <id>http://orihubon.com/blog/2015/04/17/angularjs-1</id>
-    <content type="html"><![CDATA[<p>仕事でAngularJSを使う機運が高まっているので素振り1日目。数時間Webブラウジングした結果のメモ。</p>
+    <content type="html"><![CDATA[<p>仕事でAngularJSを使う機運が高まっているので素振り1日目。数時間Webブラウジングしたメモ。</p>
 
 <!--more-->
 
 
 <h4>メモ</h4>
 
-<p>Webの情報、podcastから得た情報の個人的まとめ</p>
+<p>Webの情報、podcastから得た今日の成果</p>
 
 <ul>
 <li>AnglarJSはJavascriptのフレームワーク</li>
@@ -91,7 +91,7 @@
 
 <h4>まとめ</h4>
 
-<p>クライアントサイドエンジニアリング力の低い自分としてはとっても新鮮でした。</p>
+<p>まだコードは1行も書いてない。クライアントサイドエンジニアリング力の低い自分としてはとっても新鮮でした。</p>
 ]]></content>
   </entry>
   
