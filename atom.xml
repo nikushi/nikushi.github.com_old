@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-17T13:14:50+09:00</updated>
+  <updated>2015-04-17T13:17:40+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -44,7 +44,7 @@
 
 <ul>
 <li>RailsでAngularJSのコードを含んだhtmlレンダリングして、クライアントサイドでAngularJSを使う</li>
-<li>もしくはRailsはXHRのAPIとして、ビジネスロジックとビューのレンダリングはAngularJSに任せる</li>
+<li>もしくはRailsはXHRのAPIとして、ビジネスロジックとビューのレンダリング、フォームバリデーションなどはAngularJSに任せる</li>
 <li>アプリ化を見据えている人は後者のアプローチをとっているみたい</li>
 <li>(個人的にはRailsの恩恵を受けたいのでサーバサイドで一定のロジックを作りたい)</li>
 <li>Rails + AngularJSの例はここを見るとよさそう<a href="https://github.com/mkwiatkowski/todo-rails4-angularjs">kwiatkowski/todo-rails4-angularjs</a></li>
