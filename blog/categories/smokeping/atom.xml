@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SmokePing | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/smokeping/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:55:52+09:00</updated>
+  <updated>2015-04-19T12:57:28+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす]]></title>
-    <link href="http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/"/>
+    <link href="http://orihubon.com/blog/2015/04/19/plackup-smokeping-with-perlbrew/"/>
     <updated>2015-04-19T11:45:00+09:00</updated>
-    <id>http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew</id>
+    <id>http://orihubon.com/blog/2015/04/19/plackup-smokeping-with-perlbrew</id>
     <content type="html"><![CDATA[<p>SmokePingをApache+CGIではなくPlackだけで動かしてみた。</p>
 
 <!--more-->
