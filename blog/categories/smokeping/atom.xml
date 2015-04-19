@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SmokePing | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/smokeping/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:57:28+09:00</updated>
+  <updated>2015-04-19T12:58:24+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -113,8 +113,7 @@ $ cpanm Alien::RRDtool CGI::Emulate::PSGI Plack `cat PERL_MODULES`
 <p>SmokePingを普通に./configure &ndash;> make &ndash;> make installするとシステムPerlを使おうとするので一工夫が必要で、configure時に<code>PERL</code>環境変数で使うperlを指定することが出来る。また<code>--enable-pkgonly</code>オプションを指定することでSmokePingのインストーラ自身がCPANモジュールをインストールするのを止めている。</p>
 
 <p><code>
-$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
-$ PERL=`ls $PERL` ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
+$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
 $ make
 $ sudo /usr/bin/gmake install
 $ sudo chown -R smokeping:smokeping /usr/local/SmokePing

@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:57:28+09:00</updated>
+  <updated>2015-04-19T12:58:24+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -121,9 +121,7 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
-</span><span class='line'>$ PERL=`ls $PERL` ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
 </span><span class='line'>$ make 
 </span><span class='line'>$ sudo /usr/bin/gmake install
 </span><span class='line'>$ sudo chown -R smokeping:smokeping /usr/local/SmokePing</span></code></pre></td></tr></table></div></figure>
