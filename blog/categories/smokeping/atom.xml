@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SmokePing | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/smokeping/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:59:58+09:00</updated>
+  <updated>2015-04-19T13:04:20+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -143,14 +143,14 @@ cgiurl   = http://localhost:5000/smokeping/  # URLは適宜読み替えてくだ
 <p>以下のapp.psgiを/usr/local/Smokeping/に置く。</p>
 
 <p>```perl
-use Plack::Builder;
+use warnings;
+use strict;</p>
+
+<p>use Plack::Builder;
 use CGI::Emulate::PSGI;
 use CGI qw();</p>
 
 <p>use Smokeping;</p>
-
-<p>use warnings;
-use strict;</p>
 
 <p>my $smokeping = sub {</p>
 

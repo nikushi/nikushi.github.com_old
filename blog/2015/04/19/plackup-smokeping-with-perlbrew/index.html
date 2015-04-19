@@ -260,14 +260,14 @@
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">use</span> <span class="nn">Plack::</span><span class="n">Builder</span><span class="p">;</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="nn">Plack::</span><span class="n">Builder</span><span class="p">;</span>
 </span><span class='line'><span class="k">use</span> <span class="nn">CGI::Emulate::</span><span class="n">PSGI</span><span class="p">;</span>
 </span><span class='line'><span class="k">use</span> <span class="n">CGI</span> <span class="sx">qw()</span><span class="p">;</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">use</span> <span class="n">Smokeping</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class='line'><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">my</span> <span class="nv">$smokeping</span> <span class="o">=</span> <span class="k">sub </span><span class="p">{</span>
 </span><span class='line'>    <span class="nn">CGI::</span><span class="n">initialize_globals</span><span class="p">();</span>
