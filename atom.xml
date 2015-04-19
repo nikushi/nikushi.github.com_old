@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:54:16+09:00</updated>
+  <updated>2015-04-19T12:55:52+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -33,7 +33,7 @@
 </ul>
 
 
-<p>なお、RRDToolをシステムのパッケージシステムからインストールしPerlで使おうとするとCentOSの場合、rrdtoolとrrdtool-perlを入れることになる。rrdtool-perlを使うにはシステムPerlを使わなければならず、今回やりたいperlbrew perlを使えない。そこでAlien::RRDtoolを使ってrrdtoolをbuildすることでRRDToolをperlbrew perlで使うことにした。Alien::RRDtoolは@gfxさんの<a href="http://perl-users.jp/articles/advent-calendar/2011/hacker/2">Alien::RRDtool &ndash; RRDtoolをCPANから入れる</a>が大変参考になる。</p>
+<p>なお、RRDToolをシステムのパッケージシステムからインストールしPerlで使おうとするとCentOSの場合、rrdtoolとrrdtool-perlを入れることになる。rrdtool-perlを使うにはシステムPerlを使わなければならず、今回やりたいperlbrew perlを使えない。そこでAlien::RRDtoolを使ってrrdtoolをbuildすることでRRDToolをperlbrew perlで使えるようになる。Alien::RRDtoolは@gfxさんの<a href="http://perl-users.jp/articles/advent-calendar/2011/hacker/2">Alien::RRDtool &ndash; RRDtoolをCPANから入れる</a>が大変参考になる。</p>
 
 <p>Plack化するためCGI::Emulate::PSGIを使う。</p>
 
