@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SmokePing | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/smokeping/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:52:05+09:00</updated>
+  <updated>2015-04-19T12:54:16+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -138,7 +138,7 @@ $ head -1  /usr/local/SmokePing/bin/smokeping</p>
 <p><code>
 imgcache = /usr/local/SmokePing/cache
 imgurl   = /smokeping/cache
-cgiurl   = http://localhost/smokeping/
+cgiurl   = http://localhost:5000/smokeping/  # URLは適宜読み替えてください
 </code></p>
 
 <p>以下のapp.psgiを/usr/local/Smokeping/に置く。</p>
@@ -188,7 +188,9 @@ $ plackup
 
 <p>あとはpingプロセスを立ち上げる。これもsmokepingユーザで動かす。別途fping等インストールしておく。</p>
 
-<p><code>$ /var/app/SmokePing/bin/smokeping</code></p>
+<p><code>
+$ /var/app/SmokePing/bin/smokeping
+</code></p>
 
 <h4>まとめ</h4>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:52:05+09:00</updated>
+  <updated>2015-04-19T12:54:16+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -148,7 +148,7 @@
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>imgcache = /usr/local/SmokePing/cache
 </span><span class='line'>imgurl   = /smokeping/cache
-</span><span class='line'>cgiurl   = http://localhost/smokeping/</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>cgiurl   = http://localhost:5000/smokeping/  # URLは適宜読み替えてください</span></code></pre></td></tr></table></div></figure>
 
 
 <p>以下のapp.psgiを/usr/local/Smokeping/に置く。</p>
@@ -217,7 +217,10 @@
 
 <p>あとはpingプロセスを立ち上げる。これもsmokepingユーザで動かす。別途fping等インストールしておく。</p>
 
-<p><code>$ /var/app/SmokePing/bin/smokeping</code></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$</span> <span class="err">/</span><span class="nv">var</span><span class="sr">/app/</span><span class="n">SmokePing</span><span class="sr">/bin/smo</span><span class="n">keping</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>まとめ</h4>
 
