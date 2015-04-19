@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:58:24+09:00</updated>
+  <updated>2015-04-19T12:59:58+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -216,7 +216,7 @@
 <p>あとはpingプロセスを立ち上げる。これもsmokepingユーザで動かす。別途fping等インストールしておく。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$</span> <span class="err">/</span><span class="nv">var</span><span class="sr">/app/</span><span class="n">SmokePing</span><span class="sr">/bin/smo</span><span class="n">keping</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$</span> <span class="err">/</span><span class="nv">usr</span><span class="sr">/local/</span><span class="n">SmokePing</span><span class="sr">/bin/smo</span><span class="n">keping</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
