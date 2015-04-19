@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす - ni-blog</title>
+  <meta name="author" content="niku4i">
+
+  
+  <meta name="description" content="SmokePingをApache+CGIではなくPlackだけで動かしてみた。 以前書いたSmokePingをインストールしてみたという記事ではシステムPerl + Apache CGI + yumからrrdtool, rrdtoo-perlをインストールする方法でやったが、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-262568-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">ni-blog</a></h1>
+  
+    <h2>tech, web, work, and Tokyo.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:orihubon.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-19T11:45:00+09:00" pubdate data-updated="true">Apr 19<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>SmokePingをApache+CGIではなくPlackだけで動かしてみた。</p>
+
+<!--more-->
+
+
+<p>以前書いた<a href="http://orihubon.com/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>という記事ではシステムPerl + Apache CGI + yumからrrdtool, rrdtoo-perlをインストールする方法でやったが、今回は違う方針で入れてみた。</p>
+
+<p>やりたいこと</p>
+
+<ul>
+<li>システムPerlではなくperlbrewで入れたperlを使う</li>
+<li>PlackでApache無しでWeb画面を立ち上げる</li>
+</ul>
+
+
+<p>なお、RRDToolをシステムのパッケージシステムからインストールしPerlで使おうとするとCentOSの場合、rrdtoolとrrdtool-perlを入れることになる。rrdtool-perlを使うにはシステムPerlを使わなければならず、今回やりたいperlbrew perlを使えない。そこでAlien::RRDtoolを使ってrrdtoolをbuildすることでRRDToolをperlbrew perlで使うことにした。Alien::RRDtoolは@gfxさんの<a href="http://perl-users.jp/articles/advent-calendar/2011/hacker/2">Alien::RRDtool &ndash; RRDtoolをCPANから入れる</a>が大変参考になる。</p>
+
+<p>Plack化するためCGI::Emulate::PSGIを使う。</p>
+
+<p>以下CentOS6での作業</p>
+
+<h4>RRDToolのbuildに必要なパッケージを入れる</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># yum install cairo cairo-devel pango pango-devel libxml2-devel bitmap-console-fonts vlgothic-fonts vlgothic-fonts-common</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>PerlbrewでSmokePing用Perlをbuildする</h4>
+
+<p>perlbrewの<code>--as</code>オプションを使ってperlを名前付きでインストールする。今回の作業で必須ではないが、perlのバージョンを上げたいときに普通にインストールするとshebangのパスを書き換えないといけないが、<code>--as</code>オプションを付けると変えなくて済むので便利。</p>
+
+<p>まずsmokepingユーザを作成する</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># groupadd smokeping
+</span><span class='line'># useradd smokeping -g smokeping
+</span><span class='line'># su - smokeping</span></code></pre></td></tr></table></div></figure>
+
+
+<p>続いてperlbrewをsmokepingユーザ環境化に入れる</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L http://install.perlbrew.pl | bash
+</span><span class='line'>$ echo 'source $HOME/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bashrc
+</span><span class='line'>$ source ~/.bashrc</span></code></pre></td></tr></table></div></figure>
+
+
+<p>build</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ perl_version=5.20.2
+</span><span class='line'>$ perl_name=smokeping
+</span><span class='line'>$ perlbrew install $perl_version --as $perl_name  -j 4 -v 
+</span><span class='line'>   =&gt; ~/perl5/perlbrew/perls/$perl_name にperlがインストールされる</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>SmokePingのsourceをダウンロード</h4>
+
+<p>次のcpanmの工程で必要なので、まずsourceをダウンロードしておく</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.11.tar.gz
+</span><span class='line'>$ tar zxf smokeping-2.6.11.tar.gz
+</span><span class='line'>$ cd smokeping-2.6.11</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>CPANモジュールインストール</h4>
+
+<p>SmokePingが依存するCPANモジュール、 Alien::RRDtool、Plack関連モジュールをインストールする</p>
+
+<p>まず、perlbrew perlを使ってまずcpanmを入れる</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ perlbrew use $perl_name
+</span><span class='line'>$ curl -L https://cpanmin.us | perl - App::cpanminus</span></code></pre></td></tr></table></div></figure>
+
+
+<p>続いてcpanmを使ってperlbrew perl以下にCPANモジュールをインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cpanm Alien::RRDtool CGI::Emulate::PSGI Plack `cat PERL_MODULES`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PERL_MODULESはSmokePingのsourceに含まれているファイルでインストールすべきモジュールリストが定義されているのでここでインストールしておく。</p>
+
+<h4>SmokePingをインストール</h4>
+
+<p>SmokePingを普通に./configure &ndash;> make &ndash;> make installするとシステムPerlを使おうとするので一工夫が必要で、configure時に<code>PERL</code>環境変数で使うperlを指定することが出来る。また<code>--enable-pkgonly</code>オプションを指定することでSmokePingのインストーラ自身がCPANモジュールをインストールするのを止めている。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
+</span><span class='line'>$ PERL=`ls $PERL` ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
+</span><span class='line'>$ make 
+</span><span class='line'>$ sudo /usr/bin/gmake install
+</span><span class='line'>$ sudo chown -R smokeping:smokeping /usr/local/SmokePing</span></code></pre></td></tr></table></div></figure>
+
+
+<p>本当にperlbrew perlを使ってるかshebangを確認してみる</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ head -1  /usr/local/SmokePing/bin/smokeping
+</span><span class='line'>#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
+</span><span class='line'>
+</span><span class='line'>$ head -1  /usr/local/SmokePing/bin/smokeping_cgi
+</span><span class='line'>#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>plackupする</h4>
+
+<p>準備は整ったのでsmokepinユーザでplackupしてみる。なお今回は/smokepingをSmokePingのrootにした。</p>
+
+<p>まず、SmokePingの設定ファイルのうち以下の項目の修正が必要。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>imgcache = /usr/local/SmokePing/cache
+</span><span class='line'>imgurl   = /smokeping/cache
+</span><span class='line'>cgiurl   = http://localhost/smokeping/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下のapp.psgiを/usr/local/Smokeping/に置く。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">use</span> <span class="nn">Plack::</span><span class="n">Builder</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nn">CGI::Emulate::</span><span class="n">PSGI</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">CGI</span> <span class="sx">qw()</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="n">Smokeping</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">my</span> <span class="nv">$smokeping</span> <span class="o">=</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class='line'>    <span class="nn">CGI::</span><span class="n">initialize_globals</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">my</span> <span class="nv">$q</span> <span class="o">=</span> <span class="n">CGI</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1"># 適宜configは作成してください</span>
+</span><span class='line'>    <span class="nn">Smokeping::</span><span class="n">cgi</span><span class="p">(</span><span class="s">&quot;/usr/local/Smokeping/etc/config&quot;</span><span class="p">,</span> <span class="nv">$q</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nv">$smokeping</span>  <span class="o">=</span> <span class="nn">CGI::Emulate::</span><span class="n">PSGI</span><span class="o">-&gt;</span><span class="n">handler</span><span class="p">(</span> <span class="nv">$smokeping</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">builder</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">use</span> <span class="nn">Plack::App::</span><span class="n">File</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mount</span> <span class="s">&quot;/smokeping/cache&quot;</span> <span class="o">=&gt;</span> <span class="nn">Plack::App::</span><span class="n">File</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="n">root</span> <span class="o">=&gt;</span> <span class="s">&#39;./cache&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">to_app</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mount</span> <span class="s">&quot;/smokeping/cropper&quot;</span> <span class="o">=&gt;</span> <span class="nn">Plack::App::</span><span class="n">File</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="n">root</span> <span class="o">=&gt;</span> <span class="s">&#39;./htdocs/cropper&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">to_app</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mount</span> <span class="s">&quot;/smokeping&quot;</span> <span class="o">=&gt;</span> <span class="nv">$smokeping</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/cacheと/cropperはそれぞれ画像ファイルとjsファイルの参照のため。</p>
+
+<p>plackup</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$</span> <span class="nv">cd</span> <span class="sr">/usr/</span><span class="nb">local</span><span class="o">/</span><span class="n">SmokePing</span>
+</span><span class='line'><span class="nv">$</span> <span class="nv">plackup</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://localhost:5000/smokeping">http://localhost:5000/smokeping</a> でweb画面が見れます!!!</p>
+
+<p>あとはpingプロセスを立ち上げる。これもsmokepingユーザで動かす。別途fping等インストールしておく。</p>
+
+<p><code>$ /var/app/SmokePing/bin/smokeping</code></p>
+
+<h4>まとめ</h4>
+
+<p>何がいいの? システムPerl使いたくない人向け。また管理画面なのでCGIでも十分ではあるけどApache立てずに動かしたい人には便利。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-19T11:45:00+09:00" pubdate data-updated="true">Apr 19<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/smokeping/'>SmokePing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/04/17/angularjs-1/" title="Previous Post: AngularJSことはじめ">&laquo; AngularJSことはじめ</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/19/plackup-smokeping--with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/07/sensu-nyumon/">センス入門 を読んだ</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<style type="text/css">
+<!--
+.hatena-bookmark-widget-title { display: none; }
+-->
+</style>
+<h1>Popular Posts</h1>
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+  Hatena.BookmarkWidget.url   = "http://orihubon.com";
+  Hatena.BookmarkWidget.title = "人気エントリー";
+  Hatena.BookmarkWidget.sort  = "hot";
+  Hatena.BookmarkWidget.width = 0;
+  Hatena.BookmarkWidget.num   = 5;
+  Hatena.BookmarkWidget.theme = "notheme";
+  Hatena.BookmarkWidget.load();
+</script>
+</section>
+<section>
+  <h1>Recent Tweets</h1>
+  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - niku4i -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
+  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'orihubon';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/';
+        var disqus_url = 'http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

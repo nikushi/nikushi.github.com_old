@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-17T13:17:40+09:00</updated>
+  <updated>2015-04-19T12:48:39+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,224 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす]]></title>
+    <link href="http://orihubon.com/blog/2015/04/19/plackup-smokeping--with-perlbrew/"/>
+    <updated>2015-04-19T11:45:00+09:00</updated>
+    <id>http://orihubon.com/blog/2015/04/19/plackup-smokeping&#8211;with-perlbrew</id>
+    <content type="html"><![CDATA[<p>SmokePingをApache+CGIではなくPlackだけで動かしてみた。</p>
+
+<!--more-->
+
+
+<p>以前書いた<a href="http://orihubon.com/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>という記事ではシステムPerl + Apache CGI + yumからrrdtool, rrdtoo-perlをインストールする方法でやったが、今回は違う方針で入れてみた。</p>
+
+<p>やりたいこと</p>
+
+<ul>
+<li>システムPerlではなくperlbrewで入れたperlを使う</li>
+<li>PlackでApache無しでWeb画面を立ち上げる</li>
+</ul>
+
+
+<p>なお、RRDToolをシステムのパッケージシステムからインストールしPerlで使おうとするとCentOSの場合、rrdtoolとrrdtool-perlを入れることになる。rrdtool-perlを使うにはシステムPerlを使わなければならず、今回やりたいperlbrew perlを使えない。そこでAlien::RRDtoolを使ってrrdtoolをbuildすることでRRDToolをperlbrew perlで使うことにした。Alien::RRDtoolは@gfxさんの<a href="http://perl-users.jp/articles/advent-calendar/2011/hacker/2">Alien::RRDtool &ndash; RRDtoolをCPANから入れる</a>が大変参考になる。</p>
+
+<p>Plack化するためCGI::Emulate::PSGIを使う。</p>
+
+<p>以下CentOS6での作業</p>
+
+<h4>RRDToolのbuildに必要なパッケージを入れる</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># yum install cairo cairo-devel pango pango-devel libxml2-devel bitmap-console-fonts vlgothic-fonts vlgothic-fonts-common</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>PerlbrewでSmokePing用Perlをbuildする</h4>
+
+<p>perlbrewの<code>--as</code>オプションを使ってperlを名前付きでインストールする。今回の作業で必須ではないが、perlのバージョンを上げたいときに普通にインストールするとshebangのパスを書き換えないといけないが、<code>--as</code>オプションを付けると変えなくて済むので便利。</p>
+
+<p>まずsmokepingユーザを作成する</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># groupadd smokeping
+</span><span class='line'># useradd smokeping -g smokeping
+</span><span class='line'># su - smokeping</span></code></pre></td></tr></table></div></figure>
+
+
+<p>続いてperlbrewをsmokepingユーザ環境化に入れる</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L http://install.perlbrew.pl | bash
+</span><span class='line'>$ echo 'source $HOME/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bashrc
+</span><span class='line'>$ source ~/.bashrc</span></code></pre></td></tr></table></div></figure>
+
+
+<p>build</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ perl_version=5.20.2
+</span><span class='line'>$ perl_name=smokeping
+</span><span class='line'>$ perlbrew install $perl_version --as $perl_name  -j 4 -v 
+</span><span class='line'>   =&gt; ~/perl5/perlbrew/perls/$perl_name にperlがインストールされる</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>SmokePingのsourceをダウンロード</h4>
+
+<p>次のcpanmの工程で必要なので、まずsourceをダウンロードしておく</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.11.tar.gz
+</span><span class='line'>$ tar zxf smokeping-2.6.11.tar.gz
+</span><span class='line'>$ cd smokeping-2.6.11</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>CPANモジュールインストール</h4>
+
+<p>SmokePingが依存するCPANモジュール、 Alien::RRDtool、Plack関連モジュールをインストールする</p>
+
+<p>まず、perlbrew perlを使ってまずcpanmを入れる</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ perlbrew use $perl_name
+</span><span class='line'>$ curl -L https://cpanmin.us | perl - App::cpanminus</span></code></pre></td></tr></table></div></figure>
+
+
+<p>続いてcpanmを使ってperlbrew perl以下にCPANモジュールをインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cpanm Alien::RRDtool CGI::Emulate::PSGI Plack `cat PERL_MODULES`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PERL_MODULESはSmokePingのsourceに含まれているファイルでインストールすべきモジュールリストが定義されているのでここでインストールしておく。</p>
+
+<h4>SmokePingをインストール</h4>
+
+<p>SmokePingを普通に./configure &ndash;> make &ndash;> make installするとシステムPerlを使おうとするので一工夫が必要で、configure時に<code>PERL</code>環境変数で使うperlを指定することが出来る。また<code>--enable-pkgonly</code>オプションを指定することでSmokePingのインストーラ自身がCPANモジュールをインストールするのを止めている。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
+</span><span class='line'>$ PERL=`ls $PERL` ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
+</span><span class='line'>$ make 
+</span><span class='line'>$ sudo /usr/bin/gmake install
+</span><span class='line'>$ sudo chown -R smokeping:smokeping /usr/local/SmokePing</span></code></pre></td></tr></table></div></figure>
+
+
+<p>本当にperlbrew perlを使ってるかshebangを確認してみる</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ head -1  /usr/local/SmokePing/bin/smokeping
+</span><span class='line'>#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
+</span><span class='line'>
+</span><span class='line'>$ head -1  /usr/local/SmokePing/bin/smokeping_cgi
+</span><span class='line'>#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>plackupする</h4>
+
+<p>準備は整ったのでsmokepinユーザでplackupしてみる。なお今回は/smokepingをSmokePingのrootにした。</p>
+
+<p>まず、SmokePingの設定ファイルのうち以下の項目の修正が必要。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>imgcache = /usr/local/SmokePing/cache
+</span><span class='line'>imgurl   = /smokeping/cache
+</span><span class='line'>cgiurl   = http://localhost/smokeping/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下のapp.psgiを/usr/local/Smokeping/に置く。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="k">use</span> <span class="nn">Plack::</span><span class="n">Builder</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nn">CGI::Emulate::</span><span class="n">PSGI</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">CGI</span> <span class="sx">qw()</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="n">Smokeping</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">my</span> <span class="nv">$smokeping</span> <span class="o">=</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class='line'>    <span class="nn">CGI::</span><span class="n">initialize_globals</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">my</span> <span class="nv">$q</span> <span class="o">=</span> <span class="n">CGI</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1"># 適宜configは作成してください</span>
+</span><span class='line'>    <span class="nn">Smokeping::</span><span class="n">cgi</span><span class="p">(</span><span class="s">&quot;/usr/local/Smokeping/etc/config&quot;</span><span class="p">,</span> <span class="nv">$q</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nv">$smokeping</span>  <span class="o">=</span> <span class="nn">CGI::Emulate::</span><span class="n">PSGI</span><span class="o">-&gt;</span><span class="n">handler</span><span class="p">(</span> <span class="nv">$smokeping</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">builder</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">use</span> <span class="nn">Plack::App::</span><span class="n">File</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mount</span> <span class="s">&quot;/smokeping/cache&quot;</span> <span class="o">=&gt;</span> <span class="nn">Plack::App::</span><span class="n">File</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="n">root</span> <span class="o">=&gt;</span> <span class="s">&#39;./cache&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">to_app</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mount</span> <span class="s">&quot;/smokeping/cropper&quot;</span> <span class="o">=&gt;</span> <span class="nn">Plack::App::</span><span class="n">File</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="n">root</span> <span class="o">=&gt;</span> <span class="s">&#39;./htdocs/cropper&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">to_app</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mount</span> <span class="s">&quot;/smokeping&quot;</span> <span class="o">=&gt;</span> <span class="nv">$smokeping</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/cacheと/cropperはそれぞれ画像ファイルとjsファイルの参照のため。</p>
+
+<p>plackup</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nv">$</span> <span class="nv">cd</span> <span class="sr">/usr/</span><span class="nb">local</span><span class="o">/</span><span class="n">SmokePing</span>
+</span><span class='line'><span class="nv">$</span> <span class="nv">plackup</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://localhost:5000/smokeping">http://localhost:5000/smokeping</a> でweb画面が見れます!!!</p>
+
+<p>あとはpingプロセスを立ち上げる。これもsmokepingユーザで動かす。別途fping等インストールしておく。</p>
+
+<p><code>$ /var/app/SmokePing/bin/smokeping</code></p>
+
+<h4>まとめ</h4>
+
+<p>何がいいの? システムPerl使いたくない人向け。また管理画面なのでCGIでも十分ではあるけどApache立てずに動かしたい人には便利。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AngularJSことはじめ]]></title>
@@ -1406,469 +1624,6 @@
 
 
 <p>なかのコードはonehealth-cookbooksさんの<a href="https://github.com/onehealth-cookbooks/sysctl">onehealth-cookbooks/sysctl</a>から必要最小限必要な部分だけかいつまみました。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[test-kitchen使ったメモ]]></title>
-    <link href="http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo/"/>
-    <updated>2014-03-25T11:46:00+09:00</updated>
-    <id>http://orihubon.com/blog/2014/03/25/test-kitchenshi-tutamemo</id>
-    <content type="html"><![CDATA[<p>最近はImmutable Infrastracture盛り上がりでChefやPuppetが語られる機会が少なくなって気がしますが、それはChef/Puppetが成熟してきた証拠? test-kitchenを使ってみたメモです。</p>
-
-<!--more-->
-
-
-<p><a href="http://kitchen.ci/docs/getting-started">GETTING STARTED GUIDE</a> を写経。詳細はリンク先の原文を参照してください。</p>
-
-<p>拙作の<a href="https://github.com/niku4i/rbenv-cookbook">rbenv-cookbook</a>をtest-kitchenをつかってVagrant上の仮想マシンでテストするところまで進めました。なお、Vagrantのバージョンは1.5.1を使いました。</p>
-
-<h3>インストール</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install test-kitchen
-</span><span class='line'>$ kitchen -v
-</span><span class='line'>Test Kitchen version 1.2.1</span></code></pre></td></tr></table></div></figure>
-
-
-<p>また、あらかじめcookbookをgit cloneしておきます</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone git@github.com:niku4i/rbenv-cookbook.git
-</span><span class='line'>$ cd rbenv-cookbook</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>kitchen init</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen init --driver=kitchen-vagrant
-</span><span class='line'>      create  .kitchen.yml
-</span><span class='line'>      create  test/integration/default
-</span><span class='line'>      create  .gitignore
-</span><span class='line'>      append  .gitignore
-</span><span class='line'>      append  .gitignore
-</span><span class='line'>         run  gem install kitchen-vagrant from "."
-</span><span class='line'>Fetching: kitchen-vagrant-0.14.0.gem (100%)
-</span><span class='line'>Successfully installed kitchen-vagrant-0.14.0
-</span><span class='line'>Parsing documentation for kitchen-vagrant-0.14.0
-</span><span class='line'>Installing ri documentation for kitchen-vagrant-0.14.0
-</span><span class='line'>1 gem installed</span></code></pre></td></tr></table></div></figure>
-
-
-<p>.kitchen.ymlが作られた。中身は以下のとおり。ubuntuはひとまず不要なのでplatformから削除。またinitで作成されたyamlに登録されているcentos-6.4ではkitchen createしたときにvagrant upできなくてエラーになってしまったので、boxイメージが悪いのかなと判断して6.5を使うように変更した。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>---
-</span><span class='line'>driver:
-</span><span class='line'>  name: vagrant
-</span><span class='line'>
-</span><span class='line'>provisioner:
-</span><span class='line'>  name: chef_solo
-</span><span class='line'>
-</span><span class='line'>platforms:
-</span><span class='line'>#  - name: ubuntu-12.04
-</span><span class='line'>#  - name: centos-6.4
-</span><span class='line'>  - name: centos-65
-</span><span class='line'>
-</span><span class='line'>suites:
-</span><span class='line'>  - name: default
-</span><span class='line'>    run_list:
-</span><span class='line'>      - recipe[rbenv-cookbook::default]
-</span><span class='line'>    attributes:</span></code></pre></td></tr></table></div></figure>
-
-
-<p>kitchen listコマンドで確認できた。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen list
-</span><span class='line'>Instance           Driver   Provisioner  Last Action
-</span><span class='line'>default-centos-64  Vagrant  ChefSolo     &lt;Not Created&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>kitchen create</h3>
-
-<p>kitchen createでインスタンスをアップ</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> $ kitchen create default-centos-65
-</span><span class='line'>-----&gt; Starting Kitchen (v1.2.1)
-</span><span class='line'>-----&gt; Creating &lt;default-centos-65&gt;...
-</span><span class='line'>       Bringing machine 'default' up with 'virtualbox' provider...
-</span><span class='line'>       ==&gt; default: Box 'opscode-centos-6.5' could not be found. Attempting to find and install...
-</span><span class='line'>           default: Box Provider: virtualbox
-</span><span class='line'>           default: Box Version: &gt;= 0
-</span><span class='line'>       ==&gt; default: Adding box 'opscode-centos-6.5' (v0) for provider: virtualbox
-</span><span class='line'>           default: Downloading: https://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
-</span><span class='line'>       ==&gt; default: Successfully added box 'opscode-centos-6.5' (v0) for 'virtualbox'!
-</span><span class='line'>       ==&gt; default: Importing base box 'opscode-centos-6.5'...
-</span><span class='line'>       ==&gt; default: Matching MAC address for NAT networking...
-</span><span class='line'>       ==&gt; default: Setting the name of the VM: default-centos-65_default_1395719095721_73691
-</span><span class='line'>       ==&gt; default: Fixed port collision for 22 =&gt; 2222. Now on port 2201.
-</span><span class='line'>       ==&gt; default: Clearing any previously set network interfaces...
-</span><span class='line'>       ==&gt; default: Preparing network interfaces based on configuration...
-</span><span class='line'>           default: Adapter 1: nat
-</span><span class='line'>       ==&gt; default: Forwarding ports...
-</span><span class='line'>           default: 22 =&gt; 2201 (adapter 1)
-</span><span class='line'>       ==&gt; default: Running 'pre-boot' VM customizations...
-</span><span class='line'>       ==&gt; default: Booting VM...
-</span><span class='line'>==&gt; default: Waiting for machine to boot. This may take a few minutes...           default: SSH address: 127.0.0.1:2201
-</span><span class='line'>           default: SSH username: vagrant
-</span><span class='line'>           default: SSH auth method: private key
-</span><span class='line'>           default: Error: Connection timeout. Retrying...
-</span><span class='line'>       ==&gt; default: Machine booted and ready!
-</span><span class='line'>       ==&gt; default: Checking for guest additions in VM...
-</span><span class='line'>           default: The guest additions on this VM do not match the installed version of
-</span><span class='line'>           default: VirtualBox! In most cases this is fine, but in rare cases it can
-</span><span class='line'>           default: prevent things such as shared folders from working properly. If you see
-</span><span class='line'>           default: shared folder errors, please make sure the guest additions within the
-</span><span class='line'>           default: virtual machine match the version of VirtualBox you have installed on
-</span><span class='line'>           default: your host and reload your VM.
-</span><span class='line'>           default:
-</span><span class='line'>           default: Guest Additions Version: 4.3.8
-</span><span class='line'>           default: VirtualBox Version: 4.2
-</span><span class='line'>       ==&gt; default: Setting hostname...
-</span><span class='line'>       Vagrant instance &lt;default-centos-65&gt; created.
-</span><span class='line'>       Finished creating &lt;default-centos-65&gt; (11m27.39s).
-</span><span class='line'>-----&gt; Kitchen is finished. (11m27.70s)</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>vagrantでインスタンスを起動する</li>
-<li>boxが登録されてなければネットワークから探してくる</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen list
-</span><span class='line'>Instance           Driver   Provisioner  Last Action
-</span><span class='line'>default-centos-65  Vagrant  ChefSolo     Created</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>kitchen converge</h3>
-
-<p>レシピをインスタンスに適用する</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ kitchen converge default-centos-65
-</span><span class='line'>-----&gt; Starting Kitchen (v1.2.1)
-</span><span class='line'>-----&gt; Converging &lt;default-centos-65&gt;...
-</span><span class='line'>       Preparing files for transfer
-</span><span class='line'>       Preparing current project directory as a cookbook
-</span><span class='line'>       Removing non-cookbook files before transfer
-</span><span class='line'>-----&gt; Installing Chef Omnibus (true)
-</span><span class='line'>       downloading https://www.getchef.com/chef/install.sh
-</span><span class='line'>         to file /tmp/install.sh
-</span><span class='line'>       trying wget...
-</span><span class='line'>       Downloading Chef  for el...
-</span><span class='line'>       downloading https://www.getchef.com/chef/metadata?v=&prerelease=false&p=el&pv=6&m=x86_64
-</span><span class='line'>         to file /tmp/install.sh.1851/metadata.txt
-</span><span class='line'>       trying wget...
-</span><span class='line'>       url      https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-11.10.4-1.el6.x86_64.rpm
-</span><span class='line'>       md5      3fe6dd8e19301b6c66032496a89097db
-</span><span class='line'>       sha256   edd5d2bcc174f67e5e5136fd7e5fffd9414c5f4949c68b28055b124185904d9f
-</span><span class='line'>       downloaded metadata file looks valid...
-</span><span class='line'>       downloading https://opscode-omnibus-packages.s3.amazonaws.com/el/6/x86_64/chef-11.10.4-1.el6.x86_64.rpm
-</span><span class='line'>         to file /tmp/install.sh.1851/chef-11.10.4-1.el6.x86_64.rpm
-</span><span class='line'>       trying wget...
-</span><span class='line'>       Comparing checksum with sha256sum...
-</span><span class='line'>       Installing Chef
-</span><span class='line'>       installing with rpm...
-</span><span class='line'>       warning: /tmp/install.sh.1851/chef-11.10.4-1.el6.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID 83ef826a: NOKEY
-</span><span class='line'>Preparing...                #####  ########################################### [100%]
-</span><span class='line'>   1:chef                          ########################################### [100%]
-</span><span class='line'>       Thank you for installing Chef!
-</span><span class='line'>       Transfering files to &lt;default-centos-65&gt;
-</span><span class='line'>       [2014-03-25T03:51:33+00:00] INFO: Forking chef instance to converge...
-</span><span class='line'>       Starting Chef Client, version 11.10.4
-</span><span class='line'>       [2014-03-25T03:51:33+00:00] INFO: *** Chef 11.10.4 ***
-</span><span class='line'>       [2014-03-25T03:51:33+00:00] INFO: Chef-client pid: 1948
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Setting the run_list to ["recipe[rbenv-cookbook::default]"] from JSON
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Run List is [recipe[rbenv-cookbook::default]]
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Run List expands to [rbenv-cookbook::default]
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Starting Chef Run for default-centos-65
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Running start handlers
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] INFO: Start handlers complete.
-</span><span class='line'>       Compiling Cookbooks...
-</span><span class='line'>
-</span><span class='line'>       Running handlers:
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] ERROR: Running exception handlers
-</span><span class='line'>       Running handlers complete
-</span><span class='line'>
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] ERROR: Exception handlers complete
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] FATAL: Stacktrace dumped to /tmp/kitchen/cache/chef-stacktrace.out
-</span><span class='line'>       Chef Client failed. 0 resources updated in 0.458583313 seconds
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] ERROR: Cookbook yum-epel not found. If you're loading yum-epel from another cookbook, make sure you configure the dependency in your metadata
-</span><span class='line'>       [2014-03-25T03:51:34+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
-</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Converge failed on instance &lt;default-centos-65&gt;.
-</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Please see .kitchen/logs/default-centos-65.log for more details
-</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; ------Exception-------
-</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Class: Kitchen::ActionFailed
-</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt; Message: SSH exited (1) for command: [sudo -E chef-solo --config /tmp/kitchen/solo.rb --json-attributes /tmp/kitchen/dna.json  --log_level info]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>エラーでこけた&hellip; 。rbenv-cookbookはyum-epelに依存してるせい? metadata.rbは既に作ってるのでBerkshelfファイルを作成しmetadataを読み込むようにしたらエラーをパスできた!</p>
-
-<figure class='code'><figcaption><span>Berksfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>source &quot;https://api.berkshelf.com&quot;
-</span><span class='line'>
-</span><span class='line'>metadata
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>再実行。gitが無いので止まった。これはレシピが悪い。</p>
-
-<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">snip</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">+</span> <span class="n">package</span> <span class="s2">&quot;git&quot;</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">snip</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>再実行!無事終了!</p>
-
-<p>kitchen convergeでやること</p>
-
-<ul>
-<li>インスタンスにChefをインストール</li>
-<li>依存関係のレシピをインストール</li>
-<li>.kitchen.ymlのrun_listを実行</li>
-</ul>
-
-
-<h3>手動で確認する</h3>
-
-<p>ここまででレシピをエラー無くインスタンスに適用できることを確認した。手動でログインし確認する。</p>
-
-<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">kitchen</span> <span class="n">login</span> <span class="n">default</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mi">65</span>
-</span><span class='line'><span class="no">Last</span> <span class="ss">login</span><span class="p">:</span> <span class="no">Tue</span> <span class="no">Mar</span> <span class="mi">25</span> <span class="mo">03</span><span class="p">:</span><span class="mi">59</span><span class="p">:</span><span class="mi">38</span> <span class="mi">2014</span> <span class="n">from</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">2</span>
-</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@default</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mi">65</span> <span class="o">~]</span><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ログインできた。rbenvインストールされている。</p>
-
-<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">rbenv</span>
-</span><span class='line'><span class="n">rbenv</span> <span class="mi">0</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">95</span><span class="o">-</span><span class="n">gf71e227</span>
-</span><span class='line'><span class="ss">Usage</span><span class="p">:</span> <span class="n">rbenv</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="o">[&lt;</span><span class="n">args</span><span class="o">&gt;]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>テストを書く</h3>
-
-<p>ServerSpecを使いたいところではあるが、ここではチュートリアルに従ってBusserというテストフレームワークでテストを書く。</p>
-
-<p>テスト用のディレクトリを作成</p>
-
-<figure class='code'><figcaption><span>recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mkdir</span> <span class="o">-</span><span class="nb">p</span> <span class="nb">test</span><span class="o">/</span><span class="n">integration</span><span class="o">/</span><span class="n">default</span><span class="o">/</span><span class="n">bats</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>今回は実行ファイルが存在するかどうかだけチェックした。</p>
-
-<figure class='code'><figcaption><span>test/integration/default/bats/rbenv_installed.bats    </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>#!/usr/bin/env bats
-</span><span class='line'>
-</span><span class='line'>@test &quot;executable rbenv command is found&quot; {
-</span><span class='line'>  run test -x /usr/local/rbenv/bin/rbenv
-</span><span class='line'>  [ &quot;$status&quot; -eq 0 ]
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>テストを流す</p>
-
-<figure class='code'><figcaption><span>test/integration/default/bats/rbenv_installed.bats    </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>$ kitchen veryfy default-centos-65
-</span><span class='line'>
-</span><span class='line'>-----&gt; Starting Kitchen (v1.2.1)
-</span><span class='line'>-----&gt; Verifying &lt;default-centos-65&gt;...
-</span><span class='line'>       Removing /tmp/busser/suites/bats
-</span><span class='line'>       Uploading /tmp/busser/suites/bats/rbenv_installed.bats (mode=0644)
-</span><span class='line'>-----&gt; Running bats test suite
-</span><span class='line'> ✓ executable rbenv command is found
-</span><span class='line'>
-</span><span class='line'>       1 test, 0 failures
-</span><span class='line'>       Finished verifying &lt;default-centos-65&gt; (0m1.30s).
-</span><span class='line'>-----&gt; Kitchen is finished. (0m2.12s)
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>kitchen test</h3>
-
-<p>いままでやってきたことを全工程流す。</p>
-
-<figure class='code'><figcaption><span>test/integration/default/bats/rbenv_installed.bats    </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>$ kitchen veryfy default-centos-65
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>既存のインスタンスがあれば廃棄する</li>
-<li>インスタンス作成</li>
-<li>Chefのインストール</li>
-<li>レシピのインストール</li>
-<li>テストの実行</li>
-<li>インスタンスの廃棄</li>
-</ul>
-
-
-<h3>感想</h3>
-
-<p>test kitchenよい。でも初回遅い。boxが最初ないと更に遅い。この辺はVagrantをDockerに変えるというアプローチがあるとおもうが気軽ではない感じかも。しばらく使ってみる!</p>
 ]]></content>
   </entry>
   
