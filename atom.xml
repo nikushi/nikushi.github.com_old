@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:48:39+09:00</updated>
+  <updated>2015-04-19T12:52:05+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -133,13 +133,7 @@
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ head -1  /usr/local/SmokePing/bin/smokeping
-</span><span class='line'>#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
-</span><span class='line'>
-</span><span class='line'>$ head -1  /usr/local/SmokePing/bin/smokeping_cgi
 </span><span class='line'>#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl</span></code></pre></td></tr></table></div></figure>
 
 

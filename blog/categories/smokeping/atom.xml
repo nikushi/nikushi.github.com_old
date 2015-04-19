@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SmokePing | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/smokeping/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T12:48:39+09:00</updated>
+  <updated>2015-04-19T12:52:05+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -124,10 +124,6 @@ $ sudo chown -R smokeping:smokeping /usr/local/SmokePing
 
 <p>```
 $ head -1  /usr/local/SmokePing/bin/smokeping</p>
-
-<h1>!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl</h1>
-
-<p>$ head -1  /usr/local/SmokePing/bin/smokeping_cgi</p>
 
 <h1>!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl</h1>
 
