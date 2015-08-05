@@ -235,6 +235,15 @@ $ naginata services -a
 * ステータスに色を付ける
 * 高速化。現状サービス数、nagiosサーバ数が多くなるとそれなりに遅い。
 
+### Updates
+
+#### 2015/08/05 v0.1.6
+
+任意のディレクトリにNaginatafileを置けるようになりました(以前のバージョンではカレントディレクトリにNaginatafile置く必要がありました)
+
+* ./Naginatafile, ~/.naginata/Naginatafile, /etc/naginata/Naginatafileの順にファイルを探すよう修正
+* --naginatafileオプション、もしくはNAGINATAFILE環境変数にて任意のパスを指定可能
+
 ### まとめ
 
 [Naginata](http://github.com/niku4i/naginata)という複数NagiosをSSH経由で操作するCLIツールを作った。
