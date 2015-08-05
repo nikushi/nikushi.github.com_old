@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-04-19T13:04:20+09:00</updated>
+  <updated>2015-08-05T11:57:50+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -661,6 +661,18 @@
 <li>現状notificationのon/offのみ対応。その他のコマンドへの対応。</li>
 <li>ステータスに色を付ける</li>
 <li>高速化。現状サービス数、nagiosサーバ数が多くなるとそれなりに遅い。</li>
+</ul>
+
+
+<h3>Updates</h3>
+
+<h4>2015/08/05 v0.1.6</h4>
+
+<p>任意のディレクトリにNaginatafileを置けるようになりました(以前のバージョンではカレントディレクトリにNaginatafile置く必要がありました)</p>
+
+<ul>
+<li>./Naginatafile, ~/.naginata/Naginatafile, /etc/naginata/Naginatafileの順にファイルを探すよう修正</li>
+<li>&mdash;naginatafileオプション、もしくはNAGINATAFILE環境変数にて任意のパスを指定可能</li>
 </ul>
 
 
