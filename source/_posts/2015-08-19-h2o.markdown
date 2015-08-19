@@ -142,7 +142,7 @@ exec \
 
 社内にあるほぼ個人プロジェクトサイトをSSL化するついでにnginxからh2oに置き換えて様子見中。自分で構築したサイトでChromeのSPDY indicatorが青く(HTTP/2)に光るの嬉しいな。
 
-## 参考
+### 参考
 
 * [h2oとUnixドメインソケット](http://qiita.com/cubicdaiya/items/d6f3a165fa29e199afb1)
 * [H2Oとmrubyを使ってIPアドレスベースでアクセス制御しつつリバースプロキシとして動かしてWebサイトをHTTP/2化しよう](http://hb.matsumoto-r.jp/entry/2015/07/31/220948)
