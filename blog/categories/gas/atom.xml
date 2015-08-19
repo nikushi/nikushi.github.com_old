@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GAS | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/gas/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-08-05T11:57:50+09:00</updated>
+  <updated>2015-08-19T15:05:57+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -25,7 +25,7 @@
 
 <p>こういうシートができあがる。</p>
 
-<p><img src="/images/20140618-mylogger.png"></p>
+<p>{% img /images/20140618-mylogger.png %}</p>
 
 <p><code>Logger.log()</code>ではなくて恒久的に保存するためのロガーを作る。例えばTriggerで時限式実行するスクリプトのログを保存しておきたいとかの用途。</p>
 
@@ -225,7 +225,7 @@ function getRssFeed() {
 
 <h4>イメージ</h4>
 
-<p><img src="/images/20140530-script-lib.png"></p>
+<p>{%img /images/20140530-script-lib.png %}</p>
 
 <h4>最低限必要なこと</h4>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Server | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/server/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-08-05T11:57:50+09:00</updated>
+  <updated>2015-08-19T15:05:57+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -105,15 +105,11 @@ usermod -G smokeping apache
 
 <p>以下を<code>/etc/httpd/conf.d/smokeping.conf</code>に。</p>
 
-<p><div><script src='https://gist.github.com/4976007.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>{% gist 4976007 %}</p>
 
 <p>cgi用に以下を作った</p>
 
-<p><div><script src='https://gist.github.com/4976014.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>{% gist 4976014 %}</p>
 
 <h3>その他</h3>
 
