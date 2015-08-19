@@ -109,7 +109,61 @@
 <!--more-->
 
 
-<p>h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、またdaemontools経由で起動させるようにした。なお試したh2oのバージョンはv1.4.3です。</p>
+<p>h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、またdaemontools経由で起動させるようにした。</p>
+
+<p>環境</p>
+
+<ul>
+<li>h2o v1.4.3</li>
+<li>OS CentOS 6.5</li>
+</ul>
+
+
+<h3>インストール</h3>
+
+<p>自前でbuildした</p>
+
+<h4>cmake &amp; libyaml</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo yum install cmake libyaml</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>libuv</h4>
+
+<p>libuv 1.0.0 以上が必要。CentOSのパッケージのバージョンは古いため自前でbuild。libuvをbuildするためにはlibtoolが必要だったのでyumで入れた。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo yum install libtool
+</span><span class='line'>$ cd /var/tmp
+</span><span class='line'>$ wget https://github.com/libuv/libuv/archive/v1.7.0.tar.gz
+</span><span class='line'>$ tar zxvf 
+</span><span class='line'>$ cd libuv-1.7.0
+</span><span class='line'>$ ./autogen.sh
+</span><span class='line'>$ ./configure --prefix=/usr/local/libuv-1.7.0
+</span><span class='line'>$ make
+</span><span class='line'>$ sudo make install</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>h2o</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PKG_CONFIG_PATH=/usr/local/libuv-1.7.0/lib/pkgconfig/ cmake -DWITH_BUNDLED_SSL=on -DCMAKE_INSTALL_PREFIX=/usr/local/h2o-1.4.3 .
+</span><span class='line'>make
+</span><span class='line'>sudo make install
+</span><span class='line'>sudo ln -s /usr/local/h2o-1.4.3 /usr/local/h2o</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>設定</h3>
 
@@ -247,9 +301,10 @@
 
 
 <ul>
+<li>-t で起動せずコンフィグのsyntaxチェックできる。</li>
 <li>-m master でh2oを起動するとデーモンモードで動く。HUPシグナルを受け取るとgraceful restartしてくれるモード。</li>
 <li>-m asterで起動すると中ではServer::Starterがh2oを起動してる</li>
-<li>abで負荷かけつつサーバ側で<code>while [ 1  ]; do sleep 1 ; echo ok ; svc -h /service/h2o/ ; done</code> やってみたけど無事捌いてくれた。</li>
+<li>abで負荷かけつつサーバ側で<code>while [ 1 ]; do sleep 1 ; echo ok ; svc -h /service/h2o/ ; done</code>やってみたけど無事捌いてくれた。</li>
 </ul>
 
 
