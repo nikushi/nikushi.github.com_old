@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vim | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-08-19T15:08:11+09:00</updated>
+  <updated>2015-08-19T15:09:22+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -29,11 +29,11 @@
 
 <h3>Before</h3>
 
-<p>{% img /images/2014-12-21-solarized-before.png %}</p>
+<p><img src="/images/2014-12-21-solarized-before.png"></p>
 
 <h3>After</h3>
 
-<p>{% img /images/2014-12-21-solarized-after.png %}</p>
+<p><img src="/images/2014-12-21-solarized-after.png"></p>
 
 <p>良し悪しは分からないが以前よりコントラストが下って目にやさしいような気がするのでしばらく使ってみてみる。</p>
 ]]></content>

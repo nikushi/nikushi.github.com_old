@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | ni-blog]]></title>
   <link href="http://orihubon.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-08-19T15:08:11+09:00</updated>
+  <updated>2015-08-19T15:09:22+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -236,7 +236,9 @@ terminal &mdash;timeout=5 serial console # 追加
 
 <p>logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。</p>
 
-<p>{% gist 5105939 %}</p>
+<p><div><script src='https://gist.github.com/5105939.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
 
 <p>一部説明</p>
 

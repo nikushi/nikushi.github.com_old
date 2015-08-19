@@ -9,7 +9,7 @@
   <meta name="author" content="niku4i">
 
   
-  <meta name="description" content="SmokePingをApache+CGIではなくPlackだけで動かしてみた。 ">
+  <meta name="description" content="h2oを使ってみた。h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。h2oのバージョンはv1.4.3です。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/19/h2o/">h2oでreverse proxy(unix domain socket)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-19T14:18:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
+        
+         | <a href="/blog/2015/08/19/h2o/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>h2oを使ってみた。h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。h2oのバージョンはv1.4.3です。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/08/19/h2o/">続きを読む</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -464,49 +507,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/05/isucon-qualify/">ISUCON 2014 予選の記録 GoMiami</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-05T19:30:00+09:00" pubdate data-updated="true">Oct 5<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/10/05/isucon-qualify/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://isucon.net/archives/39780986.html">ISUCON4 予選</a>に参加しました。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/10/05/isucon-qualify/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -526,6 +526,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/08/19/h2o/">h2oでreverse proxy(unix domain socket)</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
       </li>
     
@@ -539,10 +543,6 @@
     
       <li class="post">
         <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/07/sensu-nyumon/">センス入門 を読んだ</a>
       </li>
     
   </ul>

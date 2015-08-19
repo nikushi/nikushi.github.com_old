@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-08-05T11:57:50+09:00</updated>
+  <updated>2015-08-19T15:09:22+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -12,6 +12,174 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[h2oでreverse proxy(unix domain socket)]]></title>
+    <link href="http://orihubon.com/blog/2015/08/19/h2o/"/>
+    <updated>2015-08-19T14:18:00+09:00</updated>
+    <id>http://orihubon.com/blog/2015/08/19/h2o</id>
+    <content type="html"><![CDATA[<p>h2oを使ってみた。h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。h2oのバージョンはv1.4.3です。</p>
+
+<!--more-->
+
+
+<h3>設定</h3>
+
+<p>設定はこんな感じ。</p>
+
+<figure class='code'><figcaption><span>/etc/h2o/h2o.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="nn">---</span>
+</span><span class='line'><span class="l-Scalar-Plain">max-connections</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1024</span>
+</span><span class='line'><span class="l-Scalar-Plain">num-threads</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">4</span>
+</span><span class='line'><span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">nobody</span>
+</span><span class='line'><span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="s">&quot;www.example.com:80&quot;</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">listen</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0.0.0</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">80</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="s">&quot;/&quot;</span><span class="p-Indicator">:</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">redirect</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">https://www.example.com/</span>
+</span><span class='line'>  <span class="s">&quot;www.example.com:443&quot;</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">listen</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0.0.0</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">443</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">ssl</span><span class="p-Indicator">:</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">certificate-file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/etc/h2o/www.example.com.cer</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">key-file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/etc/h2o/www.example.com.key.pem</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">proxy.timeout.io</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">30000</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="s">&quot;/&quot;</span><span class="p-Indicator">:</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">proxy.reverse.url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://[unix:/tmp/unicorn.sock]/</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">proxy.preserve-host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ON</span>
+</span><span class='line'>      <span class="s">&quot;/assets&quot;</span><span class="p-Indicator">:</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">file.dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/path/to/app/public/assets</span>
+</span><span class='line'><span class="l-Scalar-Plain">access-log</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/log/h2o/access.log</span>
+</span><span class='line'><span class="l-Scalar-Plain">error-log</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/log/h2o/error.log</span>
+</span><span class='line'><span class="l-Scalar-Plain">pid-file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/spool/h2o/pid</span>
+</span><span class='line'><span class="l-Scalar-Plain">http2-reprioritize-blocking-assets</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ON</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>基本HTTPSで受ける(HTTPできたらHTTPSにリダイレクト)</li>
+<li>裏側のアプリ(Rails)とのつなぎはTCPではなくunix domain socket経由にしてみた
+
+<ul>
+<li>2015/8/19現在公式のドキュメントにはないけど<a href="https://github.com/h2o/h2o/issues/383">#383</a>を参考に、<code>proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/</code>こう書いたら動く:)</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>起動スクリプト</h3>
+
+<p>ちゃんと動かすために今回はdaemontools経由で起動させてみた。</p>
+
+<figure class='code'><figcaption><span>/service/h2o/run</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="nb">exec </span>2&gt;&amp;1
+</span><span class='line'><span class="nv">DAEMON</span><span class="o">=</span>/usr/local/h2o/bin/h2o
+</span><span class='line'><span class="nv">CONFIG</span><span class="o">=</span>/etc/h2o/h2o.conf
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$DAEMON&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;not executable: $DAEMON&quot;</span> &gt;&amp;2
+</span><span class='line'>  <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Test configuration</span>
+</span><span class='line'><span class="nv">$DAEMON</span> -t -c <span class="nv">$CONFIG</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Failed to test $CONFIG&quot;</span> &gt;&amp;2
+</span><span class='line'>  <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">ulimit</span> -n 32896
+</span><span class='line'>
+</span><span class='line'><span class="nb">exec</span> <span class="se">\</span>
+</span><span class='line'>  setuidgid root <span class="se">\</span>
+</span><span class='line'>  <span class="nv">$DAEMON</span> <span class="se">\</span>
+</span><span class='line'>  -m master <span class="se">\</span>
+</span><span class='line'>  -c <span class="nv">$CONFIG</span> <span class="se">\</span>
+</span><span class='line'>  ;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>-m master でh2oを起動するとデーモンモードで動く。HUPシグナルを受け取るとgraceful restartしてくれるモード。</li>
+<li>-m asterで起動すると中ではServer::Starterがh2oを起動してる</li>
+<li>abで負荷かけつつサーバ側で<code>while [ 1  ]; do sleep 1 ; echo ok ; svc -h /service/h2o/ ; done</code> やってみたけど無事捌いてくれた。</li>
+</ul>
+
+
+<h3>まとめ</h3>
+
+<p>以上、h2oを動かした。</p>
+
+<p>社内にあるほぼ個人プロジェクトサイトをSSL化するついでにnginxからh2oに置き換えて様子見中。自分で構築したサイトでChromeのSPDY indicatorが青く(HTTP/2)に光るの嬉しいな。</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://qiita.com/cubicdaiya/items/d6f3a165fa29e199afb1">h2oとUnixドメインソケット</a></li>
+<li><a href="http://hb.matsumoto-r.jp/entry/2015/07/31/220948">H2Oとmrubyを使ってIPアドレスベースでアクセス制御しつつリバースプロキシとして動かしてWebサイトをHTTP/2化しよう</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす]]></title>
@@ -1617,20 +1785,6 @@
 <h4>次回へ続く</h4>
 
 <p>オーストリア編はここで終わり。1ポストで収まらなかったので続きは<a href="http://orihubon.com/blog/2014/05/17/zurich-paris/">次回へ</a>。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[/etc/sysctl.confを管理するChef cookbook]]></title>
-    <link href="http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook/"/>
-    <updated>2014-03-26T22:49:00+09:00</updated>
-    <id>http://orihubon.com/blog/2014/03/26/sysctl-chef-cookbook</id>
-    <content type="html"><![CDATA[<p>Chefでsysctl.confを管理するやつ作ってみた。<a href="https://github.com/niku4i/sysctl-cookbook">niku4i/sysctl-cookbook</a></p>
-
-<!--more-->
-
-
-<p>なかのコードはonehealth-cookbooksさんの<a href="https://github.com/onehealth-cookbooks/sysctl">onehealth-cookbooks/sysctl</a>から必要最小限必要な部分だけかいつまみました。</p>
 ]]></content>
   </entry>
   
