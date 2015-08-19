@@ -6,11 +6,11 @@ comments: true
 categories: 
 ---
 
-h2oを使ってみた。
+HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。
 
 <!--more-->
 
-h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、またdaemontools経由で起動させるようにした。
+今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、またdaemontools経由で起動させるようにした。
 
 
 環境
@@ -33,20 +33,24 @@ $ sudo yum install cmake libyaml
 libuv 1.0.0 以上が必要。CentOSのパッケージのバージョンは古いため自前でbuild。libuvをbuildするためにはlibtoolが必要だったのでyumで入れた。
 
 ```
-$ sudo yum install libtool
-$ cd /var/tmp
-$ wget https://github.com/libuv/libuv/archive/v1.7.0.tar.gz
-$ tar zxvf 
-$ cd libuv-1.7.0
-$ ./autogen.sh
-$ ./configure --prefix=/usr/local/libuv-1.7.0
-$ make
-$ sudo make install
+sudo yum install libtool
+cd /var/tmp
+wget https://github.com/libuv/libuv/archive/v1.7.0.tar.gz
+tar zxvf v1.7.0.tar.gz
+cd libuv-1.7.0
+./autogen.sh
+./configure --prefix=/usr/local/libuv-1.7.0
+make
+sudo make install
 ```
 
 #### h2o
 
 ```
+cd /var/tmp
+wget https://github.com/h2o/h2o/archive/v1.4.3.tar.gz
+tar zxvf v1.4.3.tar.gz
+cd h2o-1.4.3/
 PKG_CONFIG_PATH=/usr/local/libuv-1.7.0/lib/pkgconfig/ cmake -DWITH_BUNDLED_SSL=on -DCMAKE_INSTALL_PREFIX=/usr/local/h2o-1.4.3 .
 make
 sudo make install
