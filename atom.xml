@@ -4,7 +4,7 @@
   <title><![CDATA[ni-blog]]></title>
   <link href="http://orihubon.com/atom.xml" rel="self"/>
   <link href="http://orihubon.com/"/>
-  <updated>2015-08-19T15:36:40+09:00</updated>
+  <updated>2015-08-19T15:40:35+09:00</updated>
   <id>http://orihubon.com/</id>
   <author>
     <name><![CDATA[niku4i]]></name>
@@ -236,7 +236,7 @@
 
 <p>社内にあるほぼ個人プロジェクトサイトをSSL化するついでにnginxからh2oに置き換えて様子見中。自分で構築したサイトでChromeのSPDY indicatorが青く(HTTP/2)に光るの嬉しいな。</p>
 
-<h2>参考</h2>
+<h3>参考</h3>
 
 <ul>
 <li><a href="http://qiita.com/cubicdaiya/items/d6f3a165fa29e199afb1">h2oとUnixドメインソケット</a></li>
