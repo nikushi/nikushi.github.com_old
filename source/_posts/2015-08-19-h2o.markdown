@@ -1,0 +1,100 @@
+---
+layout: post
+title: "h2oでreverse proxy(unix domain socket)"
+date: 2015-08-19 14:18
+comments: true
+categories: 
+---
+
+h2oを使ってみた。h2oはDeNAの@kazuhoさんが作られているHTTP/2対応の高速なHTTPサーバ。今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。h2oのバージョンはv1.4.3です。
+
+<!--more-->
+
+### 設定
+
+設定はこんな感じ。
+
+```h2o.conf:yaml
+---
+max-connections: 1024
+num-threads: 4
+user: nobody
+hosts:
+  "www.example.com:80":
+    listen:
+      host: 0.0.0.0
+      port: 80
+    paths:
+      "/":
+        redirect: https://www.example.com/
+  "www.example.com:443":
+    listen:
+      host: 0.0.0.0
+      port: 443
+      ssl:
+        certificate-file: /etc/h2o/www.example.com.cer
+        key-file: /etc/h2o/www.example.com.key.pem
+    proxy.timeout.io: 30000
+    paths:
+      "/":
+        proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/
+        proxy.preserve-host: ON
+      "/assets":
+        file.dir: /path/to/app/public/assets
+access-log: /var/log/h2o/access.log
+error-log: /var/log/h2o/error.log
+pid-file: /var/spool/h2o/pid
+http2-reprioritize-blocking-assets: ON
+```
+
+* 基本HTTPSで受ける(HTTPできたらHTTPSにリダイレクト)
+* 裏側のアプリ(Rails)とのつなぎはTCPではなくunix domain socket経由にしてみた
+  * 2015/8/19現在公式のドキュメントにはないけど[#383](https://github.com/h2o/h2o/issues/383)を参考に、`proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/`こう書いたら動く:)
+
+
+### 起動スクリプト
+
+ちゃんと動かすために今回はdaemontools経由で起動させてみた。
+
+```run:sh
+#!/bin/sh
+exec 2>&1
+DAEMON=/usr/local/h2o/bin/h2o
+CONFIG=/etc/h2o/h2o.conf
+
+if [ ! -x "$DAEMON" ]; then
+  echo "not executable: $DAEMON" >&2
+  exit 1
+fi
+
+# Test configuration
+$DAEMON -t -c $CONFIG
+if [ $? -ne 0 ]; then
+  echo "Failed to test $CONFIG" >&2
+  exit 1
+fi
+
+ulimit -n 32896
+
+exec \
+  setuidgid root \
+  $DAEMON \
+  -m master \
+  -c $CONFIG \
+  ;
+```
+
+* -m master でh2oを起動するとデーモンモードで動く。HUPシグナルを受け取るとgraceful restartしてくれるモード。
+* -m asterで起動すると中ではServer::Starterがh2oを起動してる
+* abで負荷かけつつサーバ側で`while [ 1  ]; do sleep 1 ; echo ok ; svc -h /service/h2o/ ; done` やってみたけど無事捌いてくれた。
+
+### まとめ
+
+以上、h2oを動かした。
+
+社内にあるほぼ個人プロジェクトサイトをSSL化するついでにnginxからh2oに置き換えて様子見中。自分で構築したサイトでChromeのSPDY indicatorが青く(HTTP/2)に光るの嬉しいな。
+
+## 参考
+
+* [h2oとUnixドメインソケット](http://qiita.com/cubicdaiya/items/d6f3a165fa29e199afb1)
+* [H2Oとmrubyを使ってIPアドレスベースでアクセス制御しつつリバースプロキシとして動かしてWebサイトをHTTP/2化しよう](http://hb.matsumoto-r.jp/entry/2015/07/31/220948)
