@@ -18,7 +18,7 @@ task :new_post, :title do |t, args|
   else
     title = get_stdin("Enter a title for your post: ")
   end
-  filename = "#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.md"
+  filename = "post/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.md"
   system("hugo new #{filename}")
 end
 
