@@ -281,6 +281,10 @@
     
       
     
+      
+    
+      
+    
 
   </nav>
 
@@ -307,6 +311,28 @@
 
 
 <div class="posts">
+  
+    
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/09/06/%E3%83%96%E3%83%AD%E3%82%B0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/">ブログタイトル変更しました</a></h1>
+        <span class="post-date">Sep 6 2015</span>
+        <p>ni-blog 改め Nikushi&rsquo;s blog に変更しました。</p>
+
+      </div>
+    
+  
+    
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/09/06/hugo%E3%81%AB%E7%A7%BB%E8%A1%8C/">Hugoに移行</a></h1>
+        <span class="post-date">Sep 6 2015</span>
+        <p>ブログのツールをOctopressからHugoに移行した。</p>
+
+<p>週末の時間を利用してHugoに移行してみた。HugoはGoで作られた静的サイト生成ツール。</p>
+
+<p>移行は案外大変だったけどhugoのコンパイル処理がサクサク動いて良い感じ。デザインも変えてみた。</p>
+
+      </div>
+    
   
     
       <div class="post">
@@ -690,290 +716,6 @@ $ plackup
 <h4 id="まとめ:da71029cbecbb67e280045d1b45488bd">まとめ</h4>
 
 <p>まだコードは1行も書いてない。クライアントサイドエンジニアリング力の低い自分としてはとっても新鮮でした。</p>
-
-      </div>
-    
-  
-    
-      <div class="post">
-        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a></h1>
-        <span class="post-date">Apr 6 2015</span>
-        
-
-<p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作りました。</p>
-
-<p>Nagiosの画面から一度に沢山のサービスに対して通知をOFFにしたり、監視開始したりするオペレーションは結構面倒です。</p>
-
-<p>Nagiosには<a href="http://old.nagios.org/developerinfo/externalcommands/commandlist.php">External Commands</a>という仕組みがあり、nagiosのweb画面上で行える操作をCLI上でも行える仕組みが備わっています。例えば以下のコマンドをNagiosホスト上で実行すると通知OFFすることができます。</p>
-
-<pre><code>echo &quot;[1428291034] DISABLE_SVC_NOTIFICATIONS;host1;service1&quot; &gt; /var/spool/nagios/cmd/nagios.cmd
-</code></pre>
-
-<p>CGIの画面にアクセスしなくてよくこの仕組みはとても便利ですがNagiosサーバにログインする手間があります。またもし複数のNagiosサーバを管理している場合、Nagiosサーバそれぞれでオペレーションするのは面倒です。</p>
-
-<p>そこで1つのマシンから複数Nagiosサーバに対してSSH越しに上のコマンドを実行するCLIツールを作ればいいんじゃないか、ということで作ったのが<a href="http://github.com/niku4i/naginata">Naginata</a>です。複数監視対象を複数nagiosサーバ横断的に通知OFFにしたりすることが1コマンドで出来るツールになってます。</p>
-
-<h3 id="使い方:4851fcac078bc34566a042e6490f78d8">使い方</h3>
-
-<h4 id="インストール:4851fcac078bc34566a042e6490f78d8">インストール</h4>
-
-<p>SSH接続元となるホストにnaginataをインストールします。</p>
-
-<pre><code>$ gem install naginata
-</code></pre>
-
-<p><code>naginata</code>コマンドがインストールされるので、以下のように設定ファイルを作ります。</p>
-
-<pre><code>$ naginata init
-</code></pre>
-
-<p>カレントディレクトリにNaginatafileというのが出来ます。管理対象のnagiosサーバを書いてください。</p>
-
-<p>以下設定例です</p>
-
-<pre><code># 管理対象のnagiosサーバを書く
-# ログイン先のユーザ名が異なる場合はfoo@のようにユーザ名も指定する
-nagios_server 'foo@nagios1.example.com'
-nagios_server 'bar@nagios2.example.com'
-nagios_server 'baz@nagios3.example.com'
-
-# Global nagios server options 
-# nagios_serverのファイルパスを指定する
-# またrun_command_as: には nagios.cmd に書き込む時の
-# ユーザ名を指定する
-set :nagios_server_options, {
-  command_file: '/usr/local/nagios/var/rw/nagios.cmd',
-  status_file: '/usr/local/nagios/var/status.cmd',
-  run_command_as: 'nagios',
-}
-
-# Global SSH options
-# SSHの秘密鍵を指定する
-set :ssh_options, {
-  keys: %w(/home/nikushi/.ssh/id_rsa),
-}
-
-# nagiosサーバでsudoするのでpty trueにしておく
-set :pty, true
-</code></pre>
-
-<p>セットアップは以上です。nagiosサーバ側にはrubyやnaginataをインストールする必要はありません。</p>
-
-<h4 id="通知を止める-有効にする:4851fcac078bc34566a042e6490f78d8">通知を止める,有効にする</h4>
-
-<p>例として全nagiosサーバ上の全ホストのPINGとSSHの監視の通知を止めてみます。動作を確かめるため<code>-v (--verbose)</code>オプションを付けて実行してます。</p>
-
-<pre><code class="language-ruby">$ naginata notification --all-hosts  --disable  --services PING,SSH -v
-..snip..
-Following notifications will be disabled
-localhost
-  - PING
-  - SSH
-redis01.tokyo.local
-  - PING
-  - SSH
-web01.tokyo.local
-  - PING
-  - SSH
-localhost
-  - PING
-  - SSH
-redis01.osaka.local
-  - PING
-  - SSH
-web01.osaka.local
-  - PING
-  - SSH
-Are you sure? [y|N] y
-INFO [71871262] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
-INFO [48a76239] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
-INFO [71871262] Finished in 0.017 seconds with exit status 0 (successful).
-INFO [ef4827b7] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
-INFO [48a76239] Finished in 0.017 seconds with exit status 0 (successful).
-INFO [4ffe6eb6] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
-INFO [ef4827b7] Finished in 0.021 seconds with exit status 0 (successful).
-INFO [7ee77545] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
-INFO [4ffe6eb6] Finished in 0.022 seconds with exit status 0 (successful).
-INFO [2ef43042] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
-INFO [2ef43042] Finished in 0.017 seconds with exit status 0 (successful).
-INFO [13b54c30] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
-INFO [7ee77545] Finished in 0.022 seconds with exit status 0 (successful).
-INFO [de883201] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
-INFO [13b54c30] Finished in 0.018 seconds with exit status 0 (successful).
-INFO [13f9ce6c] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
-INFO [de883201] Finished in 0.017 seconds with exit status 0 (successful).
-INFO [5458ec38] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
-INFO [13f9ce6c] Finished in 0.023 seconds with exit status 0 (successful).
-INFO [5458ec38] Finished in 0.021 seconds with exit status 0 (successful).
-INFO [be16e918] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
-INFO [6247dc33] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
-INFO [be16e918] Finished in 0.020 seconds with exit status 0 (successful).
-INFO [6247dc33] Finished in 0.021 seconds with exit status 0 (successful).
-Done
-</code></pre>
-
-<p>なお、naginataは強力なフィルタ機能を持っています。上の例は全ホスト対象にしましたが引数にホスト名を指定すると対象ホストを限定できます。</p>
-
-<p>また、ホスト名やサービス名は部分一致の挙動のため一部だけ指定することもできます。grepコマンドの引数のイメージです。また複数指定も出来ます。</p>
-
-<pre><code>$ naginata notification osaka.local tokyo --enable --services Lo,PI
-Following notifications will be enabled
-redis01.tokyo.local
-  - Load
-  - PING
-web01.tokyo.local
-  - Load
-  - PING
-redis01.osaka.local
-  - Load
-  - PING
-web01.osaka.local
-  - Load
-  - PING
-Are you sure? [y|N] y
-Done
-</code></pre>
-
-<p>正規表現もできる</p>
-
-<pre><code>$ naginata notification ^web  --enable --services 'd$'
-Following notifications will be enabled
-web01.tokyo.local
-  - Load
-web01.osaka.local
-  - Load
-Are you sure? [y|N] y
-Done
-</code></pre>
-
-<p>また、例は割愛しますが<code>--nagios</code>オプションで対象nagiosサーバを限定できます。</p>
-
-<h4 id="ステータス確認:4851fcac078bc34566a042e6490f78d8">ステータス確認</h4>
-
-<p>元々External Command実行フレームワークにする作りをしていましたが、作っていく途中で監視ステータスや通知OFFされているかどうかを確認出来た方がいいなということになって作ってみました。</p>
-
-<p>以下の例ではサービス一覧を複数Nagiosサーバから取得して現在の状態を表示してます。便利、でしょうか?。こちらも上述のフィルタが使えます。</p>
-
-<pre><code>$ naginata services -a
-NAGIOS   HOST                 SERVICE          STATUS   FLAGS  OUTPUT
-nagios0  localhost            HTTP             WARNING  AC,nt  HTTP WARNING: HTTP/1.1 403 Forbidden - 5152 bytes in 0.001 second response time
-nagios0  localhost            Current Load     OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
-nagios0  localhost            PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
-nagios0  redis01.tokyo.local  Load             CRITICAL AC,NT  Too high load average 15
-nagios0  redis01.tokyo.local  PING             OK       ac,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
-nagios0  redis01.tokyo.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
-nagios0  web01.tokyo.local    Load             OK       AC,NT  OK - load average: 0.01, 0.00, 0.00
-nagios0  web01.tokyo.local    PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
-nagios0  web01.tokyo.local    SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
-nagios1  redis01.osaka.local  Load             OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
-nagios1  redis01.osaka.local  PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
-nagios1  redis01.osaka.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
-</code></pre>
-
-<p>FLAGSという列に見慣れぬ文字列が入ってますが</p>
-
-<ul>
-<li>AC = Active Check enabled</li>
-<li>ac = active check disabled</li>
-<li>NT = NoTification disabled</li>
-<li>nt = notification disabled</li>
-</ul>
-
-<p>という意味になってます。</p>
-
-<h3 id="制約など:4851fcac078bc34566a042e6490f78d8">制約など</h3>
-
-<ul>
-<li>nagiosサーバにはSSHでパスフレーズ無しでログインできる前提です</li>
-<li>SSHログイン後nagios.cmdに書き込める権限があるユーザか、もしくはSSHログイン後にsudoできるユーザ必要があります</li>
-</ul>
-
-<h3 id="その他:4851fcac078bc34566a042e6490f78d8">その他</h3>
-
-<p><a href="https://github.com/niku4i/naginata/tree/master/integration-test">naginata/tree/master/integration-test</a>にVagrantファイルとサンプルの設定ファイルを置いてるのでVagrantがインストールされたMacがあれば動作をお手軽に試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。</p>
-
-<pre><code>$ gem install naginata
-$ git clone https://github.com/niku4i/naginata.git
-$ cd naginata/integration-test
-$ vagrant up 
-</code></pre>
-
-<p>つづいて/etc/hostsに以下2行を追記する</p>
-
-<pre><code>127.0.0.1       nagios0
-127.0.0.1       nagios1
-</code></pre>
-
-<p>これで動作確認できるとおもいます!</p>
-
-<pre><code>$ naginata services -a
-</code></pre>
-
-<p>また <a href="http://localhost:8880">http://localhost:8880</a> , <a href="http://localhost:8881">http://localhost:8881</a> で仮想マシン側のnagios画面見れます。</p>
-
-<h3 id="todo:4851fcac078bc34566a042e6490f78d8">ToDo</h3>
-
-<ul>
-<li>現状notificationのon/offのみ対応。その他のコマンドへの対応。</li>
-<li>ステータスに色を付ける</li>
-<li>高速化。現状サービス数、nagiosサーバ数が多くなるとそれなりに遅い。</li>
-</ul>
-
-<h3 id="updates:4851fcac078bc34566a042e6490f78d8">Updates</h3>
-
-<h4 id="2015-08-05-v0-1-6:4851fcac078bc34566a042e6490f78d8">2015/08/05 v0.1.6</h4>
-
-<p>任意のディレクトリにNaginatafileを置けるようになりました(以前のバージョンではカレントディレクトリにNaginatafile置く必要がありました)</p>
-
-<ul>
-<li>./Naginatafile, ~/.naginata/Naginatafile, /etc/naginata/Naginatafileの順にファイルを探すよう修正</li>
-<li>&ndash;naginatafileオプション、もしくはNAGINATAFILE環境変数にて任意のパスを指定可能</li>
-</ul>
-
-<h3 id="まとめ:4851fcac078bc34566a042e6490f78d8">まとめ</h3>
-
-<p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作った。</p>
-
-<p>ぜひ使ってみてください!!</p>
-
-      </div>
-    
-  
-    
-      <div class="post">
-        <h1 class="post-title"><a href="http://orihubon.com/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a></h1>
-        <span class="post-date">Dec 21 2014</span>
-        
-
-<p><a href="http://ethanschoonover.com/solarized">solarized</a>というカラースキームが良いらしいのでvimとターミナルの配色を変えた。</p>
-
-<p><a href="https://github.com/altercation/vim-colors-solarized">vim用のカラースキーマ</a>と、<a href="https://github.com/tomislav/osx-terminal.app-colors-solarized">Terminal.app用のsolarized profile</a>をインストールにして有効にしたら出来た。</p>
-
-<p>なお、Terminal.appのフォントは以前から使っている<a href="https://store1.adobe.com/cfusion/store/html/index.cfm?store=OLS-JP&amp;event=displayFontPackage&amp;code=1960">Source Code Pro</a>を引き続き使うことにした。</p>
-
-<h3 id="before:e14e191f59c22a52b401f2a0f2b9d267">Before</h3>
-
-<p>
-<figure >
-    
-        <img src="/images/2014-12-21-solarized-before.png" />
-    
-    
-</figure>
-</p>
-
-<h3 id="after:e14e191f59c22a52b401f2a0f2b9d267">After</h3>
-
-<p>
-<figure >
-    
-        <img src="/images/2014-12-21-solarized-after.png" />
-    
-    
-</figure>
-</p>
-
-<p>良し悪しは分からないが以前よりコントラストが下って目にやさしいような気がするのでしばらく使ってみてみる。</p>
 
       </div>
     

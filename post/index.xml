@@ -6,8 +6,36 @@
     <language>en-us</language>
     <author></author>
     <rights>(C) 2015</rights>
-    <updated>2015-08-19 14:18:00 &#43;0900 JST</updated>
+    <updated>2015-09-06 19:23:58 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>ブログタイトル変更しました</title>
+          <link>http://orihubon.com/blog/2015/09/06/%E3%83%96%E3%83%AD%E3%82%B0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link>
+          <pubDate>Sun, 06 Sep 2015 19:23:58 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/09/06/%E3%83%96%E3%83%AD%E3%82%B0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+          <description>&lt;p&gt;ni-blog 改め Nikushi&amp;rsquo;s blog に変更しました。&lt;/p&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
+          <title>Hugoに移行</title>
+          <link>http://orihubon.com/blog/2015/09/06/hugo%E3%81%AB%E7%A7%BB%E8%A1%8C/</link>
+          <pubDate>Sun, 06 Sep 2015 19:13:43 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/09/06/hugo%E3%81%AB%E7%A7%BB%E8%A1%8C/</guid>
+          <description>&lt;p&gt;ブログのツールをOctopressからHugoに移行した。&lt;/p&gt;
+
+&lt;p&gt;週末の時間を利用してHugoに移行してみた。HugoはGoで作られた静的サイト生成ツール。&lt;/p&gt;
+
+&lt;p&gt;移行は案外大変だったけどhugoのコンパイル処理がサクサク動いて良い感じ。デザインも変えてみた。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>

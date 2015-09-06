@@ -6,8 +6,36 @@
     <language>en-us</language>
     <author></author>
     <rights>(C) 2015</rights>
-    <updated>2015-08-19 14:18:00 &#43;0900 JST</updated>
+    <updated>2015-09-06 19:23:58 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>ブログタイトル変更しました</title>
+          <link>http://orihubon.com/blog/2015/09/06/%E3%83%96%E3%83%AD%E3%82%B0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link>
+          <pubDate>Sun, 06 Sep 2015 19:23:58 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/09/06/%E3%83%96%E3%83%AD%E3%82%B0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+          <description>&lt;p&gt;ni-blog 改め Nikushi&amp;rsquo;s blog に変更しました。&lt;/p&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
+          <title>Hugoに移行</title>
+          <link>http://orihubon.com/blog/2015/09/06/hugo%E3%81%AB%E7%A7%BB%E8%A1%8C/</link>
+          <pubDate>Sun, 06 Sep 2015 19:13:43 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/09/06/hugo%E3%81%AB%E7%A7%BB%E8%A1%8C/</guid>
+          <description>&lt;p&gt;ブログのツールをOctopressからHugoに移行した。&lt;/p&gt;
+
+&lt;p&gt;週末の時間を利用してHugoに移行してみた。HugoはGoで作られた静的サイト生成ツール。&lt;/p&gt;
+
+&lt;p&gt;移行は案外大変だったけどhugoのコンパイル処理がサクサク動いて良い感じ。デザインも変えてみた。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>
@@ -1340,94 +1368,6 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
     
       
         <item>
-          <title>Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</title>
-          <link>http://orihubon.com/blog/2014/05/17/zurich-paris/</link>
-          <pubDate>Sat, 17 May 2014 16:41:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2014/05/17/zurich-paris/</guid>
-          <description>
-
-&lt;p&gt;ウィーンからパリまで列車の旅の後半編。&lt;a href=&#34;http://orihubon.com/blog/2014/05/17/vienna-salzburg/&#34;&gt;前半はこちら&lt;/a&gt;。&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h4 id=&#34;チューリッヒ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;チューリッヒ&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;物価高い!!!&lt;/li&gt;
-&lt;li&gt;チェックインでトラブった&lt;/li&gt;
-&lt;li&gt;チーズフォンデュは濃厚&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;物価高い!!evian 500mlペットボトルが400円強、昼飯2人でパスタとコーラ飲んで5000円弱とかで財布寒い。ホテルもベースが高かったのでチューリッヒではGuest Houseにしました。泊まったGH &lt;a href=&#34;http://www.expedia.co.jp/Zurich-Hotels-Guesthouse-Brauerstrasse.h4623034.Hotel-Information&#34;&gt;Guesthouse Brauerstrasse&lt;/a&gt;。期待していなかったのですが意外、アパートメントタイプでちゃんと専用個室で風呂もトイレも専用。部屋広くてソファもあったりしていい部屋でした。ただしチェックインは難易度高い。フロントは無くてキーボックスからキーを入手する必要があるので事前にキーコードがメールされてきます。僕はキーコードの存在を忘れてて鍵ゲットするまでちょっと手間取りました。&lt;/p&gt;
-
-&lt;p&gt;スイスは1泊だけの滞在なのでスイスといえば&amp;hellip;チーズフォンデュでしょってことで食べました。本場はチーズ風味が臭いです。味はおいしかったけど濃厚すぎて自分はダメでした。ちなみに本当は冬の食べ物らしいです。日本の鍋的感覚か。&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5429.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5448.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;h4 id=&#34;パリ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;パリ&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;お洒落な街、でも地下鉄とっても汚い&lt;/li&gt;
-&lt;li&gt;エッフェル塔、凱旋門&lt;/li&gt;
-&lt;li&gt;ショッピング&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;パリは2泊だけの滞在で駆け足。観光はエッフェル塔、凱旋門、ノートルダム寺院の3カ所。親戚の子供の洋服土産を探したりで町歩きしながらセーヌ川を眺めるそんな感じでした。パリは多人種な街ですね。セーヌ川沿いのBrasserieでワイン飲みながらってのはなかなか良いものでした。&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8903.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8936.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;h4 id=&#34;お金-手配の方法など:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;お金, 手配の方法など&lt;/h4&gt;
-
-&lt;p&gt;誰かの参考になるかもしれないので書いてみる。ツアーは使ってなくてすべて個人手配です。&lt;/p&gt;
-
-&lt;p&gt;2人で飛行機24万円、列車代が9万円、ホテルが10万くらい、その他食費等で合計55万くらい。飛行機は安かったけどユーロ高め(1ユーロ142円くらい)だったので結構財布寒い感じですね。結構食費は節約系でした。&lt;/p&gt;
-
-&lt;p&gt;飛行機はエールフランスのサイトで直接調べたら安く行けることが分かって、さらに安くならないかなとトラベルコちゃんで調べたらHISが同じ便で1万円くらい安かったので申し込み。行きはシャルルドゴール空港経由パリ行き、帰りはパリから成田への直行便です。&lt;/p&gt;
-
-&lt;p&gt;ホテルはExpediaで。選定方法はまず値段みて、あとGoogle Mapみながら交通の便が良い立地かどうかで選ぶ感じ。(このあたりネット系でコンシェルジュ的(楽々幹事さん的のり)なサービスあってやってくれるサービスとかないですかねえ。)&lt;/p&gt;
-
-&lt;p&gt;列車&lt;a href=&#34;http://www.raileurope.com/index.html&#34;&gt;RAILEUROPE&lt;/a&gt;で列車時刻調べてチケットを事前に購入しました。ユーロレイルパスは使ってません(個別購入の方が安かったので)&lt;/p&gt;
-
-&lt;h4 id=&#34;まとめ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;まとめ&lt;/h4&gt;
-
-&lt;p&gt;ウィーン、ザルツブルク、チューリッヒ、パリと列車で巡ってきた。弾丸な日程だったけど充実した旅でした。次は1都市滞在でゆっくりした旅がしたい!(けどかなり先だろう)&lt;/p&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
           <title>Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編</title>
           <link>http://orihubon.com/blog/2014/05/17/vienna-salzburg/</link>
           <pubDate>Sat, 17 May 2014 16:41:00 JST</pubDate>
@@ -1609,6 +1549,94 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
 &lt;h4 id=&#34;次回へ続く:d1380683a81c7f389d716cdbb970a4b1&#34;&gt;次回へ続く&lt;/h4&gt;
 
 &lt;p&gt;オーストリア編はここで終わり。1ポストで収まらなかったので続きは&lt;a href=&#34;http://orihubon.com/blog/2014/05/17/zurich-paris/&#34;&gt;次回へ&lt;/a&gt;。&lt;/p&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
+          <title>Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</title>
+          <link>http://orihubon.com/blog/2014/05/17/zurich-paris/</link>
+          <pubDate>Sat, 17 May 2014 16:41:00 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2014/05/17/zurich-paris/</guid>
+          <description>
+
+&lt;p&gt;ウィーンからパリまで列車の旅の後半編。&lt;a href=&#34;http://orihubon.com/blog/2014/05/17/vienna-salzburg/&#34;&gt;前半はこちら&lt;/a&gt;。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h4 id=&#34;チューリッヒ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;チューリッヒ&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;物価高い!!!&lt;/li&gt;
+&lt;li&gt;チェックインでトラブった&lt;/li&gt;
+&lt;li&gt;チーズフォンデュは濃厚&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;物価高い!!evian 500mlペットボトルが400円強、昼飯2人でパスタとコーラ飲んで5000円弱とかで財布寒い。ホテルもベースが高かったのでチューリッヒではGuest Houseにしました。泊まったGH &lt;a href=&#34;http://www.expedia.co.jp/Zurich-Hotels-Guesthouse-Brauerstrasse.h4623034.Hotel-Information&#34;&gt;Guesthouse Brauerstrasse&lt;/a&gt;。期待していなかったのですが意外、アパートメントタイプでちゃんと専用個室で風呂もトイレも専用。部屋広くてソファもあったりしていい部屋でした。ただしチェックインは難易度高い。フロントは無くてキーボックスからキーを入手する必要があるので事前にキーコードがメールされてきます。僕はキーコードの存在を忘れてて鍵ゲットするまでちょっと手間取りました。&lt;/p&gt;
+
+&lt;p&gt;スイスは1泊だけの滞在なのでスイスといえば&amp;hellip;チーズフォンデュでしょってことで食べました。本場はチーズ風味が臭いです。味はおいしかったけど濃厚すぎて自分はダメでした。ちなみに本当は冬の食べ物らしいです。日本の鍋的感覚か。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5429.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5448.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&#34;パリ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;パリ&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;お洒落な街、でも地下鉄とっても汚い&lt;/li&gt;
+&lt;li&gt;エッフェル塔、凱旋門&lt;/li&gt;
+&lt;li&gt;ショッピング&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;パリは2泊だけの滞在で駆け足。観光はエッフェル塔、凱旋門、ノートルダム寺院の3カ所。親戚の子供の洋服土産を探したりで町歩きしながらセーヌ川を眺めるそんな感じでした。パリは多人種な街ですね。セーヌ川沿いのBrasserieでワイン飲みながらってのはなかなか良いものでした。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8903.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8936.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&#34;お金-手配の方法など:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;お金, 手配の方法など&lt;/h4&gt;
+
+&lt;p&gt;誰かの参考になるかもしれないので書いてみる。ツアーは使ってなくてすべて個人手配です。&lt;/p&gt;
+
+&lt;p&gt;2人で飛行機24万円、列車代が9万円、ホテルが10万くらい、その他食費等で合計55万くらい。飛行機は安かったけどユーロ高め(1ユーロ142円くらい)だったので結構財布寒い感じですね。結構食費は節約系でした。&lt;/p&gt;
+
+&lt;p&gt;飛行機はエールフランスのサイトで直接調べたら安く行けることが分かって、さらに安くならないかなとトラベルコちゃんで調べたらHISが同じ便で1万円くらい安かったので申し込み。行きはシャルルドゴール空港経由パリ行き、帰りはパリから成田への直行便です。&lt;/p&gt;
+
+&lt;p&gt;ホテルはExpediaで。選定方法はまず値段みて、あとGoogle Mapみながら交通の便が良い立地かどうかで選ぶ感じ。(このあたりネット系でコンシェルジュ的(楽々幹事さん的のり)なサービスあってやってくれるサービスとかないですかねえ。)&lt;/p&gt;
+
+&lt;p&gt;列車&lt;a href=&#34;http://www.raileurope.com/index.html&#34;&gt;RAILEUROPE&lt;/a&gt;で列車時刻調べてチケットを事前に購入しました。ユーロレイルパスは使ってません(個別購入の方が安かったので)&lt;/p&gt;
+
+&lt;h4 id=&#34;まとめ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;まとめ&lt;/h4&gt;
+
+&lt;p&gt;ウィーン、ザルツブルク、チューリッヒ、パリと列車で巡ってきた。弾丸な日程だったけど充実した旅でした。次は1都市滞在でゆっくりした旅がしたい!(けどかなり先だろう)&lt;/p&gt;
 </description>
         </item>
       
@@ -3878,169 +3906,6 @@ color: 1
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Happy Hacking!&lt;/p&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>SmokePingをインストールしてみた</title>
-          <link>http://orihubon.com/blog/2013/02/18/install-smokeping/</link>
-          <pubDate>Mon, 18 Feb 2013 16:41:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2013/02/18/install-smokeping/</guid>
-          <description>
-
-&lt;p&gt;SmokePingをインストールしたメモ。&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;SmokePingの概要は以下のとおりです。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;smokepingデーモンが対象に対して定期的にpingポーリング&lt;/li&gt;
-&lt;li&gt;監視対象ホストのネットワークレイテンシ可視化&lt;/li&gt;
-&lt;li&gt;閾値監視、通知&lt;/li&gt;
-&lt;li&gt;ping以外にもHTTPやDNSなどを使うこともできる&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;1-rrdtool:027ac191896abc00fcc6866f157965ea&#34;&gt;1. RRDTool&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;yum install rrdtool rrdtool-devel rrdtoo-perl   
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;2-fping:027ac191896abc00fcc6866f157965ea&#34;&gt;2. fping&lt;/h3&gt;
-
-&lt;p&gt;sourceからインストールしました。fpingをroot権限で実行させるためsetuidしました。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir ~/src/ ; cd ~/src/
-wget http://oss.oetiker.ch/smokeping/pub/fping-2.4b2_to4-ipv6.tar.gz
-tar zxvf fping-2.4b2_to4-ipv6.tar.gz
-cd fping-2.4b2_to4-ipv6
-./configure --prefix=/usr/local/smokeping
-make
-su -
-make install
-chmod u+s /usr/local/sbin/fping
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;3-perl-modules:027ac191896abc00fcc6866f157965ea&#34;&gt;3. Perl Modules&lt;/h3&gt;
-
-&lt;p&gt;公式に書いてあるCPANモジュールをcpanでインストールします。optionalなモジュールは必要ないので入れてません。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# perl -MCPAIN -e shell
-cpan&amp;gt; install FCGI CGI CGI::Fast Config::Grammar LWP
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;4-smokepingのインストール:027ac191896abc00fcc6866f157965ea&#34;&gt;4. SmokePingのインストール&lt;/h3&gt;
-
-&lt;p&gt;こちらもソースからインストールします。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd ~/src
-wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.8.tar.gz
-tar zxvf smokeping-2.6.8.tar.gz
-cd smokeping-2.6.8
-./configure --prefix=/usr/local/smokeping
-/usr/bin/gmake install
-mkdir -p /usr/local/smokeping/cache
-mkdir -p /usr/local/smokeping/data
-mkdir -p /usr/local/smokeping/var
-mkdir /usr/local/smokeping/var/log
-chown -R smokeping:smokeping /usr/local/smokeping
-chmod -R g+rw /usr/local/smokeping/cache
-chmod 600 /usr/local/smokeping/etc/smokeping_secrets.dist
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;smokepingユーザを作ります。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;useradd smokeping
-usermod -G smokeping apache
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;5-smokepingのコンフィグ:027ac191896abc00fcc6866f157965ea&#34;&gt;5. SmokePingのコンフィグ&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;etc/config.dist&lt;/code&gt;を&lt;code&gt;etc/smokeping.conf&lt;/code&gt;にリネームしてサンプルを参考に設定する。&lt;/p&gt;
-
-&lt;h3 id=&#34;6-起動:027ac191896abc00fcc6866f157965ea&#34;&gt;6. 起動&lt;/h3&gt;
-
-&lt;p&gt;pingを定期実行するsmokepingデーモンを上げます。&lt;/p&gt;
-
-&lt;p&gt;ためしに起動する&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;su - smokeping -m -c /usr/local/smokeping/bin/smokeping --config=/usr/local/smokeping/etc/smokeping.conf --debug
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;問題なければinitスクリプトから起動する。initスクリプトは適当に作ったのを&lt;a href=&#34;https://gist.github.com/niku4i/4975644&#34;&gt;gist&lt;/a&gt;に上げました。&lt;/p&gt;
-
-&lt;h3 id=&#34;7-apacheの設定:027ac191896abc00fcc6866f157965ea&#34;&gt;7. apacheの設定&lt;/h3&gt;
-
-&lt;p&gt;以下を&lt;code&gt;/etc/httpd/conf.d/smokeping.conf&lt;/code&gt;に。&lt;/p&gt;
-
-&lt;p&gt;{% gist 4976007 %}&lt;/p&gt;
-
-&lt;p&gt;cgi用に以下を作った&lt;/p&gt;
-
-&lt;p&gt;{% gist 4976014 %}&lt;/p&gt;
-
-&lt;h3 id=&#34;その他:027ac191896abc00fcc6866f157965ea&#34;&gt;その他&lt;/h3&gt;
-
-&lt;p&gt;コンフィグの構文チェック&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;smokeping --check --config=/path/to/config
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;デバッグモード実行&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;smokeping --config=/path/to/config --debug
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>BSONオブジェクトのデータサイズを確認する方法(Ruby)</title>
-          <link>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/</link>
-          <pubDate>Wed, 13 Feb 2013 15:06:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2013/02/13/calculate-bson-objects-size/</guid>
-          <description>&lt;p&gt;BSON Objectのサイズを求める方法。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;class Person
-  include Mongoid::Document
-  field :name, type: String
-end
-
-Person.create name: &#39;a&#39;
-
-person = Person.first
-puts Moped::BSON::Document.serialize(parson.as_document).size
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;MongoDBにおける1BSONオブジェクトの最大サイズは16MB。ある件でembedしてデータをたくさん持たせた場合、サイズが制限内で妥当かどうか検証したときのメモ。&lt;/p&gt;
-
-&lt;p&gt;蛇足ならが、ちなみ結論的にはデータ構造がネストされて大きくなる場合はembededではなくreferencedを使うべきであった。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;class Person
-  include Mongoid::Document
-  field :name, type: String
-  embeds_many :children
-end
-
-class Child
-  include Mongoid::Document
-  embeded_in :person
-  field :age
-end
-  
-Person.create name: &#39;a&#39;
-person = Person.first
-person.children &amp;lt;&amp;lt; たくさんデータ入れる
- 
-Person.first   # loadに時間がかかる!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;relationにした場合、子供はloadされないので時間がかかりません。&lt;/p&gt;
 </description>
         </item>
       
