@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (10.4.2)
+    stringex (2.5.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  stringex
+
+BUNDLED WITH
+   1.10.6
