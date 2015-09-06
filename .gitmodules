@@ -1,0 +1,3 @@
+[submodule "themes/lanyon-hugo"]
+	path = themes/lanyon-hugo
+	url = git@github.com:niku4i/lanyon-hugo.git
