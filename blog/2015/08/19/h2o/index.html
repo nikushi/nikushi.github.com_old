@@ -1,113 +1,307 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>h2oでreverse proxy - ni-blog</title>
-  <meta name="author" content="niku4i">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   
-  <meta name="description" content="HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。 今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、 &hellip;">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://orihubon.com/blog/2015/08/19/h2o/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>
+    
+      h2oでreverse proxy &middot; Nikushi&#39;s blog
+    
+  </title>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-262568-4']);
-    _gaq.push(['_trackPageview']);
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="/css/prism.css">
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
 
-
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">ni-blog</a></h1>
-  
-    <h2>tech, web, work, and Tokyo.</h2>
-  
-</hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:orihubon.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+  <body>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
     
-      <h1 class="entry-title">h2oでreverse proxy</h1>
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    Thank you for reading this blog. If you have any feedbacks, contact me through <a href="https://twitter.com/niku4i">@niku4i</a>.
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
     
     
-      <p class="meta">
-        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
+  </div>
+</div>
 
 
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Nikushi&#39;s blog</a>
+            <small>Our Time is Limited.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
 
 
-
-
-
-
+<div class="post">
+  <h1 class="post-title">h2oでreverse proxy</h1>
+  <span class="post-date">Aug 19 2015</span>
   
 
-
-<time datetime="2015-08-19T14:18:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。</p>
-
-<!--more-->
-
+<p>HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。</p>
 
 <p>今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、またdaemontools経由で起動させるようにした。</p>
 
@@ -118,127 +312,78 @@
 <li>OS CentOS 6.5</li>
 </ul>
 
-
-<h3>インストール</h3>
+<h3 id="インストール:baa3a62230554beda5fd070b201e9e43">インストール</h3>
 
 <p>自前でbuildした</p>
 
-<h4>cmake &amp; libyaml</h4>
+<h4 id="cmake-libyaml:baa3a62230554beda5fd070b201e9e43">cmake &amp; libyaml</h4>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo yum install cmake libyaml</span></code></pre></td></tr></table></div></figure>
+<pre><code>$ sudo yum install cmake libyaml
+</code></pre>
 
-
-<h4>libuv</h4>
+<h4 id="libuv:baa3a62230554beda5fd070b201e9e43">libuv</h4>
 
 <p>libuv 1.0.0 以上が必要。CentOSのパッケージのバージョンは古いため自前でbuild。libuvをbuildするためにはlibtoolが必要だったのでyumで入れた。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo yum install libtool
-</span><span class='line'>cd /var/tmp
-</span><span class='line'>wget https://github.com/libuv/libuv/archive/v1.7.0.tar.gz
-</span><span class='line'>tar zxvf v1.7.0.tar.gz
-</span><span class='line'>cd libuv-1.7.0
-</span><span class='line'>./autogen.sh
-</span><span class='line'>./configure --prefix=/usr/local/libuv-1.7.0
-</span><span class='line'>make
-</span><span class='line'>sudo make install</span></code></pre></td></tr></table></div></figure>
+<pre><code>sudo yum install libtool
+cd /var/tmp
+wget https://github.com/libuv/libuv/archive/v1.7.0.tar.gz
+tar zxvf v1.7.0.tar.gz
+cd libuv-1.7.0
+./autogen.sh
+./configure --prefix=/usr/local/libuv-1.7.0
+make
+sudo make install
+</code></pre>
 
+<h4 id="h2o:baa3a62230554beda5fd070b201e9e43">h2o</h4>
 
-<h4>h2o</h4>
+<pre><code>cd /var/tmp
+wget https://github.com/h2o/h2o/archive/v1.4.3.tar.gz
+tar zxvf v1.4.3.tar.gz
+cd h2o-1.4.3/
+PKG_CONFIG_PATH=/usr/local/libuv-1.7.0/lib/pkgconfig/ cmake -DWITH_BUNDLED_SSL=on -DCMAKE_INSTALL_PREFIX=/usr/local/h2o-1.4.3 .
+make
+sudo make install
+sudo ln -s /usr/local/h2o-1.4.3 /usr/local/h2o
+</code></pre>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd /var/tmp
-</span><span class='line'>wget https://github.com/h2o/h2o/archive/v1.4.3.tar.gz
-</span><span class='line'>tar zxvf v1.4.3.tar.gz
-</span><span class='line'>cd h2o-1.4.3/
-</span><span class='line'>PKG_CONFIG_PATH=/usr/local/libuv-1.7.0/lib/pkgconfig/ cmake -DWITH_BUNDLED_SSL=on -DCMAKE_INSTALL_PREFIX=/usr/local/h2o-1.4.3 .
-</span><span class='line'>make
-</span><span class='line'>sudo make install
-</span><span class='line'>sudo ln -s /usr/local/h2o-1.4.3 /usr/local/h2o</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>設定</h3>
+<h3 id="設定:baa3a62230554beda5fd070b201e9e43">設定</h3>
 
 <p>設定はこんな感じ。</p>
 
-<figure class='code'><figcaption><span>/etc/h2o/h2o.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="nn">---</span>
-</span><span class='line'><span class="l-Scalar-Plain">max-connections</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1024</span>
-</span><span class='line'><span class="l-Scalar-Plain">num-threads</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">4</span>
-</span><span class='line'><span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">nobody</span>
-</span><span class='line'><span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span>
-</span><span class='line'>  <span class="s">&quot;www.example.com:80&quot;</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">listen</span><span class="p-Indicator">:</span>
-</span><span class='line'>      <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0.0.0</span>
-</span><span class='line'>      <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">80</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
-</span><span class='line'>      <span class="s">&quot;/&quot;</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">redirect</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">https://www.example.com/</span>
-</span><span class='line'>  <span class="s">&quot;www.example.com:443&quot;</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">listen</span><span class="p-Indicator">:</span>
-</span><span class='line'>      <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0.0.0</span>
-</span><span class='line'>      <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">443</span>
-</span><span class='line'>      <span class="l-Scalar-Plain">ssl</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">certificate-file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/etc/h2o/www.example.com.cer</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">key-file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/etc/h2o/www.example.com.key.pem</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">proxy.timeout.io</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">30000</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
-</span><span class='line'>      <span class="s">&quot;/&quot;</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">proxy.reverse.url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://[unix:/tmp/unicorn.sock]/</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">proxy.preserve-host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ON</span>
-</span><span class='line'>      <span class="s">&quot;/assets&quot;</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">file.dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/path/to/app/public/assets</span>
-</span><span class='line'><span class="l-Scalar-Plain">access-log</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/log/h2o/access.log</span>
-</span><span class='line'><span class="l-Scalar-Plain">error-log</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/log/h2o/error.log</span>
-</span><span class='line'><span class="l-Scalar-Plain">pid-file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/spool/h2o/pid</span>
-</span><span class='line'><span class="l-Scalar-Plain">http2-reprioritize-blocking-assets</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ON</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="language-yaml">#/etc/h2o/h2o.conf
+---
+max-connections: 1024
+num-threads: 4
+user: nobody
+hosts:
+  &quot;www.example.com:80&quot;:
+    listen:
+      host: 0.0.0.0
+      port: 80
+    paths:
+      &quot;/&quot;:
+        redirect: https://www.example.com/
+  &quot;www.example.com:443&quot;:
+    listen:
+      host: 0.0.0.0
+      port: 443
+      ssl:
+        certificate-file: /etc/h2o/www.example.com.cer
+        key-file: /etc/h2o/www.example.com.key.pem
+    proxy.timeout.io: 30000
+    paths:
+      &quot;/&quot;:
+        proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/
+        proxy.preserve-host: ON
+      &quot;/assets&quot;:
+        file.dir: /path/to/app/public/assets
+access-log: /var/log/h2o/access.log
+error-log: /var/log/h2o/error.log
+pid-file: /var/spool/h2o/pid
+http2-reprioritize-blocking-assets: ON
+</code></pre>
 
 <ul>
 <li>基本HTTPSで受ける(HTTPできたらHTTPSにリダイレクト)</li>
@@ -246,67 +391,40 @@
 
 <ul>
 <li>2015/8/19現在公式のドキュメントにはないけど<a href="https://github.com/h2o/h2o/issues/383">#383</a>を参考に、<code>proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/</code>こう書いたら動く:)</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 
-
-<h3>起動スクリプト</h3>
+<h3 id="起動スクリプト:baa3a62230554beda5fd070b201e9e43">起動スクリプト</h3>
 
 <p>ちゃんと動かすために今回はdaemontools経由で起動させてみた。</p>
 
-<figure class='code'><figcaption><span>/service/h2o/run</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'><span class="nb">exec </span>2&gt;&amp;1
-</span><span class='line'><span class="nv">DAEMON</span><span class="o">=</span>/usr/local/h2o/bin/h2o
-</span><span class='line'><span class="nv">CONFIG</span><span class="o">=</span>/etc/h2o/h2o.conf
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$DAEMON&quot;</span> <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;not executable: $DAEMON&quot;</span> &gt;&amp;2
-</span><span class='line'>  <span class="nb">exit </span>1
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Test configuration</span>
-</span><span class='line'><span class="nv">$DAEMON</span> -t -c <span class="nv">$CONFIG</span>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Failed to test $CONFIG&quot;</span> &gt;&amp;2
-</span><span class='line'>  <span class="nb">exit </span>1
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">ulimit</span> -n 32896
-</span><span class='line'>
-</span><span class='line'><span class="nb">exec</span> <span class="se">\</span>
-</span><span class='line'>  setuidgid root <span class="se">\</span>
-</span><span class='line'>  <span class="nv">$DAEMON</span> <span class="se">\</span>
-</span><span class='line'>  -m master <span class="se">\</span>
-</span><span class='line'>  -c <span class="nv">$CONFIG</span> <span class="se">\</span>
-</span><span class='line'>  ;
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-sh">#/service/h2o/run
+#!/bin/sh
+exec 2&gt;&amp;1
+DAEMON=/usr/local/h2o/bin/h2o
+CONFIG=/etc/h2o/h2o.conf
 
+if [ ! -x &quot;$DAEMON&quot; ]; then
+  echo &quot;not executable: $DAEMON&quot; &gt;&amp;2
+  exit 1
+fi
+
+# Test configuration
+$DAEMON -t -c $CONFIG
+if [ $? -ne 0 ]; then
+  echo &quot;Failed to test $CONFIG&quot; &gt;&amp;2
+  exit 1
+fi
+
+ulimit -n 32896
+
+exec \
+  setuidgid root \
+  $DAEMON \
+  -m master \
+  -c $CONFIG \
+  ;
+</code></pre>
 
 <ul>
 <li>-t で起動せずコンフィグのsyntaxチェックできる。</li>
@@ -315,14 +433,13 @@
 <li>abで負荷かけつつサーバ側で<code>while [ 1 ]; do sleep 1 ; echo ok ; svc -h /service/h2o/ ; done</code>やってみたけど無事捌いてくれた。</li>
 </ul>
 
-
-<h3>まとめ</h3>
+<h3 id="まとめ:baa3a62230554beda5fd070b201e9e43">まとめ</h3>
 
 <p>以上、h2oを動かした。</p>
 
 <p>社内にあるほぼ個人プロジェクトサイトをSSL化するついでにnginxからh2oに置き換えて様子見中。自分で構築したサイトでChromeのSPDY indicatorが青く(HTTP/2)に光るの嬉しいな。</p>
 
-<h3>参考</h3>
+<h3 id="参考:baa3a62230554beda5fd070b201e9e43">参考</h3>
 
 <ul>
 <li><a href="http://qiita.com/cubicdaiya/items/d6f3a165fa29e199afb1">h2oとUnixドメインソケット</a></li>
@@ -331,182 +448,12 @@
 
 </div>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-19T14:18:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
-      
-
-
-    </p>
-    
-      <div class="sharing">
-  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2015/08/19/h2o/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2015/08/19/h2o/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/" title="Previous Post: SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす">&laquo; SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
-      
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/08/19/h2o/">h2oでreverse proxy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-<style type="text/css">
-<!--
-.hatena-bookmark-widget-title { display: none; }
--->
-</style>
-<h1>Popular Posts</h1>
-<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript">
-  Hatena.BookmarkWidget.url   = "http://orihubon.com";
-  Hatena.BookmarkWidget.title = "人気エントリー";
-  Hatena.BookmarkWidget.sort  = "hot";
-  Hatena.BookmarkWidget.width = 0;
-  Hatena.BookmarkWidget.num   = 5;
-  Hatena.BookmarkWidget.theme = "notheme";
-  Hatena.BookmarkWidget.load();
-</script>
-</section>
-<section>
-  <h1>Recent Tweets</h1>
-  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - niku4i -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
-  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
-</p>
 
-</footer>
-  
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script type="text/javascript">
-      var disqus_shortname = 'orihubon';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://orihubon.com/blog/2015/08/19/h2o/';
-        var disqus_url = 'http://orihubon.com/blog/2015/08/19/h2o/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+    <script src="/js/prism.js"></script>
+  </body>
 </html>
+

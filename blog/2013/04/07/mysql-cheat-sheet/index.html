@@ -1,134 +1,328 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>MySQL チートシート - ni-blog</title>
-  <meta name="author" content="niku4i">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   
-  <meta name="description" content="MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。 起動 # mysqld_safe --user=_mysql &amp; 停止 # mysqladmin -uroot shutdown 接続 接続 testデータベースへ接続 $ mysql test &hellip;">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>
+    
+      MySQL チートシート &middot; Nikushi&#39;s blog
+    
+  </title>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-262568-4']);
-    _gaq.push(['_trackPageview']);
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="/css/prism.css">
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
 
-
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">ni-blog</a></h1>
-  
-    <h2>tech, web, work, and Tokyo.</h2>
-  
-</hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:orihubon.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+  <body>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
     
-      <h1 class="entry-title">MySQL チートシート</h1>
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    Thank you for reading this blog. If you have any feedbacks, contact me through <a href="https://twitter.com/niku4i">@niku4i</a>.
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
     
     
-      <p class="meta">
-        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
+  </div>
+</div>
 
 
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Nikushi&#39;s blog</a>
+            <small>Our Time is Limited.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
 
 
-
-
-
-
+<div class="post">
+  <h1 class="post-title">MySQL チートシート</h1>
+  <span class="post-date">Apr 7 2013</span>
   
 
-
-<time datetime="2013-04-07T13:04:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。</p>
+<p>MySQLのマの字も知らないデータベースエンジニアリング初心者なのでチートシートを作った。</p>
 
 <!-- more -->
 
-
-<h3>起動</h3>
+<h3 id="起動:c19b1644b6616fb7ff9fc65369332d8c">起動</h3>
 
 <pre><code># mysqld_safe --user=_mysql &amp;
 </code></pre>
 
-<h3>停止</h3>
+<h3 id="停止:c19b1644b6616fb7ff9fc65369332d8c">停止</h3>
 
 <pre><code># mysqladmin -uroot shutdown
 </code></pre>
 
-<h3>接続</h3>
+<h3 id="接続:c19b1644b6616fb7ff9fc65369332d8c">接続</h3>
 
-<h4>接続</h4>
+<h4 id="接続-1:c19b1644b6616fb7ff9fc65369332d8c">接続</h4>
 
-<p>testデータベースへ接続</p>
+<p>testデータベースへ接続
+    $ mysql test</p>
 
-<pre><code>$ mysql test
-</code></pre>
-
-<h4>ユーザ名指指定</h4>
+<h4 id="ユーザ名指指定:c19b1644b6616fb7ff9fc65369332d8c">ユーザ名指指定</h4>
 
 <p>hogeユーザ権限でtestデータベースへ接続。-pではパスワード指定しない</p>
 
@@ -136,23 +330,23 @@
 Password: 
 </code></pre>
 
-<h4>リモートのMySQLサーバへ接続</h4>
+<h4 id="リモートのmysqlサーバへ接続:c19b1644b6616fb7ff9fc65369332d8c">リモートのMySQLサーバへ接続</h4>
 
 <pre><code>$ mysql -u hoge -p --host=192.168.1.1 --port=1000 test
 </code></pre>
 
-<h4>ソケットファイルを使って接続</h4>
+<h4 id="ソケットファイルを使って接続:c19b1644b6616fb7ff9fc65369332d8c">ソケットファイルを使って接続</h4>
 
 <pre><code>$ mysql --socket=/tmp/ownsocket_file test
 </code></pre>
 
-<h3>データベース選択</h3>
+<h3 id="データベース選択:c19b1644b6616fb7ff9fc65369332d8c">データベース選択</h3>
 
 <pre><code>$ mysql
 &gt; USE test
 </code></pre>
 
-<h3>ページャを設定</h3>
+<h3 id="ページャを設定:c19b1644b6616fb7ff9fc65369332d8c">ページャを設定</h3>
 
 <p>SELECT文等で出力が大量の場合、ページャを用いる</p>
 
@@ -164,14 +358,14 @@ Password:
 <pre><code>&gt; nopager
 </code></pre>
 
-<h3>ヘルプの表示</h3>
+<h3 id="ヘルプの表示:c19b1644b6616fb7ff9fc65369332d8c">ヘルプの表示</h3>
 
 <p>mysqlコマンドが持つコマンド群と使い方の説明を表示。SQL文用の説明ではない。SQL文ではないので末尾に;は不要。</p>
 
 <pre><code>&gt; help
 </code></pre>
 
-<h3>テーブル作成</h3>
+<h3 id="テーブル作成:c19b1644b6616fb7ff9fc65369332d8c">テーブル作成</h3>
 
 <p>aテーブルをcというフィールド付きで作成</p>
 
@@ -183,31 +377,31 @@ Password:
 <pre><code>&gt; CREATE TABLE t1 ( id INT, dep INT, name CHAR(30) );
 </code></pre>
 
-<h3>テーブル作成(ストレージエンジンの指定)</h3>
+<h3 id="テーブル作成-ストレージエンジンの指定:c19b1644b6616fb7ff9fc65369332d8c">テーブル作成(ストレージエンジンの指定)</h3>
 
 <pre><code>&gt; CREATE TABLE t2 ( id INT, dep INT, name CHAR(30) ) ENGINE=InnoDB;
 </code></pre>
 
-<h3>テーブル作成(キャラクタセットの指定)</h3>
+<h3 id="テーブル作成-キャラクタセットの指定:c19b1644b6616fb7ff9fc65369332d8c">テーブル作成(キャラクタセットの指定)</h3>
 
 <pre><code>&gt; CREATE TABLE t3 ( id INT, dep INT, name CHAR(30) ) CHARACTER SET utf8;
 </code></pre>
 
-<h3>テーブルのリネーム</h3>
+<h3 id="テーブルのリネーム:c19b1644b6616fb7ff9fc65369332d8c">テーブルのリネーム</h3>
 
 <pre><code>&gt; ALTER TABLE old_table RENAME TO new_table;
 </code></pre>
 
-<h3>テーブル定義の確認</h3>
+<h3 id="テーブル定義の確認:c19b1644b6616fb7ff9fc65369332d8c">テーブル定義の確認</h3>
 
 <p>SHOW CREATE TABLE文を使用して、ストレージエンジン、テーブル、フィールドキャラクタセット等確認できる。</p>
 
 <pre><code>&gt; SHOW CREATE TABLE t1;
 </code></pre>
 
-<h3>データベースの情報確認</h3>
+<h3 id="データベースの情報確認:c19b1644b6616fb7ff9fc65369332d8c">データベースの情報確認</h3>
 
-<p>SHOW TABLE STATUS文を使うと、データベースに存在するすべてのテーブルの情報を確認可能。LIKE &lsquo;テーブル名&#8217;を使うと特定テーブルに限定可能。</p>
+<p>SHOW TABLE STATUS文を使うと、データベースに存在するすべてのテーブルの情報を確認可能。LIKE &lsquo;テーブル名&rsquo;を使うと特定テーブルに限定可能。</p>
 
 <p>テーブルaの詳細情報を縦型出力で出力</p>
 
@@ -262,7 +456,7 @@ TABLE_COLLATION: latin1_swedish_ci
 1 row in set (0.00 sec)
 </code></pre>
 
-<h3>テーブルのフィールドの構造確認</h3>
+<h3 id="テーブルのフィールドの構造確認:c19b1644b6616fb7ff9fc65369332d8c">テーブルのフィールドの構造確認</h3>
 
 <p>SHOW文またはDESC文を使う</p>
 
@@ -289,17 +483,17 @@ TABLE_COLLATION: latin1_swedish_ci
 
 <p>version 5.0以上ならばinformation_schema.COLUMNSテーブルを参照することで同等のことが可能</p>
 
-<h3>テーブル一覧を確認</h3>
+<h3 id="テーブル一覧を確認:c19b1644b6616fb7ff9fc65369332d8c">テーブル一覧を確認</h3>
 
 <pre><code>&gt; SHOW TABLES
 </code></pre>
 
-<h3>複数のフィールドに値をセットしたレコードを挿入</h3>
+<h3 id="複数のフィールドに値をセットしたレコードを挿入:c19b1644b6616fb7ff9fc65369332d8c">複数のフィールドに値をセットしたレコードを挿入</h3>
 
 <pre><code>&gt; INSERT INTO a(c,d) VALUES ('123abc','246ace')
 </code></pre>
 
-<h3>フィールドの追加</h3>
+<h3 id="フィールドの追加:c19b1644b6616fb7ff9fc65369332d8c">フィールドの追加</h3>
 
 <p>テーブルaにdというCHAR(100)のフィールドをフィールド最後に追加。COLUMNは省略可能</p>
 
@@ -314,36 +508,36 @@ or
 &gt; ALTER TABLE a ADD COLUMN f CHAR(50) AFTER e;
 </code></pre>
 
-<h3>フィールドの削除</h3>
+<h3 id="フィールドの削除:c19b1644b6616fb7ff9fc65369332d8c">フィールドの削除</h3>
 
 <pre><code>&gt; ALTER TABLE a DROP COLUMN f;
 </code></pre>
 
-<h3>フィールドの変更</h3>
+<h3 id="フィールドの変更:c19b1644b6616fb7ff9fc65369332d8c">フィールドの変更</h3>
 
 <p>名前や型を変更できる。下の例はeフィールドをe2にリネームしつつ、型をCHAR(50)に変換。</p>
 
 <pre><code>&gt; ALTER TABLE a CHANGE COLUMN e e2 CHAR(50);
 </code></pre>
 
-<h3>フィールド型の変換</h3>
+<h3 id="フィールド型の変換:c19b1644b6616fb7ff9fc65369332d8c">フィールド型の変換</h3>
 
 <pre><code>&gt; ALTER TABLE a MODIFY e2 CHAR(100);
 </code></pre>
 
-<h3>ストレージエンジンの変更</h3>
+<h3 id="ストレージエンジンの変更:c19b1644b6616fb7ff9fc65369332d8c">ストレージエンジンの変更</h3>
 
 <p>テーブルのストレージエンジンを変更する</p>
 
 <pre><code>&gt; ALTER TABLE a ENGINE=MyISAM;
 </code></pre>
 
-<h3>テーブルの破棄</h3>
+<h3 id="テーブルの破棄:c19b1644b6616fb7ff9fc65369332d8c">テーブルの破棄</h3>
 
 <pre><code>&gt; DROP TABLE a;
 </code></pre>
 
-<h3>レコード追加</h3>
+<h3 id="レコード追加:c19b1644b6616fb7ff9fc65369332d8c">レコード追加</h3>
 
 <p>フィールドの値セットしてレコード追加。指定されなかったフィールドにはデフォルト値が入る。</p>
 
@@ -360,21 +554,21 @@ or
 <pre><code>&gt; INSERT INTO a VALUES (1,'2','3','4');
 </code></pre>
 
-<h3>データの検索</h3>
+<h3 id="データの検索:c19b1644b6616fb7ff9fc65369332d8c">データの検索</h3>
 
 <p>テーブルaのすべてのレコードを表示</p>
 
 <pre><code>&gt; SELECT * FROM a;
 </code></pre>
 
-<h3>特定フィールドに限定した検索</h3>
+<h3 id="特定フィールドに限定した検索:c19b1644b6616fb7ff9fc65369332d8c">特定フィールドに限定した検索</h3>
 
 <p>テーブルaのc,dフィールドのレコードを表示</p>
 
 <pre><code>&gt; SELECT c,d FROM a;
 </code></pre>
 
-<h3>レコードの縦表示</h3>
+<h3 id="レコードの縦表示:c19b1644b6616fb7ff9fc65369332d8c">レコードの縦表示</h3>
 
 <p>フィールド数が多くて横1行に収まらなく見づらい場合。1レコード毎に縦表示させる。;の代わりに\Gを末尾にする。</p>
 
@@ -393,7 +587,7 @@ d: NULL
 2 rows in set (0.00 sec)
 </code></pre>
 
-<h3>特定値を含むレコードの抽出</h3>
+<h3 id="特定値を含むレコードの抽出:c19b1644b6616fb7ff9fc65369332d8c">特定値を含むレコードの抽出</h3>
 
 <pre><code>&gt; CREATE TABLE a ( id INT, name CHAR(50), age INT );
 Query OK, 0 rows affected (0.02 sec)
@@ -495,7 +689,7 @@ Query OK, 0 rows affected (0.02 sec)
 2 rows in set (0.00 sec)
 </code></pre>
 
-<h3>SELECT結果のソート</h3>
+<h3 id="select結果のソート:c19b1644b6616fb7ff9fc65369332d8c">SELECT結果のソート</h3>
 
 <pre><code>&gt; INSERT INTO a VALUES (0, 'Bob', 65);
 Query OK, 1 row affected (0.01 sec)
@@ -534,11 +728,11 @@ Query OK, 1 row affected (0.01 sec)
 <pre><code>&gt; SELECT * FROM a ORDER BY id, name;
 </code></pre>
 
-<h3>データの更新</h3>
+<h3 id="データの更新:c19b1644b6616fb7ff9fc65369332d8c">データの更新</h3>
 
 <p>UPDATEを使う。key=value[, key=value] で複数指定もできる。</p>
 
-<pre><code>&gt; UPDATE  a SET note="hello";
+<pre><code>&gt; UPDATE  a SET note=&quot;hello&quot;;
 Query OK, 5 rows affected (0.00 sec)
 Rows matched: 5  Changed: 5  Warnings: 0
 
@@ -560,21 +754,21 @@ Rows matched: 5  Changed: 5  Warnings: 0
 <pre><code>&gt; UPDATE  a SET age=19 WHERE name='Alice';
 </code></pre>
 
-<h3>テーブルからすべてのレコードを削除</h3>
+<h3 id="テーブルからすべてのレコードを削除:c19b1644b6616fb7ff9fc65369332d8c">テーブルからすべてのレコードを削除</h3>
 
 <p>テーブルからすべてのレコードを削除する。テーブルは削除されない</p>
 
 <pre><code>&gt; DELETE FROM b;
 </code></pre>
 
-<h3>テーブルから特定のレコードを削除</h3>
+<h3 id="テーブルから特定のレコードを削除:c19b1644b6616fb7ff9fc65369332d8c">テーブルから特定のレコードを削除</h3>
 
 <p>特定のレコードだけを削除したい場合はWHERE句を使う</p>
 
 <pre><code>DELETE  FROM b WHERE age &gt; 10;
 </code></pre>
 
-<h3>リダイレクト(SQLを記述したファイルを実行)</h3>
+<h3 id="リダイレクト-sqlを記述したファイルを実行:c19b1644b6616fb7ff9fc65369332d8c">リダイレクト(SQLを記述したファイルを実行)</h3>
 
 <pre><code>$ cat sql.txt
 SELECT * FROM a;
@@ -604,9 +798,9 @@ $
 +--------+------+------+
 </code></pre>
 
-<h3>リダイレクト(実行結果をファイルに出力)</h3>
+<h3 id="リダイレクト-実行結果をファイルに出力:c19b1644b6616fb7ff9fc65369332d8c">リダイレクト(実行結果をファイルに出力)</h3>
 
-<p>&lsquo;>&#8217;上書き、&rsquo;>>&lsquo;追記</p>
+<p>&rsquo;&gt;&lsquo;上書き、&rsquo;&gt;&gt;&lsquo;追記</p>
 
 <pre><code>$ mysql test &gt; out
 SELECT * FROM a;
@@ -621,7 +815,7 @@ a       1       NULL
 a       1       NULL
 </code></pre>
 
-<h3>リダイレクト(&lt; と > を同時に使う)</h3>
+<h3 id="リダイレクト-と-を同時に使う:c19b1644b6616fb7ff9fc65369332d8c">リダイレクト(&lt; と &gt; を同時に使う)</h3>
 
 <p>SQL文をファイルから読み込み実行。実行結果をファイルに保存</p>
 
@@ -642,7 +836,7 @@ a
 a
 </code></pre>
 
-<h3>パイプ</h3>
+<h3 id="パイプ:c19b1644b6616fb7ff9fc65369332d8c">パイプ</h3>
 
 <p>パイプを使ってSQL文を実行できる</p>
 
@@ -659,7 +853,7 @@ a       1       NULL
 a       1       NULL
 </code></pre>
 
-<h3>データベースの作成</h3>
+<h3 id="データベースの作成:c19b1644b6616fb7ff9fc65369332d8c">データベースの作成</h3>
 
 <p>testという名前のデータベースを作成</p>
 
@@ -676,7 +870,7 @@ a       1       NULL
 <pre><code>&gt; CREATE DATABASE test DEFAULT CHARACTER SET utf8;
 </code></pre>
 
-<h3>データベースの削除</h3>
+<h3 id="データベースの削除:c19b1644b6616fb7ff9fc65369332d8c">データベースの削除</h3>
 
 <p>testという名前のデータベースを削除</p>
 
@@ -688,196 +882,19 @@ a       1       NULL
 <pre><code>&gt; DROP DATABASE test;
 </code></pre>
 
-<h3>データベース作成時のクエリを確認</h3>
+<h3 id="データベース作成時のクエリを確認:c19b1644b6616fb7ff9fc65369332d8c">データベース作成時のクエリを確認</h3>
 
 <pre><code>&gt; SHOW CREATE DATABASE test;
 </code></pre>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T13:04:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/mysql/'>MySQL</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
 
 </div>
 
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/" title="Previous Post: 前日日付のファイル名でローテートし圧縮するlogrotateの設定例">&laquo; 前日日付のファイル名でローテートし圧縮するlogrotateの設定例</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/07/03/yokohama-dot-ex-on-20130703/" title="Next Post: yokohama.ex #2 に参加してきたよ">yokohama.ex #2 に参加してきたよ &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/08/19/h2o/">h2oでreverse proxy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-<style type="text/css">
-<!--
-.hatena-bookmark-widget-title { display: none; }
--->
-</style>
-<h1>Popular Posts</h1>
-<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript">
-  Hatena.BookmarkWidget.url   = "http://orihubon.com";
-  Hatena.BookmarkWidget.title = "人気エントリー";
-  Hatena.BookmarkWidget.sort  = "hot";
-  Hatena.BookmarkWidget.width = 0;
-  Hatena.BookmarkWidget.num   = 5;
-  Hatena.BookmarkWidget.theme = "notheme";
-  Hatena.BookmarkWidget.load();
-</script>
-</section>
-<section>
-  <h1>Recent Tweets</h1>
-  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - niku4i -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
-  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
-</p>
 
-</footer>
-  
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script type="text/javascript">
-      var disqus_shortname = 'orihubon';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/';
-        var disqus_url = 'http://orihubon.com/blog/2013/04/07/mysql-cheat-sheet/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+    <script src="/js/prism.js"></script>
+  </body>
 </html>
+

@@ -1,636 +1,993 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>ni-blog</title>
-  <meta name="author" content="niku4i">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   
-  <meta name="description" content="HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。 ">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://orihubon.com/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>
+    
+      Nikushi&#39;s blog &middot; Our Time is Limited.
+    
+  </title>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-262568-4']);
-    _gaq.push(['_trackPageview']);
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="/css/prism.css">
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
 
-
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">ni-blog</a></h1>
-  
-    <h2>tech, web, work, and Tokyo.</h2>
-  
-</hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:orihubon.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+  <body>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    Thank you for reading this blog. If you have any feedbacks, contact me through <a href="https://twitter.com/niku4i">@niku4i</a>.
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item  active " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/08/19/h2o/">h2oでreverse proxy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-19T14:18:00+09:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
-        
-         | <a href="/blog/2015/08/19/h2o/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/08/19/h2o/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-19T11:45:00+09:00" pubdate data-updated="true">Apr 19<span>th</span>, 2015</time>
-        
-         | <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>SmokePingをApache+CGIではなくPlackだけで動かしてみた。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-17T12:27:00+09:00" pubdate data-updated="true">Apr 17<span>th</span>, 2015</time>
-        
-         | <a href="/blog/2015/04/17/angularjs-1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>仕事でAngularJSを使う機運が高まっているので素振り1日目。数時間Webブラウジングしたメモ。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/04/17/angularjs-1/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-06T12:22:00+09:00" pubdate data-updated="true">Apr 6<span>th</span>, 2015</time>
-        
-         | <a href="/blog/2015/04/06/naginata/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作りました。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/04/06/naginata/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-21T21:03:00+09:00" pubdate data-updated="true">Dec 21<span>st</span>, 2014</time>
-        
-         | <a href="/blog/2014/12/21/solarized-colorscheme/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://ethanschoonover.com/solarized">solarized</a>というカラースキームが良いらしいのでvimとターミナルの配色を変えた。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/21/solarized-colorscheme/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/07/sensu-nyumon/">センス入門 を読んだ</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-07T22:10:00+09:00" pubdate data-updated="true">Dec 7<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/12/07/sensu-nyumon/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.amazon.co.jp/%E3%82%BB%E3%83%B3%E3%82%B9%E5%85%A5%E9%96%80-%E6%9D%BE%E6%B5%A6-%E5%BC%A5%E5%A4%AA%E9%83%8E/dp/4480816720">センス入門 松浦 弥太郎  (著)</a> という本を読んだ。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/07/sensu-nyumon/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/">git pushのトピックブランチ名を省略する方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-11T11:22:00+09:00" pubdate data-updated="true">Nov 11<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>トピックブランチを完成させたあと <code>git push origin myfix</code> と毎度タイプしてたけどタイプがしんどいので省略する方法を調べた。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/11/shortcut-to-push-origin-topicbranch/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/10/pushd-and-popd/">pushd and popd</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-10T22:42:00+09:00" pubdate data-updated="true">Nov 10<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/11/10/pushd-and-popd/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>pushd と popd を使い始めた。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/10/pushd-and-popd/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/09/isucon4-final/">ISUCON4本戦に出場しました!! 悔しい!!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-09T17:58:00+09:00" pubdate data-updated="true">Nov 9<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/11/09/isucon4-final/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>週末、<a href="http://isucon.net/archives/cat_1024989.html">ISUCON4本戦</a>に参加しました。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/09/isucon4-final/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/06/binfiles/">binfiles</a></h1>
+      
     
+      
     
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-06T10:43:00+09:00" pubdate data-updated="true">Nov 6<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/11/06/binfiles/#disqus_thread">Comments</a>
-        
-      </p>
+      
     
-  </header>
-
-
-  <div class="entry-content"><p><code>~/bin/</code>にあったオレオレスクリプトを<a href="https://github.com/niku4i/binfiles">github.com/niku4i/binfiles</a>で管理するようにした。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/06/binfiles/">続きを読む</a>
-    </footer>
-  
-
-
-    </article>
-  
-  <div class="pagination">
+      
     
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+      
     
-    <a href="/blog/archives">Blog Archives</a>
+      
     
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
   </div>
 </div>
-<aside class="sidebar">
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Nikushi&#39;s blog</a>
+            <small>Our Time is Limited.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+
+
+<div class="posts">
   
-    <section>
-  <h1>About Me</h1>
-  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
     
-      <li class="post">
-        <a href="/blog/2015/08/19/h2o/">h2oでreverse proxy</a>
-      </li>
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/08/19/h2o/">h2oでreverse proxy</a></h1>
+        <span class="post-date">Aug 19 2015</span>
+        
+
+<p>HTTP/2対応の高速なHTTPサーバ、h2oを使ってみた。</p>
+
+<p>今回、HTTP/2でリクエスト受けて裏側のアプリサーバへHTTP/1.1で流すreverse proxyとして動かしてみた。reverse proxy先へはunix domain socket経由で、またdaemontools経由で起動させるようにした。</p>
+
+<p>環境</p>
+
+<ul>
+<li>h2o v1.4.3</li>
+<li>OS CentOS 6.5</li>
+</ul>
+
+<h3 id="インストール:baa3a62230554beda5fd070b201e9e43">インストール</h3>
+
+<p>自前でbuildした</p>
+
+<h4 id="cmake-libyaml:baa3a62230554beda5fd070b201e9e43">cmake &amp; libyaml</h4>
+
+<pre><code>$ sudo yum install cmake libyaml
+</code></pre>
+
+<h4 id="libuv:baa3a62230554beda5fd070b201e9e43">libuv</h4>
+
+<p>libuv 1.0.0 以上が必要。CentOSのパッケージのバージョンは古いため自前でbuild。libuvをbuildするためにはlibtoolが必要だったのでyumで入れた。</p>
+
+<pre><code>sudo yum install libtool
+cd /var/tmp
+wget https://github.com/libuv/libuv/archive/v1.7.0.tar.gz
+tar zxvf v1.7.0.tar.gz
+cd libuv-1.7.0
+./autogen.sh
+./configure --prefix=/usr/local/libuv-1.7.0
+make
+sudo make install
+</code></pre>
+
+<h4 id="h2o:baa3a62230554beda5fd070b201e9e43">h2o</h4>
+
+<pre><code>cd /var/tmp
+wget https://github.com/h2o/h2o/archive/v1.4.3.tar.gz
+tar zxvf v1.4.3.tar.gz
+cd h2o-1.4.3/
+PKG_CONFIG_PATH=/usr/local/libuv-1.7.0/lib/pkgconfig/ cmake -DWITH_BUNDLED_SSL=on -DCMAKE_INSTALL_PREFIX=/usr/local/h2o-1.4.3 .
+make
+sudo make install
+sudo ln -s /usr/local/h2o-1.4.3 /usr/local/h2o
+</code></pre>
+
+<h3 id="設定:baa3a62230554beda5fd070b201e9e43">設定</h3>
+
+<p>設定はこんな感じ。</p>
+
+<pre><code class="language-yaml">#/etc/h2o/h2o.conf
+---
+max-connections: 1024
+num-threads: 4
+user: nobody
+hosts:
+  &quot;www.example.com:80&quot;:
+    listen:
+      host: 0.0.0.0
+      port: 80
+    paths:
+      &quot;/&quot;:
+        redirect: https://www.example.com/
+  &quot;www.example.com:443&quot;:
+    listen:
+      host: 0.0.0.0
+      port: 443
+      ssl:
+        certificate-file: /etc/h2o/www.example.com.cer
+        key-file: /etc/h2o/www.example.com.key.pem
+    proxy.timeout.io: 30000
+    paths:
+      &quot;/&quot;:
+        proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/
+        proxy.preserve-host: ON
+      &quot;/assets&quot;:
+        file.dir: /path/to/app/public/assets
+access-log: /var/log/h2o/access.log
+error-log: /var/log/h2o/error.log
+pid-file: /var/spool/h2o/pid
+http2-reprioritize-blocking-assets: ON
+</code></pre>
+
+<ul>
+<li>基本HTTPSで受ける(HTTPできたらHTTPSにリダイレクト)</li>
+<li>裏側のアプリ(Rails)とのつなぎはTCPではなくunix domain socket経由にしてみた
+
+<ul>
+<li>2015/8/19現在公式のドキュメントにはないけど<a href="https://github.com/h2o/h2o/issues/383">#383</a>を参考に、<code>proxy.reverse.url: http://[unix:/tmp/unicorn.sock]/</code>こう書いたら動く:)</li>
+</ul></li>
+</ul>
+
+<h3 id="起動スクリプト:baa3a62230554beda5fd070b201e9e43">起動スクリプト</h3>
+
+<p>ちゃんと動かすために今回はdaemontools経由で起動させてみた。</p>
+
+<pre><code class="language-sh">#/service/h2o/run
+#!/bin/sh
+exec 2&gt;&amp;1
+DAEMON=/usr/local/h2o/bin/h2o
+CONFIG=/etc/h2o/h2o.conf
+
+if [ ! -x &quot;$DAEMON&quot; ]; then
+  echo &quot;not executable: $DAEMON&quot; &gt;&amp;2
+  exit 1
+fi
+
+# Test configuration
+$DAEMON -t -c $CONFIG
+if [ $? -ne 0 ]; then
+  echo &quot;Failed to test $CONFIG&quot; &gt;&amp;2
+  exit 1
+fi
+
+ulimit -n 32896
+
+exec \
+  setuidgid root \
+  $DAEMON \
+  -m master \
+  -c $CONFIG \
+  ;
+</code></pre>
+
+<ul>
+<li>-t で起動せずコンフィグのsyntaxチェックできる。</li>
+<li>-m master でh2oを起動するとデーモンモードで動く。HUPシグナルを受け取るとgraceful restartしてくれるモード。</li>
+<li>-m asterで起動すると中ではServer::Starterがh2oを起動してる</li>
+<li>abで負荷かけつつサーバ側で<code>while [ 1 ]; do sleep 1 ; echo ok ; svc -h /service/h2o/ ; done</code>やってみたけど無事捌いてくれた。</li>
+</ul>
+
+<h3 id="まとめ:baa3a62230554beda5fd070b201e9e43">まとめ</h3>
+
+<p>以上、h2oを動かした。</p>
+
+<p>社内にあるほぼ個人プロジェクトサイトをSSL化するついでにnginxからh2oに置き換えて様子見中。自分で構築したサイトでChromeのSPDY indicatorが青く(HTTP/2)に光るの嬉しいな。</p>
+
+<h3 id="参考:baa3a62230554beda5fd070b201e9e43">参考</h3>
+
+<ul>
+<li><a href="http://qiita.com/cubicdaiya/items/d6f3a165fa29e199afb1">h2oとUnixドメインソケット</a></li>
+<li><a href="http://hb.matsumoto-r.jp/entry/2015/07/31/220948">H2Oとmrubyを使ってIPアドレスベースでアクセス制御しつつリバースプロキシとして動かしてWebサイトをHTTP/2化しよう</a></li>
+</ul>
+
+      </div>
     
-      <li class="post">
-        <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
-      </li>
+  
     
-      <li class="post">
-        <a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a>
-      </li>
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack &#43; Perlbrew &#43; Alien::RRDtoolで動かす</a></h1>
+        <span class="post-date">Apr 19 2015</span>
+        
+
+<p>SmokePingをApache+CGIではなくPlackだけで動かしてみた。</p>
+
+<p>以前書いた<a href="http://orihubon.com/blog/2013/02/18/install-smokeping/">SmokePingをインストールしてみた</a>という記事ではシステムPerl + Apache CGI + yumからrrdtool, rrdtoo-perlをインストールする方法でやったが、今回は違う方針で入れてみた。</p>
+
+<p>やりたいこと</p>
+
+<ul>
+<li>システムPerlではなくperlbrewで入れたperlを使う</li>
+<li>PlackでApache無しでWeb画面を立ち上げる</li>
+</ul>
+
+<p>なお、RRDToolをシステムのパッケージシステムからインストールしPerlで使おうとするとCentOSの場合、rrdtoolとrrdtool-perlを入れることになる。rrdtool-perlを使うにはシステムPerlを使わなければならず、今回やりたいperlbrew perlを使えない。そこでAlien::RRDtoolを使ってrrdtoolをbuildすることでRRDToolをperlbrew perlで使えるようになる。Alien::RRDtoolは@gfxさんの<a href="http://perl-users.jp/articles/advent-calendar/2011/hacker/2">Alien::RRDtool - RRDtoolをCPANから入れる</a>が大変参考になる。</p>
+
+<p>Plack化するためCGI::Emulate::PSGIを使う。</p>
+
+<p>以下CentOS6での作業</p>
+
+<h4 id="rrdtoolのbuildに必要なパッケージを入れる:7cd04675aa0acc78f5f9de741333a9de">RRDToolのbuildに必要なパッケージを入れる</h4>
+
+<pre><code># yum install cairo cairo-devel pango pango-devel libxml2-devel bitmap-console-fonts vlgothic-fonts vlgothic-fonts-common
+</code></pre>
+
+<h4 id="perlbrewでsmokeping用perlをbuildする:7cd04675aa0acc78f5f9de741333a9de">PerlbrewでSmokePing用Perlをbuildする</h4>
+
+<p>perlbrewの<code>--as</code>オプションを使ってperlを名前付きでインストールする。今回の作業で必須ではないが、perlのバージョンを上げたいときに普通にインストールするとshebangのパスを書き換えないといけないが、<code>--as</code>オプションを付けると変えなくて済むので便利。</p>
+
+<p>まずsmokepingユーザを作成する</p>
+
+<pre><code># groupadd smokeping
+# useradd smokeping -g smokeping
+# su - smokeping
+</code></pre>
+
+<p>続いてperlbrewをsmokepingユーザ環境化に入れる</p>
+
+<pre><code>$ \curl -L http://install.perlbrew.pl | bash
+$ echo 'source $HOME/perl5/perlbrew/etc/bashrc' &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre>
+
+<p>build</p>
+
+<pre><code>$ perl_version=5.20.2
+$ perl_name=smokeping
+$ perlbrew install $perl_version --as $perl_name  -j 4 -v 
+   =&gt; ~/perl5/perlbrew/perls/$perl_name にperlがインストールされる
+</code></pre>
+
+<h4 id="smokepingのsourceをダウンロード:7cd04675aa0acc78f5f9de741333a9de">SmokePingのsourceをダウンロード</h4>
+
+<p>次のcpanmの工程で必要なので、まずsourceをダウンロードしておく</p>
+
+<pre><code>$ wget http://oss.oetiker.ch/smokeping/pub/smokeping-2.6.11.tar.gz
+$ tar zxf smokeping-2.6.11.tar.gz
+$ cd smokeping-2.6.11
+</code></pre>
+
+<h4 id="cpanモジュールインストール:7cd04675aa0acc78f5f9de741333a9de">CPANモジュールインストール</h4>
+
+<p>SmokePingが依存するCPANモジュール、 Alien::RRDtool、Plack関連モジュールをインストールする</p>
+
+<p>まず、perlbrew perlを使ってまずcpanmを入れる</p>
+
+<pre><code>$ perlbrew use $perl_name
+$ curl -L https://cpanmin.us | perl - App::cpanminus
+</code></pre>
+
+<p>続いてcpanmを使ってperlbrew perl以下にCPANモジュールをインストール</p>
+
+<pre><code>$ cpanm Alien::RRDtool CGI::Emulate::PSGI Plack `cat PERL_MODULES`
+</code></pre>
+
+<p>PERL_MODULESはSmokePingのsourceに含まれているファイルでインストールすべきモジュールリストが定義されているのでここでインストールしておく。</p>
+
+<h4 id="smokepingをインストール:7cd04675aa0acc78f5f9de741333a9de">SmokePingをインストール</h4>
+
+<p>SmokePingを普通に./configure -&gt; make -&gt; make installするとシステムPerlを使おうとするので一工夫が必要で、configure時に<code>PERL</code>環境変数で使うperlを指定することが出来る。また<code>--enable-pkgonly</code>オプションを指定することでSmokePingのインストーラ自身がCPANモジュールをインストールするのを止めている。</p>
+
+<pre><code>$ PERL=/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl ./configure --prefix=/usr/local/SmokePing --enable-pkgonly
+$ make 
+$ sudo /usr/bin/gmake install
+$ sudo chown -R smokeping:smokeping /usr/local/SmokePing
+</code></pre>
+
+<p>本当にperlbrew perlを使ってるかshebangを確認してみる</p>
+
+<pre><code>$ head -1  /usr/local/SmokePing/bin/smokeping
+#!/home/smokeping/perl5/perlbrew/perls/smokeping/bin/perl
+</code></pre>
+
+<h4 id="plackupする:7cd04675aa0acc78f5f9de741333a9de">plackupする</h4>
+
+<p>準備は整ったのでsmokepinユーザでplackupしてみる。なお今回は/smokepingをSmokePingのrootにした。</p>
+
+<p>まず、SmokePingの設定ファイルのうち以下の項目の修正が必要。</p>
+
+<pre><code>imgcache = /usr/local/SmokePing/cache
+imgurl   = /smokeping/cache
+cgiurl   = http://localhost:5000/smokeping/  # URLは適宜読み替えてください
+</code></pre>
+
+<p>以下のapp.psgiを/usr/local/Smokeping/に置く。</p>
+
+<pre><code class="language-perl">use warnings;
+use strict;
+
+use Plack::Builder;
+use CGI::Emulate::PSGI;
+use CGI qw();
+
+use Smokeping;
+
+my $smokeping = sub {
+    CGI::initialize_globals();
+    my $q = CGI-&gt;new;
+    # 適宜configは作成してください
+    Smokeping::cgi(&quot;/usr/local/Smokeping/etc/config&quot;, $q);
+};
+$smokeping  = CGI::Emulate::PSGI-&gt;handler( $smokeping );
+
+builder {
+    use Plack::App::File;
+    mount &quot;/smokeping/cache&quot; =&gt; Plack::App::File-&gt;new(root =&gt; './cache')-&gt;to_app;
+    mount &quot;/smokeping/cropper&quot; =&gt; Plack::App::File-&gt;new(root =&gt; './htdocs/cropper')-&gt;to_app;
+    mount &quot;/smokeping&quot; =&gt; $smokeping;
+};
+</code></pre>
+
+<p>/cacheと/cropperはそれぞれ画像ファイルとjsファイルの参照のため。</p>
+
+<p>plackup</p>
+
+<pre><code>$ cd /usr/local/SmokePing
+$ plackup
+</code></pre>
+
+<p><a href="http://localhost:5000/smokeping">http://localhost:5000/smokeping</a> でweb画面が見れます!!!</p>
+
+<p>あとはpingプロセスを立ち上げる。これもsmokepingユーザで動かす。別途fping等インストールしておく。</p>
+
+<pre><code>$ /usr/local/SmokePing/bin/smokeping
+</code></pre>
+
+<h4 id="まとめ:7cd04675aa0acc78f5f9de741333a9de">まとめ</h4>
+
+<p>何がいいの? システムPerl使いたくない人向け。また管理画面なのでCGIでも十分ではあるけどApache立てずに動かしたい人には便利。</p>
+
+      </div>
     
-      <li class="post">
-        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
-      </li>
+  
     
-      <li class="post">
-        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
-      </li>
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a></h1>
+        <span class="post-date">Apr 17 2015</span>
+        
+
+<p>仕事でAngularJSを使う機運が高まっているので素振り1日目。数時間Webブラウジングしたメモ。</p>
+
+<h4 id="メモ:da71029cbecbb67e280045d1b45488bd">メモ</h4>
+
+<p>Webの情報、podcastから得た今日の成果</p>
+
+<ul>
+<li>AngularJSはJavascriptのフレームワーク</li>
+<li>フルスタック</li>
+<li>クライアントサイドMVW(Model, View and Whatever)</li>
+<li>AngularJS 現在のバージョンは 1.3.15, 今後 version 2が出る機運</li>
+<li>他にはBackbone.js, React.js</li>
+<li>HTMLタグを拡張 e.g. <code>&lt;html ng-app&gt;</code>, <code>&lt;input type=&quot;text&quot; ng-model=&quot;yourName&quot; placeholder=&quot;Enter a name here&quot;&gt;</code> こういうの。ngなんとかという記述が沢山出てくる。</li>
+<li>シングルWebページアプリケーション向き</li>
+<li>業務アプリ、管理アプリなどCRUDなアプリに向いている</li>
+<li>jQueryを使うとdom操作をつらつらと書く。コードが大きくなって後から読めなくなる。AngularJSだとコード量少なく書ける</li>
+<li>SEOに向かないらしい。ボットアクセスの時はPhantomJSでサーバサイドでhtml生成して返すといったことをやってる人がいる。</li>
+<li>SEOが重要なサイトには使わないという割りきってもいい、という人もいる</li>
+<li>フルスタックゆえか学習コストは高い</li>
+<li>例えばサーバサイドをRailsで作る場合、2パターンのアプローチが取れる
+
+<ul>
+<li>RailsでAngularJSのコードを含んだhtmlレンダリングして、クライアントサイドでAngularJSを使う</li>
+<li>もしくはRailsはXHRのAPIとして、ビジネスロジックとビューのレンダリング、フォームバリデーションなどはAngularJSに任せる</li>
+<li>アプリ化を見据えている人は後者のアプローチをとっているみたい</li>
+<li>(個人的にはRailsの恩恵を受けたいのでサーバサイドで一定のロジックを作りたい)</li>
+<li>Rails + AngularJSの例はここを見るとよさそう<a href="https://github.com/mkwiatkowski/todo-rails4-angularjs">kwiatkowski/todo-rails4-angularjs</a></li>
+</ul></li>
+<li>jQueryプラグインと一緒に使うとハマるかも</li>
+<li>困ったときはStackoverflow</li>
+<li>レガシーブラウザサポートはしてない</li>
+</ul>
+
+<h4 id="podcasts:da71029cbecbb67e280045d1b45488bd">Podcasts</h4>
+
+<p>通勤の途中で聞いたpodcast。とても分かりやすい。</p>
+
+<ul>
+<li><a href="http://wada.fm/ep024/">wada.fm 24. AngularJSの功罪</a></li>
+<li><a href="http://mozaic.fm/post/87393804788/3-angular-js">mozaic.fm #3 Angular.js</a></li>
+</ul>
+
+<h4 id="学習:da71029cbecbb67e280045d1b45488bd">学習</h4>
+
+<p>これから読む。</p>
+
+<ul>
+<li><a href="https://angularjs.org/">official</a></li>
+<li><a href="http://angularjsninja.com/">AngularJS Ninja</a></li>
+<li><a href="https://egghead.io/">Egghead.io</a></li>
+<li><a href="http://js.studio-kingdom.com/angularjs">AnguarJS日本語リファレンス</a></li>
+<li><a href="https://github.com/mgechev/angularjs-style-guide/blob/master/README-ja-jp.md">AnguarJS StyleGuide(JA)</a></li>
+<li><a href="http://weblogs.asp.net/dwahlin/video-tutorial-angularjs-fundamentals-in-60-ish-minutes">Video Tutorial: AngularJS Fundamentals in 60-ish Minutes</a></li>
+<li><a href="http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/">Ultimate guide to learning AngularJS in one day</a></li>
+<li><a href="http://www.oreilly.co.jp/books/9784873116679/">AngularJSアプリケーション開発ガイド(O&rsquo;REILLY)</a></li>
+</ul>
+
+<h4 id="その他:da71029cbecbb67e280045d1b45488bd">その他</h4>
+
+<ul>
+<li><a href="http://ionicframework.com/">ionic</a> スマフォのハイブリッドアプリをAngularJSで書ける。ionicが吐くjsを見て勉強する、というやり方もあるようだ。</li>
+</ul>
+
+<h4 id="まとめ:da71029cbecbb67e280045d1b45488bd">まとめ</h4>
+
+<p>まだコードは1行も書いてない。クライアントサイドエンジニアリング力の低い自分としてはとっても新鮮でした。</p>
+
+      </div>
     
-  </ul>
-</section>
-<section>
-<style type="text/css">
-<!--
-.hatena-bookmark-widget-title { display: none; }
--->
-</style>
-<h1>Popular Posts</h1>
-<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript">
-  Hatena.BookmarkWidget.url   = "http://orihubon.com";
-  Hatena.BookmarkWidget.title = "人気エントリー";
-  Hatena.BookmarkWidget.sort  = "hot";
-  Hatena.BookmarkWidget.width = 0;
-  Hatena.BookmarkWidget.num   = 5;
-  Hatena.BookmarkWidget.theme = "notheme";
-  Hatena.BookmarkWidget.load();
-</script>
-</section>
-<section>
-  <h1>Recent Tweets</h1>
-  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
+  
+    
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a></h1>
+        <span class="post-date">Apr 6 2015</span>
+        
+
+<p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作りました。</p>
+
+<p>Nagiosの画面から一度に沢山のサービスに対して通知をOFFにしたり、監視開始したりするオペレーションは結構面倒です。</p>
+
+<p>Nagiosには<a href="http://old.nagios.org/developerinfo/externalcommands/commandlist.php">External Commands</a>という仕組みがあり、nagiosのweb画面上で行える操作をCLI上でも行える仕組みが備わっています。例えば以下のコマンドをNagiosホスト上で実行すると通知OFFすることができます。</p>
+
+<pre><code>echo &quot;[1428291034] DISABLE_SVC_NOTIFICATIONS;host1;service1&quot; &gt; /var/spool/nagios/cmd/nagios.cmd
+</code></pre>
+
+<p>CGIの画面にアクセスしなくてよくこの仕組みはとても便利ですがNagiosサーバにログインする手間があります。またもし複数のNagiosサーバを管理している場合、Nagiosサーバそれぞれでオペレーションするのは面倒です。</p>
+
+<p>そこで1つのマシンから複数Nagiosサーバに対してSSH越しに上のコマンドを実行するCLIツールを作ればいいんじゃないか、ということで作ったのが<a href="http://github.com/niku4i/naginata">Naginata</a>です。複数監視対象を複数nagiosサーバ横断的に通知OFFにしたりすることが1コマンドで出来るツールになってます。</p>
+
+<h3 id="使い方:4851fcac078bc34566a042e6490f78d8">使い方</h3>
+
+<h4 id="インストール:4851fcac078bc34566a042e6490f78d8">インストール</h4>
+
+<p>SSH接続元となるホストにnaginataをインストールします。</p>
+
+<pre><code>$ gem install naginata
+</code></pre>
+
+<p><code>naginata</code>コマンドがインストールされるので、以下のように設定ファイルを作ります。</p>
+
+<pre><code>$ naginata init
+</code></pre>
+
+<p>カレントディレクトリにNaginatafileというのが出来ます。管理対象のnagiosサーバを書いてください。</p>
+
+<p>以下設定例です</p>
+
+<pre><code># 管理対象のnagiosサーバを書く
+# ログイン先のユーザ名が異なる場合はfoo@のようにユーザ名も指定する
+nagios_server 'foo@nagios1.example.com'
+nagios_server 'bar@nagios2.example.com'
+nagios_server 'baz@nagios3.example.com'
+
+# Global nagios server options 
+# nagios_serverのファイルパスを指定する
+# またrun_command_as: には nagios.cmd に書き込む時の
+# ユーザ名を指定する
+set :nagios_server_options, {
+  command_file: '/usr/local/nagios/var/rw/nagios.cmd',
+  status_file: '/usr/local/nagios/var/status.cmd',
+  run_command_as: 'nagios',
+}
+
+# Global SSH options
+# SSHの秘密鍵を指定する
+set :ssh_options, {
+  keys: %w(/home/nikushi/.ssh/id_rsa),
+}
+
+# nagiosサーバでsudoするのでpty trueにしておく
+set :pty, true
+</code></pre>
+
+<p>セットアップは以上です。nagiosサーバ側にはrubyやnaginataをインストールする必要はありません。</p>
+
+<h4 id="通知を止める-有効にする:4851fcac078bc34566a042e6490f78d8">通知を止める,有効にする</h4>
+
+<p>例として全nagiosサーバ上の全ホストのPINGとSSHの監視の通知を止めてみます。動作を確かめるため<code>-v (--verbose)</code>オプションを付けて実行してます。</p>
+
+<pre><code class="language-ruby">$ naginata notification --all-hosts  --disable  --services PING,SSH -v
+..snip..
+Following notifications will be disabled
+localhost
+  - PING
+  - SSH
+redis01.tokyo.local
+  - PING
+  - SSH
+web01.tokyo.local
+  - PING
+  - SSH
+localhost
+  - PING
+  - SSH
+redis01.osaka.local
+  - PING
+  - SSH
+web01.osaka.local
+  - PING
+  - SSH
+Are you sure? [y|N] y
+INFO [71871262] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [48a76239] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [71871262] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [ef4827b7] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [48a76239] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [4ffe6eb6] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [ef4827b7] Finished in 0.021 seconds with exit status 0 (successful).
+INFO [7ee77545] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [4ffe6eb6] Finished in 0.022 seconds with exit status 0 (successful).
+INFO [2ef43042] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [2ef43042] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [13b54c30] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [7ee77545] Finished in 0.022 seconds with exit status 0 (successful).
+INFO [de883201] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [13b54c30] Finished in 0.018 seconds with exit status 0 (successful).
+INFO [13f9ce6c] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [de883201] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [5458ec38] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;PING&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [13f9ce6c] Finished in 0.023 seconds with exit status 0 (successful).
+INFO [5458ec38] Finished in 0.021 seconds with exit status 0 (successful).
+INFO [be16e918] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [6247dc33] Running /usr/bin/env echo &quot;[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;SSH&quot; &gt; /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [be16e918] Finished in 0.020 seconds with exit status 0 (successful).
+INFO [6247dc33] Finished in 0.021 seconds with exit status 0 (successful).
+Done
+</code></pre>
+
+<p>なお、naginataは強力なフィルタ機能を持っています。上の例は全ホスト対象にしましたが引数にホスト名を指定すると対象ホストを限定できます。</p>
+
+<p>また、ホスト名やサービス名は部分一致の挙動のため一部だけ指定することもできます。grepコマンドの引数のイメージです。また複数指定も出来ます。</p>
+
+<pre><code>$ naginata notification osaka.local tokyo --enable --services Lo,PI
+Following notifications will be enabled
+redis01.tokyo.local
+  - Load
+  - PING
+web01.tokyo.local
+  - Load
+  - PING
+redis01.osaka.local
+  - Load
+  - PING
+web01.osaka.local
+  - Load
+  - PING
+Are you sure? [y|N] y
+Done
+</code></pre>
+
+<p>正規表現もできる</p>
+
+<pre><code>$ naginata notification ^web  --enable --services 'd$'
+Following notifications will be enabled
+web01.tokyo.local
+  - Load
+web01.osaka.local
+  - Load
+Are you sure? [y|N] y
+Done
+</code></pre>
+
+<p>また、例は割愛しますが<code>--nagios</code>オプションで対象nagiosサーバを限定できます。</p>
+
+<h4 id="ステータス確認:4851fcac078bc34566a042e6490f78d8">ステータス確認</h4>
+
+<p>元々External Command実行フレームワークにする作りをしていましたが、作っていく途中で監視ステータスや通知OFFされているかどうかを確認出来た方がいいなということになって作ってみました。</p>
+
+<p>以下の例ではサービス一覧を複数Nagiosサーバから取得して現在の状態を表示してます。便利、でしょうか?。こちらも上述のフィルタが使えます。</p>
+
+<pre><code>$ naginata services -a
+NAGIOS   HOST                 SERVICE          STATUS   FLAGS  OUTPUT
+nagios0  localhost            HTTP             WARNING  AC,nt  HTTP WARNING: HTTP/1.1 403 Forbidden - 5152 bytes in 0.001 second response time
+nagios0  localhost            Current Load     OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
+nagios0  localhost            PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  redis01.tokyo.local  Load             CRITICAL AC,NT  Too high load average 15
+nagios0  redis01.tokyo.local  PING             OK       ac,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  redis01.tokyo.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+nagios0  web01.tokyo.local    Load             OK       AC,NT  OK - load average: 0.01, 0.00, 0.00
+nagios0  web01.tokyo.local    PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  web01.tokyo.local    SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+nagios1  redis01.osaka.local  Load             OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
+nagios1  redis01.osaka.local  PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios1  redis01.osaka.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+</code></pre>
+
+<p>FLAGSという列に見慣れぬ文字列が入ってますが</p>
+
+<ul>
+<li>AC = Active Check enabled</li>
+<li>ac = active check disabled</li>
+<li>NT = NoTification disabled</li>
+<li>nt = notification disabled</li>
+</ul>
+
+<p>という意味になってます。</p>
+
+<h3 id="制約など:4851fcac078bc34566a042e6490f78d8">制約など</h3>
+
+<ul>
+<li>nagiosサーバにはSSHでパスフレーズ無しでログインできる前提です</li>
+<li>SSHログイン後nagios.cmdに書き込める権限があるユーザか、もしくはSSHログイン後にsudoできるユーザ必要があります</li>
+</ul>
+
+<h3 id="その他:4851fcac078bc34566a042e6490f78d8">その他</h3>
+
+<p><a href="https://github.com/niku4i/naginata/tree/master/integration-test">naginata/tree/master/integration-test</a>にVagrantファイルとサンプルの設定ファイルを置いてるのでVagrantがインストールされたMacがあれば動作をお手軽に試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。</p>
+
+<pre><code>$ gem install naginata
+$ git clone https://github.com/niku4i/naginata.git
+$ cd naginata/integration-test
+$ vagrant up 
+</code></pre>
+
+<p>つづいて/etc/hostsに以下2行を追記する</p>
+
+<pre><code>127.0.0.1       nagios0
+127.0.0.1       nagios1
+</code></pre>
+
+<p>これで動作確認できるとおもいます!</p>
+
+<pre><code>$ naginata services -a
+</code></pre>
+
+<p>また <a href="http://localhost:8880">http://localhost:8880</a> , <a href="http://localhost:8881">http://localhost:8881</a> で仮想マシン側のnagios画面見れます。</p>
+
+<h3 id="todo:4851fcac078bc34566a042e6490f78d8">ToDo</h3>
+
+<ul>
+<li>現状notificationのon/offのみ対応。その他のコマンドへの対応。</li>
+<li>ステータスに色を付ける</li>
+<li>高速化。現状サービス数、nagiosサーバ数が多くなるとそれなりに遅い。</li>
+</ul>
+
+<h3 id="updates:4851fcac078bc34566a042e6490f78d8">Updates</h3>
+
+<h4 id="2015-08-05-v0-1-6:4851fcac078bc34566a042e6490f78d8">2015/08/05 v0.1.6</h4>
+
+<p>任意のディレクトリにNaginatafileを置けるようになりました(以前のバージョンではカレントディレクトリにNaginatafile置く必要がありました)</p>
+
+<ul>
+<li>./Naginatafile, ~/.naginata/Naginatafile, /etc/naginata/Naginatafileの順にファイルを探すよう修正</li>
+<li>&ndash;naginatafileオプション、もしくはNAGINATAFILE環境変数にて任意のパスを指定可能</li>
+</ul>
+
+<h3 id="まとめ:4851fcac078bc34566a042e6490f78d8">まとめ</h3>
+
+<p><a href="http://github.com/niku4i/naginata">Naginata</a>という複数NagiosをSSH経由で操作するCLIツールを作った。</p>
+
+<p>ぜひ使ってみてください!!</p>
+
+      </div>
+    
+  
+    
+      <div class="post">
+        <h1 class="post-title"><a href="http://orihubon.com/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a></h1>
+        <span class="post-date">Dec 21 2014</span>
+        
+
+<p><a href="http://ethanschoonover.com/solarized">solarized</a>というカラースキームが良いらしいのでvimとターミナルの配色を変えた。</p>
+
+<p><a href="https://github.com/altercation/vim-colors-solarized">vim用のカラースキーマ</a>と、<a href="https://github.com/tomislav/osx-terminal.app-colors-solarized">Terminal.app用のsolarized profile</a>をインストールにして有効にしたら出来た。</p>
+
+<p>なお、Terminal.appのフォントは以前から使っている<a href="https://store1.adobe.com/cfusion/store/html/index.cfm?store=OLS-JP&amp;event=displayFontPackage&amp;code=1960">Source Code Pro</a>を引き続き使うことにした。</p>
+
+<h3 id="before:e14e191f59c22a52b401f2a0f2b9d267">Before</h3>
 
 
+<figure >
+    
+        <img src="/images/2014-12-21-solarized-before.png" />
+    
+    
+</figure>
 
 
+<h3 id="after:e14e191f59c22a52b401f2a0f2b9d267">After</h3>
+
+
+<figure >
+    
+        <img src="/images/2014-12-21-solarized-after.png" />
+    
+    
+</figure>
+
+
+<p>良し悪しは分からないが以前よりコントラストが下って目にやさしいような気がするのでしばらく使ってみてみる。</p>
+
+      </div>
+    
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
 
   
-</aside>
+    <span class="pagination-item newer">Newer</span>
+  
+</div>
 
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - niku4i -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
-  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
-</p>
 
-</footer>
-  
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script type="text/javascript">
-      var disqus_shortname = 'orihubon';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+    <script src="/js/prism.js"></script>
+  </body>
 </html>
+

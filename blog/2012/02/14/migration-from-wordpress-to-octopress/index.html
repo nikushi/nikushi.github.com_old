@@ -1,111 +1,307 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Wordpressからoctopressに移行した - ni-blog</title>
-  <meta name="author" content="niku4i">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   
-  <meta name="description" content="Wordpressからoctopressに移行した。 移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。 Wordpressは数年使っていて機能豊富でテーマも充実してるし管理画面も使いやすく、正直あまり不満はない。
-でもWordpress = PHPなんだよね。 &hellip;">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>
+    
+      Wordpressからoctopressに移行した &middot; Nikushi&#39;s blog
+    
+  </title>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-262568-4']);
-    _gaq.push(['_trackPageview']);
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="/css/prism.css">
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
 
-
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">ni-blog</a></h1>
-  
-    <h2>tech, web, work, and Tokyo.</h2>
-  
-</hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:orihubon.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+  <body>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
     
-      <h1 class="entry-title">Wordpressからoctopressに移行した</h1>
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    Thank you for reading this blog. If you have any feedbacks, contact me through <a href="https://twitter.com/niku4i">@niku4i</a>.
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
     
     
-      <p class="meta">
-        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
+  </div>
+</div>
 
 
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Nikushi&#39;s blog</a>
+            <small>Our Time is Limited.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
 
 
-
-
-
-
+<div class="post">
+  <h1 class="post-title">Wordpressからoctopressに移行した</h1>
+  <span class="post-date">Feb 14 2012</span>
   
 
-
-<time datetime="2012-02-14T15:53:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>Wordpressからoctopressに移行した。</p>
+<p>Wordpressからoctopressに移行した。</p>
 
 <p>移行作業でいくつかつまづいて時間がかかったので、どなたかの役に立てばとメモを残す。</p>
 
@@ -120,8 +316,7 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 
 <!-- more -->
 
-
-<h2>方針</h2>
+<h2 id="方針:0e7958f92e1a2413d44ea650842d9d71">方針</h2>
 
 <ul>
 <li>Wordpressのデータベースから直接データはひっこぬかない</li>
@@ -130,22 +325,19 @@ gitやPasSに触れれてこれは一石二鳥。</p>
 <li>写真などのデータは移行対象外。必要に応じて手動で移行</li>
 </ul>
 
+<h2 id="手順:0e7958f92e1a2413d44ea650842d9d71">手順</h2>
 
-<h2>手順</h2>
+<h3 id="wordpressの管理画面から投稿データをxml形式でエクスポート:0e7958f92e1a2413d44ea650842d9d71">Wordpressの管理画面から投稿データをxml形式でエクスポート</h3>
 
-<h3>Wordpressの管理画面から投稿データをxml形式でエクスポート</h3>
-
-<p>ツール &ndash;> エクスポート というのが標準で備わっている。Wordpressを去るのにWordpressは便利だというのは皮肉か。
-タグやカテゴリ、タグのページは不要なのでエクスポート対象は&#8221;投稿&#8221;だけにする。
+<p>ツール -&gt; エクスポート というのが標準で備わっている。Wordpressを去るのにWordpressは便利だというのは皮肉か。
+タグやカテゴリ、タグのページは不要なのでエクスポート対象は&rdquo;投稿&rdquo;だけにする。
 適当な作業ディレクトリにwordpress.xmlという名前で保存する。以下の例であればwordpress.xmlを~/tmp/migration/に保存</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir ~/tmp/migration
-</span><span class='line'>$ cd ~/tmp/migration</span></code></pre></td></tr></table></div></figure>
+<pre><code>$ mkdir ~/tmp/migration
+$ cd ~/tmp/migration
+</code></pre>
 
-
-<h3>yekyllスタイルに変換</h3>
+<h3 id="yekyllスタイルに変換:0e7958f92e1a2413d44ea650842d9d71">yekyllスタイルに変換</h3>
 
 <p>githubのjekyllのリポジトリには<a href="https://github.com/mojombo/jekyll/blob/master/lib/jekyll/migrators/wordpressdotcom.rb">migrationツール</a>が備わっている。
 wordpressdotcom.rbを利用してそれなりにデータ変換ができたが以下の問題がみつかった。</p>
@@ -155,300 +347,90 @@ wordpressdotcom.rbを利用してそれなりにデータ変換ができたが�
 <li>各記事の本文の文字コードがCR+LF。</li>
 </ul>
 
-
 <p>そこでオリジナルのwordpressdoccom.rbを拝借しつつ、コードを少し修正。以下のコードを用いる。</p>
 
-<div><script src='https://gist.github.com/1824307.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
+<p>{% gist 1824307 %}</p>
 
-
-<h3>修正ポイント</h3>
+<h3 id="修正ポイント:0e7958f92e1a2413d44ea650842d9d71">修正ポイント</h3>
 
 <ul>
-<li>permalinkを生成する箇所で一度 nkf &mdash;url-input -w して文字コードをプレーンにし、さらにto_urlメソッドで日本語をローマ字に変換する。</li>
+<li>permalinkを生成する箇所で一度 nkf &ndash;url-input -w して文字コードをプレーンにし、さらにto_urlメソッドで日本語をローマ字に変換する。</li>
 <li>記事のデータをputsする際にもnkf -Lu -wするようにした。</li>
 </ul>
 
-
-<p>to_urlメソッドはrequre &lsquo;stringex&#8217;することでStringクラスのメソッドとしてto_urlが追加される。to_urlメソッドを使うと漢字でも強制的に
+<p>to_urlメソッドはrequre &lsquo;stringex&rsquo;することでStringクラスのメソッドとしてto_urlが追加される。to_urlメソッドを使うと漢字でも強制的に
 ローマ字に変換する模様。octopressでrake new_postする際のコードを参考に。</p>
 
 <p>では改めて変換作業を行う</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ls
-</span><span class='line'>wordpress.xml wordpressdotcom.rb
-</span><span class='line'>$ ruby -rubygems -e 'require "./wordpressdotcom"; Jekyll::WordpressDotCom.process("wordpress.xml")'
-</span><span class='line'>Imported 65 posts
-</span><span class='line'>$ ls
-</span><span class='line'>_post wordpress.xml wordpressdotcom.rb</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>$ ls
+wordpress.xml wordpressdotcom.rb
+$ ruby -rubygems -e 'require &quot;./wordpressdotcom&quot;; Jekyll::WordpressDotCom.process(&quot;wordpress.xml&quot;)'
+Imported 65 posts
+$ ls
+_post wordpress.xml wordpressdotcom.rb
+</code></pre>
 
 <p>_post以下にエントリが出来上がるのでエディタで開いてざっくり問題なさそうか確認する。生成されたファイルの拡張子は.htmlになる。.markdownではない
 ファイルの中身をみるとわかるが、ブログポストの本文はmarkdownではなくhtmlのまま。なので.htmlのままにする。</p>
 
-<h3>ローカルテスト</h3>
+<h3 id="ローカルテスト:0e7958f92e1a2413d44ea650842d9d71">ローカルテスト</h3>
 
 <p>変換したデータをローカルのoctopressディレクトリにコピし、記事を生成する。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cp _post/* /path/to/octopress/source/_post/
-</span><span class='line'>$ cd /path/to/octopress/source/_post/
-</span><span class='line'>$ rake generate
-</span><span class='line'>$ rake preview</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>$ cp _post/* /path/to/octopress/source/_post/
+$ cd /path/to/octopress/source/_post/
+$ rake generate
+$ rake preview
+</code></pre>
 
 <p>rake previewするとlocalhost:4000でwebサーバが立ち上がる。内容をチェック。
 ちなみにrake watchするとローカルファイルの更新を監視して逐次プレビューに反映してくれるので便利。</p>
 
-<h3>deploy</h3>
+<h3 id="deploy:0e7958f92e1a2413d44ea650842d9d71">deploy</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>$ rake deploy
+</code></pre>
 
 <p>rake deployを実行するとrake pushが内部で呼び出される。rake pushは内部で
-&ndash; git add .
-&ndash; git commit
-&ndash; git push origin master
+- git add .
+- git commit
+- git push origin master
 を実行するので、rake deployを実行するとコミットと公開まで自動的に実行してくれる。</p>
 
 <p>git push origin masterは、origin = githubのusername/username.github.comレポジトリ に master = localの_public/ディレクトリ以下をpushする。</p>
 
-<figure class='code'><figcaption><span>push task in Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;deploy public directory to github pages&quot;</span>
-</span><span class='line'><span class="n">multitask</span> <span class="ss">:push</span> <span class="k">do</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;## Deploying branch to Github Pages &quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2">/*&quot;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">rm_rf</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">}</span>
-</span><span class='line'>  <span class="ss">Rake</span><span class="p">:</span><span class="ss">:Task</span><span class="o">[</span><span class="ss">:copydot</span><span class="o">].</span><span class="n">invoke</span><span class="p">(</span><span class="n">public_dir</span><span class="p">,</span> <span class="n">deploy_dir</span><span class="p">)</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## copying </span><span class="si">#{</span><span class="n">public_dir</span><span class="si">}</span><span class="s2"> to </span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>  <span class="n">cp_r</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">public_dir</span><span class="si">}</span><span class="s2">/.&quot;</span><span class="p">,</span> <span class="n">deploy_dir</span>
-</span><span class='line'>  <span class="n">cd</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">system</span> <span class="s2">&quot;git add .&quot;</span>
-</span><span class='line'>    <span class="nb">system</span> <span class="s2">&quot;git add -u&quot;</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## Commiting: Site updated at </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">utc</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Site updated at </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">utc</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="nb">system</span> <span class="s2">&quot;git commit -m </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## Pushing generated </span><span class="si">#{</span><span class="n">deploy_dir</span><span class="si">}</span><span class="s2"> website&quot;</span>
-</span><span class='line'>    <span class="nb">system</span> <span class="s2">&quot;git push origin </span><span class="si">#{</span><span class="n">deploy_branch</span><span class="si">}</span><span class="s2"> --force&quot;</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## Github Pages deploy complete&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="language-ruby">#Rakefile
+desc &quot;deploy public directory to github pages&quot;
+multitask :push do
+  puts &quot;## Deploying branch to Github Pages &quot;
+  (Dir[&quot;#{deploy_dir}/*&quot;]).each { |f| rm_rf(f) }
+  Rake::Task[:copydot].invoke(public_dir, deploy_dir)
+  puts &quot;\n## copying #{public_dir} to #{deploy_dir}&quot;
+  cp_r &quot;#{public_dir}/.&quot;, deploy_dir
+  cd &quot;#{deploy_dir}&quot; do
+    system &quot;git add .&quot;
+    system &quot;git add -u&quot;
+    puts &quot;\n## Commiting: Site updated at #{Time.now.utc}&quot;
+    message = &quot;Site updated at #{Time.now.utc}&quot;
+    system &quot;git commit -m \&quot;#{message}\&quot;&quot;
+    puts &quot;\n## Pushing generated #{deploy_dir} website&quot;
+    system &quot;git push origin #{deploy_branch} --force&quot;
+    puts &quot;\n## Github Pages deploy complete&quot;
+  end
+end
+</code></pre>
 
 <p>本番のブログにアップされたか確認して問題なければ完了。</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-14T15:53:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
 
 </div>
 
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2012/02/14/hello/" title="Previous Post: Hello, World">&laquo; Hello, World</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2012/03/11/migrate-from-wordpress-to-octopress-part2-image-files/" title="Next Post: Wordpressからoctopressに移行した(画像移行編)">Wordpressからoctopressに移行した(画像移行編) &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/08/19/h2o/">h2oでreverse proxy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-<style type="text/css">
-<!--
-.hatena-bookmark-widget-title { display: none; }
--->
-</style>
-<h1>Popular Posts</h1>
-<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript">
-  Hatena.BookmarkWidget.url   = "http://orihubon.com";
-  Hatena.BookmarkWidget.title = "人気エントリー";
-  Hatena.BookmarkWidget.sort  = "hot";
-  Hatena.BookmarkWidget.width = 0;
-  Hatena.BookmarkWidget.num   = 5;
-  Hatena.BookmarkWidget.theme = "notheme";
-  Hatena.BookmarkWidget.load();
-</script>
-</section>
-<section>
-  <h1>Recent Tweets</h1>
-  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - niku4i -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
-  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
-</p>
 
-</footer>
-  
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script type="text/javascript">
-      var disqus_shortname = 'orihubon';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress/';
-        var disqus_url = 'http://orihubon.com/blog/2012/02/14/migration-from-wordpress-to-octopress/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+    <script src="/js/prism.js"></script>
+  </body>
 </html>
+

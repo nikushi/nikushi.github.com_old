@@ -1,113 +1,307 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Fluentdのマルチプロセス化が簡単になったので試してみた! - ni-blog</title>
-  <meta name="author" content="niku4i">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   
-  <meta name="description" content="ワイワイ! Fluentd Advent Calendar 2013 6日目担当の @niku4i です。 今日はFluentdのマルチプロセス化について。最近公式ページに Multiprocess Input Plugin がドキュメント化されました。 &hellip;">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="ni-blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>
+    
+      Fluentdのマルチプロセス化が簡単になったので試してみた! &middot; Nikushi&#39;s blog
+    
+  </title>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-262568-4']);
-    _gaq.push(['_trackPageview']);
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="/css/prism.css">
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
 
-
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">ni-blog</a></h1>
-  
-    <h2>tech, web, work, and Tokyo.</h2>
-  
-</hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:orihubon.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+  <body>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
     
-      <h1 class="entry-title">Fluentdのマルチプロセス化が簡単になったので試してみた!</h1>
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    Thank you for reading this blog. If you have any feedbacks, contact me through <a href="https://twitter.com/niku4i">@niku4i</a>.
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
     
     
-      <p class="meta">
-        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
+  </div>
+</div>
 
 
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Nikushi&#39;s blog</a>
+            <small>Our Time is Limited.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
 
 
-
-
-
-
+<div class="post">
+  <h1 class="post-title">Fluentdのマルチプロセス化が簡単になったので試してみた!</h1>
+  <span class="post-date">Dec 6 2013</span>
   
 
-
-<time datetime="2013-12-06T08:35:00+09:00" pubdate data-updated="true">Dec 6<span>th</span>, 2013</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
-
-<!--more-->
-
+<p>ワイワイ! <a href="http://qiita.com/advent-calendar/2013/fluentd">Fluentd Advent Calendar 2013</a> 6日目担当の <a href="http://twitter.com/niku4i">@niku4i</a> です。</p>
 
 <p>今日はFluentdのマルチプロセス化について。最近公式ページに <a href="http://docs.fluentd.org/articles/in_multiprocess">Multiprocess Input Plugin</a> がドキュメント化されました。</p>
 
@@ -117,122 +311,80 @@
 
 <p>Fluentdは0.10.41を使っています。gemコマンドでインストールしました。</p>
 
-<h3>インストール</h3>
+<h3 id="インストール:aa46c961993492d9cda41a5b093b6010">インストール</h3>
 
 <p>Fluentdのコアプラグインではないので、fluent-gemコマンドを使ってインストールします。</p>
 
-<figure class='code'><figcaption><span>install plugin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>fluent-gem install fluent-plugin-multiprocess
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="language-bash">#install
+$ fluent-gem install fluent-plugin-multiprocess
+</code></pre>
 
 <p>なお、td-agent版の場合はコマンドのパスが通っていないので以下のとおりインストールしてください。</p>
 
-<figure class='code'><figcaption><span>install plugin (td-agent user)</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>/usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-multiprocess
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-bash">#install
+$ /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-multiprocess
+</code></pre>
 
-
-<h3>コンフィグレーション</h3>
+<h3 id="コンフィグレーション:aa46c961993492d9cda41a5b093b6010">コンフィグレーション</h3>
 
 <p>今回は4プロセスでそれぞれ24221〜24224/TCPでListenし受信したメッセージを標準出力に書き出す設定を作りました。書き出し部分は全プロセス共通なので <code>include</code> で1つにまとめました。非常に簡単な設定例なので面白みがないですが実際はinclude先にout系の設定を入れていくことになります。</p>
 
-<figure class='code'><figcaption><span>/etc/fluent/fluentd.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> multiprocess
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child1.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child2.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child3.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;process&gt;</span>
-</span><span class='line'>    <span class="nb">cmdline</span> -c <span class="sx">/etc/fluent/fluentd_child4.conf</span>
-</span><span class='line'>    <span class="nb">sleep_before_start</span> <span class="m">1</span>s
-</span><span class='line'>    <span class="nb">sleep_before_shutdown</span> <span class="m">5</span>s
-</span><span class='line'>  <span class="nt">&lt;/process&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-apache">#/etc/fluent/fluentd.conf
+&lt;source&gt;
+  type multiprocess
 
+  &lt;process&gt;
+    cmdline -c /etc/fluent/fluentd_child1.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 5s
+  &lt;/process&gt;
+
+  &lt;process&gt;
+    cmdline -c /etc/fluent/fluentd_child2.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 5s
+  &lt;/process&gt;
+
+  &lt;process&gt;
+    cmdline -c /etc/fluent/fluentd_child3.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 5s
+  &lt;/process&gt;
+
+  &lt;process&gt;
+    cmdline -c /etc/fluent/fluentd_child4.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 5s
+  &lt;/process&gt;
+
+&lt;/source&gt;
+</code></pre>
 
 <p><code>cmdline</code>にマルチプロセス化した時の子プロセスに読み込ませるコンフィグファイルを指定します。このコンフィグは以下のように記述します。</p>
 
-<figure class='code'><figcaption><span>/etc/fluent/fluentd_child1.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Receive events from TCP port</span>
-</span><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> forward
-</span><span class='line'>  <span class="nb">port</span> <span class="m">24221</span>
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Include common configurations</span>
-</span><span class='line'><span class="nb">include</span> conf.d/*.conf
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-apache">#/etc/fluent/fluentd_child1.conf
+# Receive events from TCP port
+&lt;source&gt;
+  type forward
+  port 24221
+&lt;/source&gt;
 
+# Include common configurations
+include conf.d/*.conf
+</code></pre>
 
 <p>fluentd_child[2-4].confのコンフィグ掲載は省略しますが <code>port</code> の番号のみ変更します。</p>
 
 <p>includeしたコンフィグで出力を定義しました。</p>
 
-<figure class='code'><figcaption><span>/etc/fluent/conf.d/match_all.conf </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># Output messages to STDOUT</span>
-</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> stdout
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-apache">#/etc/fluent/conf.d/match_all.conf
+# Output messages to STDOUT
+&lt;match **&gt;
+  type stdout
+&lt;/match&gt;
+</code></pre>
 
-
-<h3>起動</h3>
+<h3 id="起動:aa46c961993492d9cda41a5b093b6010">起動</h3>
 
 <p>今回はコマンドラインから起動します。</p>
 
@@ -240,74 +392,47 @@
 
 <p><a href="https://gist.github.com/niku4i/7802190">起動ログ</a>を見ると親fluentdプロセスが子fluentdを立ち上げていることが分かります。</p>
 
-<figure class='code'><figcaption><span>起動ログ抜粋</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>2013-12-05 08:45:30 +0000 <span class="o">[</span>info<span class="o">]</span>: launching child fluentd -c /etc/fluent/fluentd_child4.conf
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="language-bash">#起動ログ抜粋
+2013-12-05 08:45:30 +0000 [info]: launching child fluentd -c /etc/fluent/fluentd_child4.conf
+</code></pre>
 
 <p>netstatコマンドを使って確認しました。確かに4ポートでListenしています。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo netstat -anpt | grep -e ruby -e Proto
-</span><span class='line'>Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
-</span><span class='line'>tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24222               0.0.0.0:*                   LISTEN      25143/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LISTEN      25126/ruby
-</span><span class='line'>tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-sh">$ sudo netstat -anpt | grep -e ruby -e Proto
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 0.0.0.0:24221               0.0.0.0:*                   LISTEN      25160/ruby          
+tcp        0      0 0.0.0.0:24222               0.0.0.0:*                   LISTEN      25143/ruby          
+tcp        0      0 0.0.0.0:24223               0.0.0.0:*                   LISTEN      25126/ruby          
+tcp        0      0 0.0.0.0:24224               0.0.0.0:*                   LISTEN      25108/ruby 
+</code></pre>
 
-
-<h3>追記: -i オプションによる動的リッスンポート切替</h3>
+<h3 id="追記-i-オプションによる動的リッスンポート切替:aa46c961993492d9cda41a5b093b6010">追記: -i オプションによる動的リッスンポート切替</h3>
 
 <p><em>2013/12/19 追記</em></p>
 
 <p>あまり知られていないですがFluentdには<code>-i</code>という起動オプションがあり<code>-i</code>に続いてコンフィグを記述することができます。以下のようにすればinput forwardでリッスンするポートをプロセス毎に変えることができます。ポート番号などプロセス固有の設定は<code>-i</code>で渡すことで同じ設定ファイルで異なる挙動ということも実現できますね。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>&lt;<span class="nb">source</span>&gt;
-</span><span class='line'>  <span class="nb">type </span>multiprocess
-</span><span class='line'>  &lt;process&gt;
-</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20000\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
-</span><span class='line'>    sleep_before_start 1s
-</span><span class='line'>    sleep_before_shutdown 1s
-</span><span class='line'>  &lt;/process&gt;
-</span><span class='line'>  &lt;process&gt;
-</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20001\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
-</span><span class='line'>    sleep_before_start 1s
-</span><span class='line'>    sleep_before_shutdown 1s
-</span><span class='line'>  &lt;/process&gt;
-</span><span class='line'>  &lt;process&gt;
-</span><span class='line'>    cmdline -i <span class="s2">&quot;&lt;source&gt;\ntype forward\nport 20002\n&lt;/source&gt;&quot;</span> -c /etc/fluentd/fluentd.conf
-</span><span class='line'>    sleep_before_start 1s
-</span><span class='line'>    sleep_before_shutdown 1s
-</span><span class='line'>  &lt;/process&gt;
-</span><span class='line'>&lt;<span class="nb">source</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>&lt;source&gt;
+  type multiprocess
+  &lt;process&gt;
+    cmdline -i &quot;&lt;source&gt;\ntype forward\nport 20000\n&lt;/source&gt;&quot; -c /etc/fluentd/fluentd.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 1s
+  &lt;/process&gt;
+  &lt;process&gt;
+    cmdline -i &quot;&lt;source&gt;\ntype forward\nport 20001\n&lt;/source&gt;&quot; -c /etc/fluentd/fluentd.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 1s
+  &lt;/process&gt;
+  &lt;process&gt;
+    cmdline -i &quot;&lt;source&gt;\ntype forward\nport 20002\n&lt;/source&gt;&quot; -c /etc/fluentd/fluentd.conf
+    sleep_before_start 1s
+    sleep_before_shutdown 1s
+  &lt;/process&gt;
+&lt;source&gt;
+</code></pre>
 
-
-<h3>まとめ</h3>
+<h3 id="まとめ:aa46c961993492d9cda41a5b093b6010">まとめ</h3>
 
 <p>Multiprocess Input Pluginにより簡単にマルチプロセス化することができました。</p>
 
@@ -322,192 +447,15 @@
 <p>すごい知った風でしたがgemの使い方を紹介しただけでした。最近Fluentdにふれる機会がなかったので、ユースケースを開拓してFluentdを積極的に使ってアウトプットしていきたいですね。</p>
 
 <p>次は、<a href="https://twitter.com/yteraoka">@yteraoka</a> さんです!</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">niku4i</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-06T08:35:00+09:00" pubdate data-updated="true">Dec 6<span>th</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/fluentd/'>Fluentd</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/" data-via="niku4i" data-counturl="http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
 
 </div>
 
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/11/20/github-memo/" title="Previous Post: GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ">&laquo; GitHubの組織が成長する過程で変えたことと変えなかったこと、のメモ</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/12/06/snmpwalk-or-snmpget-which-are-fast/" title="Next Post: SNMPのindexキャッシュによる取得時間短縮の検証">SNMPのindexキャッシュによる取得時間短縮の検証 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>渋谷でソフトウェアエンジニアやっています。プログラミング、Web系技術の話題を書いています。</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/08/19/h2o/">h2oでreverse proxy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/19/plackup-smokeping-with-perlbrew/">SmokePingをPlack + Perlbrew + Alien::RRDtoolで動かす</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/17/angularjs-1/">AngularJSことはじめ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/naginata/">Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/21/solarized-colorscheme/">vimとTerminal.appのカラースキーマをsolarizedにする</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-<style type="text/css">
-<!--
-.hatena-bookmark-widget-title { display: none; }
--->
-</style>
-<h1>Popular Posts</h1>
-<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript">
-  Hatena.BookmarkWidget.url   = "http://orihubon.com";
-  Hatena.BookmarkWidget.title = "人気エントリー";
-  Hatena.BookmarkWidget.sort  = "hot";
-  Hatena.BookmarkWidget.width = 0;
-  Hatena.BookmarkWidget.num   = 5;
-  Hatena.BookmarkWidget.theme = "notheme";
-  Hatena.BookmarkWidget.load();
-</script>
-</section>
-<section>
-  <h1>Recent Tweets</h1>
-  <a class="twitter-timeline" href="https://twitter.com/niku4i" data-widget-id="402432810813644800">Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - niku4i -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-  - <span class="credit">Theme by <a href="http://www.gehaxelt.in">Gehaxelt</a></span>
-  <span class="credit">and <a href="http://www.it-solutions-neef.de">IT Solutions Neef</a></span>
-</p>
 
-</footer>
-  
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script type="text/javascript">
-      var disqus_shortname = 'orihubon';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/';
-        var disqus_url = 'http://orihubon.com/blog/2013/12/06/fluentd-multiprocess-input-plugin/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+    <script src="/js/prism.js"></script>
+  </body>
 </html>
+
