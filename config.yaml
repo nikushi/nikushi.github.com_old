@@ -1,0 +1,15 @@
+baseurl: http://orihubon.com/
+languageCode: ja
+title: ni-blog
+permalinks:
+  post: /blog/:year/:month/:day/:slug/
+metadataformat: "yaml"
+theme: lanyon-hugo
+taxonomies:
+  tags: ["meta", "theme", "blog"]
+
+params:
+  Title: Nikushi's blog
+  Tagline: Our Time is Limited.
+  author: niku4i
+  DateForm: "Jan 2 2006"

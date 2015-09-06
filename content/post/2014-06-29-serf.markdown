@@ -1,0 +1,42 @@
+---
+title: "週末雨だったのでSerfをさわってみた"
+slug: serf
+date: 2014-06-29T21:10:00+09:00
+comments: true
+categories: 
+  - Serf
+---
+
+最近まで[Serf](http://www.serfdom.io/)の意味を波乗りくらいにおもってました。'農奴'らしいです。梅雨で週末雨だったのでSerfを触ってみました。
+
+<!--more-->
+
+Vagrantで仮想マシン2台建てて[Get Started](http://www.serfdom.io/intro/getting-started/install.html)をもくもくやってみました。
+
+* __Membership__: ノード一覧を管理する。管理するといっても中央サーバはいなくて各ノードが自律分散的に他ノードと会話して全ノードを知っている状態になる。ノードのクラスタへの参加、離脱はeventという形でクラスタ内のノードに即時伝搬する。イベントハンドラの機能により各ノードは任意のスクリプトを実行できる。
+
+* __Failure detection and recovery__: nodeは他のノードの(コネクティビティ的意味の)failを検知でき、他のノードにも伝える。また自動で再接続を試みる。これもイベントとして伝搬されイベントハンドラによりスクリプト実行可能。
+
+* __Custom event propagation__: ノードの参加、離脱、接続失敗以外にもカスタムなイベントをクラスタ内に伝搬できる。例えば、deploy実行を伝搬させたり、設定を伝搬させたり。またQueryを使えばevent handler経由で各ノードの実行結果を受け取ることもできる。
+
+さわってみた感想としては、インストール楽。`serf`コマンドをダウンロードして置くだけ。Goの良いとろこ。また学習コストが低くてGet Started読んで試してみれば1, 2時間あればだいたい理解できるとおもいます。
+
+#### ユースケース || 参考
+
+* [Automatic /etc/hosts management with Serf](http://blog.kentarok.org/entry/2013/10/30/020120) by [@kentaro](https://twitter.com/kentaro) さん
+* [Serf+HAProxyで作るAutomatic Load Balancer](http://blog.glidenote.com/blog/2013/10/30/serf-haproxy/) by [@glidenote](https://twitter.com/glidenote) さん
+* [正月休みだし Serf 触ってみた](http://blog.livedoor.jp/sonots/archives/35397486.html) by [@sonots](https://twitter.com/sonots) さん
+* [ご注文は監視自動化ですか?](http://www.slideshare.net/zembutsu/is-the-order-an-automation-of-operation-and-monitoring?qid=493a7731-e373-426d-9cb9-d61821aced17&v=qf1&b=&from_search=4) by [@zembatsu](https://twitter.com/zembutsu) さん
+* memcached や redis ノードのクラスタを管理する
+* deploy(git pullとか)してアプリケーションのrestart
+* 設定の伝搬
+
+#### まとめ
+
+やんごとなき事情により`/etc/hosts`を使っているシステムを知ってて内部DNSサーバなあと考えてたけどSerf + `/etc/hosts`の組み合わせいいですね!
+
+あと、個人的にはネットワーク機器みたいな箱物のサービスディスカバリに対する最適解が無いので、良いツールが出て来ないものかとおもっている次第なんだけど、ネットワーク機器がLinuxの箱で置き換わればいいのにとおもってます。
+
+簡単に自立分散システム作れて良い時代になったものですね。
+
+以上!!

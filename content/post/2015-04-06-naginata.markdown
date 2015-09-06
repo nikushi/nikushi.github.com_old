@@ -1,0 +1,252 @@
+---
+title: "Naginataという複数NagiosをSSH経由で操作するCLIツールを作りました"
+slug: naginata
+date: 2015-04-06T12:22:00+09:00
+comments: true
+categories: 
+  - ruby
+---
+
+[Naginata](http://github.com/niku4i/naginata)という複数NagiosをSSH経由で操作するCLIツールを作りました。
+
+<!--more-->
+
+Nagiosの画面から一度に沢山のサービスに対して通知をOFFにしたり、監視開始したりするオペレーションは結構面倒です。
+
+Nagiosには[External Commands](http://old.nagios.org/developerinfo/externalcommands/commandlist.php)という仕組みがあり、nagiosのweb画面上で行える操作をCLI上でも行える仕組みが備わっています。例えば以下のコマンドをNagiosホスト上で実行すると通知OFFすることができます。
+
+~~~
+echo "[1428291034] DISABLE_SVC_NOTIFICATIONS;host1;service1" > /var/spool/nagios/cmd/nagios.cmd
+~~~
+
+CGIの画面にアクセスしなくてよくこの仕組みはとても便利ですがNagiosサーバにログインする手間があります。またもし複数のNagiosサーバを管理している場合、Nagiosサーバそれぞれでオペレーションするのは面倒です。
+
+そこで1つのマシンから複数Nagiosサーバに対してSSH越しに上のコマンドを実行するCLIツールを作ればいいんじゃないか、ということで作ったのが[Naginata](http://github.com/niku4i/naginata)です。複数監視対象を複数nagiosサーバ横断的に通知OFFにしたりすることが1コマンドで出来るツールになってます。
+
+### 使い方
+
+#### インストール
+
+SSH接続元となるホストにnaginataをインストールします。
+
+~~~
+$ gem install naginata
+~~~
+
+`naginata`コマンドがインストールされるので、以下のように設定ファイルを作ります。
+
+~~~
+$ naginata init
+~~~
+
+カレントディレクトリにNaginatafileというのが出来ます。管理対象のnagiosサーバを書いてください。
+
+以下設定例です
+
+~~~
+# 管理対象のnagiosサーバを書く
+# ログイン先のユーザ名が異なる場合はfoo@のようにユーザ名も指定する
+nagios_server 'foo@nagios1.example.com'
+nagios_server 'bar@nagios2.example.com'
+nagios_server 'baz@nagios3.example.com'
+
+# Global nagios server options 
+# nagios_serverのファイルパスを指定する
+# またrun_command_as: には nagios.cmd に書き込む時の
+# ユーザ名を指定する
+set :nagios_server_options, {
+  command_file: '/usr/local/nagios/var/rw/nagios.cmd',
+  status_file: '/usr/local/nagios/var/status.cmd',
+  run_command_as: 'nagios',
+}
+
+# Global SSH options
+# SSHの秘密鍵を指定する
+set :ssh_options, {
+  keys: %w(/home/nikushi/.ssh/id_rsa),
+}
+
+# nagiosサーバでsudoするのでpty trueにしておく
+set :pty, true
+~~~
+
+セットアップは以上です。nagiosサーバ側にはrubyやnaginataをインストールする必要はありません。
+
+#### 通知を止める,有効にする
+
+例として全nagiosサーバ上の全ホストのPINGとSSHの監視の通知を止めてみます。動作を確かめるため`-v (--verbose)`オプションを付けて実行してます。
+
+~~~ruby
+$ naginata notification --all-hosts  --disable  --services PING,SSH -v
+..snip..
+Following notifications will be disabled
+localhost
+  - PING
+  - SSH
+redis01.tokyo.local
+  - PING
+  - SSH
+web01.tokyo.local
+  - PING
+  - SSH
+localhost
+  - PING
+  - SSH
+redis01.osaka.local
+  - PING
+  - SSH
+web01.osaka.local
+  - PING
+  - SSH
+Are you sure? [y|N] y
+INFO [71871262] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING" > /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [48a76239] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;PING" > /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [71871262] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [ef4827b7] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH" > /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [48a76239] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [4ffe6eb6] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;localhost;SSH" > /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [ef4827b7] Finished in 0.021 seconds with exit status 0 (successful).
+INFO [7ee77545] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;PING" > /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [4ffe6eb6] Finished in 0.022 seconds with exit status 0 (successful).
+INFO [2ef43042] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;PING" > /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [2ef43042] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [13b54c30] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.tokyo.local;SSH" > /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [7ee77545] Finished in 0.022 seconds with exit status 0 (successful).
+INFO [de883201] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;redis01.osaka.local;SSH" > /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [13b54c30] Finished in 0.018 seconds with exit status 0 (successful).
+INFO [13f9ce6c] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;PING" > /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [de883201] Finished in 0.017 seconds with exit status 0 (successful).
+INFO [5458ec38] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;PING" > /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [13f9ce6c] Finished in 0.023 seconds with exit status 0 (successful).
+INFO [5458ec38] Finished in 0.021 seconds with exit status 0 (successful).
+INFO [be16e918] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.tokyo.local;SSH" > /var/spool/nagios/cmd/nagios.cmd on nagios0
+INFO [6247dc33] Running /usr/bin/env echo "[1428296330] DISABLE_SVC_NOTIFICATIONS;web01.osaka.local;SSH" > /var/spool/nagios/cmd/nagios.cmd on nagios1
+INFO [be16e918] Finished in 0.020 seconds with exit status 0 (successful).
+INFO [6247dc33] Finished in 0.021 seconds with exit status 0 (successful).
+Done
+~~~
+
+
+なお、naginataは強力なフィルタ機能を持っています。上の例は全ホスト対象にしましたが引数にホスト名を指定すると対象ホストを限定できます。
+
+また、ホスト名やサービス名は部分一致の挙動のため一部だけ指定することもできます。grepコマンドの引数のイメージです。また複数指定も出来ます。
+
+~~~
+$ naginata notification osaka.local tokyo --enable --services Lo,PI
+Following notifications will be enabled
+redis01.tokyo.local
+  - Load
+  - PING
+web01.tokyo.local
+  - Load
+  - PING
+redis01.osaka.local
+  - Load
+  - PING
+web01.osaka.local
+  - Load
+  - PING
+Are you sure? [y|N] y
+Done
+~~~
+
+正規表現もできる
+
+~~~
+$ naginata notification ^web  --enable --services 'd$'
+Following notifications will be enabled
+web01.tokyo.local
+  - Load
+web01.osaka.local
+  - Load
+Are you sure? [y|N] y
+Done
+~~~
+
+また、例は割愛しますが`--nagios`オプションで対象nagiosサーバを限定できます。
+
+
+#### ステータス確認
+
+元々External Command実行フレームワークにする作りをしていましたが、作っていく途中で監視ステータスや通知OFFされているかどうかを確認出来た方がいいなということになって作ってみました。
+
+以下の例ではサービス一覧を複数Nagiosサーバから取得して現在の状態を表示してます。便利、でしょうか?。こちらも上述のフィルタが使えます。
+
+~~~
+$ naginata services -a
+NAGIOS   HOST                 SERVICE          STATUS   FLAGS  OUTPUT
+nagios0  localhost            HTTP             WARNING  AC,nt  HTTP WARNING: HTTP/1.1 403 Forbidden - 5152 bytes in 0.001 second response time
+nagios0  localhost            Current Load     OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
+nagios0  localhost            PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  redis01.tokyo.local  Load             CRITICAL AC,NT  Too high load average 15
+nagios0  redis01.tokyo.local  PING             OK       ac,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  redis01.tokyo.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+nagios0  web01.tokyo.local    Load             OK       AC,NT  OK - load average: 0.01, 0.00, 0.00
+nagios0  web01.tokyo.local    PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios0  web01.tokyo.local    SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+nagios1  redis01.osaka.local  Load             OK       AC,NT  OK - load average: 0.00, 0.00, 0.00
+nagios1  redis01.osaka.local  PING             OK       AC,NT  PING OK - Packet loss = 0%, RTA = 0.04 ms
+nagios1  redis01.osaka.local  SSH              OK       AC,NT  SSH OK - OpenSSH_5.3 (protocol 2.0)
+~~~
+
+FLAGSという列に見慣れぬ文字列が入ってますが
+
+* AC = Active Check enabled
+* ac = active check disabled
+* NT = NoTification disabled
+* nt = notification disabled
+
+という意味になってます。
+
+### 制約など
+
+* nagiosサーバにはSSHでパスフレーズ無しでログインできる前提です
+* SSHログイン後nagios.cmdに書き込める権限があるユーザか、もしくはSSHログイン後にsudoできるユーザ必要があります
+
+### その他
+
+[naginata/tree/master/integration-test](https://github.com/niku4i/naginata/tree/master/integration-test)にVagrantファイルとサンプルの設定ファイルを置いてるのでVagrantがインストールされたMacがあれば動作をお手軽に試せます。vagrant upすると仮想マシンにnagiosをインストールした状態で上がってきます。
+
+~~~
+$ gem install naginata
+$ git clone https://github.com/niku4i/naginata.git
+$ cd naginata/integration-test
+$ vagrant up 
+~~~
+
+つづいて/etc/hostsに以下2行を追記する
+
+~~~
+127.0.0.1       nagios0
+127.0.0.1       nagios1
+~~~
+
+これで動作確認できるとおもいます!
+
+~~~
+$ naginata services -a
+~~~
+
+また http://localhost:8880 , http://localhost:8881 で仮想マシン側のnagios画面見れます。
+
+### ToDo
+
+* 現状notificationのon/offのみ対応。その他のコマンドへの対応。
+* ステータスに色を付ける
+* 高速化。現状サービス数、nagiosサーバ数が多くなるとそれなりに遅い。
+
+### Updates
+
+#### 2015/08/05 v0.1.6
+
+任意のディレクトリにNaginatafileを置けるようになりました(以前のバージョンではカレントディレクトリにNaginatafile置く必要がありました)
+
+* ./Naginatafile, ~/.naginata/Naginatafile, /etc/naginata/Naginatafileの順にファイルを探すよう修正
+* --naginatafileオプション、もしくはNAGINATAFILE環境変数にて任意のパスを指定可能
+
+### まとめ
+
+[Naginata](http://github.com/niku4i/naginata)という複数NagiosをSSH経由で操作するCLIツールを作った。
+
+ぜひ使ってみてください!!
+

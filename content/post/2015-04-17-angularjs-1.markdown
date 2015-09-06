@@ -1,0 +1,69 @@
+---
+title: "AngularJSことはじめ"
+slug: angularjs-1
+date: 2015-04-17T12:27:00+09:00
+comments: true
+categories: 
+  - AngularJS
+---
+
+仕事でAngularJSを使う機運が高まっているので素振り1日目。数時間Webブラウジングしたメモ。
+
+<!--more-->
+
+#### メモ
+
+Webの情報、podcastから得た今日の成果
+
+* AngularJSはJavascriptのフレームワーク
+* フルスタック
+* クライアントサイドMVW(Model, View and Whatever)
+* AngularJS 現在のバージョンは 1.3.15, 今後 version 2が出る機運
+* 他にはBackbone.js, React.js
+* HTMLタグを拡張 e.g. `<html ng-app>`, `<input type="text" ng-model="yourName" placeholder="Enter a name here">` こういうの。ngなんとかという記述が沢山出てくる。
+* シングルWebページアプリケーション向き
+* 業務アプリ、管理アプリなどCRUDなアプリに向いている
+* jQueryを使うとdom操作をつらつらと書く。コードが大きくなって後から読めなくなる。AngularJSだとコード量少なく書ける
+* SEOに向かないらしい。ボットアクセスの時はPhantomJSでサーバサイドでhtml生成して返すといったことをやってる人がいる。
+* SEOが重要なサイトには使わないという割りきってもいい、という人もいる
+* フルスタックゆえか学習コストは高い
+* 例えばサーバサイドをRailsで作る場合、2パターンのアプローチが取れる
+  * RailsでAngularJSのコードを含んだhtmlレンダリングして、クライアントサイドでAngularJSを使う
+  * もしくはRailsはXHRのAPIとして、ビジネスロジックとビューのレンダリング、フォームバリデーションなどはAngularJSに任せる
+  * アプリ化を見据えている人は後者のアプローチをとっているみたい
+  * (個人的にはRailsの恩恵を受けたいのでサーバサイドで一定のロジックを作りたい)
+  * Rails + AngularJSの例はここを見るとよさそう[kwiatkowski/todo-rails4-angularjs](https://github.com/mkwiatkowski/todo-rails4-angularjs)
+* jQueryプラグインと一緒に使うとハマるかも
+* 困ったときはStackoverflow
+* レガシーブラウザサポートはしてない
+
+#### Podcasts
+
+通勤の途中で聞いたpodcast。とても分かりやすい。
+
+* [wada.fm 24. AngularJSの功罪](http://wada.fm/ep024/)
+* [mozaic.fm #3 Angular.js](http://mozaic.fm/post/87393804788/3-angular-js)
+
+#### 学習
+
+これから読む。
+
+* [official](https://angularjs.org/)
+* [AngularJS Ninja](http://angularjsninja.com/)
+* [Egghead.io](https://egghead.io/)
+* [AnguarJS日本語リファレンス](http://js.studio-kingdom.com/angularjs) 
+* [AnguarJS StyleGuide(JA)](https://github.com/mgechev/angularjs-style-guide/blob/master/README-ja-jp.md)
+* [Video Tutorial: AngularJS Fundamentals in 60-ish Minutes](http://weblogs.asp.net/dwahlin/video-tutorial-angularjs-fundamentals-in-60-ish-minutes)
+* [Ultimate guide to learning AngularJS in one day](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/)
+* [AngularJSアプリケーション開発ガイド(O'REILLY)](http://www.oreilly.co.jp/books/9784873116679/)
+
+
+
+#### その他
+
+* [ionic](http://ionicframework.com/) スマフォのハイブリッドアプリをAngularJSで書ける。ionicが吐くjsを見て勉強する、というやり方もあるようだ。
+
+#### まとめ
+
+まだコードは1行も書いてない。クライアントサイドエンジニアリング力の低い自分としてはとっても新鮮でした。
+

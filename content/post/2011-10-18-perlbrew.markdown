@@ -1,0 +1,17 @@
+---
+date: 2011-10-18T00:00:00+09:00
+slug: perlbrew
+title: perlbrew
+tags:
+- perl
+- perlbrew
+- programming
+status: publish
+published: true
+meta:
+  _edit_last: '1'
+---
+rootにならずとも様々なperlバージョンをインストールして使える。
+
+インストール方法、使い方は[公式ドキュメント](http://www.perlbrew.pl/)を参考にする。
+
