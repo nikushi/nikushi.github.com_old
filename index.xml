@@ -669,25 +669,25 @@ $ vagrant up
 
 &lt;h3 id=&#34;before:e14e191f59c22a52b401f2a0f2b9d267&#34;&gt;Before&lt;/h3&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-12-21-solarized-before.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;h3 id=&#34;after:e14e191f59c22a52b401f2a0f2b9d267&#34;&gt;After&lt;/h3&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-12-21-solarized-after.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;良し悪しは分からないが以前よりコントラストが下って目にやさしいような気がするのでしばらく使ってみてみる。&lt;/p&gt;
 </description>
@@ -999,14 +999,14 @@ net.core.somaxconn = 65535
 
 &lt;p&gt;こういうシートができあがる。&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/20140618-mylogger.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;Logger.log()&lt;/code&gt;ではなくて恒久的に保存するためのロガーを作る。例えばTriggerで時限式実行するスクリプトのログを保存しておきたいとかの用途。&lt;/p&gt;
 
@@ -1212,14 +1212,14 @@ function getAddressByFullName(fullName) {
 
 &lt;h4 id=&#34;イメージ:b901e512bd25f6341f48f605e9fc4b39&#34;&gt;イメージ&lt;/h4&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/20140530-script-lib.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;h4 id=&#34;最低限必要なこと:b901e512bd25f6341f48f605e9fc4b39&#34;&gt;最低限必要なこと&lt;/h4&gt;
 
@@ -1363,43 +1363,43 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
 
 &lt;p&gt;僕が大学時代オーケストラやっていて嫁が現在チェロ習い中ということもあって &lt;a href=&#34;http://www.musikverein.at/&#34;&gt;楽友協会&lt;/a&gt; (Wiener Musikverein)へクラシックコンサートききにいきました。黄金ホールが新年のウィーンフィルのニューイヤーコンサートで有名です。日本でクラシックコンサート聞く場合だと結構ジーパン、Tシャツってのもありではありなんですが、さすがヨーロッパ、みなさまお洒落紳士淑女なんですね。僕らは昼間観光した後にいったんホテル戻って綺麗な服に着替えて出かけました。普段クラシック聞かない人でも雰囲気満点で楽しめるとおもいます!&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5300.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5306.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5319.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;ちなみにチケットは公式ページからクレジットカードで買えます。レシートをA4に印刷して当日会場のチケット預かりで提示すればチケット引き換えできます。&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5303.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;また、昼間にやってるオペラ座ツアーは5ユーロでみれるので安くてお得でオススメです。オペラ座内部をガイドさんが40分くらいかけて案内してくれます。開始時刻は&lt;a href=&#34;http://www.wiener-staatsoper.at/Content.Node/home/Startseite-Content.jp.php&#34;&gt;公式ページ&lt;/a&gt;を参照。予約無しで開始15分くらい前に行って5ユーロ支払えばOKです。&lt;/p&gt;
 
@@ -1407,50 +1407,50 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
 
 &lt;p&gt;あとグルメ的にはウィーンにいったらウィーナーシュニッチェル、ザッハトルテは食べとけとのことでした。ザッハトルテってHotel Sacher Viennaというところのカフェのチョコケーキだからザッハトルテ(sacher torte)というのは今回知りました。&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8694.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8705.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8704.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8617.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8688.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;h4 id=&#34;ザルツブルク:d1380683a81c7f389d716cdbb970a4b1&#34;&gt;ザルツブルク&lt;/h4&gt;
 

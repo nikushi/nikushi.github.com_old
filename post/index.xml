@@ -669,25 +669,25 @@ $ vagrant up
 
 &lt;h3 id=&#34;before:e14e191f59c22a52b401f2a0f2b9d267&#34;&gt;Before&lt;/h3&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-12-21-solarized-before.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;h3 id=&#34;after:e14e191f59c22a52b401f2a0f2b9d267&#34;&gt;After&lt;/h3&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-12-21-solarized-after.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;良し悪しは分からないが以前よりコントラストが下って目にやさしいような気がするのでしばらく使ってみてみる。&lt;/p&gt;
 </description>
@@ -999,14 +999,14 @@ net.core.somaxconn = 65535
 
 &lt;p&gt;こういうシートができあがる。&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/20140618-mylogger.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;Logger.log()&lt;/code&gt;ではなくて恒久的に保存するためのロガーを作る。例えばTriggerで時限式実行するスクリプトのログを保存しておきたいとかの用途。&lt;/p&gt;
 
@@ -1212,14 +1212,14 @@ function getAddressByFullName(fullName) {
 
 &lt;h4 id=&#34;イメージ:b901e512bd25f6341f48f605e9fc4b39&#34;&gt;イメージ&lt;/h4&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/20140530-script-lib.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;h4 id=&#34;最低限必要なこと:b901e512bd25f6341f48f605e9fc4b39&#34;&gt;最低限必要なこと&lt;/h4&gt;
 
@@ -1363,43 +1363,43 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
 
 &lt;p&gt;僕が大学時代オーケストラやっていて嫁が現在チェロ習い中ということもあって &lt;a href=&#34;http://www.musikverein.at/&#34;&gt;楽友協会&lt;/a&gt; (Wiener Musikverein)へクラシックコンサートききにいきました。黄金ホールが新年のウィーンフィルのニューイヤーコンサートで有名です。日本でクラシックコンサート聞く場合だと結構ジーパン、Tシャツってのもありではありなんですが、さすがヨーロッパ、みなさまお洒落紳士淑女なんですね。僕らは昼間観光した後にいったんホテル戻って綺麗な服に着替えて出かけました。普段クラシック聞かない人でも雰囲気満点で楽しめるとおもいます!&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5300.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5306.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5319.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;ちなみにチケットは公式ページからクレジットカードで買えます。レシートをA4に印刷して当日会場のチケット預かりで提示すればチケット引き換えできます。&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5303.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;また、昼間にやってるオペラ座ツアーは5ユーロでみれるので安くてお得でオススメです。オペラ座内部をガイドさんが40分くらいかけて案内してくれます。開始時刻は&lt;a href=&#34;http://www.wiener-staatsoper.at/Content.Node/home/Startseite-Content.jp.php&#34;&gt;公式ページ&lt;/a&gt;を参照。予約無しで開始15分くらい前に行って5ユーロ支払えばOKです。&lt;/p&gt;
 
@@ -1407,50 +1407,50 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
 
 &lt;p&gt;あとグルメ的にはウィーンにいったらウィーナーシュニッチェル、ザッハトルテは食べとけとのことでした。ザッハトルテってHotel Sacher Viennaというところのカフェのチョコケーキだからザッハトルテ(sacher torte)というのは今回知りました。&lt;/p&gt;
 
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8694.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8705.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8704.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8617.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
+&lt;/p&gt;
 
-
-
+&lt;p&gt;
 &lt;figure &gt;
     
         &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8688.JPG&#34; /&gt;
     
     
 &lt;/figure&gt;
-
+&lt;/p&gt;
 
 &lt;h4 id=&#34;ザルツブルク:d1380683a81c7f389d716cdbb970a4b1&#34;&gt;ザルツブルク&lt;/h4&gt;
 
@@ -5057,7 +5057,8 @@ end
           <guid>http://orihubon.com/blog/2012/02/09/streaming-log-with-capistrano/</guid>
           <description>
 
-&lt;p&gt;&lt;img src=&#34;http://orihubon.com/images/tail-log-with-capistrano-image.jpg&#34; alt=&#34;tail-log-with-capistrano-image&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://orihubon.com/images/tail-log-with-capistrano-image.jpg&#34; alt=&#34;tail-log-with-capistrano-image&#34; /&gt;
+&lt;/p&gt;
 
 &lt;p&gt;複数のリモートホスト上のログファイルをtail -fして同時に流しながら見やすくする１つのアプローチとしてCapistranoを使って実現してみました。&lt;/p&gt;
 
@@ -5258,6 +5259,45 @@ server2: 192.168.2.5 - - [05/Feb/2012:01:48:07 +0900] &amp;quot;HEAD /style.css 
     
       
         <item>
+          <title>Android</title>
+          <link>http://orihubon.com/blog/2012/01/29/android/</link>
+          <pubDate>Sun, 29 Jan 2012 00:00:00 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2012/01/29/android/</guid>
+          <description>Androidを買うために比較。
+
+&lt;a href=&#34;http://www.samsung.com/global/microsite/galaxytab/10.1/index.html&#34;&gt;GALAXY Tab 10.1- Samsung Mobile&lt;/a&gt;
+
+&lt;a href=&#34;http://www.samsung.com/global/microsite/galaxytab/10.1/index.html&#34;&gt;
+&lt;/a&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
+          <title>Capistrano</title>
+          <link>http://orihubon.com/blog/2012/01/29/capistrano/</link>
+          <pubDate>Sun, 29 Jan 2012 00:00:00 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2012/01/29/capistrano/</guid>
+          <description></description>
+        </item>
+      
+    
+      
+        <item>
+          <title>listen backlog queue tuning</title>
+          <link>http://orihubon.com/blog/2012/01/29/listen-backlog-queue-tuning/</link>
+          <pubDate>Sun, 29 Jan 2012 00:00:00 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2012/01/29/listen-backlog-queue-tuning/</guid>
+          <description></description>
+        </item>
+      
+    
+      
+        <item>
           <title>curlでサーバ証明書の検証で失敗したとき</title>
           <link>http://orihubon.com/blog/2012/01/20/curldesabazheng-ming-shu-falsejian-zheng-deshi-bai-sitatoki/</link>
           <pubDate>Fri, 20 Jan 2012 00:00:00 JST</pubDate>
@@ -5289,6 +5329,56 @@ rvmをインストールしたいので、公式ページに従い上のとお�
 	&lt;li&gt;すると自動的に、:&#39;&amp;lt;,&#39;&amp;gt;まで入力されるので、:&#39;&amp;lt;,&#39;&amp;gt;:s/before/after/gする&lt;/li&gt;
 &lt;/ol&gt;
 vimでコード書いてるときなど、この範囲だけざっくりコメントアウトしたい、とかいうときとか便利。 :&#39;&amp;lt;,&#39;&amp;gt; :s/^/# /g こんな感じで。
+</description>
+        </item>
+      
+    
+      
+        <item>
+          <title>Listen Backlog Queue Tuning</title>
+          <link>http://orihubon.com/blog/2012/01/06/listen-backlog-queue-tuning/</link>
+          <pubDate>Fri, 06 Jan 2012 00:00:00 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2012/01/06/listen-backlog-queue-tuning/</guid>
+          <description>とあるdaemonが動作するサーバでたまにトラフィックが落ち込む事象があり、調べてみるとSYNセグメントを取りこぼす事象が起きていた。さらに調べてみるとどうもlisten backlogの値が小さいことが分かったのでメモ。
+
+サーバがSYNパケットを受け取るとTCPのlisten backlog queue に格納しaccept()されるまでキューイングする。ソケットはLISTENからSYN_RCVDに遷移しますがbacklog queue以上をためることはできないので、SYNパケットが瞬間的にバーストしたりするとSYNパケットを取りこぼしちゃう。
+
+listen backlog queue sizeはlisten()システムコールを実行するときに指定できるみたい。
+&lt;pre lang=&#34;c&#34;&gt;$ man 2 listen
+SYNOPSIS
+  #include 
+
+  int listen(int sockfd, int backlog);&lt;/pre&gt;
+
+さてそこでdaemonのソースコードを確認してみた。しかし、listenの第2引数には10000以上の大きな値が設定されているようで、この数を越えるリクエストがあるとは到底思えない。
+
+もう一度manを見なおした。
+&lt;pre lang=&#34;shell&#34;&gt;$ man 2 listen
+BUGS
+  If the socket is of type AF_INET, and the backlog argument is greater than the constant SOMAXCONN (128 in Linux 2.0 &amp;amp; 2.2), it is silently truncated to SOMAXCONN.&lt;/pre&gt;
+listen()で指定したback log queue sizeがsomaxconnより大きい場合、somaxconnの値に切りつめられる、ということ。これはBUGなんだろうか。
+
+確認してみると確かに小さい。
+&lt;pre lang=&#34;shell&#34;&gt;$ cat /proc/sys/net/core/somaxconn
+ 128&lt;/pre&gt;
+値を増やして様子を見ることにした。
+
+ネット上の情報を探してみると今回のdaemonに限らずapacheはmemcachedなどlisten()するのは基本的にこれにはまる可能性があるみたい。
+&lt;pre lang=&#34;shell&#34;&gt;
+ # sysctl -w net.core.somaxconn=1024
+ net.core.somaxconn = 1024
+ $ /sbin/sysctl -n net.core.somaxconn
+ 1024&lt;/pre&gt;
+他に確認するところとしては、somaxconnとは少し違うが、net.ipv4.tcp_max_syn_backlog の値とかも確認するとよさそう。
+
+
+サーバのbacklog queueにどのくらい溜まっているかは SYN_RCVDを数えればいい(間違ってたら指摘ください)
+&lt;pre lang=shell&gt;
+$ netstat -an |grep SYN_RCVD | wc -l
+15&lt;/pre&gt;
+
+TCPは奥が深く、楽しい。勉強になった。
 </description>
         </item>
       
