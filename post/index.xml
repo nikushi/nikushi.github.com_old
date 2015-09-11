@@ -6,8 +6,34 @@
     <language>en-us</language>
     <author></author>
     <rights>(C) 2015</rights>
-    <updated>2015-09-07 11:37:02 &#43;0900 JST</updated>
+    <updated>2015-09-11 11:50:31 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>daemontoolsインストール後にトラブった</title>
+          <link>http://orihubon.com/blog/2015/09/11/daemontools%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E5%BE%8C%E3%81%AB%E3%83%88%E3%83%A9%E3%83%96%E3%81%A3%E3%81%9F/</link>
+          <pubDate>Fri, 11 Sep 2015 11:50:31 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/09/11/daemontools%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E5%BE%8C%E3%81%AB%E3%83%88%E3%83%A9%E3%83%96%E3%81%A3%E3%81%9F/</guid>
+          <description>&lt;p&gt;普段と違うで順でマシンをセットアップした時のこと。daemontoolsまわりたまにハマると詰んだ。メモメモ。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CentOS 6.3&lt;/li&gt;
+&lt;li&gt;upstart経由でsvscanbootを起動させる&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;こういう構成&lt;/p&gt;
+
+&lt;p&gt;daemontoolsをrpmからインストールした後、上げたいプロセス(mysqld)が起動しなくて困った。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svscan: warning: unable to start supervise mysql: file does not exist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;こういうエラーが出てる。でもためしにupstart経由せずマニュアル &lt;code&gt;$ svscan /service&lt;/code&gt; で起動するとうまく起動する。$PATH確認してみたりパーミッション確認したりしたが問題なさそう。英語Q&amp;amp;AサイトでOS再起動したら治るよ、っていう記述があって乱暴だな&amp;hellip;とおもったのだが。困ったときのreboot、マシンを再起動したらupstart経由でデーモン起動できた。謎&amp;hellip;。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>

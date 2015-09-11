@@ -6,8 +6,34 @@
     <language>en-us</language>
     <author></author>
     <rights>(C) 2015</rights>
-    <updated>2015-09-07 11:37:02 &#43;0900 JST</updated>
+    <updated>2015-09-11 11:50:31 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>daemontoolsインストール後にトラブった</title>
+          <link>http://orihubon.com/blog/2015/09/11/daemontools%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E5%BE%8C%E3%81%AB%E3%83%88%E3%83%A9%E3%83%96%E3%81%A3%E3%81%9F/</link>
+          <pubDate>Fri, 11 Sep 2015 11:50:31 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/09/11/daemontools%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E5%BE%8C%E3%81%AB%E3%83%88%E3%83%A9%E3%83%96%E3%81%A3%E3%81%9F/</guid>
+          <description>&lt;p&gt;普段と違うで順でマシンをセットアップした時のこと。daemontoolsまわりたまにハマると詰んだ。メモメモ。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CentOS 6.3&lt;/li&gt;
+&lt;li&gt;upstart経由でsvscanbootを起動させる&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;こういう構成&lt;/p&gt;
+
+&lt;p&gt;daemontoolsをrpmからインストールした後、上げたいプロセス(mysqld)が起動しなくて困った。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svscan: warning: unable to start supervise mysql: file does not exist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;こういうエラーが出てる。でもためしにupstart経由せずマニュアル &lt;code&gt;$ svscan /service&lt;/code&gt; で起動するとうまく起動する。$PATH確認してみたりパーミッション確認したりしたが問題なさそう。英語Q&amp;amp;AサイトでOS再起動したら治るよ、っていう記述があって乱暴だな&amp;hellip;とおもったのだが。困ったときのreboot、マシンを再起動したらupstart経由でデーモン起動できた。謎&amp;hellip;。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>
@@ -3855,59 +3881,6 @@ extension .log # ローテート後のファイル名の場所の末尾に.log
 lastaction     # 最後に実行するコマンド
                # postrotateを使わないのはpostrotateはcompressする前
                # に実行されるため。compressしてlastactionが実行される。
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>Perl環境構築作りのチート</title>
-          <link>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/</link>
-          <pubDate>Mon, 25 Feb 2013 09:30:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2013/02/25/perl-dev_env_and_deploy/</guid>
-          <description>
-
-&lt;p&gt;ステージや本番での環境構築まわりについて調べてみた。&lt;/p&gt;
-
-&lt;p&gt;調べたかったことはこのスライドにまとまっていた。&lt;a href=&#34;http://www.slideshare.net/ImaiHayato/niigatapm-1&#34;&gt;モダンかもしれないPerlウェブアプリケーション開発入門 - Nigata.pm teck talk#1&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;以下、自分用にメモします。&lt;/p&gt;
-
-&lt;h3 id=&#34;開発環境:db522ff76a1c60c8e34fb0ba1e7e3bd1&#34;&gt;開発環境&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;$ curl -kL http://install.perlbrew.pl | bash
-$ echo &#39;source ~/perl5/perlbrew/etc/bashrc&#39; &amp;gt;&amp;gt; ~/.bash_profile
-$ source ~/.bash_profile
-$ perlbrew install perl-5.17.9
-$ perlbrew switch perl-5.17.9
-$ perlbrew install-cpanm
-$ cpanm carton
-$ cpanm proclet # 必要であれば
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;デプロイ先:db522ff76a1c60c8e34fb0ba1e7e3bd1&#34;&gt;デプロイ先&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo useradd -m myapp &amp;amp;&amp;amp; sudo su - myapp
-# perl環境構築(略)
-myapp$ git clone url myapp
-myapp$ cd myapp
-myapp$ carton install
-myapp$ carton exec -- prove
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;daemontoolsスクリプト:db522ff76a1c60c8e34fb0ba1e7e3bd1&#34;&gt;daemontoolsスクリプト&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;    #!/bin/sh
-    export HOME=/home/myapp
-    export PLACK_ENV=production
-    cd $HOME/myappexec
-    exec setuidgid myapp ./script/start.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;    source $HOME/perl5/perlbrew/etc/bashrc
-    carton exec -- myapp
 &lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>

@@ -10,7 +10,7 @@
 
   <title>
     
-      Basics of Perl web portals &middot; Nikushi&#39;s blog
+      daemontoolsインストール後にトラブった &middot; Nikushi&#39;s blog
     
   </title>
 
@@ -313,11 +313,23 @@
 
 
 <div class="post">
-  <h1 class="post-title">Basics of Perl web portals</h1>
-  <span class="post-date">Sep 3 2011</span>
-  <a href="http://www.ibm.com/developerworks/aix/library/au-perlweb_revision/index.html?ca=drs-">Basics of Perl web portals</a>.
-<blockquote>Summary: Perl is a powerful scripting language that can be used to perform small operations from the command line or power a complete web portal. Understanding techniques for making safe and secure Perl CGI scripts is vital to developing a web portal that does not compromise the integrity of a server or the web site's data. This article explains several techniques that will help developers create secure Perl CGI scripts and handle errors, before looking at a simpler method for building web applications like portals using the Plack system.</blockquote>
-carp()は最近覚えたので個人的にはホット。 モジュール内ではdie()は使ってはダメだとおもっていたがcarpを使うとしっくりくる、のかな。
+  <h1 class="post-title">daemontoolsインストール後にトラブった</h1>
+  <span class="post-date">Sep 11 2015</span>
+  <p>普段と違うで順でマシンをセットアップした時のこと。daemontoolsまわりたまにハマると詰んだ。メモメモ。</p>
+
+<ul>
+<li>CentOS 6.3</li>
+<li>upstart経由でsvscanbootを起動させる</li>
+</ul>
+
+<p>こういう構成</p>
+
+<p>daemontoolsをrpmからインストールした後、上げたいプロセス(mysqld)が起動しなくて困った。</p>
+
+<pre><code>svscan: warning: unable to start supervise mysql: file does not exist
+</code></pre>
+
+<p>こういうエラーが出てる。でもためしにupstart経由せずマニュアル <code>$ svscan /service</code> で起動するとうまく起動する。$PATH確認してみたりパーミッション確認したりしたが問題なさそう。英語Q&amp;AサイトでOS再起動したら治るよ、っていう記述があって乱暴だな&hellip;とおもったのだが。困ったときのreboot、マシンを再起動したらupstart経由でデーモン起動できた。謎&hellip;。</p>
 
 </div>
 
