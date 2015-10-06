@@ -3,8 +3,13 @@
   
   <url>
     <loc>http://orihubon.com/</loc>
-    <lastmod>2015-09-11T11:50:31+09:00</lastmod>
+    <lastmod>2015-10-06T22:47:17+09:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://orihubon.com/blog/2015/10/06/%E8%8B%B1%E8%AA%9E%E5%AD%A6%E7%BF%92-x-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3%E3%83%84%E3%83%BC%E3%83%AB/</loc>
+    <lastmod>2015-10-06T22:47:17+09:00</lastmod>
   </url>
   
   <url>
@@ -348,12 +353,12 @@
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2012/01/29/android/</loc>
+    <loc>http://orihubon.com/blog/2012/01/29/capistrano/</loc>
     <lastmod>2012-01-29T00:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2012/01/29/capistrano/</loc>
+    <loc>http://orihubon.com/blog/2012/01/29/android/</loc>
     <lastmod>2012-01-29T00:00:00+09:00</lastmod>
   </url>
   
@@ -438,12 +443,12 @@
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/10/10/hawai/</loc>
+    <loc>http://orihubon.com/blog/2011/10/10/jin-tore/</loc>
     <lastmod>2011-10-10T00:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/10/10/jin-tore/</loc>
+    <loc>http://orihubon.com/blog/2011/10/10/hawai/</loc>
     <lastmod>2011-10-10T00:00:00+09:00</lastmod>
   </url>
   
@@ -473,12 +478,12 @@
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/09/03/basics-of-perl-web-portals/</loc>
+    <loc>http://orihubon.com/blog/2011/09/03/du-hang-xu-ke-shu-esta/</loc>
     <lastmod>2011-09-03T00:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/09/03/du-hang-xu-ke-shu-esta/</loc>
+    <loc>http://orihubon.com/blog/2011/09/03/basics-of-perl-web-portals/</loc>
     <lastmod>2011-09-03T00:00:00+09:00</lastmod>
   </url>
   
@@ -493,12 +498,12 @@
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/08/31/sekiyuriteienziniaringu-2/</loc>
+    <loc>http://orihubon.com/blog/2011/08/31/manhuairuwozhi-jie-du-mufang-fa/</loc>
     <lastmod>2011-08-31T00:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/08/31/manhuairuwozhi-jie-du-mufang-fa/</loc>
+    <loc>http://orihubon.com/blog/2011/08/31/sekiyuriteienziniaringu-2/</loc>
     <lastmod>2011-08-31T00:00:00+09:00</lastmod>
   </url>
   
@@ -523,7 +528,7 @@
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/08/18/videtabuwosupesuni-gua-bian-huan-suruniha/</loc>
+    <loc>http://orihubon.com/blog/2011/08/18/818-lunch/</loc>
     <lastmod>2011-08-18T00:00:00+09:00</lastmod>
   </url>
   
@@ -533,7 +538,7 @@
   </url>
   
   <url>
-    <loc>http://orihubon.com/blog/2011/08/18/818-lunch/</loc>
+    <loc>http://orihubon.com/blog/2011/08/18/videtabuwosupesuni-gua-bian-huan-suruniha/</loc>
     <lastmod>2011-08-18T00:00:00+09:00</lastmod>
   </url>
   

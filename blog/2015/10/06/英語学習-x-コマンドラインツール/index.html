@@ -10,7 +10,7 @@
 
   <title>
     
-      memo for Perl Framewarks &middot; Nikushi&#39;s blog
+      英語学習 x コマンドラインツール &middot; Nikushi&#39;s blog
     
   </title>
 
@@ -315,15 +315,74 @@
 
 
 <div class="post">
-  <h1 class="post-title">memo for Perl Framewarks</h1>
-  <span class="post-date">Oct 15 2011</span>
-  Catlyst is very heavy weight one .
+  <h1 class="post-title">英語学習 x コマンドラインツール</h1>
+  <span class="post-date">Oct 6 2015</span>
+  
 
-mojolicious is light weight one .
+<p>英語の調べ物、学習をサポートするコマンドラインツールをまとめてみました。Mac限定です。</p>
 
-&nbsp;
+<!-- more -->
 
-重量級アプリを作ることは今のところないのでmojoliciousを使ってみよう。
+<p>最近Skypeで英会話レッスンを受けてレッスン後には復習をさっとやるのですが、辞書を引く、単語の発音確認などやります。ささっとコマンドラインツール出できたらとおもい調べてみました。</p>
+
+<h3 id="辞書:bd384aa5a3082b8866558cf890d67ac1">辞書</h3>
+
+<p><code>open dict://WORD</code>でターミナルからMac付属のDictionaly.app(辞書.app)を開ける</p>
+
+<pre><code>$ open dict://Hello
+</code></pre>
+
+<p>.bashrc, .zshrcなどにエイリアス登録しとくと<code>$ dict Hello</code>で使えて便利。</p>
+
+<pre><code class="language-sh">function dict {
+  if [ $# -eq 0 ]; then
+    echo &quot;Usage: dict WORD&quot; 1&gt;&amp;2
+    return 1
+  fi
+  open dict://$@
+}
+</code></pre>
+
+<p>あらかじめDictionaly.appの設定で必要な辞書(英英、英和、和英などなど)好みの設定にしておくとよい。</p>
+
+<h3 id="発音確認:bd384aa5a3082b8866558cf890d67ac1">発音確認</h3>
+
+<p>sayコマンドでMacが喋り出す。</p>
+
+<pre><code>$ say &quot;Bob’s mother became sick three month ago&quot;
+</code></pre>
+
+<p><code>-r NUMBER</code>オプションで1分間のワードレートを変更できる。-r 100くらいにするとゆっくり喋ってくれる。</p>
+
+<pre><code>$ say -r 100 Please speak slowly
+</code></pre>
+
+<h3 id="自分の発音を録音し即時再生:bd384aa5a3082b8866558cf890d67ac1">自分の発音を録音し即時再生</h3>
+
+<p>soxコマンド付属のコマンドを使うとコマンドラインで録音、オーディオファイル再生ができる。</p>
+
+<p>インストール</p>
+
+<pre><code>$ brew install sox
+</code></pre>
+
+<p>rec, playコマンドがインストールされるので、 以下のコマンドで録音 -&gt; Ctrl-cで録音終了 -&gt; すぐが再生できる</p>
+
+<pre><code>$ rec /tmp/a.wav; play /tmp/a.wav; rm /tmp/a.wav
+
+Input File     : 'default' (coreaudio)
+Channels       : 2
+Sample Rate    : 44100
+Precision      : 32-bit
+Sample Encoding: 32-bit Signed Integer PCM
+
+In:0.00% 00:00:01.83 [00:00:00.00] Out:79.9k [   ===|===   ]  Clip:0
+...
+</code></pre>
+
+<p>.zshrc, .bashrcなどに<code>alias rec-play='rec /tmp/a.wav; play /tmp/a.wav; rm /tmp/a.wav'</code>としておくと便利。</p>
+
+<p>いろいろ便利。</p>
 
 </div>
 

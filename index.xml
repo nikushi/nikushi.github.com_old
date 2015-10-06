@@ -6,8 +6,85 @@
     <language>en-us</language>
     <author></author>
     <rights>(C) 2015</rights>
-    <updated>2015-09-11 11:50:31 &#43;0900 JST</updated>
+    <updated>2015-10-06 22:47:17 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>英語学習 x コマンドラインツール</title>
+          <link>http://orihubon.com/blog/2015/10/06/%E8%8B%B1%E8%AA%9E%E5%AD%A6%E7%BF%92-x-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3%E3%83%84%E3%83%BC%E3%83%AB/</link>
+          <pubDate>Tue, 06 Oct 2015 22:47:17 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2015/10/06/%E8%8B%B1%E8%AA%9E%E5%AD%A6%E7%BF%92-x-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3%E3%83%84%E3%83%BC%E3%83%AB/</guid>
+          <description>
+
+&lt;p&gt;英語の調べ物、学習をサポートするコマンドラインツールをまとめてみました。Mac限定です。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;最近Skypeで英会話レッスンを受けてレッスン後には復習をさっとやるのですが、辞書を引く、単語の発音確認などやります。ささっとコマンドラインツール出できたらとおもい調べてみました。&lt;/p&gt;
+
+&lt;h3 id=&#34;辞書:bd384aa5a3082b8866558cf890d67ac1&#34;&gt;辞書&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;open dict://WORD&lt;/code&gt;でターミナルからMac付属のDictionaly.app(辞書.app)を開ける&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ open dict://Hello
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;.bashrc, .zshrcなどにエイリアス登録しとくと&lt;code&gt;$ dict Hello&lt;/code&gt;で使えて便利。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;function dict {
+  if [ $# -eq 0 ]; then
+    echo &amp;quot;Usage: dict WORD&amp;quot; 1&amp;gt;&amp;amp;2
+    return 1
+  fi
+  open dict://$@
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;あらかじめDictionaly.appの設定で必要な辞書(英英、英和、和英などなど)好みの設定にしておくとよい。&lt;/p&gt;
+
+&lt;h3 id=&#34;発音確認:bd384aa5a3082b8866558cf890d67ac1&#34;&gt;発音確認&lt;/h3&gt;
+
+&lt;p&gt;sayコマンドでMacが喋り出す。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ say &amp;quot;Bob’s mother became sick three month ago&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;-r NUMBER&lt;/code&gt;オプションで1分間のワードレートを変更できる。-r 100くらいにするとゆっくり喋ってくれる。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ say -r 100 Please speak slowly
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;自分の発音を録音し即時再生:bd384aa5a3082b8866558cf890d67ac1&#34;&gt;自分の発音を録音し即時再生&lt;/h3&gt;
+
+&lt;p&gt;soxコマンド付属のコマンドを使うとコマンドラインで録音、オーディオファイル再生ができる。&lt;/p&gt;
+
+&lt;p&gt;インストール&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew install sox
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;rec, playコマンドがインストールされるので、 以下のコマンドで録音 -&amp;gt; Ctrl-cで録音終了 -&amp;gt; すぐが再生できる&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ rec /tmp/a.wav; play /tmp/a.wav; rm /tmp/a.wav
+
+Input File     : &#39;default&#39; (coreaudio)
+Channels       : 2
+Sample Rate    : 44100
+Precision      : 32-bit
+Sample Encoding: 32-bit Signed Integer PCM
+
+In:0.00% 00:00:01.83 [00:00:00.00] Out:79.9k [   ===|===   ]  Clip:0
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;.zshrc, .bashrcなどに&lt;code&gt;alias rec-play=&#39;rec /tmp/a.wav; play /tmp/a.wav; rm /tmp/a.wav&#39;&lt;/code&gt;としておくと便利。&lt;/p&gt;
+
+&lt;p&gt;いろいろ便利。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>
@@ -3847,40 +3924,6 @@ a       1       NULL
 &lt;h3 id=&#34;データベース作成時のクエリを確認:c19b1644b6616fb7ff9fc65369332d8c&#34;&gt;データベース作成時のクエリを確認&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt; SHOW CREATE DATABASE test;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>前日日付のファイル名でローテートし圧縮するlogrotateの設定例</title>
-          <link>http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/</link>
-          <pubDate>Thu, 07 Mar 2013 15:57:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2013/03/07/logrotate-as-compressed-and-previous-date-formatted-file-name/</guid>
-          <description>&lt;p&gt;ファイル名を前日の日付でローテートする方法をメモします。&lt;/p&gt;
-
-&lt;p&gt;logrotateでdateextを設定するとローテートしたファイルに日付を含めることができます。しかし、00:00-早朝のあたりでlogrotateを実行するとローテートされた内容は前日分のログなのに日付は実行時(今日)になりログの内容とファイル名の日付が乖離してしまいます。ファイル名を前日の日付でローテートする方法をメモします。&lt;/p&gt;
-
-&lt;p&gt;{% gist 5105939 %}&lt;/p&gt;
-
-&lt;p&gt;一部説明&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ifempty        # 空ファイルでもローテートする。
-               # 過去ログを`ls | wc -l`などするときに
-               # 日数と数を合わせたいので。
-dateext        # ローテートしたファイルに実行時の日付を
-               # 付ける。ただし、00:00以降にlogrotateを実行する
-               # 場合は、ログ内容と日付が乖離するので別途
-               # lastactionで日付を前日分に変えている。
-extension .log # ローテート後のファイル名の場所の末尾に.log 
-               # を持ってくる。 圧縮する場合は.log.gzになる。
-               # 本オプション指定ない場合はapp.log-yyyymmdd となり
-               # 微妙なので調整のため。
-lastaction     # 最後に実行するコマンド
-               # postrotateを使わないのはpostrotateはcompressする前
-               # に実行されるため。compressしてlastactionが実行される。
 &lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
