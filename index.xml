@@ -58,12 +58,12 @@
 
 &lt;p&gt;soxコマンド付属のコマンドを使うとコマンドラインで録音、オーディオファイル再生ができる。&lt;/p&gt;
 
-&lt;p&gt;インストール&lt;/p&gt;
+&lt;p&gt;インストール。sox, rec, playコマンドがインストールされる。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ brew install sox
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;rec, playコマンドがインストールされるので、 以下のコマンドで録音 -&amp;gt; Ctrl-cで録音終了 -&amp;gt; すぐが再生できる&lt;/p&gt;
+&lt;p&gt;以下のコマンドで録音 -&amp;gt; Ctrl-cで録音終了 -&amp;gt; 即時再生となる。簡易ボイスレコーダになって便利。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ rec /tmp/a.wav; play /tmp/a.wav; rm /tmp/a.wav
 
