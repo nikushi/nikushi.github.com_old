@@ -42,6 +42,14 @@
 
 &lt;p&gt;あらかじめDictionaly.appの設定で必要な辞書(英英、英和、和英などなど)好みの設定にしておくとよい。&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;UPDATE 2015/10/12&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;はてブコメント経由で辞書引いた結果をターミナル内で完結しないのか、というのがあり調べてみた。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/jakwings/macdict]&#34;&gt;jakwings/macdict&lt;/a&gt;というのが良さそう。CLIオプションで辞書を選択できるようになってた。また&lt;a href=&#34;https://github.com/sekimura/lookup&#34;&gt;sekimura/lookup&lt;/a&gt;というのも見つけたがこちらは任意の辞書選択は出来ないみたい。&lt;/p&gt;
+
+&lt;p&gt;ただ文字列を整形して(例えばmanみたいに)出してくれる訳ではないのでやはり読みやすくはないので、個人的な意見としてはopen dict://で辞書アプリに飛ぶ方が良いかなー。&lt;/p&gt;
+
 &lt;h3 id=&#34;発音確認:bd384aa5a3082b8866558cf890d67ac1&#34;&gt;発音確認&lt;/h3&gt;
 
 &lt;p&gt;sayコマンドでMacが喋り出す。&lt;/p&gt;
