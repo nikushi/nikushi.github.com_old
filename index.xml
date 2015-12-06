@@ -47,7 +47,7 @@
 &lt;li&gt;設定ファイル管理はCVSからGitHubへ移行
 
 &lt;ul&gt;
-&lt;li&gt;プロジェクトルート以下にNagiosサーバホスト名毎のディレクトリを作る&lt;/li&gt;
+&lt;li&gt;nagios-etc みたいな名前で1プロジェクト作成。Nagiosサーバホスト名毎にディレクトリ切って1プロジェクトで全監視サーバ分入れる。&lt;/li&gt;
 &lt;li&gt;テンプレートエンジン等の自動生成の仕組みは不要だったので、素の設定をGitに突っ込むだけ&lt;/li&gt;
 &lt;li&gt;Git移行にあたりCVSの過去の履歴は捨てた。履歴見ることあまり無いし、いざ見たくなればCVSのログを見る&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
