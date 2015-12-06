@@ -10,7 +10,7 @@
 
   <title>
     
-      電気代 &middot; Nikushi&#39;s blog
+      複数Nagios運用をGitHubを使って楽にした話し &middot; Nikushi&#39;s blog
     
   </title>
 
@@ -291,6 +291,8 @@
     
       
     
+      
+    
 
   </nav>
 
@@ -315,14 +317,15 @@
 
 
 <div class="post">
-  <h1 class="post-title">電気代</h1>
-  <span class="post-date">Aug 10 2011</span>
-  電気代高い。先月が5千円代。今月はエアコン使う率上がってるから6、7千円行きそう。
+  <h1 class="post-title">複数Nagios運用をGitHubを使って楽にした話し</h1>
+  <span class="post-date">Dec 4 2015</span>
+  <p>これは<a href="http://qiita.com/advent-calendar/2015/netopscoding">NetOpsCoding Advent Calendar 2015</a>の9日目の記事です。</p>
 
-今週末は扇風機買いに行く。
-2台ある冷蔵庫の1台はシャットダウンする。
+<!-- more -->
 
-節電を意識しよう。
+<p>死活監視のソフトウェアは何使ってますか? Zabbix、Sensuでしょうか? 私の働いているDeNAのネットワークチームではネットワーク機器の監視にNagiosを使っており、1台で収容困難という理由と複数拠点に対するリーチャビリの観点から複数Nagiosサーバを運用しています。</p>
+
+<p>今日は複数Nagiosサーバの監視設定変更を楽するために、GitHubとJenkins、Capistrano(rsync)、Slackを使ってサーバログインレスで変更を反映する仕組みについて書きます。仕組みの全体像は以下の図のとおりです。</p>
 
 </div>
 

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Nagiosの監視変更作業をGitHubを使って楽にした話し &middot; Nikushi&#39;s blog
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="/css/prism.css">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    Thank you for reading this blog. If you have any feedbacks, contact me through <a href="https://twitter.com/niku4i">@niku4i</a>.
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Nikushi&#39;s blog</a>
+            <small>Our Time is Limited.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Nagiosの監視変更作業をGitHubを使って楽にした話し</h1>
+  <span class="post-date">Dec 4 2015</span>
+  <p><a href="http://qiita.com/advent-calendar/2015/netopscoding">NetOpsCoding Advent Calendar 2015</a>の9日目の記事です。</p>
+
+<!-- more -->
+
+<p>DeNAという会社のネットワークチームで働いています。ネットワーク機器の死活監視にNagiosを使っています。今日書くのは監視対象追加や閾値修正等の運用について、レガシーな従来の仕組みをGitHub(とpull request)と自動deployで改善した話しをします。</p>
+
+<p>私の入社当時はNagiosの設定ファイルはCVSで設定ファイルを管理されてはいましたが、日々の作業(閾値変更など)は監視サーバへSSHログインして行う必要がありました。またNagiosサーバの数が複数台あり、どのサーバでどのネットワーク機器が監視されているか分かりにくかったとおもいます。</p>
+
+<p>以下、改善したかった点です。</p>
+
+<ol>
+<li>誰が作業してるか見える化したかった</li>
+<li>閾値変更等に対して作業前にレビューを可能にしたかった(レビュー必須ではない)</li>
+<li>サーバログインレスにする。複数台のNagiosサーバのどれにログインするとか考えたくない</li>
+</ol>
+
+<p>これらを実現するためにの仕組みは以下のようになりました。</p>
+
+<p>
+<figure >
+    
+        <img src="/images/nagios-integration.png" />
+    
+    
+</figure>
+</p>
+
+<ul>
+<li>設定ファイル管理はCVSからGitHubへ移行
+
+<ul>
+<li>プロジェクトルート以下にNagiosサーバホスト名毎のディレクトリを作る</li>
+<li>テンプレートエンジン等の自動生成の仕組みは不要だったので、素の設定をGitに突っ込むだけ</li>
+</ul></li>
+<li>変更はPull Requestで。いわゆる<a href="https://gist.github.com/Gab-km/3705015">GitHub Flow</a>で運用
+
+<ul>
+<li>手元のMac等で監視項目追加、閾値変更等毎にトピックブランチを作りmasterブランチに対してpull request</li>
+<li>レビューする(ケースバイケース)</li>
+<li>masterブランチにマージされるとCIサーバがNagiosサーバへ設定ファイルをdeploy &amp;&amp; Nagiosプロセスreload</li>
+<li>GitHubからCIサーバへはwebhookで通知し連携</li>
+</ul></li>
+<li>CIサーバ兼、撒き元サーバ
+
+<ul>
+<li>CIにはJenkinsを使う</li>
+<li>CIサーバからNagiosサーバへはsshログイン可能にしておく</li>
+<li>撒きスクリプトはCapistrano + RSync(+ssh) で実装</li>
+<li>撒きスクリプトはJenkinsのbuildタスクとして登録しておく</li>
+<li>撒きの結果はSlackで通知</li>
+</ul></li>
+</ul>
+
+<p>この改善により、pull requestベースで変更が全て行われるようになるので作業が見える化され、また閾値の妥当性などについてコメントで議論することもでき色々捗るようになりました。またmasterブランチへマージするとNagiosサーバのreloadまでが裏側で自動実施されるのでサーバログイン不要となりまた気軽に閾値変更できるようにもなりました。</p>
+
+<p>実のところWebアプリケーションのCIとdeploy作業の自動化といったコンテキストでよく出てくるワークフローと同じです。また設定を撒くところはChefやPuppetで置き換えてもいいかもしれませんが、私の所ではテンプレートエンジン等も不要だったのでシンプルで早いRSyncで巻く方法を取りました。</p>
+
+<p>またこれにあたってはZabbixなど他の監視ミドルウェアへの移行も検討していましたが、最終的にはデータベースもいらず学習コストも低くメンバが仕組みにもなれたNagiosから別のミドルウェアに移行するほどのメリットが見いだせずNagiosを使って運用を改善することにしました。</p>
+
+<p>実はこれやったのは結構前の話しだったりするのですが、ソフトウェアからのネットワーク機器操作によってネットワーク運用の自動化を志す人達のAdvent Calendar、という機会を得てようやく書けた次第でよかった。</p>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/js/prism.js"></script>
+  </body>
+</html>
+
