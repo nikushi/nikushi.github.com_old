@@ -49,6 +49,7 @@
 &lt;ul&gt;
 &lt;li&gt;プロジェクトルート以下にNagiosサーバホスト名毎のディレクトリを作る&lt;/li&gt;
 &lt;li&gt;テンプレートエンジン等の自動生成の仕組みは不要だったので、素の設定をGitに突っ込むだけ&lt;/li&gt;
+&lt;li&gt;Git移行にあたりCVSの過去の履歴は捨てた。履歴見ることあまり無いし、いざ見たくなればCVSのログを見る&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;変更はPull Requestで。いわゆる&lt;a href=&#34;https://gist.github.com/Gab-km/3705015&#34;&gt;GitHub Flow&lt;/a&gt;で運用
 
