@@ -11,11 +11,11 @@
     
       
         <item>
-          <title>コピペ誤爆対策 by pbwatch</title>
-          <link>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96-by-pbwatch/</link>
+          <title>コピペ誤爆対策</title>
+          <link>http://orihubon.com/blog/2016/07/21/copy-and-paste-pbwatch/</link>
           <pubDate>Thu, 21 Jul 2016 22:00:03 JST</pubDate>
           <author></author>
-          <guid>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96-by-pbwatch/</guid>
+          <guid>http://orihubon.com/blog/2016/07/21/copy-and-paste-pbwatch/</guid>
           <description>&lt;p&gt;SQLをコピペでデータベースに投入するときとか、rootでコマンドコピペ作業するときとか、コピペする内容は意図通り? さっきみたメールの本文だったりしないか? と不安になるときもある。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/niku4i/pbwatch&#34;&gt;pbwatch&lt;/a&gt;というコマンドラインツールを作ってみた。ターミナル上でクリップボードのテキストをターミナル上で表示しつづけるだけのシンプルツール。Macオンリーです。&lt;/p&gt;
