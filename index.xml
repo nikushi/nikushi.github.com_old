@@ -16,9 +16,9 @@
           <pubDate>Thu, 21 Jul 2016 22:00:03 JST</pubDate>
           <author></author>
           <guid>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96/</guid>
-          <description>&lt;p&gt;SQLをコピペでデータベースに投入するときとか、rootでコマンドコピペ作業するときとか、コピペする内容は意図通り? さっきみたメールの本文だったりしないか? と不安になるかもしれない。&lt;/p&gt;
+          <description>&lt;p&gt;SQLをコピペでデータベースに投入するときとか、rootでコマンドコピペ作業するときとか、コピペする内容は意図通り? さっきみたメールの本文だったりしないか? と不安になるときもある。&lt;/p&gt;
 
-&lt;p&gt;そこで&lt;a href=&#34;https://github.com/niku4i/pbwatch&#34;&gt;pbwatch&lt;/a&gt;というコマンドラインツールを作ってみた。ターミナル上でクリップボードのテキストをターミナル上で表示しつづけるだけのシンプルツール。Macオンリーです。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/niku4i/pbwatch&#34;&gt;pbwatch&lt;/a&gt;というコマンドラインツールを作ってみた。ターミナル上でクリップボードのテキストをターミナル上で表示しつづけるだけのシンプルツール。Macオンリーです。&lt;/p&gt;
 
 &lt;p&gt;
 &lt;figure &gt;
@@ -29,9 +29,9 @@
 &lt;/figure&gt;
 &lt;/p&gt;
 
-&lt;p&gt;会社の後輩氏に試してもらったところ好評だったが、ちなみに別解もあって、シェルで &lt;code&gt;$ while [ 1 ] ; do clear; pbpaste; sleep 1; done&lt;/code&gt; とかでもよいかもしれない。&lt;/p&gt;
+&lt;p&gt;ちなみに別解としては、シェルで &lt;code&gt;$ while [ 1 ] ; do clear; pbpaste; sleep 1; done&lt;/code&gt; とかでもほぼ同じことはできたりする。&lt;/p&gt;
 
-&lt;p&gt;なおWindowsだと似たフリーソフトがあったとおもう。Macでもシンプルなツールないかと探してみたが無かったので書いてみた次第。&lt;/p&gt;
+&lt;p&gt;前職でWindows使ってたときはこういうフリーソフトがあって使ってたんだけど、今はMac使っててMacでもシンプルなツールないかと探してみたもののこのくらいシンプルなのが無かったのでGoでコマンドラインでいいやと作ってみた次第。コピペ前にテキストエディタとかに貼り付けて確認(無意識的に)してるかもしれないけど、少し手間が減って良さそう。&lt;/p&gt;
 </description>
         </item>
       
