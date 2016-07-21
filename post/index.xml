@@ -5,9 +5,36 @@
     <link>http://orihubon.com/post/</link>
     <language>en-us</language>
     <author></author>
-    <rights>(C) 2015</rights>
-    <updated>2015-12-04 10:12:15 &#43;0900 JST</updated>
+    <rights>(C) 2016</rights>
+    <updated>2016-07-21 22:00:03 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>コピペ誤爆対策</title>
+          <link>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96/</link>
+          <pubDate>Thu, 21 Jul 2016 22:00:03 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96/</guid>
+          <description>&lt;p&gt;SQLをコピペでデータベースに投入するときとか、rootでコマンドコピペ作業するときとか、コピペする内容は意図通り? さっきみたメールの本文だったりしないか? と不安になるかもしれない。&lt;/p&gt;
+
+&lt;p&gt;そこで&lt;a href=&#34;https://github.com/niku4i/pbwatch&#34;&gt;pbwatch&lt;/a&gt;というコマンドラインツールを作ってみた。ターミナル上でクリップボードのテキストをターミナル上で表示しつづけるだけのシンプルツール。Macオンリーです。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/20160721-pbwatch-demo.gif&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;会社の後輩氏に試してもらったところ好評だったが、ちなみに別解もあって、シェルで &lt;code&gt;$ while [ 1 ] ; do clear; pbpaste; sleep 1; done&lt;/code&gt; とかでもよいかもしれない。&lt;/p&gt;
+
+&lt;p&gt;なおWindowsだと似たフリーソフトがあったとおもう。Macでもシンプルなツールないかと探してみたが無かったので書いてみた次第。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>

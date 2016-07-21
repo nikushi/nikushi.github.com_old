@@ -10,7 +10,7 @@
 
   <title>
     
-      Perl Moduleのバージョンを確認する方法 &middot; Nikushi&#39;s blog
+      コピペ誤爆対策 &middot; Nikushi&#39;s blog
     
   </title>
 
@@ -293,11 +293,13 @@
     
       
     
+      
+    
 
   </nav>
 
   <div class="sidebar-item">
-    <p>&copy; 2015 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
+    <p>&copy; 2016 @niku4i All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> - Theme by <a href="https://github.com/tummychow/lanyon-hugo">tummychow/lanyon-hugo</a>.</p>
   </div>
 </div>
 
@@ -317,18 +319,24 @@
 
 
 <div class="post">
-  <h1 class="post-title">Perl Moduleのバージョンを確認する方法</h1>
-  <span class="post-date">Nov 24 2011</span>
-  たまにしかしないので、忘れないようメモ。
-Makefile.PLを作るとき依存するモジュールを記述するが、今使っているモジュールのバージョンを知りたい。
+  <h1 class="post-title">コピペ誤爆対策</h1>
+  <span class="post-date">Jul 21 2016</span>
+  <p>SQLをコピペでデータベースに投入するときとか、rootでコマンドコピペ作業するときとか、コピペする内容は意図通り? さっきみたメールの本文だったりしないか? と不安になるかもしれない。</p>
 
-例
-<pre code="shell">
-$ perl -MTemplate -e '$Template::VERSION'
-2.14
-</pre>
+<p>そこで<a href="https://github.com/niku4i/pbwatch">pbwatch</a>というコマンドラインツールを作ってみた。ターミナル上でクリップボードのテキストをターミナル上で表示しつづけるだけのシンプルツール。Macオンリーです。</p>
 
-モジュール内で定義された our $VERSION = 2.14; を出力すればよい。
+<p>
+<figure >
+    
+        <img src="/images/20160721-pbwatch-demo.gif" />
+    
+    
+</figure>
+</p>
+
+<p>会社の後輩氏に試してもらったところ好評だったが、ちなみに別解もあって、シェルで <code>$ while [ 1 ] ; do clear; pbpaste; sleep 1; done</code> とかでもよいかもしれない。</p>
+
+<p>なおWindowsだと似たフリーソフトがあったとおもう。Macでもシンプルなツールないかと探してみたが無かったので書いてみた次第。</p>
 
 </div>
 

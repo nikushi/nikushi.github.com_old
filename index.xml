@@ -5,9 +5,36 @@
     <link>http://orihubon.com/</link>
     <language>en-us</language>
     <author></author>
-    <rights>(C) 2015</rights>
-    <updated>2015-12-04 10:12:15 &#43;0900 JST</updated>
+    <rights>(C) 2016</rights>
+    <updated>2016-07-21 22:00:03 &#43;0900 JST</updated>
 
+    
+      
+        <item>
+          <title>コピペ誤爆対策</title>
+          <link>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96/</link>
+          <pubDate>Thu, 21 Jul 2016 22:00:03 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2016/07/21/%E3%82%B3%E3%83%94%E3%83%9A%E8%AA%A4%E7%88%86%E5%AF%BE%E7%AD%96/</guid>
+          <description>&lt;p&gt;SQLをコピペでデータベースに投入するときとか、rootでコマンドコピペ作業するときとか、コピペする内容は意図通り? さっきみたメールの本文だったりしないか? と不安になるかもしれない。&lt;/p&gt;
+
+&lt;p&gt;そこで&lt;a href=&#34;https://github.com/niku4i/pbwatch&#34;&gt;pbwatch&lt;/a&gt;というコマンドラインツールを作ってみた。ターミナル上でクリップボードのテキストをターミナル上で表示しつづけるだけのシンプルツール。Macオンリーです。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/20160721-pbwatch-demo.gif&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;会社の後輩氏に試してもらったところ好評だったが、ちなみに別解もあって、シェルで &lt;code&gt;$ while [ 1 ] ; do clear; pbpaste; sleep 1; done&lt;/code&gt; とかでもよいかもしれない。&lt;/p&gt;
+
+&lt;p&gt;なおWindowsだと似たフリーソフトがあったとおもう。Macでもシンプルなツールないかと探してみたが無かったので書いてみた次第。&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>
@@ -1597,94 +1624,6 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
     
       
         <item>
-          <title>Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</title>
-          <link>http://orihubon.com/blog/2014/05/17/zurich-paris/</link>
-          <pubDate>Sat, 17 May 2014 16:41:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2014/05/17/zurich-paris/</guid>
-          <description>
-
-&lt;p&gt;ウィーンからパリまで列車の旅の後半編。&lt;a href=&#34;http://orihubon.com/blog/2014/05/17/vienna-salzburg/&#34;&gt;前半はこちら&lt;/a&gt;。&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h4 id=&#34;チューリッヒ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;チューリッヒ&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;物価高い!!!&lt;/li&gt;
-&lt;li&gt;チェックインでトラブった&lt;/li&gt;
-&lt;li&gt;チーズフォンデュは濃厚&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;物価高い!!evian 500mlペットボトルが400円強、昼飯2人でパスタとコーラ飲んで5000円弱とかで財布寒い。ホテルもベースが高かったのでチューリッヒではGuest Houseにしました。泊まったGH &lt;a href=&#34;http://www.expedia.co.jp/Zurich-Hotels-Guesthouse-Brauerstrasse.h4623034.Hotel-Information&#34;&gt;Guesthouse Brauerstrasse&lt;/a&gt;。期待していなかったのですが意外、アパートメントタイプでちゃんと専用個室で風呂もトイレも専用。部屋広くてソファもあったりしていい部屋でした。ただしチェックインは難易度高い。フロントは無くてキーボックスからキーを入手する必要があるので事前にキーコードがメールされてきます。僕はキーコードの存在を忘れてて鍵ゲットするまでちょっと手間取りました。&lt;/p&gt;
-
-&lt;p&gt;スイスは1泊だけの滞在なのでスイスといえば&amp;hellip;チーズフォンデュでしょってことで食べました。本場はチーズ風味が臭いです。味はおいしかったけど濃厚すぎて自分はダメでした。ちなみに本当は冬の食べ物らしいです。日本の鍋的感覚か。&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5429.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5448.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;h4 id=&#34;パリ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;パリ&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;お洒落な街、でも地下鉄とっても汚い&lt;/li&gt;
-&lt;li&gt;エッフェル塔、凱旋門&lt;/li&gt;
-&lt;li&gt;ショッピング&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;パリは2泊だけの滞在で駆け足。観光はエッフェル塔、凱旋門、ノートルダム寺院の3カ所。親戚の子供の洋服土産を探したりで町歩きしながらセーヌ川を眺めるそんな感じでした。パリは多人種な街ですね。セーヌ川沿いのBrasserieでワイン飲みながらってのはなかなか良いものでした。&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8903.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8936.JPG&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;h4 id=&#34;お金-手配の方法など:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;お金, 手配の方法など&lt;/h4&gt;
-
-&lt;p&gt;誰かの参考になるかもしれないので書いてみる。ツアーは使ってなくてすべて個人手配です。&lt;/p&gt;
-
-&lt;p&gt;2人で飛行機24万円、列車代が9万円、ホテルが10万くらい、その他食費等で合計55万くらい。飛行機は安かったけどユーロ高め(1ユーロ142円くらい)だったので結構財布寒い感じですね。結構食費は節約系でした。&lt;/p&gt;
-
-&lt;p&gt;飛行機はエールフランスのサイトで直接調べたら安く行けることが分かって、さらに安くならないかなとトラベルコちゃんで調べたらHISが同じ便で1万円くらい安かったので申し込み。行きはシャルルドゴール空港経由パリ行き、帰りはパリから成田への直行便です。&lt;/p&gt;
-
-&lt;p&gt;ホテルはExpediaで。選定方法はまず値段みて、あとGoogle Mapみながら交通の便が良い立地かどうかで選ぶ感じ。(このあたりネット系でコンシェルジュ的(楽々幹事さん的のり)なサービスあってやってくれるサービスとかないですかねえ。)&lt;/p&gt;
-
-&lt;p&gt;列車&lt;a href=&#34;http://www.raileurope.com/index.html&#34;&gt;RAILEUROPE&lt;/a&gt;で列車時刻調べてチケットを事前に購入しました。ユーロレイルパスは使ってません(個別購入の方が安かったので)&lt;/p&gt;
-
-&lt;h4 id=&#34;まとめ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;まとめ&lt;/h4&gt;
-
-&lt;p&gt;ウィーン、ザルツブルク、チューリッヒ、パリと列車で巡ってきた。弾丸な日程だったけど充実した旅でした。次は1都市滞在でゆっくりした旅がしたい!(けどかなり先だろう)&lt;/p&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
           <title>Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 前編</title>
           <link>http://orihubon.com/blog/2014/05/17/vienna-salzburg/</link>
           <pubDate>Sat, 17 May 2014 16:41:00 JST</pubDate>
@@ -1866,6 +1805,94 @@ sh.getRange(1,1,2,2).setValues([[&#39;Value&#39;, &#39;Value&#39;], [&#39;Value&
 &lt;h4 id=&#34;次回へ続く:d1380683a81c7f389d716cdbb970a4b1&#34;&gt;次回へ続く&lt;/h4&gt;
 
 &lt;p&gt;オーストリア編はここで終わり。1ポストで収まらなかったので続きは&lt;a href=&#34;http://orihubon.com/blog/2014/05/17/zurich-paris/&#34;&gt;次回へ&lt;/a&gt;。&lt;/p&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
+          <title>Vienna, Salzburg, Zurich, Parisを列車で巡ってみた - 後編</title>
+          <link>http://orihubon.com/blog/2014/05/17/zurich-paris/</link>
+          <pubDate>Sat, 17 May 2014 16:41:00 JST</pubDate>
+          <author></author>
+          <guid>http://orihubon.com/blog/2014/05/17/zurich-paris/</guid>
+          <description>
+
+&lt;p&gt;ウィーンからパリまで列車の旅の後半編。&lt;a href=&#34;http://orihubon.com/blog/2014/05/17/vienna-salzburg/&#34;&gt;前半はこちら&lt;/a&gt;。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h4 id=&#34;チューリッヒ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;チューリッヒ&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;物価高い!!!&lt;/li&gt;
+&lt;li&gt;チェックインでトラブった&lt;/li&gt;
+&lt;li&gt;チーズフォンデュは濃厚&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;物価高い!!evian 500mlペットボトルが400円強、昼飯2人でパスタとコーラ飲んで5000円弱とかで財布寒い。ホテルもベースが高かったのでチューリッヒではGuest Houseにしました。泊まったGH &lt;a href=&#34;http://www.expedia.co.jp/Zurich-Hotels-Guesthouse-Brauerstrasse.h4623034.Hotel-Information&#34;&gt;Guesthouse Brauerstrasse&lt;/a&gt;。期待していなかったのですが意外、アパートメントタイプでちゃんと専用個室で風呂もトイレも専用。部屋広くてソファもあったりしていい部屋でした。ただしチェックインは難易度高い。フロントは無くてキーボックスからキーを入手する必要があるので事前にキーコードがメールされてきます。僕はキーコードの存在を忘れてて鍵ゲットするまでちょっと手間取りました。&lt;/p&gt;
+
+&lt;p&gt;スイスは1泊だけの滞在なのでスイスといえば&amp;hellip;チーズフォンデュでしょってことで食べました。本場はチーズ風味が臭いです。味はおいしかったけど濃厚すぎて自分はダメでした。ちなみに本当は冬の食べ物らしいです。日本の鍋的感覚か。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5429.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/IMG_5448.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&#34;パリ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;パリ&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;お洒落な街、でも地下鉄とっても汚い&lt;/li&gt;
+&lt;li&gt;エッフェル塔、凱旋門&lt;/li&gt;
+&lt;li&gt;ショッピング&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;パリは2泊だけの滞在で駆け足。観光はエッフェル塔、凱旋門、ノートルダム寺院の3カ所。親戚の子供の洋服土産を探したりで町歩きしながらセーヌ川を眺めるそんな感じでした。パリは多人種な街ですね。セーヌ川沿いのBrasserieでワイン飲みながらってのはなかなか良いものでした。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8903.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://orihubon.com/images/2014-05-17-honey-moon-log/DSC_8936.JPG&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&#34;お金-手配の方法など:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;お金, 手配の方法など&lt;/h4&gt;
+
+&lt;p&gt;誰かの参考になるかもしれないので書いてみる。ツアーは使ってなくてすべて個人手配です。&lt;/p&gt;
+
+&lt;p&gt;2人で飛行機24万円、列車代が9万円、ホテルが10万くらい、その他食費等で合計55万くらい。飛行機は安かったけどユーロ高め(1ユーロ142円くらい)だったので結構財布寒い感じですね。結構食費は節約系でした。&lt;/p&gt;
+
+&lt;p&gt;飛行機はエールフランスのサイトで直接調べたら安く行けることが分かって、さらに安くならないかなとトラベルコちゃんで調べたらHISが同じ便で1万円くらい安かったので申し込み。行きはシャルルドゴール空港経由パリ行き、帰りはパリから成田への直行便です。&lt;/p&gt;
+
+&lt;p&gt;ホテルはExpediaで。選定方法はまず値段みて、あとGoogle Mapみながら交通の便が良い立地かどうかで選ぶ感じ。(このあたりネット系でコンシェルジュ的(楽々幹事さん的のり)なサービスあってやってくれるサービスとかないですかねえ。)&lt;/p&gt;
+
+&lt;p&gt;列車&lt;a href=&#34;http://www.raileurope.com/index.html&#34;&gt;RAILEUROPE&lt;/a&gt;で列車時刻調べてチケットを事前に購入しました。ユーロレイルパスは使ってません(個別購入の方が安かったので)&lt;/p&gt;
+
+&lt;h4 id=&#34;まとめ:c2865a63b30e81fb4d903a12ab579d34&#34;&gt;まとめ&lt;/h4&gt;
+
+&lt;p&gt;ウィーン、ザルツブルク、チューリッヒ、パリと列車で巡ってきた。弾丸な日程だったけど充実した旅でした。次は1都市滞在でゆっくりした旅がしたい!(けどかなり先だろう)&lt;/p&gt;
 </description>
         </item>
       
@@ -3381,32 +3408,6 @@ BUNDLE_WITHOUT: development test
 &lt;p&gt;jQueryなどのライブラリの選択やバージョンの変更も左側のメニューからポチポチやるだけで切り替えれて簡単。&lt;/p&gt;
 
 &lt;p&gt;また、Ajax系の動作確認も可能です。サーバサイドのエンドポイントが必要ですが、jsFiddleでは &lt;code&gt;/echo/json/&lt;/code&gt;, &lt;code&gt;/echo/html/&lt;/code&gt;といったリクエストをresponseとしてechoするダミーのエンドポイントが提供されています。&lt;/p&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>yokohama.ex #2 に参加してきたよ</title>
-          <link>http://orihubon.com/blog/2013/07/03/yokohama-dot-ex-on-20130703/</link>
-          <pubDate>Wed, 03 Jul 2013 23:02:00 JST</pubDate>
-          <author></author>
-          <guid>http://orihubon.com/blog/2013/07/03/yokohama-dot-ex-on-20130703/</guid>
-          <description>&lt;p&gt;2013/07/03(水) 開催された &lt;a href=&#34;http://www.zusaar.com/event/822004&#34;&gt;yokohama.ex #2&lt;/a&gt; に参加してきました!&lt;/p&gt;
-
-&lt;p&gt;場所はDeNA@渋谷ヒカリエ。&lt;/p&gt;
-
-&lt;p&gt;会の趣旨は &lt;a href=&#34;http://elixir-lang.org/&#34;&gt;elixir-lang.org&lt;/a&gt;のGETTING STARTEDをみんなで読んで勉強しましょう、といったところ。&lt;/p&gt;
-
-&lt;p&gt;前回(第1回)はyokohama.rbの中でElixir紹介がてらGETTING STARTEDの1章から2.6.4までを読んだ、そうです。僕は参加してませんでしたので今回にあたって密かに一人独習したわけですが、@sonots さんが&lt;a href=&#34;https://docs.google.com/presentation/d/1Tl-NTgGiW6V6QCCi2Hy0V81XZTjkAWEC22yTWE8ChP4/pub?start=false&amp;amp;loop=false&amp;amp;delayms=3000#slide=id.p&#34;&gt;復習資料&lt;/a&gt; を作成してくれていて今日の会はこの復習資料からスタート! 英文で読んだ後でまとまった日本語で再度インプットするとすーっと浸みいります。とても助かりました。&lt;/p&gt;
-
-&lt;p&gt;今回はSection2.6.5 TryからSection3の最後まで。プロジェクタにホームページの英文を映して代表の人が読みながらサンプルコードをiexで実行、あれこれ言い合う感じで進められていました。&lt;/p&gt;
-
-&lt;p&gt;Elixirにもの申すレベルではないのでElixirには言及しませんが、会の進め方については1つ1つ順番に読み進めるスタイルなのでElixir初心者であっても取っ付きやすかったとおもいます!!!&lt;/p&gt;
-
-&lt;p&gt;普段Ruby、Perlなどを使ってるので関数型言語の考え方は頭の体操になりました! 英語の速読にも良い会でした:)&lt;/p&gt;
-
-&lt;p&gt;次回#3も予定されています。まだ追いつけるとおもますので興味がありましたら次回参加してみたらいかがでしょうか。&lt;/p&gt;
 </description>
         </item>
       
